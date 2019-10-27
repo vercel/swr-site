@@ -18,7 +18,7 @@ const Snippet = () => {
           width: 300px;
           border: 1px solid var(--accents-2);
           border-radius: var(--radius);
-          padding: var(--gap);
+          padding: var(--gap-half);
           font-family: var(--font-mono);
           background: var(--bg);
           display: flex;

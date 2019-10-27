@@ -114,6 +114,8 @@ const Index = () => (
       }
 
       .slice {
+        opacity: 0;
+        animation: fadeIn 2s ease-in-out forwards;
         position: relative;
       }
 
@@ -148,16 +150,15 @@ const Index = () => (
 
       @keyframes slideRight {
         0% {
-          transform: skew(-20deg) translateX(0);
-        }
-
-        99% {
-          opacity: 0.8;
+          width: 100%;
+          left: 0;
+          background-image: none;
         }
 
         100% {
-          transform: skew(-20deg) translateX(100%);
-          opacity: 0;
+          width: 0;
+          left: 100%;
+          opacity: 0.6;
         }
       }
     `}</style>
@@ -205,8 +206,8 @@ const Index = () => (
         flex-direction: column;
         align-items: center;
 
-        background-image: radial-gradient(#222 1px, transparent 1px),
-          radial-gradient(#222 1px, transparent 1px);
+        background-image: radial-gradient(#333 1px, transparent 1px),
+          radial-gradient(#333 1px, transparent 1px);
         background-position: 0 0, 25px 25px;
         background-size: 50px 50px;
 
