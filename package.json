@@ -1,0 +1,25 @@
+{
+  "name": "swr",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "next build",
+    "lint": "prettier '**/*.{js,ts,tsx}' --write"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "copee": "^1.0.6",
+    "next": "^9.1.1",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.18.2"
+  },
+  "pre-commit": "lint"
+}
