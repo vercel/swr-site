@@ -193,7 +193,7 @@ function Profile () {
             <figure>
               Notice that we also still revalidate, which means our bakcend is
               decapitalizing the name and applying different rules that our
-              frontend doesn’t know about.
+              frontend has forgotten to enforce.
             </figure>
           </div>
         </div>
