@@ -43,20 +43,23 @@ const Index = () => (
           fetch request (revalidate), and finally comes with the up-to-date data
           again.
         </p>
-      </div>
 
-      <div className="explanation">
-        <h3>Fast Navigation</h3>
-        <p>
-          When navigating through pages or sections inside a system (e.g.: in
-          Next.js), or when pressing the back button, it’s often desirable to
-          load a cached version of the data.
-        </p>
+        <pre><code>{`import useSWR from 'use-swr'
 
-        <p>
-          To achieve eventual consistency, SWR will automatically revalidate the
-          data from the origin as soon as data is rendered from the cache.
-        </p>
+function Profile () {
+  const { data, error } = useSWR('/api/user', fetch)
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return <div>hello {data.name}!</div>
+}`}</code></pre>
+
+        <p>In this example, the React Hook <code>useSWR</code> accepts a <code>key</code> and a <code>fetch</code> function.
+        <br /><code>key</code> is a unique identifier of the data, normally the URL of the API. Then <code>key</code> will be passed to <code>fetch</code>, which returns the data asynchronously.</p>
+
+        <p><code>useSWR</code> also returns 2 values: <code>data</code> and <code>error</code>, based on the status of the request.</p>
+
+        <p>For detailed API and code snippets, please check out the <a href="https://github.com/zeit/swr" target="_blank">repository</a>.</p>
       </div>
 
       <div className="explanation">
@@ -87,15 +90,41 @@ const Index = () => (
       </div>
 
       <div className="explanation">
+        <h3>Fast Navigation</h3>
+        <p>
+          When navigating through pages or sections inside a system (e.g.: in
+          Next.js), or when pressing the back button, it’s often desirable to
+          load a cached version of the data.
+        </p>
+
+        <p>
+          To achieve eventual consistency, SWR will automatically revalidate the
+          data from the origin as soon as data is rendered from the cache.
+        </p>
+
+        <div className="video">
+          <video controls style={{ maxHeight: 600 }}>
+            <source
+              src="https://assets.zeit.co/video/upload/q_auto/v1572278352/swr/example-videos/fast-navigation.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <figure>
+            SWR will make cached pages render much faster, then update the cache with the latest data.
+          </figure>
+        </div>
+      </div>
+
+      <div className="explanation">
         <h3>Refetch on Interval</h3>
         <p>
           In many cases, data changes because of multiple devices, multiple
           users, multiple tabs. How can we over time update the data on screen?
         </p>
         <p>
-          SWR will give you the option to automatically refetch data. It’s <mark>smart</mark>{' '}
-          which means refetching will only happen if the component associated
-          with the hook is <mark>on screen</mark>.
+          SWR will give you the option to automatically refetch data. It’s{' '}
+          <mark>smart</mark> which means refetching will only happen if the
+          component associated with the hook is <mark>on screen</mark>.
         </p>
 
         <div className="video">
@@ -106,7 +135,8 @@ const Index = () => (
             />
           </video>
           <figure>
-            A user make a change and then both sessions eventually rendering the same data.
+            A user make a change and then both sessions eventually rendering the
+            same data.
           </figure>
         </div>
       </div>
@@ -133,8 +163,9 @@ const Index = () => (
           with the corresponding UI for “load more”.
         </p>
         <p>
-          And even further, when navigating back to the “load more” list, everything
-          including the <mark>scroll position</mark> will be recovered automatically.
+          And even further, when navigating back to the “load more” list,
+          everything including the <mark>scroll position</mark> will be
+          recovered automatically.
         </p>
 
         <div className="video">
@@ -145,7 +176,8 @@ const Index = () => (
             />
           </video>
           <figure>
-            An infinite scroll UI on the <a href="https://zeit.co">ZEIT</a> dashboard, SWR will recover your scroll position.
+            An infinite scroll UI on the <a href="https://zeit.co">ZEIT</a>{' '}
+            dashboard, SWR will recover your scroll position.
           </figure>
         </div>
       </div>
@@ -273,10 +305,20 @@ const Index = () => (
 
       code {
         font-size: 0.8rem;
-        background: #eaeaea;
+        background: #f1f1f1;
         padding: 0.2rem;
         border-radius: var(--radius);
         font-family: var(--font-mono);
+      }
+
+      pre {
+        white-space: pre-wrap;
+      }
+      pre code {
+        display: block;
+        padding: 0.8rem;
+        line-height: 1.4;
+        background: #f5f5f5;
       }
 
       .slice {
