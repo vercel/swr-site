@@ -237,10 +237,34 @@ function Profile () {
       <div className="explanation">
         <Heading>Custom Data Fetching</Heading>
         <p>
-          SWR uses `fetch` by default and assumes a REST-style API call.
+          SWR uses <code>fetch</code> by default and assumes a REST-style API call.
           However, the developer can define any asynchronous function as the
-          fetcher, including GraphQL.
+          fetcher. For example, GraphQL:
         </p>
+        <pre>
+          <code>{`import { request } from 'graphql-request'
+import useSWR from '@zeit/swr'
+
+const API = 'https://api.graph.cool/simple/v1/movies'
+
+function Profile () {
+  const { data, error } = useSWR(
+    \`{
+      Movie(title: "Inception") {
+        releaseDate
+        actors {
+          name
+        }
+      }
+    }\`,
+    query => request(API, query)
+  )
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return <div>Movie: {data.title}!</div>
+}`}</code>
+        </pre>
       </div>
 
       <div className="explanation">
@@ -250,6 +274,25 @@ function Profile () {
           <code>suspense: true</code> in the SWR config and everything will work
           smoothly.
         </p>
+        <pre>
+          <code>{`import { Suspense } from 'react'
+import useSWR from '@zeit/swr'
+
+function Profile () {
+  const { data } = useSWR(
+    '/api/user',
+    fetch,
+    { suspense: true }
+  )
+  return <div>hello, {data.name}</div>
+}
+
+function App () {
+  return <Suspense fallback={<div>loading...</div>}>
+    <Profile/>
+  </Suspense>
+}`}</code>
+        </pre>
         <br />
         <br />
         <p>
@@ -413,7 +456,7 @@ function Profile () {
       pre code {
         display: block;
         padding: 0.8rem;
-        line-height: 1.4;
+        line-height: 1.5;
         background: #f5f5f5;
       }
 
