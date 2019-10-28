@@ -6,6 +6,7 @@ import GitHub from '../components/github'
 
 import FeatureList from '../components/feature-list'
 import Heading from '../components/heading'
+import Video from '../components/video'
 
 const ANIMATION_COOKIE = 'swr-animated'
 
@@ -130,12 +131,7 @@ function Profile () {
           </p>
 
           <div className="video">
-            <video controls>
-              <source
-                src="https://assets.zeit.co/video/upload/q_auto/v1572271867/swr/example-videos/focus-revalidate.mp4"
-                type="video/mp4"
-              />
-            </video>
+            <Video controls src="https://assets.zeit.co/video/upload/q_auto/v1572271867/swr/example-videos/focus-revalidate.mp4"/>
             <figure>
               Using focus revalidation to automatically sync login state between
               pages.
@@ -157,12 +153,7 @@ function Profile () {
           </p>
 
           <div className="video">
-            <video controls style={{ maxHeight: 600 }}>
-              <source
-                src="https://assets.zeit.co/video/upload/q_auto/v1572278352/swr/example-videos/fast-navigation.mp4"
-                type="video/mp4"
-              />
-            </video>
+            <Video controls style={{ maxHeight: 600 }} src="https://assets.zeit.co/video/upload/q_auto/v1572278352/swr/example-videos/fast-navigation.mp4" />
             <figure>
               SWR will make cached pages render much faster, then update the
               cache with the latest data.
@@ -187,12 +178,7 @@ function Profile () {
           </p>
 
           <div className="video">
-            <video controls style={{ maxHeight: 600 }}>
-              <source
-                src="https://assets.zeit.co/video/upload/q_auto/v1572283098/swr/example-videos/local-mutation.mp4"
-                type="video/mp4"
-              />
-            </video>
+            <Video controls style={{ maxHeight: 600 }} src="https://assets.zeit.co/video/upload/q_auto/v1572283098/swr/example-videos/local-mutation.mp4" />
             <figure>
               Notice that we also still revalidate, which means our bakcend is
               decapitalizing the name and applying different rules that our
@@ -214,12 +200,7 @@ function Profile () {
           </p>
 
           <div className="video">
-            <video controls style={{ maxHeight: 600 }}>
-              <source
-                src="https://assets.zeit.co/video/upload/q_auto/v1572275644/swr/example-videos/swr-pages.mp4"
-                type="video/mp4"
-              />
-            </video>
+            <Video controls style={{ maxHeight: 600 }} src="https://assets.zeit.co/video/upload/q_auto/v1572275644/swr/example-videos/swr-pages.mp4" />
             <figure>
               An infinite scroll UI on the <a href="https://zeit.co">ZEIT</a>{' '}
               dashboard, SWR will recover your scroll position.
@@ -415,7 +396,7 @@ function App () {
           margin-left: 50%;
           text-align: center;
         }
-        .video video {
+        .video :global(video) {
           max-width: 100%;
           max-height: 90vh;
           outline: none;
