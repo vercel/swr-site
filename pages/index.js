@@ -171,34 +171,6 @@ function Profile () {
         </div>
 
         <div className="explanation">
-          <Heading>Refetch on Interval</Heading>
-          <p>
-            Data is dynamic. Changes made through different devices, multiple
-            tabs, or your teammates means that the data shown on screen can very
-            quickly become outdated. How can we keep the data on screen
-            up-to-date?
-          </p>
-          <p>
-            SWR gives you the option to automatically refetch data. Refetching
-            happens <mark>efficiently</mark>, only when the components
-            associated with the hook are on screen.
-          </p>
-
-          <div className="video">
-            <video controls>
-              <source
-                src="https://assets.zeit.co/video/upload/q_auto/v1572274198/swr/example-videos/refetch-interval.mp4"
-                type="video/mp4"
-              />
-            </video>
-            <figure>
-              A user make a change and then both sessions eventually rendering
-              the same data.
-            </figure>
-          </div>
-        </div>
-
-        <div className="explanation">
           <Heading>Local Mutation</Heading>
           <p>
             SWR scales extremely well because it requires very little effort to
@@ -213,6 +185,20 @@ function Profile () {
             temporary local state that will automatically update on the next
             revalidation.
           </p>
+
+          <div className="video">
+            <video controls style={{ maxHeight: 600 }}>
+              <source
+                src="https://assets.zeit.co/video/upload/q_auto/v1572283098/swr/example-videos/local-mutation.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <figure>
+              Notice that we also still revalidate, which means our bakcend is
+              decapitalizing the name and applying different rules that our
+              frontend doesn’t know about.
+            </figure>
+          </div>
         </div>
 
         <div className="explanation">
@@ -244,10 +230,34 @@ function Profile () {
         <div className="explanation">
           <Heading>Custom Data Fetching</Heading>
           <p>
-            SWR uses `fetch` by default and assumes a REST-style API call.
-            However, the developer can define any asynchronous function as the
-            fetcher, including GraphQL.
+            SWR uses <code>fetch</code> by default and assumes a REST-style API
+            call. However, the developer can define any asynchronous function as
+            the fetcher. For example, GraphQL:
           </p>
+          <pre>
+            <code>{`import { request } from 'graphql-request'
+import useSWR from '@zeit/swr'
+
+const API = 'https://api.graph.cool/simple/v1/movies'
+
+function Profile () {
+  const { data, error } = useSWR(
+    \`{
+      Movie(title: "Inception") {
+        releaseDate
+        actors {
+          name
+        }
+      }
+    }\`,
+    query => request(API, query)
+  )
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return <div>Movie: {data.title}!</div>
+}`}</code>
+          </pre>
         </div>
 
         <div className="explanation">
@@ -257,6 +267,25 @@ function Profile () {
             <code>suspense: true</code> in the SWR config and everything will
             work smoothly.
           </p>
+          <pre>
+            <code>{`import { Suspense } from 'react'
+import useSWR from '@zeit/swr'
+
+function Profile () {
+  const { data } = useSWR(
+    '/api/user',
+    fetch,
+    { suspense: true }
+  )
+  return <div>hello, {data.name}</div>
+}
+
+function App () {
+  return <Suspense fallback={<div>loading...</div>}>
+    <Profile/>
+  </Suspense>
+}`}</code>
+          </pre>
           <br />
           <br />
           <p>
@@ -322,6 +351,11 @@ function Profile () {
           padding: 0 2rem;
           background: var(--bg);
           margin: calc(2 * var(--gap-double)) auto;
+        }
+        figure {
+          font-size: 0.85rem;
+          color: #999;
+          line-height: 1.8;
         }
 
         footer {
@@ -392,6 +426,15 @@ function Profile () {
           font-weight: 400;
           font-size: 0.94rem;
           line-height: 1.7;
+        }
+        pre {
+          white-space: pre-wrap;
+        }
+        pre code {
+          display: block;
+          padding: 0.8rem;
+          line-height: 1.5;
+          background: #f5f5f5;
         }
 
         code {
