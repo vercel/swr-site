@@ -17,11 +17,11 @@ class MyApp extends App {
           <meta httpEquiv="Content-Language" content="en" />
           <meta
             name="description"
-            content="SWR is a React Hooks luibrary for remote data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
+            content="SWR is a React Hooks library for remote data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
           />
           <meta
             name="og:description"
-            content="SWR is a React Hooks luibrary for remote data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
+            content="SWR is a React Hooks library for remote data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
           />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@zeithq" />
