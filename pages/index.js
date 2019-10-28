@@ -350,7 +350,8 @@ function App () {
 
         .explanation {
           font-size: 1rem;
-          max-width: 35rem;
+          width: 35rem;
+          max-width: 100vw;
           padding: 0 2rem;
           background: var(--bg);
           margin: calc(2 * var(--gap-double)) auto;
@@ -431,7 +432,11 @@ function App () {
           line-height: 1.7;
         }
         pre {
-          white-space: pre-wrap;
+          white-space: pre;
+        }
+        pre code {
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
         }
 
         code {
@@ -521,7 +526,7 @@ function App () {
 
         @media (max-width: 600px) {
           .explanation {
-            padding: 0;
+            padding: 0 1rem;
           }
 
           h2 {
