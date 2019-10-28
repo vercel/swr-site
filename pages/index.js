@@ -3,6 +3,7 @@ import ZEIT from '../components/zeit'
 
 import FeatureList from '../components/feature-list'
 import Heading from '../components/heading'
+import Badge from '../components/badge'
 
 const Index = () => (
   <div className="page">
@@ -20,11 +21,6 @@ const Index = () => (
             <span className="slice">React Hooks for Remote Data Fetching</span>
           </h2>
         </div>
-
-        {/* <div className="links">
-          <h5>GitHub</h5>
-          <h5>GitHub</h5>
-        </div> */}
       </div>
 
       <div className="features">
@@ -32,6 +28,13 @@ const Index = () => (
       </div>
 
       <div className="explanation">
+        <p>
+          <a href="https://github.com/zeit/swr" target="_blank">
+            GitHub Repository
+          </a>
+        </p>
+        <br/>
+
         <Heading>Basic Data Loading</Heading>
         <p>SWR is a React Hooks library for remote data fetching.</p>
 
@@ -46,7 +49,7 @@ const Index = () => (
         </p>
 
         <pre>
-          <code>{`import useSWR from 'use-swr'
+          <code>{`import useSWR from '@zeit/swr'
 
 function Profile () {
   const { data, error } = useSWR('/api/user', fetch)
@@ -206,13 +209,14 @@ function Profile () {
         <p>
           SWR by default uses `fetch` and assumes a REST-style API call.
           However, the developer can define any asynchronous function as the
-          fetcher. For example, GraphQL:
+          fetcher like GraphQL.
         </p>
       </div>
 
       <div className="explanation">
         <Heading>Suspense</Heading>
-        <p>With just one </p>
+        <p>You can also use SWR Hooks with React Suspense. Just enable <code>suspense: true</code> in the SWR config and 
+        everything will work smoothly.</p>
       </div>
     </main>
 
@@ -234,6 +238,13 @@ function Profile () {
         min-height: 350px;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .links {
+        display: flex;
+        text-align: center;
         justify-content: center;
         align-items: center;
       }
