@@ -33,7 +33,7 @@ const Index = () => (
             GitHub Repository
           </a>
         </p>
-        <br/>
+        <br />
 
         <Heading>Basic Data Loading</Heading>
         <p>SWR is a React Hooks library for remote data fetching.</p>
@@ -215,8 +215,11 @@ function Profile () {
 
       <div className="explanation">
         <Heading>Suspense</Heading>
-        <p>You can also use SWR Hooks with React Suspense. Just enable <code>suspense: true</code> in the SWR config and 
-        everything will work smoothly.</p>
+        <p>
+          You can also use SWR Hooks with React Suspense. Just enable{' '}
+          <code>suspense: true</code> in the SWR config and everything will work
+          smoothly.
+        </p>
       </div>
     </main>
 
