@@ -1,6 +1,6 @@
 const GitHub = () => {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <svg height={40} viewBox="0 0 24 24" fill="none">
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"
