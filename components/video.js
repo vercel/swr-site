@@ -2,7 +2,9 @@ import { useEffect, useRef, useCallback } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 const Video = ({ src, ...props }) => {
-  const [inViewRef, inView] = useInView()
+  const [inViewRef, inView] = useInView({
+    threshold: 1
+  })
   const videoRef = useRef()
 
   const setRefs = useCallback(
