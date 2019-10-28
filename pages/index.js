@@ -2,6 +2,7 @@ import Logo from '../components/logo'
 import ZEIT from '../components/zeit'
 
 import FeatureList from '../components/feature-list'
+import Heading from '../components/heading'
 
 const Index = () => (
   <div className="page">
@@ -31,7 +32,7 @@ const Index = () => (
       </div>
 
       <div className="explanation">
-        <h3>Basic Data Loading</h3>
+        <Heading>Basic Data Loading</Heading>
         <p>SWR is a React Hooks library for remote data fetching.</p>
 
         <p>
@@ -44,7 +45,8 @@ const Index = () => (
           again.
         </p>
 
-        <pre><code>{`import useSWR from 'use-swr'
+        <pre>
+          <code>{`import useSWR from 'use-swr'
 
 function Profile () {
   const { data, error } = useSWR('/api/user', fetch)
@@ -52,18 +54,34 @@ function Profile () {
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
   return <div>hello {data.name}!</div>
-}`}</code></pre>
+}`}</code>
+        </pre>
 
-        <p>In this example, the React Hook <code>useSWR</code> accepts a <code>key</code> and a <code>fetch</code> function.
-        <br /><code>key</code> is a unique identifier of the data, normally the URL of the API. Then <code>key</code> will be passed to <code>fetch</code>, which returns the data asynchronously.</p>
+        <p>
+          In this example, the React Hook <code>useSWR</code> accepts a{' '}
+          <code>key</code> and a <code>fetch</code> function.
+          <br />
+          <code>key</code> is a unique identifier of the data, normally the URL
+          of the API. Then <code>key</code> will be passed to <code>fetch</code>
+          , which returns the data asynchronously.
+        </p>
 
-        <p><code>useSWR</code> also returns 2 values: <code>data</code> and <code>error</code>, based on the status of the request.</p>
+        <p>
+          <code>useSWR</code> also returns 2 values: <code>data</code> and{' '}
+          <code>error</code>, based on the status of the request.
+        </p>
 
-        <p>For detailed API and code snippets, please check out the <a href="https://github.com/zeit/swr" target="_blank">repository</a>.</p>
+        <p>
+          For detailed API and code snippets, please check out the{' '}
+          <a href="https://github.com/zeit/swr" target="_blank">
+            repository
+          </a>
+          .
+        </p>
       </div>
 
       <div className="explanation">
-        <h3>Focus Revalidate</h3>
+        <Heading>Focus Revalidate</Heading>
         <p>
           When you come back to a page that wasn’t focused, or you switch
           between tabs, we automatically revalidate data.
@@ -90,7 +108,7 @@ function Profile () {
       </div>
 
       <div className="explanation">
-        <h3>Fast Navigation</h3>
+        <Heading>Fast Navigation</Heading>
         <p>
           When navigating through pages or sections inside a system (e.g.: in
           Next.js), or when pressing the back button, it’s often desirable to
@@ -110,13 +128,14 @@ function Profile () {
             />
           </video>
           <figure>
-            SWR will make cached pages render much faster, then update the cache with the latest data.
+            SWR will make cached pages render much faster, then update the cache
+            with the latest data.
           </figure>
         </div>
       </div>
 
       <div className="explanation">
-        <h3>Refetch on Interval</h3>
+        <Heading>Refetch on Interval</Heading>
         <p>
           In many cases, data changes because of multiple devices, multiple
           users, multiple tabs. How can we over time update the data on screen?
@@ -142,7 +161,7 @@ function Profile () {
       </div>
 
       <div className="explanation">
-        <h3>Local Mutation</h3>
+        <Heading>Local Mutation</Heading>
         <p>
           SWR scales extremely well because it requires very little effort on
           the developer side to write applications that automatically and
@@ -157,7 +176,7 @@ function Profile () {
       </div>
 
       <div className="explanation">
-        <h3>Scroll Position Recovery and Pagination</h3>
+        <Heading>Scroll Position Recovery and Pagination</Heading>
         <p>
           SWR features built-in support for APIs that return data in chunks,
           with the corresponding UI for “load more”.
@@ -183,7 +202,7 @@ function Profile () {
       </div>
 
       <div className="explanation">
-        <h3>Custom Data Fetching</h3>
+        <Heading>Custom Data Fetching</Heading>
         <p>
           SWR by default uses `fetch` and assumes a REST-style API call.
           However, the developer can define any asynchronous function as the
@@ -192,8 +211,8 @@ function Profile () {
       </div>
 
       <div className="explanation">
-        <h3>React Suspense</h3>
-        <p></p>
+        <Heading>Suspense</Heading>
+        <p>With just one </p>
       </div>
     </main>
 
@@ -276,11 +295,6 @@ function Profile () {
         font-size: 1.25rem;
         letter-spacing: -0.02rem;
         color: var(--accents-3);
-      }
-
-      h3 {
-        font-size: 1.25rem;
-        letter-spacing: -0.02rem;
       }
 
       .video {
