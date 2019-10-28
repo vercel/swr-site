@@ -30,7 +30,7 @@ const Video = ({ src, ...props }) => {
   }, [inView])
 
   return (
-    <video controls ref={setRefs} {...props}>
+    <video controls ref={setRefs} muted="muted" {...props}>
       <source src={src} type="video/mp4" />
     </video>
   )
