@@ -14,6 +14,29 @@ class MyApp extends App {
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
+          <meta httpEquiv="Content-Language" content="en" />
+          <meta
+            name="description"
+            content="SWR is a React Hooks luibrary for remote data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
+          />
+          <meta
+            name="og:description"
+            content="SWR is a React Hooks luibrary for remote data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
+          />
+          <meta
+            name="twitter:card"
+            content="https://assets.zeit.co/image/upload/v1572282926/swr/twitter-card.jpg"
+          />
+          <meta
+            name="og:title"
+            content="SWR: React Hooks for Remote Data Fetching"
+          />
+          <meta name="og:url" content="https://swr.now.sh" />
+          <meta
+            name="og:image"
+            content="https://assets.zeit.co/image/upload/v1572282926/swr/twitter-card.jpg"
+          />
+          <meta name="apple-mobile-web-app-title" content="SWR" />
 
           {/* Favicons */}
           <link
