@@ -261,11 +261,13 @@ function Profile () {
           </pre>
         </div>
 
-
         <div className="explanation">
           <Heading>Dependent Fetching</Heading>
           <p>
-            SWR allows you to fetch data that depends on other data. It ensures the maximum possible parallelism (avoiding waterfalls), as well as serial fetching when a piece of dynamic data is required for the next data fetch to happen.
+            SWR allows you to fetch data that depends on other data. It ensures
+            the maximum possible parallelism (avoiding waterfalls), as well as
+            serial fetching when a piece of dynamic data is required for the
+            next data fetch to happen.
           </p>
           <pre>
             <Code
