@@ -237,9 +237,9 @@ function Profile () {
       <div className="explanation">
         <Heading>Custom Data Fetching</Heading>
         <p>
-          SWR uses <code>fetch</code> by default and assumes a REST-style API call.
-          However, the developer can define any asynchronous function as the
-          fetcher. For example, GraphQL:
+          SWR uses <code>fetch</code> by default and assumes a REST-style API
+          call. However, the developer can define any asynchronous function as
+          the fetcher. For example, GraphQL:
         </p>
         <pre>
           <code>{`import { request } from 'graphql-request'
