@@ -64,7 +64,7 @@ export default () => (
       }
     />
     <Feature
-      text="JAMStack oriented"
+      text="JAMstack oriented"
       icon={
         <svg
           width="24"
