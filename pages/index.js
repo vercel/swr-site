@@ -69,14 +69,20 @@ const Index = () => (
         <p>
           This can be useful to immediately synchronize to the latest state.
           This is extremely helpful for refreshing data for common scenarios
-          like stale mobile tabs, or laptops that went to sleep.
+          like stale mobile tabs, or laptops that <mark>went to sleep</mark>.
         </p>
 
         <div className="video">
           <video controls>
-            <source src="https://assets.zeit.co/video/upload/q_auto/v1572271867/swr/example-videos/focus-revalidate.mp4" type="video/mp4"/>
+            <source
+              src="https://assets.zeit.co/video/upload/q_auto/v1572271867/swr/example-videos/focus-revalidate.mp4"
+              type="video/mp4"
+            />
           </video>
-          <figure>Using focus revalidation to automatically sync login state between pages.</figure>
+          <figure>
+            Using focus revalidation to automatically sync login state between
+            pages.
+          </figure>
         </div>
       </div>
 
@@ -87,10 +93,22 @@ const Index = () => (
           users, multiple tabs. How can we over time update the data on screen?
         </p>
         <p>
-          SWR will give you the option to automatically refetch data. It’s smart
+          SWR will give you the option to automatically refetch data. It’s <mark>smart</mark>{' '}
           which means refetching will only happen if the component associated
-          with the hook is on screen.
+          with the hook is <mark>on screen</mark>.
         </p>
+
+        <div className="video">
+          <video controls>
+            <source
+              src="https://assets.zeit.co/video/upload/q_auto/v1572274198/swr/example-videos/refetch-interval.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <figure>
+            A user make a change and then both sessions eventually rendering the same data.
+          </figure>
+        </div>
       </div>
 
       <div className="explanation">
@@ -114,6 +132,22 @@ const Index = () => (
           SWR features built-in support for APIs that return data in chunks,
           with the corresponding UI for “load more”.
         </p>
+        <p>
+          And even further, when navigating back to the “load more” list, everything
+          including the <mark>scroll position</mark> will be recovered automatically.
+        </p>
+
+        <div className="video">
+          <video controls style={{ maxHeight: 600 }}>
+            <source
+              src="https://assets.zeit.co/video/upload/q_auto/v1572275644/swr/example-videos/swr-pages.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <figure>
+            An infinite scroll UI on the <a href="https://zeit.co">ZEIT</a> dashboard, SWR will recover your scroll position.
+          </figure>
+        </div>
       </div>
 
       <div className="explanation">
@@ -176,8 +210,17 @@ const Index = () => (
       }
 
       figure {
-        font-size: .85rem;
+        font-size: 0.85rem;
         color: #999;
+      }
+
+      a {
+        color: #0076ff;
+        text-decoration: none;
+      }
+
+      mark {
+        background: rgba(247, 212, 255, 0.8);
       }
 
       .title {
@@ -217,6 +260,7 @@ const Index = () => (
       }
       .video video {
         max-width: 100%;
+        max-height: 90vh;
         outline: none;
       }
 
