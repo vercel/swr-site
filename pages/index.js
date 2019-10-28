@@ -194,7 +194,7 @@ function Profile () {
               src="https://assets.zeit.co/video/upload/q_auto/v1572283098/swr/example-videos/local-mutation.mp4"
             />
             <figure>
-              Notice that we also still revalidate, which means our bakcend is
+              Notice that we also still revalidate, which means our backend is
               decapitalizing the name and applying different rules that our
               frontend has forgotten to enforce.
             </figure>
