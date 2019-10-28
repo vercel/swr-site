@@ -1,5 +1,6 @@
 import Logo from '../components/logo'
 import ZEIT from '../components/zeit'
+import GitHub from '../components/github'
 
 import FeatureList from '../components/feature-list'
 
@@ -20,10 +21,15 @@ const Index = () => (
           </h2>
         </div>
 
-        {/* <div className="links">
-          <h5>GitHub</h5>
-          <h5>GitHub</h5>
-        </div> */}
+        <div className="links">
+          <a
+            href="https://github.com/zeit/use-swr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <GitHub />
+          </a>
+        </div>
       </div>
 
       <div className="features">
@@ -45,7 +51,9 @@ const Index = () => (
           fetch request (revalidate), and finally comes with the up-to-date data
           again.
         </p>
-
+      </div>
+      <div className="explanation">
+        <h3>Example</h3>
         <pre>
           <code>{`import useSWR from 'use-swr'
 
@@ -73,7 +81,11 @@ function Profile () {
 
         <p>
           For the detailed API and more examples, visit the{' '}
-          <a href="https://github.com/zeit/swr" target="_blank">
+          <a
+            href="https://github.com/zeit/swr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             repository
           </a>
           .
@@ -81,7 +93,7 @@ function Profile () {
       </div>
 
       <div className="explanation">
-        <h3>Focus Revalidate</h3>
+        <h3>Focus Revalidation</h3>
         <p>
           When you re-focus a page or switch between tabs, SWR automatically
           revalidates data.
@@ -246,6 +258,13 @@ function Profile () {
       a {
         color: #0076ff;
         text-decoration: none;
+      }
+
+      .links {
+        margin-top: var(--gap);
+        opacity: 0;
+        animation: fadeIn 0.5s ease-in-out forwards;
+        animation-delay: 2s;
       }
 
       mark {
