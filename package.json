@@ -10,6 +10,7 @@
     "classnames": "^2.2.6",
     "copee": "^1.0.6",
     "next": "^9.1.2-canary.8",
+    "prismjs": "^1.17.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-intersection-observer": "^8.25.1"

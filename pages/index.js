@@ -7,6 +7,7 @@ import GitHub from '../components/github'
 import FeatureList from '../components/feature-list'
 import Heading from '../components/heading'
 import Video from '../components/video'
+import Code from '../components/code'
 
 const ANIMATION_COOKIE = 'swr-animated'
 
@@ -80,7 +81,8 @@ const Index = () => {
         <div className="explanation">
           <Heading>Basic Data Loading</Heading>
           <pre>
-            <code>{`import useSWR from '@zeit/swr'
+            <Code
+              code={`import useSWR from '@zeit/swr'
 
 function Profile () {
   const { data, error } = useSWR('/api/user', fetch)
@@ -88,7 +90,8 @@ function Profile () {
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
   return <div>hello {data.name}!</div>
-}`}</code>
+}`}
+            />
           </pre>
 
           <p>
@@ -231,7 +234,8 @@ function Profile () {
             the fetcher. For example, GraphQL:
           </p>
           <pre>
-            <code>{`import { request } from 'graphql-request'
+            <Code
+              code={`import { request } from 'graphql-request'
 import useSWR from '@zeit/swr'
 
 const API = 'https://api.graph.cool/simple/v1/movies'
@@ -252,7 +256,8 @@ function Profile () {
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
   return <div>Movie: {data.title}!</div>
-}`}</code>
+}`}
+            />
           </pre>
         </div>
 
@@ -264,7 +269,8 @@ function Profile () {
             work smoothly.
           </p>
           <pre>
-            <code>{`import { Suspense } from 'react'
+            <Code
+              code={`import { Suspense } from 'react'
 import useSWR from '@zeit/swr'
 
 function Profile () {
@@ -280,7 +286,8 @@ function App () {
   return <Suspense fallback={<div>loading...</div>}>
     <Profile/>
   </Suspense>
-}`}</code>
+}`}
+            />
           </pre>
           <br />
           <br />
@@ -426,12 +433,6 @@ function App () {
         pre {
           white-space: pre-wrap;
         }
-        pre code {
-          display: block;
-          padding: 0.8rem;
-          line-height: 1.5;
-          background: #f5f5f5;
-        }
 
         code {
           font-size: 0.8rem;
@@ -439,16 +440,6 @@ function App () {
           padding: 0.2rem;
           border-radius: var(--radius);
           font-family: var(--font-mono);
-        }
-
-        pre {
-          white-space: pre-wrap;
-        }
-        pre code {
-          display: block;
-          padding: 0.8rem;
-          line-height: 1.4;
-          background: #f5f5f5;
         }
 
         .slice {
@@ -592,6 +583,151 @@ function App () {
 
           /* Hack */
           overflow-x: hidden;
+        }
+      `}</style>
+
+      <style jsx global>{`
+        code[class*='language-'],
+        pre[class*='language-'] {
+          color: #000;
+          text-align: left;
+          white-space: pre;
+          word-spacing: normal;
+          word-break: normal;
+          font-size: 0.95em;
+          line-height: 1.4em;
+          tab-size: 4;
+          hyphens: none;
+        }
+        .token.comment,
+        .token.prolog,
+        .token.doctype,
+        .token.cdata {
+          color: #999;
+        }
+        .token.namespace {
+          opacity: 0.7;
+        }
+        .token.string,
+        .token.attr-value {
+          color: #028265;
+        }
+        .token.punctuation,
+        .token.operator {
+          color: #000;
+        }
+        .token.url,
+        .token.symbol,
+        .token.boolean,
+        .token.variable,
+        .token.constant {
+          color: #36acaa;
+        }
+        .token.atrule,
+        .language-autohotkey .token.selector,
+        .language-json .token.boolean,
+        code[class*='language-css'] {
+          font-weight: 600;
+        }
+        .language-json .token.boolean {
+          color: var(--geist-success);
+        }
+        .token.keyword {
+          color: #ff0078;
+          font-weight: bolder;
+        }
+        .token.function,
+        .token.tag,
+        .token.class-name,
+        .token.number,
+        .token.tag .token.punctuation {
+          color: var(--geist-success);
+        }
+        .language-autohotkey .token.tag {
+          color: #9a050f;
+        }
+        .token.selector,
+        .language-autohotkey .token.keyword {
+          color: #00009f;
+        }
+        .token.important,
+        .token.bold {
+          font-weight: bold;
+        }
+        .token.italic {
+          font-style: italic;
+        }
+        .token.deleted {
+          color: red;
+          font-weight: bolder;
+        }
+        .token.inserted {
+          color: var(--geist-success);
+          font-weight: bolder;
+        }
+        .language-json .token.property,
+        .language-markdown .token.title {
+          color: #000;
+          font-weight: bolder;
+        }
+        .language-markdown .token.code {
+          color: var(--geist-success);
+          font-weight: normal;
+        }
+        .language-markdown .token.list,
+        .language-markdown .token.hr {
+          color: #999;
+        }
+        .language-markdown .token.url {
+          color: #ff0078;
+          font-weight: bolder;
+        }
+        .token.selector {
+          color: #2b91af;
+        }
+        .token.property,
+        .token.entity {
+          color: #f00;
+        }
+        .token.attr-name,
+        .token.regex {
+          color: #d9931e;
+        }
+        .token.directive.tag .tag {
+          background: #ff0;
+          color: #393a34;
+        }
+        /* dark */
+        pre.dark[class*='language-'] {
+          color: #fafbfc;
+        }
+        .language-json .dark .token.boolean {
+          color: var(--geist-success);
+        }
+        .dark .token.string {
+          color: #50e3c2;
+        }
+        .dark .token.function,
+        .dark .token.tag,
+        .dark .token.class-name,
+        .dark .token.number {
+          color: #2ba8ff;
+        }
+        .dark .token.attr-value,
+        .dark .token.punctuation,
+        .dark .token.operator {
+          color: #efefef;
+        }
+        .dark .token.attr-name,
+        .dark .token.regex {
+          color: #fac863;
+        }
+        .language-json .dark .token.property,
+        .language-markdown .dark .token.title {
+          color: #fff;
+        }
+        .language-markdown .dark .token.code {
+          color: #50e3c2;
         }
       `}</style>
     </div>
