@@ -200,7 +200,9 @@ function Profile () {
             />
           </video>
           <figure>
-            Notice that we also still revalidate, which means our bakcend is decapitalizing the name and applying different rules that our frontend doesn’t know about.
+            Notice that we also still revalidate, which means our bakcend is
+            decapitalizing the name and applying different rules that our
+            frontend doesn’t know about.
           </figure>
         </div>
       </div>
