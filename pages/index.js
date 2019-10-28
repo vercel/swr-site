@@ -1,40 +1,141 @@
 import Logo from '../components/logo'
-import Snippet from '../components/snippet'
 import ZEIT from '../components/zeit'
+
+import Feature from '../components/feature'
 
 const Index = () => (
   <div className="page">
     <main>
       <div className="landing">
-        <div className="logo slice">
+        {/* <div className="logo slice">
           <Logo />
-        </div>
+        </div> */}
 
         <div className="title">
           <h1>
-            <span className="slice">useSWR</span>
+            <span className="slice">SWR</span>
           </h1>
           <h2>
-            <span className="slice">Stale While Revalidate</span>
+            <span className="slice">React Hooks for Remote Data Fetching</span>
           </h2>
         </div>
 
-        <div className="snippet">
-          <Snippet />
-        </div>
+        {/* <div className="links">
+          <h5>GitHub</h5>
+          <h5>GitHub</h5>
+        </div> */}
+      </div>
+
+      <div className="features">
+        <Feature text='Lightweight' icon={<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" shapeRendering="geometricPrecision" style={{ color: 'var(--geist-foreground)' }}><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" /></svg>} />
+        <Feature text='Backend agnostic' icon={<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" shapeRendering="geometricPrecision" style={{ color: 'var(--geist-foreground)' }}><path d="M20 17.58A5 5 0 0018 8h-1.26A8 8 0 104 16.25" /><path d="M8 16h.01" /><path d="M8 20h.01" /><path d="M12 18h.01" /><path d="M12 22h.01" /><path d="M16 16h.01" /><path d="M16 20h.01" /></svg>} />
+        <Feature text='Realtime' icon={
+          <svg
+            width='24'
+            height='24'
+            fill='none'
+            stroke='currentColor'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth='1.5'
+            color='var(--geist-foreground)'
+            shapeRendering='geometricPrecision'
+            viewBox='0 0 24 24'
+          >
+            <path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'></path>
+          </svg>} />
+        <Feature text='JAMStack oriented' icon={
+          <svg
+            width='24'
+            height='24'
+            fill='none'
+            stroke='currentColor'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth='1.5'
+            color='var(--geist-foreground)'
+            shapeRendering='geometricPrecision'
+            viewBox='0 0 24 24'
+          >
+            <path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'></path>
+          </svg>} />
+        <Feature text='Suspense' icon={
+          <svg
+            width='24'
+            height='24'
+            fill='none'
+            stroke='currentColor'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth='1.5'
+            color='var(--geist-foreground)'
+            shapeRendering='geometricPrecision'
+            viewBox='0 0 24 24'
+          >
+            <path fill='var(--geist-fill)' d='M6 4H10V20H6z'></path>
+            <path fill='var(--geist-fill)' d='M14 4H18V20H14z'></path>
+          </svg>} />
+        <Feature text='TypeScript ready' icon={
+          <svg
+            width='24'
+            height='24'
+            fill='none'
+            stroke='currentColor'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth='1.5'
+            color='var(--geist-foreground)'
+            shapeRendering='geometricPrecision'
+            viewBox='0 0 24 24'
+          >
+            <path d='M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z'></path>
+            <path d='M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12'></path>
+          </svg>} />
+        <Feature text='REST compatible' icon={
+          <svg
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+            color="var(--geist-foreground)"
+            shapeRendering="geometricPrecision"
+            viewBox="0 0 24 24"
+          >
+            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+          </svg>
+        } />
+        <Feature text='Remote + Local' icon={
+          <svg
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+            color="var(--geist-foreground)"
+            shapeRendering="geometricPrecision"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="12" cy="12" r="2"></circle>
+            <path d="M16.24 7.76a6 6 0 010 8.49m-8.48-.01a6 6 0 010-8.49m11.31-2.82a10 10 0 010 14.14m-14.14 0a10 10 0 010-14.14"></path>
+          </svg>
+        } />
       </div>
 
       <div className="explanation">
+        <h3>Basic Data Loading</h3>
         <p>
-          <code>useSWR</code> is a React hook for efficient, auto-updating data
-          fetching.
+          SWR is a React Hooks library for remote data fetching.
         </p>
 
         <p>
-          SWR stands for <b>S</b>tale-<b>W</b>hile-<b>R</b>evalidate. The hook
-          first returns the data from cache, then sends the fetch request, gets
-          the up-to-date data and returns again. The cache is being stored in
-          indexedDB, with memory cache as a fallback.
+          The name “<b>SWR</b>” is derived from <code>stale-while-revalidate</code>, a HTTP cache invalidation strategy popularized by RFC 5861.
+          <br/>
+          <b>SWR</b> first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again.  
         </p>
       </div>
     </main>
@@ -54,24 +155,32 @@ const Index = () => (
       }
 
       .landing {
-        min-height: 100vh;
+        min-height: 350px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
       }
 
+      .features {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        width: 1040px;
+        max-width: 100vw;
+      }
+
       .explanation {
-        font-size: 1.25rem;
+        font-size: 1rem;
         max-width: 35rem;
-        margin-bottom: calc(10 * var(--gap-double));
+        margin: calc(2 * var(--gap-double)) auto;
       }
 
       footer {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: calc(3 * var(--gap-double));
+        margin: calc(3 * var(--gap-double)) auto;
       }
 
       .title {
@@ -83,39 +192,43 @@ const Index = () => (
       }
 
       h1 {
-        margin: var(--gap-double) 0 var(--gap) 0;
-        font-size: 3rem;
+        margin: var(--gap-double) 0 calc(0.5 * var(--gap)) 0;
+        font-size: 2.25rem;
+        font-weight: 800;
+        letter-spacing: -.05rem;
       }
 
       h2 {
         margin: 0;
-        font-size: 1.5rem;
+        font-weight: 300;
+        font-size: 1.25rem;
+        letter-spacing: -.02rem;
         color: var(--accents-3);
       }
 
+      h3 {
+        font-size: 1.25rem;
+        letter-spacing: -.02rem;
+      }
+
       p {
-        color: #eaeaea;
+        color: #555;
+        font-weight: 400;
+        font-size: .94rem;
         line-height: 1.7;
       }
 
       code {
-        font-size: 1rem;
-        background: var(--accents-1);
-        padding: var(--gap-quarter);
+        font-size: .8rem;
+        background: #eaeaea;
+        padding: .2rem;
         border-radius: var(--radius);
         font-family: var(--font-mono);
       }
 
-      .snippet {
-        margin-top: calc(2 * var(--gap-double));
-        opacity: 0;
-        animation: fadeIn 2s ease-in-out forwards;
-        animation-delay: 2s;
-      }
-
       .slice {
         opacity: 0;
-        animation: fadeIn 2s ease-in-out forwards;
+        animation: fadeIn 1.8s ease-in-out forwards;
         position: relative;
       }
 
@@ -125,11 +238,11 @@ const Index = () => (
         left: 0;
         top: 0;
         height: 100%;
-        width: 100%;
-        background: #000;
+        width: 120%;
+        background: #fff;
         transform: skew(-20deg);
-        animation: slideRight 2s ease-in-out forwards;
-        animation-delay: 1s;
+        animation: slideRight 2s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+        animation-delay: .8s;
       }
 
       h1 .slice::after {
@@ -150,14 +263,14 @@ const Index = () => (
 
       @keyframes slideRight {
         0% {
-          width: 100%;
+          width: 120%;
           left: 0;
           background-image: none;
         }
 
         100% {
           width: 0;
-          left: 100%;
+          left: 120%;
           opacity: 0.6;
         }
       }
@@ -174,7 +287,8 @@ const Index = () => (
         --fg: #fff;
         --accents-1: #111;
         --accents-2: #333;
-        --accents-3: #444;
+        --accents-3: #888;
+        --geist-foreground: #000;
 
         --radius: 8px;
 
@@ -198,16 +312,16 @@ const Index = () => (
 
       body {
         min-height: 100vh;
-        background: var(--bg);
-        color: var(--fg);
+        background: var(--fg);
+        color: var(--bg);
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
           Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
         display: flex;
         flex-direction: column;
         align-items: center;
 
-        background-image: radial-gradient(#333 1px, transparent 1px),
-          radial-gradient(#333 1px, transparent 1px);
+        background-image: radial-gradient(#ddd 1px, transparent 1px),
+          radial-gradient(#ddd 1px, transparent 1px);
         background-position: 0 0, 25px 25px;
         background-size: 50px 50px;
 

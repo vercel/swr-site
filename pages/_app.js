@@ -9,7 +9,7 @@ class MyApp extends App {
     return (
       <>
         <Head>
-          <title>useSWR | React hook for data fetching</title>
+          <title>SWR: React Hooks for Remote Data Fetching</title>
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
