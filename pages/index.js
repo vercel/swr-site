@@ -265,7 +265,7 @@ function Profile () {
         <div className="explanation">
           <Heading>Dependent Fetching</Heading>
           <p>
-            SWR allows you to fetch data that depends on other data having been fetched. It ensures the maximum possible parallelism (avoiding waterfalls), as well as serial fetching when a piece of dynamic data is required for the next data fetch to happen.
+            SWR allows you to fetch data that depends on other data. It ensures the maximum possible parallelism (avoiding waterfalls), as well as serial fetching when a piece of dynamic data is required for the next data fetch to happen.
           </p>
           <pre>
             <Code
@@ -277,12 +277,12 @@ function MyProjects () {
     () => '/api/projects?uid=' + user.id
   )
   // When passing a function, SWR will use the
-  // return value as \`key\`. If the function throws
+  // return value as \`key\`. If the function throws,
   // SWR will know that some dependencies are not
   // ready. In this case it is \`user\`.
 
   if (!projects) return 'loading...'
-  return 'You have ' + projects.lenght + ' projects'
+  return 'You have ' + projects.length + ' projects'
 }`}
             />
           </pre>
@@ -310,9 +310,11 @@ function Profile () {
 }
 
 function App () {
-  return <Suspense fallback={<div>loading...</div>}>
-    <Profile/>
-  </Suspense>
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      <Profile/>
+    </Suspense>
+  )
 }`}
             />
           </pre>
