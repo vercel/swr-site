@@ -27,7 +27,7 @@ const Index = () => (
       </div>
 
       <div className="features">
-        <FeatureList/>
+        <FeatureList />
       </div>
 
       <div className="explanation">
@@ -47,48 +47,82 @@ const Index = () => (
 
       <div className="explanation">
         <h3>Fast Navigation</h3>
-        <p>When navigating through pages or sections inside a system (e.g.: in Next.js), or when pressing
-the back button, it’s often desirable to load a cached version of the data.</p>
+        <p>
+          When navigating through pages or sections inside a system (e.g.: in
+          Next.js), or when pressing the back button, it’s often desirable to
+          load a cached version of the data.
+        </p>
 
-        <p>To achieve eventual consistency, SWR will automatically revalidate the data from the origin
-as soon as data is rendered from the cache.</p>
+        <p>
+          To achieve eventual consistency, SWR will automatically revalidate the
+          data from the origin as soon as data is rendered from the cache.
+        </p>
       </div>
 
       <div className="explanation">
         <h3>Focus Revalidate</h3>
-        <p>When you come back to a page that wasn’t focused, or you switch between tabs, we automatically
-revalidate data.</p>
+        <p>
+          When you come back to a page that wasn’t focused, or you switch
+          between tabs, we automatically revalidate data.
+        </p>
 
-        <p>This can be useful to immediately synchronize to the latest state. This is extremely helpful for refreshing
-data for common scenarios like stale mobile tabs, or laptops that went to sleep.</p>
+        <p>
+          This can be useful to immediately synchronize to the latest state.
+          This is extremely helpful for refreshing data for common scenarios
+          like stale mobile tabs, or laptops that went to sleep.
+        </p>
+
+        <div className="video">
+          <video controls>
+            <source src="https://assets.zeit.co/video/upload/q_auto/v1572271867/swr/example-videos/focus-revalidate.mp4" type="video/mp4"/>
+          </video>
+          <figure>Using focus revalidation to automatically sync login state between pages.</figure>
+        </div>
       </div>
 
       <div className="explanation">
         <h3>Refetch on Interval</h3>
-        <p>In many cases, data changes because of multiple devices, multiple users, multiple tabs.
-How can we over time update the data on screen?</p>
-        <p>SWR will give you the option to automatically refetch data. It’s smart which means refetching will
-only happen if the component associated with the hook is on screen.</p>
+        <p>
+          In many cases, data changes because of multiple devices, multiple
+          users, multiple tabs. How can we over time update the data on screen?
+        </p>
+        <p>
+          SWR will give you the option to automatically refetch data. It’s smart
+          which means refetching will only happen if the component associated
+          with the hook is on screen.
+        </p>
       </div>
 
       <div className="explanation">
         <h3>Local Mutation</h3>
-        <p>SWR scales extremely well because it requires very little effort on the developer side to write applications
-that automatically and eventually converge to the freshest remote state of the data.</p>
+        <p>
+          SWR scales extremely well because it requires very little effort on
+          the developer side to write applications that automatically and
+          eventually converge to the freshest remote state of the data.
+        </p>
 
-        <p>In many cases, the developer can make an extra effort to speed up local data changes by applying local
-mutations to the data. This is completely optional.</p>
+        <p>
+          In many cases, the developer can make an extra effort to speed up
+          local data changes by applying local mutations to the data. This is
+          completely optional.
+        </p>
       </div>
 
       <div className="explanation">
         <h3>Scroll Position Recovery and Pagination</h3>
-        <p>SWR features built-in support for APIs that return data in chunks, with the corresponding UI for “load more”.</p>
+        <p>
+          SWR features built-in support for APIs that return data in chunks,
+          with the corresponding UI for “load more”.
+        </p>
       </div>
 
       <div className="explanation">
         <h3>Custom Data Fetching</h3>
-        <p>SWR by default uses `fetch` and assumes a REST-style API call. However, the developer can define any
-asynchronous function as the fetcher. For example, GraphQL:</p>
+        <p>
+          SWR by default uses `fetch` and assumes a REST-style API call.
+          However, the developer can define any asynchronous function as the
+          fetcher. For example, GraphQL:
+        </p>
       </div>
 
       <div className="explanation">
@@ -130,6 +164,7 @@ asynchronous function as the fetcher. For example, GraphQL:</p>
       .explanation {
         font-size: 1rem;
         max-width: 35rem;
+        padding: 0 2rem;
         margin: calc(2 * var(--gap-double)) auto;
       }
 
@@ -138,6 +173,11 @@ asynchronous function as the fetcher. For example, GraphQL:</p>
         justify-content: center;
         align-items: center;
         margin: calc(3 * var(--gap-double)) auto;
+      }
+
+      figure {
+        font-size: .85rem;
+        color: #999;
       }
 
       .title {
@@ -166,6 +206,18 @@ asynchronous function as the fetcher. For example, GraphQL:</p>
       h3 {
         font-size: 1.25rem;
         letter-spacing: -0.02rem;
+      }
+
+      .video {
+        width: 1080px;
+        max-width: calc(100vw - 40px);
+        transform: translateX(-50%);
+        margin-left: 50%;
+        text-align: center;
+      }
+      .video video {
+        max-width: 100%;
+        outline: none;
       }
 
       p {
