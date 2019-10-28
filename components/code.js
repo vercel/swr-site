@@ -1,8 +1,6 @@
 import Prism from 'prismjs'
 import 'prismjs/components/prism-jsx'
 
-import syntax from './syntax'
-
 const Code = ({ code }) => {
   return (
     <>
