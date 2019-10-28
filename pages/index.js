@@ -39,7 +39,7 @@ const Index = () => (
       </div>
 
       <div className="explanation">
-        <Heading>Basic Data Loading</Heading>
+        <Heading>Introduction</Heading>
         <p>SWR is a React Hooks library for remote data fetching.</p>
 
         <p>
@@ -54,8 +54,9 @@ const Index = () => (
           again.
         </p>
       </div>
+
       <div className="explanation">
-        <h3>Example</h3>
+        <Heading>Basic Data Loading</Heading>
         <pre>
           <code>{`import useSWR from '@zeit/swr'
 
@@ -95,7 +96,7 @@ function Profile () {
       </div>
 
       <div className="explanation">
-      <Heading>Focus Revalidation</Heading>
+        <Heading>Focus Revalidation</Heading>
         <p>
           When you re-focus a page or switch between tabs, SWR automatically
           revalidates data.
@@ -223,7 +224,7 @@ function Profile () {
         <p>
           SWR uses `fetch` by default and assumes a REST-style API call.
           However, the developer can define any asynchronous function as the
-          fetcher like GraphQL.
+          fetcher, including GraphQL.
         </p>
       </div>
 
@@ -237,9 +238,15 @@ function Profile () {
         <br />
         <br />
         <p>
-          <a href="https://github.com/zeit/swr" target="_blank" rel="noopener noreferrer">
+          Visit the{' '}
+          <a
+            href="https://github.com/zeit/swr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             GitHub Repository
-          </a>
+          </a>{' '}
+          for more examples and documentation.
         </p>
       </div>
     </main>
@@ -280,6 +287,10 @@ function Profile () {
         margin: 0 auto;
         width: 1040px;
         max-width: calc(100vw - var(--gap-double));
+
+        opacity: 0;
+        animation: fadeIn 0.5s ease-in-out forwards;
+        animation-delay: 2s;
       }
 
       .explanation {
@@ -288,6 +299,10 @@ function Profile () {
         padding: 0 2rem;
         background: var(--bg);
         margin: calc(2 * var(--gap-double)) auto;
+
+        opacity: 0;
+        animation: fadeIn 0.5s ease-in-out forwards;
+        animation-delay: 2.5s;
       }
 
       footer {
@@ -396,7 +411,7 @@ function Profile () {
         width: 120%;
         background: #fff;
         transform: skew(-20deg);
-        animation: slideRight 2s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+        animation: slideRight 1.5s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
         animation-delay: 0.8s;
       }
 
