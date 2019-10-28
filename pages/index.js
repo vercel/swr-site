@@ -28,6 +28,7 @@ const Index = () => (
             href="https://github.com/zeit/swr"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitHub Repository"
           >
             <GitHub />
           </a>
@@ -266,7 +267,12 @@ function Profile () {
     </main>
 
     <footer>
-      <a href="https://zeit.co" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://zeit.co"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Made by ZEIT"
+      >
         <ZEIT />
       </a>
     </footer>
@@ -333,7 +339,7 @@ function Profile () {
       }
 
       a {
-        color: #0076ff;
+        color: #0070f3;
         text-decoration: none;
       }
 
