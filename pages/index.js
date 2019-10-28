@@ -434,7 +434,7 @@ function App () {
         pre {
           white-space: pre;
         }
-        pre code {
+        pre :global(code) {
           overflow: auto;
           -webkit-overflow-scrolling: touch;
         }
