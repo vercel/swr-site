@@ -9,6 +9,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "copee": "^1.0.6",
+    "intersection-observer": "^0.7.0",
     "next": "^9.1.2-canary.8",
     "prismjs": "^1.17.1",
     "react": "^16.11.0",
