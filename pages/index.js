@@ -321,7 +321,6 @@ function App () {
           display: flex;
           flex-direction: column;
           min-height: 100vh;
-          padding: 0 var(--gap);
         }
 
         .landing {
