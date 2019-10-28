@@ -191,6 +191,18 @@ function Profile () {
           Local mutations are a completely optional way to set a temporary local
           state that will automatically update on the next revalidation.
         </p>
+
+        <div className="video">
+          <video controls style={{ maxHeight: 600 }}>
+            <source
+              src="https://assets.zeit.co/video/upload/q_auto/v1572283098/swr/example-videos/local-mutation.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <figure>
+            Notice that we also still revalidate, which means our bakcend is decapitalizing the name and applying different rules that our frontend doesn’t know about.
+          </figure>
+        </div>
       </div>
 
       <div className="explanation">
@@ -315,6 +327,7 @@ function Profile () {
       figure {
         font-size: 0.85rem;
         color: #999;
+        line-height: 1.8;
       }
 
       a {
