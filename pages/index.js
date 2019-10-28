@@ -38,13 +38,16 @@ const Index = () => (
           The name “<b>SWR</b>” is derived from{' '}
           <code>stale-while-revalidate</code>, a HTTP cache invalidation
           strategy popularized by RFC 5861.
-          <br />
+        </p>
+
+        <p>
           <b>SWR</b> first returns the data from cache (stale), then sends the
           fetch request (revalidate), and finally comes with the up-to-date data
           again.
         </p>
 
-        <pre><code>{`import useSWR from 'use-swr'
+        <pre>
+          <code>{`import useSWR from 'use-swr'
 
 function Profile () {
   const { data, error } = useSWR('/api/user', fetch)
@@ -52,27 +55,42 @@ function Profile () {
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
   return <div>hello {data.name}!</div>
-}`}</code></pre>
+}`}</code>
+        </pre>
 
-        <p>In this example, the React Hook <code>useSWR</code> accepts a <code>key</code> and a <code>fetch</code> function.
-        <br /><code>key</code> is a unique identifier of the data, normally the URL of the API. Then <code>key</code> will be passed to <code>fetch</code>, which returns the data asynchronously.</p>
+        <p>
+          In this example, the React Hook <code>useSWR</code> accepts a{' '}
+          <code>key</code> and a <code>fetch</code> function. <code>key</code>{' '}
+          is a unique identifier of the data, normally the URL of the API. Then{' '}
+          <code>key</code> will be passed to <code>fetch</code>, which returns
+          the data asynchronously.
+        </p>
 
-        <p><code>useSWR</code> also returns 2 values: <code>data</code> and <code>error</code>, based on the status of the request.</p>
+        <p>
+          <code>useSWR</code> also returns 2 values: <code>data</code> and{' '}
+          <code>error</code>, based on the status of the request.
+        </p>
 
-        <p>For detailed API and code snippets, please check out the <a href="https://github.com/zeit/swr" target="_blank">repository</a>.</p>
+        <p>
+          For the detailed API and more examples, visit the{' '}
+          <a href="https://github.com/zeit/swr" target="_blank">
+            repository
+          </a>
+          .
+        </p>
       </div>
 
       <div className="explanation">
         <h3>Focus Revalidate</h3>
         <p>
-          When you come back to a page that wasn’t focused, or you switch
-          between tabs, we automatically revalidate data.
+          When you re-focus a page or switch between tabs, SWR automatically
+          revalidates data.
         </p>
 
         <p>
           This can be useful to immediately synchronize to the latest state.
-          This is extremely helpful for refreshing data for common scenarios
-          like stale mobile tabs, or laptops that <mark>went to sleep</mark>.
+          This is helpful for refreshing data in scenarios like stale mobile
+          tabs, or laptops that <mark>went to sleep</mark>.
         </p>
 
         <div className="video">
@@ -90,41 +108,17 @@ function Profile () {
       </div>
 
       <div className="explanation">
-        <h3>Fast Navigation</h3>
-        <p>
-          When navigating through pages or sections inside a system (e.g.: in
-          Next.js), or when pressing the back button, it’s often desirable to
-          load a cached version of the data.
-        </p>
-
-        <p>
-          To achieve eventual consistency, SWR will automatically revalidate the
-          data from the origin as soon as data is rendered from the cache.
-        </p>
-
-        <div className="video">
-          <video controls style={{ maxHeight: 600 }}>
-            <source
-              src="https://assets.zeit.co/video/upload/q_auto/v1572278352/swr/example-videos/fast-navigation.mp4"
-              type="video/mp4"
-            />
-          </video>
-          <figure>
-            SWR will make cached pages render much faster, then update the cache with the latest data.
-          </figure>
-        </div>
-      </div>
-
-      <div className="explanation">
         <h3>Refetch on Interval</h3>
         <p>
-          In many cases, data changes because of multiple devices, multiple
-          users, multiple tabs. How can we over time update the data on screen?
+          Data is dynamic. Changes made through different devices, multiple
+          tabs, or your teammates means that the data shown on screen can very
+          quickly become outdated. How can we keep the data on screen
+          up-to-date?
         </p>
         <p>
-          SWR will give you the option to automatically refetch data. It’s{' '}
-          <mark>smart</mark> which means refetching will only happen if the
-          component associated with the hook is <mark>on screen</mark>.
+          SWR gives you the option to automatically refetch data. Refetching
+          happens <mark>efficiently</mark>, only when the components associated
+          with the hook are on screen.
         </p>
 
         <div className="video">
@@ -144,15 +138,16 @@ function Profile () {
       <div className="explanation">
         <h3>Local Mutation</h3>
         <p>
-          SWR scales extremely well because it requires very little effort on
-          the developer side to write applications that automatically and
-          eventually converge to the freshest remote state of the data.
+          SWR scales extremely well because it requires very little effort to
+          write applications that automatically and eventually converge to the
+          most recent remote data.
         </p>
 
         <p>
-          In many cases, the developer can make an extra effort to speed up
-          local data changes by applying local mutations to the data. This is
-          completely optional.
+          In many cases, applying local mutations to data is a good way to make
+          changes feel faster — no need to wait for the remote source of data.
+          Local mutations are a completely optional way to set a temporary local
+          state that will automatically update on the next revalidation.
         </p>
       </div>
 
@@ -185,7 +180,7 @@ function Profile () {
       <div className="explanation">
         <h3>Custom Data Fetching</h3>
         <p>
-          SWR by default uses `fetch` and assumes a REST-style API call.
+          SWR uses `fetch` by default and assumes a REST-style API call.
           However, the developer can define any asynchronous function as the
           fetcher. For example, GraphQL:
         </p>
@@ -217,6 +212,7 @@ function Profile () {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        overflow-x: hidden;
       }
 
       .features {
@@ -224,13 +220,14 @@ function Profile () {
         flex-wrap: wrap;
         margin: 0 auto;
         width: 1040px;
-        max-width: 100vw;
+        max-width: calc(100vw - var(--gap-double));
       }
 
       .explanation {
         font-size: 1rem;
         max-width: 35rem;
         padding: 0 2rem;
+        background: var(--bg);
         margin: calc(2 * var(--gap-double)) auto;
       }
 
@@ -252,6 +249,8 @@ function Profile () {
       }
 
       mark {
+        padding: var(--gap-quarter);
+        border-radius: var(--radius);
         background: rgba(247, 212, 255, 0.8);
       }
 
@@ -369,6 +368,16 @@ function Profile () {
           opacity: 0.6;
         }
       }
+
+      @media (max-width: 600px) {
+        .explanation {
+          padding: 0;
+        }
+
+        h2 {
+          font-size: 1rem;
+        }
+      }
     `}</style>
 
     <style jsx global>{`
@@ -378,8 +387,8 @@ function Profile () {
         --gap: 1rem;
         --gap-double: 2rem;
 
-        --bg: #000;
-        --fg: #fff;
+        --bg: #fff;
+        --fg: #000;
         --accents-1: #111;
         --accents-2: #333;
         --accents-3: #888;
@@ -407,8 +416,8 @@ function Profile () {
 
       body {
         min-height: 100vh;
-        background: var(--fg);
-        color: var(--bg);
+        background: var(--bg);
+        color: var(--fg);
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
           Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
         display: flex;
