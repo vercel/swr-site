@@ -134,9 +134,7 @@ function Profile () {
           </p>
 
           <div className="video">
-            <Video
-              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:50/v1572271867/swr/example-videos/focus-revalidate.mp4"
-            />
+            <Video src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:50/v1572271867/swr/example-videos/focus-revalidate.mp4" />
             <figure>
               Using focus revalidation to automatically sync login state between
               pages.
@@ -183,9 +181,7 @@ function Profile () {
           </p>
 
           <div className="video">
-            <Video
-              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4"
-            />
+            <Video src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4" />
             <figure>
               A user make a change and then both sessions eventually rendering
               the same data.
