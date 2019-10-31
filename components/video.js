@@ -14,6 +14,16 @@ const Video = ({ src, ...props }) => {
       videoRef.current = node
       // Callback refs, like the one from `useInView`, is a function that takes the node as an argument
       inViewRef(node)
+      
+      if (node) {
+        node.addEventListener('click', function () {
+          if (this.paused) {
+            this.play()
+          } else {
+            this.pause()
+          }
+        })
+      }
     },
     [inViewRef]
   )
@@ -31,7 +41,7 @@ const Video = ({ src, ...props }) => {
   }, [inView])
 
   return (
-    <video controls ref={setRefs} muted="muted" playsInline {...props}>
+    <video ref={setRefs} muted="muted" loop playsInline {...props}>
       <source src={src} type="video/mp4" />
     </video>
   )

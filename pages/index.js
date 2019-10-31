@@ -135,8 +135,7 @@ function Profile () {
 
           <div className="video">
             <Video
-              controls
-              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572271867/swr/example-videos/focus-revalidate.mp4"
+              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:50/v1572271867/swr/example-videos/focus-revalidate.mp4"
             />
             <figure>
               Using focus revalidation to automatically sync login state between
@@ -160,9 +159,8 @@ function Profile () {
 
           <div className="video">
             <Video
-              controls
               style={{ maxHeight: 600 }}
-              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:60/v1572278352/swr/example-videos/fast-navigation.mp4"
+              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:70/v1572278352/swr/example-videos/fast-navigation.mp4"
             />
             <figure>
               SWR will make cached pages render much faster, then update the
@@ -175,25 +173,23 @@ function Profile () {
           <Heading>Refetch on Interval</Heading>
           <p>
             In many cases, data changes because of multiple devices, multiple
-            users, multiple tabs. How can we over time update the data on screen?
-        </p>
+            users, multiple tabs. How can we over time update the data on
+            screen?
+          </p>
           <p>
             SWR will give you the option to automatically refetch data. It’s{' '}
             <mark>smart</mark> which means refetching will only happen if the
-          component associated with the hook is <mark>on screen</mark>.
-        </p>
+            component associated with the hook is <mark>on screen</mark>.
+          </p>
 
           <div className="video">
-            <video controls>
-              <source
-                src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4"
-                type="video/mp4"
-              />
-            </video>
+            <Video
+              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4"
+            />
             <figure>
-              A user make a change and then both sessions eventually rendering the
-              same data.
-          </figure>
+              A user make a change and then both sessions eventually rendering
+              the same data.
+            </figure>
           </div>
         </div>
 
@@ -215,7 +211,6 @@ function Profile () {
 
           <div className="video">
             <Video
-              controls
               style={{ maxHeight: 600 }}
               src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572283098/swr/example-videos/local-mutation.mp4"
             />
@@ -241,7 +236,6 @@ function Profile () {
 
           <div className="video">
             <Video
-              controls
               style={{ maxHeight: 600 }}
               src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:80/v1572275644/swr/example-videos/swr-pages.mp4"
             />
@@ -474,6 +468,7 @@ function App () {
           transform: translateX(-50%);
           margin-left: 50%;
           text-align: center;
+          cursor: pointer;
         }
         .video :global(video) {
           max-width: 100%;
