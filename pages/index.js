@@ -136,7 +136,7 @@ function Profile () {
           <div className="video">
             <Video
               controls
-              src="https://assets.zeit.co/video/upload/q_auto/v1572271867/swr/example-videos/focus-revalidate.mp4"
+              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572271867/swr/example-videos/focus-revalidate.mp4"
             />
             <figure>
               Using focus revalidation to automatically sync login state between
@@ -162,7 +162,7 @@ function Profile () {
             <Video
               controls
               style={{ maxHeight: 600 }}
-              src="https://assets.zeit.co/video/upload/q_auto/v1572278352/swr/example-videos/fast-navigation.mp4"
+              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:60/v1572278352/swr/example-videos/fast-navigation.mp4"
             />
             <figure>
               SWR will make cached pages render much faster, then update the
@@ -191,7 +191,7 @@ function Profile () {
             <Video
               controls
               style={{ maxHeight: 600 }}
-              src="https://assets.zeit.co/video/upload/q_auto/v1572283098/swr/example-videos/local-mutation.mp4"
+              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572283098/swr/example-videos/local-mutation.mp4"
             />
             <figure>
               Notice that we also still revalidate, which means our backend is
@@ -217,7 +217,7 @@ function Profile () {
             <Video
               controls
               style={{ maxHeight: 600 }}
-              src="https://assets.zeit.co/video/upload/q_auto/v1572275644/swr/example-videos/swr-pages.mp4"
+              src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:80/v1572275644/swr/example-videos/swr-pages.mp4"
             />
             <figure>
               An infinite scroll UI on the <a href="https://zeit.co">ZEIT</a>{' '}
