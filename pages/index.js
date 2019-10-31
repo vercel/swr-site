@@ -99,7 +99,7 @@ function Profile () {
             <code>key</code> and a <code>fetch</code> function. <code>key</code>{' '}
             is a unique identifier of the data, normally the URL of the API.
             Then <code>key</code> will be passed to <code>fetch</code>, which
-            returns the data asynchronously.
+            can be any asynchronous function which returns the data.
           </p>
 
           <p>
