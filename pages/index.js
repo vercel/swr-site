@@ -172,6 +172,32 @@ function Profile () {
         </div>
 
         <div className="explanation">
+          <Heading>Refetch on Interval</Heading>
+          <p>
+            In many cases, data changes because of multiple devices, multiple
+            users, multiple tabs. How can we over time update the data on screen?
+        </p>
+          <p>
+            SWR will give you the option to automatically refetch data. It’s{' '}
+            <mark>smart</mark> which means refetching will only happen if the
+          component associated with the hook is <mark>on screen</mark>.
+        </p>
+
+          <div className="video">
+            <video controls>
+              <source
+                src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <figure>
+              A user make a change and then both sessions eventually rendering the
+              same data.
+          </figure>
+          </div>
+        </div>
+
+        <div className="explanation">
           <Heading>Local Mutation</Heading>
           <p>
             SWR scales extremely well because it requires very little effort to
