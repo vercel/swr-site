@@ -82,7 +82,7 @@ const Index = () => {
           <Heading>Basic Data Loading</Heading>
           <pre>
             <Code
-              code={`import useSWR from '@zeit/swr'
+              code={`import useSWR from 'swr'
 
 function Profile () {
   const { data, error } = useSWR('/api/user', fetch)
@@ -236,7 +236,7 @@ function Profile () {
           <pre>
             <Code
               code={`import { request } from 'graphql-request'
-import useSWR from '@zeit/swr'
+import useSWR from 'swr'
 
 const API = 'https://api.graph.cool/simple/v1/movies'
 
@@ -271,7 +271,7 @@ function Profile () {
           </p>
           <pre>
             <Code
-              code={`import useSWR from '@zeit/swr'
+              code={`import useSWR from 'swr'
 
 function MyProjects () {
   const { data: user } = useSWR('/api/user')
@@ -300,7 +300,7 @@ function MyProjects () {
           <pre>
             <Code
               code={`import { Suspense } from 'react'
-import useSWR from '@zeit/swr'
+import useSWR from 'swr'
 
 function Profile () {
   const { data } = useSWR(
