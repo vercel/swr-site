@@ -2,7 +2,7 @@
 
 ## [swr.now.sh](https://swr.now.sh)
 
-The offical website for [github.com/zeit/swr](https://github.com/zeit/swr).
+The official website for [github.com/zeit/swr](https://github.com/zeit/swr).
 
 ## Contribution
 
