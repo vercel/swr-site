@@ -183,7 +183,7 @@ function Profile () {
           <div className="video">
             <Video src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4" />
             <figure>
-              A user make a change and then both sessions eventually rendering
+              When a user makes a change, both sessions will eventually render
               the same data.
             </figure>
           </div>
