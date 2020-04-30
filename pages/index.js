@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import cn from 'classnames'
 
-import ZEIT from '../components/zeit'
+import Vercel from '../components/vercel'
 import GitHub from '../components/github'
 
 import FeatureList from '../components/feature-list'
@@ -354,12 +354,12 @@ function App () {
 
       <footer>
         <a
-          href="https://zeit.co"
+          href="https://vercel.com"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Made by ZEIT"
+          aria-label="Made by Vercel"
         >
-          <ZEIT />
+          <Vercel />
         </a>
       </footer>
 
