@@ -85,7 +85,7 @@ const Index = () => {
               code={`import useSWR from 'swr'
 
 function Profile () {
-  const { data, error } = useSWR('/api/user', fetch)
+  const { data, error } = useSWR('/api/user', fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
@@ -96,9 +96,9 @@ function Profile () {
 
           <p>
             In this example, the React Hook <code>useSWR</code> accepts a{' '}
-            <code>key</code> and a <code>fetch</code> function. <code>key</code>{' '}
+            <code>key</code> and a <code>fetcher</code> function. <code>key</code>{' '}
             is a unique identifier of the data, normally the URL of the API.
-            Then <code>key</code> will be passed to <code>fetch</code>, which
+            Then <code>key</code> will be passed to <code>fetcher</code>, which
             can be any asynchronous function which returns the data.
           </p>
 
@@ -236,7 +236,7 @@ function Profile () {
               src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:80/v1572275644/swr/example-videos/swr-pages.mp4"
             />
             <figure>
-              An infinite scroll UI on the <a href="https://zeit.co">ZEIT</a>{' '}
+              An infinite scroll UI on the <a href="https://vercel.com">Vercel</a>{' '}
               dashboard, SWR will recover your scroll position.
             </figure>
           </div>
@@ -245,9 +245,9 @@ function Profile () {
         <div className="explanation">
           <Heading>Custom Data Fetching</Heading>
           <p>
-            SWR uses <code>fetch</code> by default and assumes a REST-style API
-            call. However, the developer can define any asynchronous function as
-            the fetcher. For example, GraphQL:
+            Other than using the native <code>fetch</code> and assumes a REST-style API
+            call, the developer can define any asynchronous function as the fetcher. 
+            For example, GraphQL:
           </p>
           <pre>
             <Code
@@ -321,7 +321,7 @@ import useSWR from 'swr'
 function Profile () {
   const { data } = useSWR(
     '/api/user',
-    fetch,
+    fetcher,
     { suspense: true }
   )
   return <div>hello, {data.name}</div>
