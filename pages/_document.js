@@ -5,6 +5,15 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          {/* Font */}
+          <link
+            rel="preload"
+            href="/inter.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
+
           {/* Favicons */}
           <link
             rel="apple-touch-icon"
@@ -31,15 +40,6 @@ class MyDocument extends Document {
           />
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta name="theme-color" content="#ffffff" />
-
-          {/* Font */}
-          <link
-            rel="preload"
-            href="/inter.woff2"
-            as="font"
-            type="font/woff2"
-            crossOrigin="anonymous"
-          />
 
           <meta
             name="viewport"
