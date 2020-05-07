@@ -41,7 +41,7 @@ const Video = ({ src, ...props }) => {
   }, [inView])
 
   return (
-    <video ref={setRefs} muted="muted" loop playsInline {...props}>
+    <video ref={setRefs} muted loop playsInline {...props}>
       <source src={src} type="video/mp4" />
     </video>
   )
