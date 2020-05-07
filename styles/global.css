@@ -2,7 +2,8 @@
   font-family: 'Inter';
   font-weight: 100 900;
   font-display: block;
-  src: url('/inter.woff2') format('woff2');
+  src: url('https://assets.vercel.com/raw/upload/v1587415301/fonts/2/inter-var-latin.woff2')
+    format('woff2');
 }
 
 :root {
