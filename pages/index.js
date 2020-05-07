@@ -233,12 +233,12 @@ import useSWR from 'swr'
 
 const API = 'https://api.graph.cool/simple/v1/movies'
 
-function Profile () {
+function MovieActors () {
   const { data, error } = useSWR(
     \`{
       Movie(title: "Inception") {
-        releaseDate
         actors {
+          id
           name
         }
       }
@@ -248,7 +248,7 @@ function Profile () {
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
-  return <div>Movie: {data.title}!</div>
+  return data.actors.map(actor => <li key={actor.id}>{actor.name}</li>)
 }`}
           />
         </pre>
