@@ -55,10 +55,10 @@ class MyDocument extends Document {
             content="SWR is a React Hooks library for remote data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
           />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:site" content="@zeithq" />
+          <meta name="twitter:site" content="@vercel" />
           <meta
             name="twitter:image"
-            content="https://assets.zeit.co/image/upload/v1572282926/swr/twitter-card.jpg"
+            content="https://assets.vercel.com/image/upload/v1572282926/swr/twitter-card.jpg"
           />
           <meta
             name="og:title"
@@ -67,7 +67,7 @@ class MyDocument extends Document {
           <meta name="og:url" content="https://swr.now.sh" />
           <meta
             name="og:image"
-            content="https://assets.zeit.co/image/upload/v1572282926/swr/twitter-card.jpg"
+            content="https://assets.vercel.com/image/upload/v1572282926/swr/twitter-card.jpg"
           />
           <meta name="apple-mobile-web-app-title" content="SWR" />
         </Head>
