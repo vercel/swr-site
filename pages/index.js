@@ -113,7 +113,7 @@ function Profile () {
         </p>
 
         <div className="video">
-          <Video src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:50/v1572271867/swr/example-videos/focus-revalidate.mp4" />
+          <Video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:50/v1572271867/swr/example-videos/focus-revalidate.mp4" />
           <figure>
             Using focus revalidation to automatically sync login state between
             pages.
@@ -137,7 +137,7 @@ function Profile () {
         <div className="video">
           <Video
             style={{ maxHeight: 600 }}
-            src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:70/v1572278352/swr/example-videos/fast-navigation.mp4"
+            src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:70/v1572278352/swr/example-videos/fast-navigation.mp4"
           />
           <figure>
             SWR will make cached pages render much faster, then update the cache
@@ -159,7 +159,7 @@ function Profile () {
         </p>
 
         <div className="video">
-          <Video src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4" />
+          <Video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4" />
           <figure>
             When a user makes a change, both sessions will eventually render the
             same data.
@@ -185,7 +185,7 @@ function Profile () {
         <div className="video">
           <Video
             style={{ maxHeight: 600 }}
-            src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:40/v1572283098/swr/example-videos/local-mutation.mp4"
+            src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572283098/swr/example-videos/local-mutation.mp4"
           />
           <figure>
             Notice that we also still revalidate, which means our backend is
@@ -210,7 +210,7 @@ function Profile () {
         <div className="video">
           <Video
             style={{ maxHeight: 600 }}
-            src="https://assets.zeit.co/video/upload/q_auto,e_accelerate:80/v1572275644/swr/example-videos/swr-pages.mp4"
+            src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:80/v1572275644/swr/example-videos/swr-pages.mp4"
           />
           <figure>
             An infinite scroll UI on the <a href="https://vercel.com">Vercel</a>{' '}
