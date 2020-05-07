@@ -1,4 +1,4 @@
-[![SWR](https://assets.zeit.co/image/upload/v1572289618/swr/banner.png)](https://swr.now.sh)
+[![SWR](https://assets.vercel.com/image/upload/v1572289618/swr/banner.png)](https://swr.now.sh)
 
 ## [swr.now.sh](https://swr.now.sh)
 
