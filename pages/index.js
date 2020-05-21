@@ -5,6 +5,10 @@ import Head from 'next/head'
 import Header from 'components/header'
 import Footer from 'components/footer'
 
+export const config = {
+  unstable_runtimeJS: false
+}
+
 export default ({ html }) => (
   <>
     <Head>

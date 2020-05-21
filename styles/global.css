@@ -77,7 +77,7 @@ body.animate .features {
   animation-delay: 2s;
 }
 
-body.animate .explanation {
+body.animate .post {
   opacity: 0;
   animation: fadeIn 0.5s ease-in-out forwards;
   animation-delay: 2.5s;
