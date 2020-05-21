@@ -22,13 +22,16 @@
   },
   "devDependencies": {
     "@mapbox/rehype-prism": "^0.4.0",
+    "github-slugger": "^1.3.0",
+    "mdast-util-to-string": "^1.1.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.18.2",
     "rehype-raw": "^4.0.2",
     "rehype-sanitize": "^3.0.1",
     "rehype-stringify": "^7.0.0",
     "remark": "^12.0.0",
-    "remark-rehype": "^7.0.0"
+    "remark-rehype": "^7.0.0",
+    "unist-util-visit": "^2.0.2"
   },
   "pre-commit": "lint"
 }

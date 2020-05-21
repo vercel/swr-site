@@ -5,9 +5,6 @@ import Head from 'next/head'
 import Header from 'components/header'
 import Footer from 'components/footer'
 
-// TODO: h3 # links
-// TODO: correct font on code
-
 export default ({ html }) => (
   <>
     <Head>

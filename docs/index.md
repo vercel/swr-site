@@ -45,7 +45,7 @@ This is helpful for refreshing data in scenarios like stale mobile
 tabs, or laptops that <mark>went to sleep</mark>.
 
 <figure>
-    <video loop muted autoPlay playsInline src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:50/v1572271867/swr/example-videos/focus-revalidate.mp4"></video>
+    <video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:50/v1572271867/swr/example-videos/focus-revalidate.mp4"></video>
     <figcaption>Using focus revalidation to automatically sync login state between pages.</figcaption>
 </figure>
 
@@ -59,7 +59,7 @@ To achieve eventual consistency, SWR will automatically revalidate the
 data from the origin as soon as data is rendered from the cache.
 
 <figure>
-    <video loop muted autoPlay playsInline src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:70/v1572278352/swr/example-videos/fast-navigation.mp4"></video>
+    <video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:70/v1572278352/swr/example-videos/fast-navigation.mp4"></video>
     <figcaption>
         SWR will make cached pages render much faster, then update the cache
         with the latest data.
@@ -76,7 +76,7 @@ SWR will give you the option to automatically refetch data. It’s
 component associated with the hook is <mark>on screen</mark>.
 
 <figure>
-    <video loop muted autoPlay playsInline src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4"></video>
+    <video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4"></video>
     <figcaption>When a user makes a change, both sessions will eventually render the same data.</figcaption>
 </figure>
 
@@ -92,7 +92,7 @@ Local mutations are a completely optional way to set a temporary local
 state that will automatically update on the next revalidation.
 
 <figure>
-    <video loop muted autoPlay playsInline src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572283098/swr/example-videos/local-mutation.mp4"></video>
+    <video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572283098/swr/example-videos/local-mutation.mp4"></video>
     <figcaption>
         Notice that we also still revalidate, which means our backend is
         decapitalizing the name and applying different rules that our
@@ -110,7 +110,7 @@ everything including the <mark>scroll position</mark> will be
 recovered automatically.
 
 <figure>
-    <video loop muted autoPlay playsInline src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:80/v1572275644/swr/example-videos/swr-pages.mp4"></video>
+    <video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:80/v1572275644/swr/example-videos/swr-pages.mp4"></video>
     <figcaption>
         An infinite scroll UI on the <a href="https://vercel.com">Vercel</a>
         dashboard, SWR will recover your scroll position.
