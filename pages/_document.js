@@ -81,7 +81,7 @@ class MyDocument extends Document {
                 localStorage.setItem('swr-animated', '1');
               }
             } catch (e) {}
-          `
+          `,
             }}
           />
           <Main />

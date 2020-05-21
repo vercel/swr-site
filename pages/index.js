@@ -6,7 +6,7 @@ import Header from 'components/header'
 import Footer from 'components/footer'
 
 export const config = {
-  unstable_runtimeJS: false
+  unstable_runtimeJS: false,
 }
 
 export default ({ html }) => (
@@ -30,7 +30,7 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      html
-    }
+      html,
+    },
   }
 }
