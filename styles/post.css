@@ -67,6 +67,18 @@
   outline: none;
 }
 
+.post figure figcaption {
+  font-size: 0.85rem;
+  color: #999;
+  line-height: 1.8;
+}
+
+.post mark {
+  padding: var(--gap-quarter);
+  border-radius: var(--radius);
+  background: rgba(247, 212, 255, 0.8);
+}
+
 @media (max-width: 600px) {
   .post {
     padding: 0 1rem;
