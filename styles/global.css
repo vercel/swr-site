@@ -57,3 +57,64 @@ body {
   /* Hack */
   overflow-x: hidden;
 }
+
+body:not(.animate) .slice::after {
+  content: unset;
+}
+
+body.animate .slice {
+  animation: fadeIn 1.8s ease-in-out forwards;
+}
+
+body.animate .slice::after {
+  animation: slideRight 1.5s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+  animation-delay: 0.8s;
+}
+
+body.animate .features {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
+  animation-delay: 2s;
+}
+
+body.animate .explanation {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
+  animation-delay: 2.5s;
+}
+
+body.animate .links {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
+  animation-delay: 2s;
+}
+
+body.animate h1 .slice::after {
+  width: 105%;
+  left: -1%;
+  animation-delay: 0.5s;
+  animation-duration: 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    width: 120%;
+    left: 0;
+    background-image: none;
+  }
+
+  100% {
+    width: 0;
+    left: 120%;
+    opacity: 0.6;
+  }
+}

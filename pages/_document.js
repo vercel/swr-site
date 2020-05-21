@@ -14,7 +14,7 @@ class MyDocument extends Document {
             crossOrigin="anonymous"
           />
 
-          {/* Favicons */}
+          {/* Favicons, meta */}
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -40,7 +40,6 @@ class MyDocument extends Document {
           />
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta name="theme-color" content="#ffffff" />
-
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
