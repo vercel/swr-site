@@ -1,4 +1,4 @@
-import Feature from './feature'
+import Feature from 'components/feature'
 
 export default () => (
   <>
