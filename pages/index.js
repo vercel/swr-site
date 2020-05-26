@@ -1,15 +1,9 @@
-import { readFileSync } from 'fs'
-import { join } from 'path'
-import markdownToHtml from 'lib/markdown-to-html'
 import Head from 'next/head'
 import Header from 'components/header'
 import Footer from 'components/footer'
+import Content from 'docs/index.mdx'
 
-export const config = {
-  unstable_runtimeJS: false,
-}
-
-export default ({ html }) => (
+export default () => (
   <>
     <Head>
       <title>SWR: React Hooks for Remote Data Fetching</title>
@@ -17,20 +11,8 @@ export default ({ html }) => (
 
     <Header />
 
-    <main className="post" dangerouslySetInnerHTML={{ __html: html }} />
+    <Content />
 
     <Footer />
   </>
 )
-
-export const getStaticProps = async () => {
-  const markdown = readFileSync(join(process.cwd(), 'docs', 'index.md'))
-
-  const html = await markdownToHtml(markdown)
-
-  return {
-    props: {
-      html,
-    },
-  }
-}

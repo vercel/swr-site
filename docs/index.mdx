@@ -1,3 +1,6 @@
+import withMDX from 'components/with-mdx'
+export default withMDX
+
 ### Introduction
 
 SWR is a React Hooks library for remote data fetching.
@@ -42,12 +45,12 @@ revalidates data.
 
 This can be useful to immediately synchronize to the latest state.
 This is helpful for refreshing data in scenarios like stale mobile
-tabs, or laptops that <mark>went to sleep</mark>.
+tabs, or laptops that _went to sleep_.
 
-<figure>
-    <video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:50/v1572271867/swr/example-videos/focus-revalidate.mp4"></video>
-    <figcaption>Using focus revalidation to automatically sync login state between pages.</figcaption>
-</figure>
+<Video
+  src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:50/v1572271867/swr/example-videos/focus-revalidate.mp4"
+  caption="Using focus revalidation to automatically sync login state between pages."
+/>
 
 ### Fast Navigation
 
@@ -58,27 +61,25 @@ load a cached version of the data.
 To achieve eventual consistency, SWR will automatically revalidate the
 data from the origin as soon as data is rendered from the cache.
 
-<figure>
-    <video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:70/v1572278352/swr/example-videos/fast-navigation.mp4"></video>
-    <figcaption>
-        SWR will make cached pages render much faster, then update the cache
-        with the latest data.
-    </figcaption>
-</figure>
+<Video
+  src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:70/v1572278352/swr/example-videos/fast-navigation.mp4"
+  caption="SWR will make cached pages render much faster, then update the cache with
+    the latest data."
+/>
 
 ### Refetch on Interval
 
 In many cases, data changes because of multiple devices, multiple
 users, multiple tabs. How can we over time update the data on screen?
 
-SWR will give you the option to automatically refetch data. It’s
-<mark>smart</mark> which means refetching will only happen if the
-component associated with the hook is <mark>on screen</mark>.
+SWR will give you the option to automatically refetch data. It’s _smart_ which means refetching will only happen if the component associated
+with the hook is _on screen_.
 
-<figure>
-    <video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4"></video>
-    <figcaption>When a user makes a change, both sessions will eventually render the same data.</figcaption>
-</figure>
+<Video
+  src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4"
+  caption="When a user makes a change, both sessions will eventually render the same
+    data."
+/>
 
 ### Local Mutation
 
@@ -91,14 +92,12 @@ changes feel faster — no need to wait for the remote source of data.
 Local mutations are a completely optional way to set a temporary local
 state that will automatically update on the next revalidation.
 
-<figure>
-    <video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572283098/swr/example-videos/local-mutation.mp4"></video>
-    <figcaption>
-        Notice that we also still revalidate, which means our backend is
-        decapitalizing the name and applying different rules that our
-        frontend has forgotten to enforce.
-    </figcaption>
-</figure>
+<Video
+  src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572283098/swr/example-videos/local-mutation.mp4"
+  caption="Notice that we also still revalidate, which means our backend is
+    decapitalizing the name and applying different rules that our frontend has
+    forgotten to enforce."
+/>
 
 ### Scroll Position Recovery and Pagination
 
@@ -106,16 +105,21 @@ SWR features built-in support for APIs that return data in chunks,
 with the corresponding UI for “load more”.
 
 And even further, when navigating back to the “load more” list,
-everything including the <mark>scroll position</mark> will be
+everything including the _scroll position_ will be
 recovered automatically.
 
-<figure>
-    <video src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:80/v1572275644/swr/example-videos/swr-pages.mp4"></video>
-    <figcaption>
-        An infinite scroll UI on the <a href="https://vercel.com">Vercel</a>
-        dashboard, SWR will recover your scroll position.
-    </figcaption>
-</figure>
+<Video
+  src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:80/v1572275644/swr/example-videos/swr-pages.mp4"
+  caption={
+    <>
+      An infinite scroll UI on the{' '}
+      <a target="_blank" rel="noopener noreferrer" href="https://vercel.com">
+        Vercel
+      </a>{' '}
+      dashboard, SWR will recover your scroll position.
+    </>
+  }
+/>
 
 ### Custom Data Fetching
 
@@ -139,12 +143,12 @@ function MovieActors() {
         }
       }
     }`,
-    query => request(API, query)
+    (query) => request(API, query)
   )
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
-  return data.actors.map(actor => <li key={actor.id}>{actor.name}</li>)
+  return data.actors.map((actor) => <li key={actor.id}>{actor.name}</li>)
 }
 ```
 
@@ -160,7 +164,7 @@ import useSWR from 'swr'
 
 function MyProjects() {
   const { data: user } = useSWR('/api/user')
-  const { data: projects } = useSWR(() => '/api/projects?uid=' + user.id)
+  const { data: projects } = useSWR(() => '/api/projects?uid=' + user.id))
   // When passing a function, SWR will use the
   // return value as `key`. If the function throws,
   // SWR will know that some dependencies are not
