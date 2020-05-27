@@ -1,4 +1,5 @@
-.post {
+.root {
+  composes: fadeIn from global;
   font-size: 1rem;
   width: 35rem;
   max-width: 100vw;
@@ -7,39 +8,39 @@
   margin: 0 auto;
 }
 
-.post h3 {
+.root h3 {
   font-size: 1.25rem;
   letter-spacing: -0.02rem;
   display: inline-block;
   margin: calc(2 * var(--gap-double)) 0 0;
 }
 
-.post h3 a {
+.root h3 a {
   color: currentColor;
 }
 
-.post p {
+.root p {
   color: #555;
   font-weight: 400;
   font-size: 0.94rem;
   line-height: 1.7;
 }
 
-.post a {
+.root a {
   color: #0070f3;
   text-decoration: none;
 }
 
-.post pre {
+.root pre {
   white-space: pre;
 }
 
-.post pre code {
+.root pre code {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.post code {
+.root code {
   font-size: 0.8rem;
   background: #f1f1f1;
   padding: 0.2rem;
@@ -47,7 +48,7 @@
   font-family: var(--font-mono);
 }
 
-.post code:not(.inline) {
+.root code:not(.inline) {
   display: block;
   padding: 0.8rem;
   line-height: 1.5;
@@ -56,7 +57,7 @@
   border-radius: var(--radius);
 }
 
-.post figure {
+.root figure {
   width: 1080px;
   max-width: calc(100vw - 40px);
   transform: translateX(-50%);
@@ -65,26 +66,30 @@
   cursor: pointer;
 }
 
-.post figure video {
+.root figure video {
   max-width: 100%;
   max-height: 600px;
   outline: none;
 }
 
-.post figure figcaption {
+.root figure figcaption {
+  margin: 0 auto;
+  width: 35rem;
+  max-width: calc(100vw - 40px);
   font-size: 0.85rem;
   color: #999;
   line-height: 1.8;
 }
 
-.post mark {
+.root em {
+  color: #000;
   padding: var(--gap-quarter);
   border-radius: var(--radius);
   background: rgba(247, 212, 255, 0.8);
 }
 
 @media (max-width: 600px) {
-  .post {
+  .root {
     padding: 0 1rem;
   }
 }
