@@ -148,7 +148,7 @@ function MovieActors() {
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
-  return data.actors.map((actor) => <li key={actor.id}>{actor.name}</li>)
+  return data.Movie.actors.map((actor) => <li key={actor.id}>{actor.name}</li>)
 }
 ```
 
