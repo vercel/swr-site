@@ -1,6 +1,5 @@
-import 'styles/global.css'
-import 'styles/code.css'
+import '.nextra/styles.css'
 
-const MyApp = ({ Component, pageProps }) => <Component {...pageProps} />
-
-export default MyApp
+export default function Nextra({ Component, pageProps }) {
+  return <Component {...pageProps} />
+}

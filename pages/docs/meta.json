@@ -1,0 +1,12 @@
+{
+  "options": "Options",
+  "global-configuration": "Global Configuration",
+  "data-fetching": "Data Fetching",
+  "conditional-fetching": "Conditional Data Fetching",
+  "arguments": "Arguments",
+  "mutation": "Mutation",
+  "pagination": "Pagination",
+  "prefetching": "Prefetching",
+  "ssr": "SSR",
+  "suspense": "Suspense"
+}

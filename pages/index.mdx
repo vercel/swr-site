@@ -1,0 +1,61 @@
+import Callout from '../components/callout'
+
+# Introduction
+
+**SWR** is a React Hooks library for remote data fetching.
+
+The name “SWR” is derived from `stale-while-revalidate`, a HTTP cache invalidation strategy popularized by [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861). 
+SWR is a strategy to first return the data from cache (stale), then send the fetch request (revalidate), and finally come with the up-to-date data.
+
+<Callout emoji="✅">
+  With SWR, components will get a stream of data updates <strong>constantly</strong> and <strong>automatically</strong>.
+  <br/>
+  And the UI will be always <strong>fast</strong> and <strong>reactive</strong>.
+</Callout>
+
+## Overview
+
+```jsx
+import useSWR from 'swr'
+
+function Profile() {
+  const { data, error } = useSWR('/api/user', fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return <div>hello {data.name}!</div>
+}
+```
+
+In this example, the `useSWR` hook accepts a `key` string and a `fetcher` function. `key` is a unique identifier of the data (normally the API URL) 
+and will be passed to `fetcher`. `fetcher` can be any asynchronous function which returns the data, you can use the native fetch or tools like Axios.
+
+The hook returns 2 values: `data` and `error`, based on the status of the request.
+
+## Features
+
+With just one single line of code, you can simplify the logic of data fetching in your project, and also have all these amazing features out-of-the-box:
+
+- Fast, lightweight and reusable data fetching
+- Built-in cache and request deduplication
+- Transport and protocol agnostic
+- JAMstack oriented
+- TypeScript ready
+- React Native
+
+And SWR well covers all the common scenarios in data fetching to help you build a better UX:
+- Fast page navigation
+- Polling on interval
+- Data dependency
+- Revalidation on focus
+- Revalidation on network recovery
+- Local mutation (Optimistic UI)
+- Smart error retry
+- Pagination and scroll position recovery
+- React Suspense
+- ...
+
+## Community
+
+Feel free to share ideas and ask questions in [GitHub Discussions](https://github.com/vercel/swr/discussions).  
+Follow [@vercel](https://twitter.com/vercel) on Twitter.
