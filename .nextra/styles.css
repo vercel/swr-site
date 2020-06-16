@@ -1,17 +1,15 @@
 @tailwind base;
 
-@font-face {
-  font-family: 'Inter';
-  font-weight: 100 900;
-  font-display: block;
-  src: url('https://assets.vercel.com/raw/upload/v1587415301/fonts/2/inter-var-latin.woff2')
-    format('woff2');
+@import url('https://rsms.me/inter/inter.css');
+html { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  html { font-family: 'Inter var', sans-serif; }
 }
 
 html {
   @apply font-display subpixel-antialiased;
   font-size: 16px;
-  font-feature-settings: 'rlig', 'calt' 1;
+  font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
   scroll-behavior: smooth;
 }
 
@@ -26,7 +24,7 @@ h3 {
   @apply text-2xl font-semibold tracking-tight mt-8;
 }
 h4 {
-  @apply text-xl font-semibold;
+  @apply text-xl font-semibold mt-6;
 }
 h5 {
   @apply text-lg font-semibold;
@@ -44,13 +42,16 @@ hr {
   @apply my-8;
 }
 code {
-  @apply p-1 text-sm text-gray-800 bg-gray-200 rounded;
+  @apply p-1 text-sm text-gray-800 bg-gray-500 bg-opacity-25 rounded;
 }
 pre {
   @apply p-4 bg-gray-200 rounded-lg mt-6 mb-4 overflow-x-auto scrolling-touch;
 }
 pre code {
   @apply p-0 text-black bg-transparent rounded-none;
+}
+a code {
+  @apply text-current no-underline;
 }
 
 @tailwind components;

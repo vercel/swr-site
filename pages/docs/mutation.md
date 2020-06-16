@@ -1,0 +1,127 @@
+# Mutation
+
+## Revalidate
+
+You can broadcast a revalidation message globally to all SWRs with the same key by calling
+`mutate(key)`.
+
+This example shows how to automatically refetch the login info (e.g.: inside `<Profile/>`) 
+when the user clicks the “Logout” button.
+
+```js
+import useSWR, { mutate } from 'swr'
+
+function App () {
+  return (
+    <div>
+      <Profile />
+      <button onClick={() => {
+        // set the cookie as expired
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+
+        // tell all SWRs with this key to revalidate
+        mutate('/api/user')
+      }}>
+        Logout
+      </button>
+    </div>
+  )
+}
+```
+
+## Mutation and Post Request
+
+In many cases, applying local mutations to data is a good way to make changes
+feel faster — no need to wait for the remote source of data.
+
+With `mutate`, you can update your local data programmatically, while
+revalidating and finally replace it with the latest data.
+
+```js
+import useSWR, { mutate } from 'swr'
+
+function Profile () {
+  const { data } = useSWR('/api/user', fetcher)
+
+  return (
+    <div>
+      <h1>My name is {data.name}.</h1>
+      <button onClick={async () => {
+        const newName = data.name.toUpperCase()
+        // send a request to the API to update the data
+        await requestUpdateUsername(newName)
+        // update the local data immediately and revalidate (refetch)
+        // NOTE: key has to be passed to mutate as it's not bound
+        mutate('/api/user', { ...data, name: newName })
+      }}>Uppercase my name!</button>
+    </div>
+  )
+}
+```
+
+Clicking the button in the example above will send a POST request to modify the remote data, locally update the client data and
+try to fetch the latest one (revalidate).
+
+But many POST APIs will just return the updated data directly, so we don’t need to revalidate again.  
+Here’s an example showing the “local mutate - request - update” usage:
+
+```js
+mutate('/api/user', newUser, false)      // use `false` to mutate without revalidation
+mutate('/api/user', updateUser(newUser)) // `updateUser` is a Promise of the request,
+                                         // which returns the updated document
+```
+
+## Mutate Based on Current Data
+
+In many cases, you are receiving a single value back from your API and want to update a list of them.
+
+With `mutate`, you can pass an async function which will receive the current cached value, if any, and let you return an updated document.
+
+```js
+mutate('/api/users', async users => {
+  const user = await fetcher('/api/users/1')
+  return [user, ...users.slice(1)]
+})
+```
+
+## Returned Data from Mutate
+
+Most probably, you need some data to update the cache. The data is resolved or returned from the promise or async function you passed to `mutate`.
+
+The function will return an updated document to let `mutate` update the corresponding cache value. It could throw an error somehow, every time when you call it.
+
+```js
+try {
+  const user = await mutate('/api/user', updateUser(newUser))
+} catch (error) {
+  // Handle an error while updating the user here
+}
+```
+
+## Bound Mutate
+
+The SWR object returned by `useSWR` also contains a `mutate()` function that is pre-bound to the SWR's key.
+
+It is functionally equivalent to the global `mutate` function but does not require the `key` parameter.
+
+```js
+import useSWR from 'swr'
+
+function Profile () {
+  const { data, mutate } = useSWR('/api/user', fetcher)
+
+  return (
+    <div>
+      <h1>My name is {data.name}.</h1>
+      <button onClick={async () => {
+        const newName = data.name.toUpperCase()
+        // send a request to the API to update the data
+        await requestUpdateUsername(newName)
+        // update the local data immediately and revalidate (refetch)
+        // NOTE: key is not required when using useSWR's mutate as it's pre-bound
+        mutate({ ...data, name: newName })
+      }}>Uppercase my name!</button>
+    </div>
+  )
+}
+```

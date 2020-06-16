@@ -4,6 +4,7 @@ const Logo = ({ height }) => <svg height={height} viewBox="0 0 291 69" fill="non
 
 export default {
   github: 'https://github.com/vercel/swr',
+  docs: 'https://github.com/vercel/swr-site',
   titleSuffix: ' – SWR',
   logo: <>
     <Logo height={18}/>
@@ -11,15 +12,6 @@ export default {
     <span className="text-gray-600 font-normal hidden md:inline">React Hooks for data fetching</span>
   </>,
   head: <>
-    {/* Font */}
-    <link
-      rel="preload"
-      href="https://assets.vercel.com/raw/upload/v1587415301/fonts/2/inter-var-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossOrigin="anonymous"
-    />
-
     {/* Favicons, meta */}
     <link
       rel="apple-touch-icon"

@@ -1,6 +1,6 @@
 # Global Configuration
 
-The context `SWRConfig` can provide global configurations (`options`) for all SWR hooks.
+The context `SWRConfig` can provide global configurations ([options](/docs/options)) for all SWR hooks.
 
 ```jsx
 <SWRConfig value={options}>
@@ -16,8 +16,8 @@ import useSWR, { SWRConfig } from 'swr'
 function Dashboard () {
   const { data: events } = useSWR('/api/events')
   const { data: projects } = useSWR('/api/projects')
-  const { data: user } = useSWR('/api/user', { refreshInterval: 0 })
-  // don't refresh
+  const { data: user } = useSWR('/api/user', { refreshInterval: 0 }) // override
+
   // ...
 }
 

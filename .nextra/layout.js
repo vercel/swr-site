@@ -86,8 +86,10 @@ function Sidebar ({ show, anchors }) {
   </aside>
 }
 
-export default ({ children }) => {
+const Layout = ({ filename, children }) => {
   const [menu, setMenu] = useState(false)
+  const route = useRouter().route 
+  const filepath = route.slice(0, route.lastIndexOf('/') + 1)
 
   const titles = React.Children.toArray(children).filter(child => titleType.includes(child.props.mdxType))
   const title = titles.find(child => child.props.mdxType === 'h1')?.props.children || 'Untitled'
@@ -125,9 +127,18 @@ export default ({ children }) => {
         <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden">
           <div className="max-w-screen-md">
             <Theme>{children}</Theme>
+            <div className="mt-24 text-right">
+              <a className="text-sm" href={
+                config.docs + '/tree/master/pages' + filepath + filename
+              } target="_blank">Edit this page on GitHub</a>
+            </div>
           </div>
         </content>
       </main>
     </div>
   </>
+}
+
+export default filename => {
+  return props => <Layout filename={filename} {...props}/>
 }
