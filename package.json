@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "next",
     "start": "next",
     "build": "next build"
   },
@@ -11,10 +12,12 @@
   "license": "MIT",
   "dependencies": {
     "@sindresorhus/slugify": "^1.0.0",
+    "intersection-observer": "^0.10.0",
     "next": "^9.4.4",
     "prism-react-renderer": "^1.1.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-intersection-observer": "^8.26.2"
   },
   "devDependencies": {
     "@mdx-js/loader": "^1.6.5",

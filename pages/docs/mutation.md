@@ -8,7 +8,7 @@ You can broadcast a revalidation message globally to all SWRs with the same key 
 This example shows how to automatically refetch the login info (e.g.: inside `<Profile/>`) 
 when the user clicks the “Logout” button.
 
-```js
+```jsx
 import useSWR, { mutate } from 'swr'
 
 function App () {
@@ -37,7 +37,7 @@ feel faster — no need to wait for the remote source of data.
 With `mutate`, you can update your local data programmatically, while
 revalidating and finally replace it with the latest data.
 
-```js
+```jsx
 import useSWR, { mutate } from 'swr'
 
 function Profile () {
@@ -65,7 +65,7 @@ try to fetch the latest one (revalidate).
 But many POST APIs will just return the updated data directly, so we don’t need to revalidate again.  
 Here’s an example showing the “local mutate - request - update” usage:
 
-```js
+```jsx
 mutate('/api/user', newUser, false)      // use `false` to mutate without revalidation
 mutate('/api/user', updateUser(newUser)) // `updateUser` is a Promise of the request,
                                          // which returns the updated document
@@ -77,7 +77,7 @@ In many cases, you are receiving a single value back from your API and want to u
 
 With `mutate`, you can pass an async function which will receive the current cached value, if any, and let you return an updated document.
 
-```js
+```jsx
 mutate('/api/users', async users => {
   const user = await fetcher('/api/users/1')
   return [user, ...users.slice(1)]
@@ -90,7 +90,7 @@ Most probably, you need some data to update the cache. The data is resolved or r
 
 The function will return an updated document to let `mutate` update the corresponding cache value. It could throw an error somehow, every time when you call it.
 
-```js
+```jsx
 try {
   const user = await mutate('/api/user', updateUser(newUser))
 } catch (error) {
@@ -104,7 +104,7 @@ The SWR object returned by `useSWR` also contains a `mutate()` function that is 
 
 It is functionally equivalent to the global `mutate` function but does not require the `key` parameter.
 
-```js
+```jsx
 import useSWR from 'swr'
 
 function Profile () {

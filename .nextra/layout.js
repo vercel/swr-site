@@ -7,7 +7,8 @@ import slugify from '@sindresorhus/slugify'
 import getDirectories from './directories'
 import Theme from './theme'
 
-import GitHubIcon from '../components/github-icon'
+import GitHubIcon from 'components/github-icon'
+import VercelIcon from 'components/vercel-icon'
 import config from '../nextra.config'
 
 const directories = getDirectories()
@@ -127,7 +128,12 @@ const Layout = ({ filename, children }) => {
         <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden">
           <div className="max-w-screen-md">
             <Theme>{children}</Theme>
-            <div className="mt-24 text-right">
+            <hr/>
+            <div className="mt-24 flex justify-between flex-col-reverse md:flex-row items-center md:items-end">
+              <a href="https://vercel.com/?utm_source=swr" target="_blank" className="inline-flex items-center no-underline text-current font-semibold">
+                <span className="mr-1">Powered by</span><span><VercelIcon/></span>
+              </a>
+              <div className="mt-6"/>
               <a className="text-sm" href={
                 config.docs + '/tree/master/pages' + filepath + filename
               } target="_blank">Edit this page on GitHub</a>

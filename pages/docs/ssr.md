@@ -3,7 +3,7 @@
 With the `initialData` option, you pass an initial value to the hook. It works perfectly with many SSR solutions
 such as `getServerSideProps` in [Next.js](https://github.com/zeit/next.js):
 
-```js
+```jsx
 export async function getServerSideProps() {
   const data = await fetcher('/api/data')
   return { props: { data } }
@@ -17,5 +17,5 @@ function App (props) {
 }
 ```
 
-It is still a server-side rendered site, but it’s also fully powered by SWR in the client side. 
+The page is still server-side rendered, but it’s also fully powered by SWR in the client side. 
 Which means the data can be dynamic and update itself over time and user interactions.

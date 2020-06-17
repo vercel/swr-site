@@ -1,6 +1,6 @@
 # Arguments
 
-By default, `key` will be passed to `fetcher` as the argument. These 3 lines of code do the same thing:
+By default, `key` will be passed to `fetcher` as the argument. So the following 3 expressions are equivalent:
 
 ```js
 useSWR('/api/user', () => fetcher('/api/user'))

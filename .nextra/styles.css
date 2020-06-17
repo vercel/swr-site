@@ -53,6 +53,19 @@ pre code {
 a code {
   @apply text-current no-underline;
 }
+video {
+  cursor: pointer;
+}
+figure figcaption {
+  @apply text-sm text-gray-600;
+}
+@media (min-width: 768px) {
+  figure {
+    /* allow figures to overflow, but not exceeding the viewport width */
+    @apply -mr-56;
+    max-width: calc(100vw - 20rem);
+  }
+}
 
 @tailwind components;
 @tailwind utilities;

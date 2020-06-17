@@ -2,11 +2,11 @@
   "options": "Options",
   "global-configuration": "Global Configuration",
   "data-fetching": "Data Fetching",
+  "revalidation": "Auto Revalidation",
   "conditional-fetching": "Conditional Data Fetching",
   "arguments": "Arguments",
   "mutation": "Mutation",
-  "pagination": "Pagination",
   "prefetching": "Prefetching",
-  "ssr": "SSR",
+  "ssr": "SSR with Next.js",
   "suspense": "Suspense"
 }

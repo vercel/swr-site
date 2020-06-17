@@ -8,8 +8,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 ### Parameters
 
-- `key`: a unique key string for the request (or a function / array / null) [(advanced usage)](#conditional-fetching)  
-- `fetcher`: (_optional_) a Promise returning function to fetch your data [(details)](#data-fetching) 
+- `key`: a unique key string for the request (or a function / array / null) [(advanced usage)](/docs/conditional-fetching)  
+- `fetcher`: (_optional_) a Promise returning function to fetch your data [(details)](/docs/data-fetching) 
 - `options`: (_optional_) an object of options for this SWR hook
 
 ### Return Values
@@ -20,25 +20,25 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 ### Options (_optional_)
 
-- `suspense = false`: enable React Suspense mode [(details)](#suspense-mode)
-- `fetcher = undefined`: the default fetcher function
-- `initialData`: initial data to be returned (note: This is per-hook)
+- `suspense = false`: enable React Suspense mode [(details)](/docs/suspense)
+- `fetcher = undefined`: the fetcher function
+- `initialData`: initial data to be returned (note: This is per-hook) [(details)](/docs/ssr)
 - `revalidateOnMount`: enable or disable automatic revalidation when component is mounted (by default revalidation occurs on mount when initialData is not set, use this flag to force behavior)
-- `revalidateOnFocus = true`: auto revalidate when window gets focused
-- `revalidateOnReconnect = true`: automatically revalidate when the browser regains a network connection (via `navigator.onLine`)
-- `refreshInterval = 0`: polling interval (disabled by default)
+- `revalidateOnFocus = true`: auto revalidate when window gets focused [(details)](/docs/revalidation)
+- `revalidateOnReconnect = true`: automatically revalidate when the browser regains a network connection (via `navigator.onLine`) [(details)](/docs/revalidation)
+- `refreshInterval = 0`: polling interval (disabled by default) [(details)](/docs/revalidation)
 - `refreshWhenHidden = false`: polling when the window is invisible (if `refreshInterval` is enabled)
 - `refreshWhenOffline = false`: polling when the browser is offline (determined by `navigator.onLine`)
-- `shouldRetryOnError = true`: retry when fetcher has an error [(details)](#error-retries)
+- `shouldRetryOnError = true`: retry when fetcher has an error
 - `dedupingInterval = 2000`: dedupe requests with the same key in this time span
 - `focusThrottleInterval = 5000`: only revalidate once during a time span
 - `loadingTimeout = 3000`: timeout to trigger the onLoadingSlow event
-- `errorRetryInterval = 5000`: error retry interval [(details)](#error-retries)
-- `errorRetryCount`: max error retry count [(details)](#error-retries)
+- `errorRetryInterval = 5000`: error retry interval
+- `errorRetryCount`: max error retry count
 - `onLoadingSlow(key, config)`: callback function when a request takes too long to load (see `loadingTimeout`)
 - `onSuccess(data, key, config)`: callback function when a request finishes successfully
 - `onError(err, key, config)`: callback function when a request returns an error
-- `onErrorRetry(err, key, config, revalidate, revalidateOps)`: handler for [error retry](#error-retries)
+- `onErrorRetry(err, key, config, revalidate, revalidateOps)`: handler for error retry
 - `compare(a, b)`: comparison function used to detect when returned data has changed, to avoid spurious rerenders. By default, [fast-deep-equal](https://github.com/epoberezkin/fast-deep-equal) is used.
 
 <Callout emoji="💡">
