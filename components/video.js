@@ -2,7 +2,7 @@ import { useRef, useCallback, useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 import 'intersection-observer'
 
-export default ({ src, caption }) => {
+export default ({ src, caption, ratio }) => {
   const [inViewRef, inView] = useInView({
     threshold: 1,
   })
@@ -42,6 +42,7 @@ export default ({ src, caption }) => {
 
   return (
     <figure>
+      <div style={{ paddingBottom: ratio * 100 + '%' }}/>
       <video loop muted autoPlay playsInline ref={setRefs}>
         <source src={src} type="video/mp4" />
       </video>

@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 import slugify from '@sindresorhus/slugify'
+import 'focus-visible'
 
 import getDirectories from './directories'
 import Theme from './theme'
@@ -20,7 +21,7 @@ const MenuContext = createContext(false)
 function Folder ({ item, anchors }) {
   const route = useRouter().route + '/'
   const active = route.startsWith(item.route + '/')
-  const open = TreeState[item.route] || active
+  const open = TreeState[item.route] ?? true
   const [_, render] = useState(false)
 
   useEffect(() => {
@@ -113,7 +114,7 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
     <div className="main-container flex flex-col">
       <nav className="flex items-center bg-white z-20 fixed top-0 left-0 right-0 h-16 border-b px-6">
         <div className="w-full flex items-center">
-          <Link href="/"><a className="no-underline text-current inline-flex items-center hover:opacity-75">
+          <Link href="/"><a className="no-underline text-current inline-flex items-center py-2 hover:opacity-75">
             {config.logo}
           </a></Link>
         </div>

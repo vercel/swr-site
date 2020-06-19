@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@sindresorhus/slugify": "^1.0.0",
+    "focus-visible": "^5.1.0",
     "intersection-observer": "^0.10.0",
     "markdown-to-jsx": "^6.11.4",
     "next": "^9.4.4",
