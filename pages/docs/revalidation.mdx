@@ -1,6 +1,12 @@
 import Video from 'components/video'
+import Callout from 'components/callout'
+import Link from 'next/link'
 
-# Revalidation
+# Automatically Revalidation
+
+<Callout>
+  If you want to manually revalidate the data, check <Link href="/docs/mutation"><a href="/docs/mutation">mutation</a></Link>.
+</Callout>
 
 ## Revalidate on Focus
 
@@ -9,7 +15,7 @@ When you re-focus a page or switch between tabs, SWR automatically revalidates d
 This can be useful to immediately synchronize to the latest state. This is helpful for refreshing data in scenarios like stale mobile tabs, or laptops that **went to sleep**.
 
 <Video
-  src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:50/v1572271867/swr/example-videos/focus-revalidate.mp4"
+  src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/focus-revalidate.mp4"
   caption="Video: using focus revalidation to automatically sync login state between pages."
 />
 
@@ -22,7 +28,7 @@ In many cases, data changes because of multiple devices, multiple users, multipl
 SWR will give you the option to automatically refetch data. It’s **smart** which means refetching will only happen if the component associated with the hook is **on screen**.
 
 <Video
-  src="https://assets.vercel.com/video/upload/q_auto,e_accelerate:40/v1572274198/swr/example-videos/refetch-interval.mp4"
+  src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/refetch-interval.mp4"
   caption="Video: when a user makes a change, both sessions will eventually render the same data."
 />
 

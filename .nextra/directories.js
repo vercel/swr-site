@@ -7,7 +7,7 @@ const items = preval`
   const { readdirSync, readFileSync } = require('fs')
   const title = require('title')
   
-  const extension = /(\.mdx?)$/
+  const extension = /\.(mdx?|jsx?)$/
 
   function getFiles(dir, route) {
     const files = readdirSync(dir, { withFileTypes: true })

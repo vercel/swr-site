@@ -12,6 +12,9 @@ html {
   font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
   scroll-behavior: smooth;
 }
+body {
+  @apply bg-white;
+}
 
 h1 {
   @apply text-4xl font-bold tracking-tight;
@@ -52,6 +55,9 @@ pre code {
 }
 a code {
   @apply text-current no-underline;
+}
+figure {
+  @apply mb-8;
 }
 video {
   cursor: pointer;
@@ -106,4 +112,8 @@ content li {
   display: inline-block;
   position: absolute;
   width: 1px;
+}
+
+h2 a {
+  @apply no-underline;
 }

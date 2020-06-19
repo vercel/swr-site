@@ -6,6 +6,7 @@ import slugify from '@sindresorhus/slugify'
 
 import getDirectories from './directories'
 import Theme from './theme'
+import SSGContext from './ssg'
 
 import GitHubIcon from 'components/github-icon'
 import VercelIcon from 'components/vercel-icon'
@@ -87,13 +88,13 @@ function Sidebar ({ show, anchors }) {
   </aside>
 }
 
-const Layout = ({ filename, children }) => {
+const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
   const [menu, setMenu] = useState(false)
   const route = useRouter().route 
   const filepath = route.slice(0, route.lastIndexOf('/') + 1)
 
-  const titles = React.Children.toArray(children).filter(child => titleType.includes(child.props.mdxType))
-  const title = titles.find(child => child.props.mdxType === 'h1')?.props.children || 'Untitled'
+  const titles = React.Children.toArray(children).filter(child => titleType.includes(child.props?.mdxType))
+  const title = titles.find(child => child.props.mdxType === 'h1')?.props.children || _title || 'Untitled'
   const anchors = titles.filter(child => child.props.mdxType === 'h2').map(child => child.props.children)
 
   useEffect(() => {
@@ -123,23 +124,29 @@ const Layout = ({ filename, children }) => {
       </nav>
       <main className="flex flex-1 h-full">
         <MenuContext.Provider value={{ setMenu }}>
-        <Sidebar show={menu} anchors={anchors}/>
+          <Sidebar show={menu} anchors={anchors}/>
         </MenuContext.Provider>
-        <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden">
-          <div className="max-w-screen-md">
-            <Theme>{children}</Theme>
-            <hr/>
-            <div className="mt-24 flex justify-between flex-col-reverse md:flex-row items-center md:items-end">
-              <a href="https://vercel.com/?utm_source=swr" target="_blank" className="inline-flex items-center no-underline text-current font-semibold">
-                <span className="mr-1">Powered by</span><span><VercelIcon/></span>
-              </a>
-              <div className="mt-6"/>
-              <a className="text-sm" href={
-                config.docs + '/tree/master/pages' + filepath + filename
-              } target="_blank">Edit this page on GitHub</a>
-            </div>
-          </div>
-        </content>
+        <SSGContext.Provider value={ssg}>
+          {
+            full
+              ? <content className="relative pt-16 w-full overflow-x-hidden">{children}</content>
+              : <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden">
+                  <div className="max-w-screen-md">
+                    <Theme>{children}</Theme>
+                    <hr/>
+                    <div className="mt-24 flex justify-between flex-col-reverse md:flex-row items-center md:items-end">
+                      <a href="https://vercel.com/?utm_source=swr" target="_blank" className="inline-flex items-center no-underline text-current font-semibold">
+                        <span className="mr-1">Powered by</span><span><VercelIcon/></span>
+                      </a>
+                      <div className="mt-6"/>
+                      <a className="text-sm" href={
+                        config.docs + '/tree/master/pages' + filepath + filename
+                      } target="_blank">Edit this page on GitHub</a>
+                    </div>
+                  </div>
+                </content>
+          }
+        </SSGContext.Provider>
       </main>
     </div>
   </>
