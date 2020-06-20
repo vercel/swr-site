@@ -26,13 +26,13 @@ h3 {
   @apply text-2xl font-semibold tracking-tight mt-8;
 }
 h4 {
-  @apply text-xl font-semibold mt-6;
+  @apply text-xl font-semibold tracking-tight mt-8;
 }
 h5 {
-  @apply text-lg font-semibold;
+  @apply text-lg font-semibold tracking-tight mt-8;
 }
 h6 {
-  @apply text-base font-semibold;
+  @apply text-base font-semibold tracking-tight mt-8;
 }
 a {
   @apply text-blue-600 underline;
@@ -114,6 +114,28 @@ content li {
   width: 1px;
 }
 
+.subheading-anchor + a:hover .anchor-icon {
+  opacity: 1;
+}
+.anchor-icon {
+  opacity: 0;
+  @apply ml-2 text-gray-500;
+}
+
 h2 a {
   @apply no-underline;
+}
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+.search-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
