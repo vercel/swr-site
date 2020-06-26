@@ -30,13 +30,7 @@ const THEME = {
       },
     },
     {
-      types: ['variable', 'language-javascript'],
-      style: {
-        color: '#c6c5fe',
-      },
-    },
-    {
-      types: ['builtin', 'char', 'constant'],
+      types: ['builtin', 'char', 'constant', 'language-javascript'],
       style: {
         color: '#000',
       },

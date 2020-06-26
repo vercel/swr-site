@@ -14,7 +14,7 @@ export default {
   logo: <>
     <Logo height={18}/>
     <span className="mx-2 font-extrabold hidden md:inline">SWR</span>
-    <span className="text-gray-600 font-normal hidden md:inline">React Hooks for data fetching</span>
+    <span className="text-gray-600 font-normal hidden md:inline whitespace-no-wrap">React Hooks for data fetching</span>
   </>,
   head: () => <>
     {/* Favicons, meta */}

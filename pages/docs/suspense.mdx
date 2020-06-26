@@ -3,7 +3,7 @@ import Callout from 'components/callout'
 # Suspense
 
 <Callout emoji="🚨" background="bg-red-200">
-  Suspense is current an <strong>experimental</strong> feature of React. These features may change significantly and without a warning before they become a part of React. 
+  Suspense is current an <strong>experimental</strong> feature of React. These APIs may change significantly and without a warning before they become a part of React. 
   <br/>
   <a href="https://reactjs.org/docs/concurrent-mode-suspense.html" target="_blank">More information</a>
 </Callout>
@@ -42,3 +42,31 @@ But if an error occurred, you need to use an [error boundary](https://reactjs.or
   </Suspense>
 </ErrorBoundary>
 ```
+
+---
+
+### Note: With Conditional Fetching
+
+Normally, when you enabled `suspense` it's guaranteed that `data` will always be ready on render:
+
+```jsx
+function Profile () {
+  const { data } = useSWR('/api/user', fetcher, { suspense: true })
+
+  // `data` will never be `undefined`
+  // ...
+}
+```
+
+However, when using it together with conditional fetching or dependent fetching, `data` will be `undefined` if the request is **paused**:
+
+```jsx
+function Profile () {
+  const { data } = useSWR(isReady ? '/api/user' : null, fetcher, { suspense: true })
+
+  // `data` will be `undefined` if `isReady` is false
+  // ...
+}
+```
+
+If you want to read more technical details about this restriction, check [the discussion here](https://github.com/vercel/swr/pull/357#issuecomment-627089889).
