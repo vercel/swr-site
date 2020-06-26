@@ -201,7 +201,7 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
   ), [flatDirectories, pathname])
   
   const title =
-    flatDirectories[currentIndex].title ||
+    flatDirectories[currentIndex]?.title ||
     titles.find((child) => child.props.mdxType === 'h1')?.props.children ||
     'Untitled'
 
