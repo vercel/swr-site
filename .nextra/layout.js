@@ -184,9 +184,6 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
   const titles = React.Children.toArray(children).filter((child) =>
     titleType.includes(child.props.mdxType)
   )
-  const title =
-    titles.find((child) => child.props.mdxType === 'h1')?.props.children ||
-    'Untitled'
   const anchors = titles
     .filter((child) => child.props.mdxType === 'h2')
     .map((child) => child.props.children)
@@ -202,6 +199,11 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
   const currentIndex = useMemo(() => flatDirectories.findIndex(
     (dir) => dir.route === pathname
   ), [flatDirectories, pathname])
+  
+  const title =
+    flatDirectories[currentIndex].title ||
+    titles.find((child) => child.props.mdxType === 'h1')?.props.children ||
+    'Untitled'
 
   const props = {
     filepath: filepath + filename,
@@ -221,7 +223,7 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
         <nav className="flex items-center bg-white z-20 fixed top-0 left-0 right-0 h-16 border-b px-6">
           <div className="hidden md:block w-full flex items-center">
             <Link href="/">
-              <a className="no-underline text-current inline-flex items-center hover:opacity-75">
+              <a className="no-underline text-current inline-flex items-center p-2 -m-2 hover:opacity-75">
                 {config.logo}
               </a>
             </Link>

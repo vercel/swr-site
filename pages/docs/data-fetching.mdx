@@ -3,7 +3,12 @@ import Link from 'next/link'
 
 # Data Fetching
 
-`fetcher` is an async function that **accepts the `key`** of SWR, and returns the data.  
+```js
+{ data, error } = useSWR(key, fetcher)
+```
+
+This is the very fundamental API of SWR. The `fetcher` here is an async function that **accepts the `key`** of SWR, and returns the data. 
+
 The returned value will be passed as `data`, and if it throws, it will be caught as `error`.
 
 <Callout emoji="💡">

@@ -1,13 +1,17 @@
 @tailwind base;
 
 @import url('https://rsms.me/inter/inter.css');
-html { font-family: 'Inter', sans-serif; }
+html {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
 @supports (font-variation-settings: normal) {
-  html { font-family: 'Inter var', sans-serif; }
+  html {
+    font-family: 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  }
 }
 
 html {
-  @apply font-display subpixel-antialiased;
+  @apply subpixel-antialiased;
   font-size: 16px;
   font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
 }

@@ -7,6 +7,6 @@
   "arguments": "Arguments",
   "mutation": "Mutation",
   "prefetching": "Prefetching",
-  "ssr": "SSR with Next.js",
+  "with-nextjs": "Usage with Next.js",
   "suspense": "Suspense"
 }
