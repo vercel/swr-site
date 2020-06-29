@@ -1,6 +1,7 @@
-export default ({ height = 24, ...props }) => {
+export default ({ width = 24, height = 24, ...props }) => {
   return (
     <svg
+      width={width}
       height={height}
       viewBox="0 0 24 24"
       fill="none"

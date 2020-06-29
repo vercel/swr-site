@@ -143,3 +143,7 @@ input[type='search']::-webkit-search-results-decoration {
   left: 0;
   right: 0;
 }
+
+.algolia-autocomplete .algolia-docsearch-suggestion--category-header span {
+  display: inline-block;
+}
