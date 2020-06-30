@@ -8,7 +8,7 @@ import cn from 'classnames'
 
 import Theme from './theme'
 import SSGContext from './ssg'
-// import Search from './search'
+import Search from './search'
 // import DocSearch from './docsearch'
 import GitHubIcon from './github-icon'
 import ArrowRight from './arrow-right'
@@ -231,7 +231,7 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
             </Link>
           </div>
 
-          {/* {config.search && <Search directories={flatDirectories} />} */}
+          {config.search && <Search directories={flatDirectories} />}
           {/* <DocSearch/> */}
 
           {config.github ? (
