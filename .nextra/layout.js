@@ -231,7 +231,7 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
             </Link>
           </div>
 
-          {/* {config.search && <Search directories={flatDirectories} />} */}
+          {config.search && <Search directories={flatDirectories} />}
           {/* <DocSearch/> */}
 
           {config.github ? (
