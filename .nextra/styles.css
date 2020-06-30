@@ -105,6 +105,14 @@ figure figcaption {
   @apply text-gray-900 bg-gray-100;
 }
 
+.sidebar .active-route > button {
+  @apply text-black font-medium;
+}
+
+.sidebar .active-route > button:hover {
+  @apply text-current bg-transparent cursor-default;
+}
+
 content ul {
   @apply list-disc ml-6 mt-6;
 }
@@ -146,4 +154,9 @@ input[type='search']::-webkit-search-results-decoration {
 
 .algolia-autocomplete .algolia-docsearch-suggestion--category-header span {
   display: inline-block;
+}
+.algolia-autocomplete .ds-dropdown-menu {
+  width: 500px;
+  min-width: 300px;
+  max-width: calc(100vw - 50px);
 }

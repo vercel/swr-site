@@ -27,7 +27,8 @@ export default function () {
       window.docsearch({
         apiKey: '247dd86c8ddbbbe6d7a2d4adf4f3a68a',
         indexName: 'vercel_swr',
-        inputSelector: 'input#algolia-doc-search'
+        inputSelector: 'input#algolia-doc-search',
+        debug: true
       })
     }
   }, [])

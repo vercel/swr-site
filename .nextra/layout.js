@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import slugify from '@sindresorhus/slugify'
 import 'focus-visible'
+import cn from 'classnames'
 
 import Theme from './theme'
 import SSGContext from './ssg'
@@ -44,7 +45,7 @@ function Folder({ item, anchors }) {
   }, [active])
 
   return (
-    <li className={open ? 'active' : ''}>
+    <li className={cn(open ? 'active' : '', { 'active-route': active })}>
       <button
         onClick={() => {
           if (active) return
