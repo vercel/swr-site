@@ -1,0 +1,51 @@
+import Video from 'components/video'
+import Callout from 'components/callout'
+import Link from 'next/link'
+
+# Automatically Revalidation
+
+<Callout>
+  If you want to manually revalidate the data, check <Link href="/docs/mutation"><a href="/docs/mutation">mutation</a></Link>.
+</Callout>
+
+## Revalidate on Focus
+
+When you re-focus a page or switch between tabs, SWR automatically revalidates data.
+
+This can be useful to immediately synchronize to the latest state. This is helpful for refreshing data in scenarios like stale mobile tabs, or laptops that **went to sleep**.
+
+<Video
+  src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/focus-revalidate.mp4"
+  caption="Video: using focus revalidation to automatically sync login state between pages."
+  ratio={307/768}
+/>
+
+This feature is enabled by default. You can disable it via the [`revalidateOnFocus`](/docs/options) option.
+
+## Revalidate on Interval
+
+In many cases, data changes because of multiple devices, multiple users, multiple tabs. How can we over time update the data on screen?
+
+SWR will give you the option to automatically refetch data. It’s **smart** which means refetching will only happen if the component associated with the hook is **on screen**.
+
+<Video
+  src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/refetch-interval.mp4"
+  caption="Video: when a user makes a change, both sessions will eventually render the same data."
+  ratio={307/768}
+/>
+
+You can enable it by setting a [`refreshInterval`](/docs/options) value:
+
+```js
+useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
+```
+
+There're also options such as `refreshWhenHidden` and `refreshWhenOffline`. Both are disabled by default so SWR won't fetch when the webpage is not on screen, or there's no network connection.
+
+## Revalidate on Reconnect
+
+It's useful to also revalidate when the user is back online. This scenario happens a lot when the user unlocks their computer, but the internet is not yet connected at the same moment.
+
+To make sure the data is always up-to-date, SWR automatically revalidates when network recovers.
+
+This feature is enabled by default. You can disable it via the [`revalidateOnReconnect`](/docs/options) option.

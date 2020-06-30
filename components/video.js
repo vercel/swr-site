@@ -1,10 +1,8 @@
-import { useEffect, useRef, useCallback } from 'react'
-import NextLink from 'next/link'
+import { useRef, useCallback, useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 import 'intersection-observer'
-import styles from './with-mdx.module.css'
 
-const Video = ({ src, caption }) => {
+export default ({ src, caption, ratio }) => {
   const [inViewRef, inView] = useInView({
     threshold: 1,
   })
@@ -44,47 +42,11 @@ const Video = ({ src, caption }) => {
 
   return (
     <figure>
+      <div style={{ paddingBottom: ratio * 100 + '%' }}/>
       <video loop muted autoPlay playsInline ref={setRefs}>
         <source src={src} type="video/mp4" />
       </video>
       {caption && <figcaption>{caption}</figcaption>}
     </figure>
   )
-}
-
-const InlineCode = (props) => <code className={styles.inline} {...props} />
-
-const Link = ({ href, children }) => {
-  const isAbsolute = /^https?:\/\/|^\/\//i.test(href)
-
-  if (isAbsolute) {
-    return (
-      <a href={href} target="_blank" rel="noopener noreferrer">
-        {children}
-      </a>
-    )
-  }
-
-  return (
-    <NextLink href={href}>
-      <a>{children}</a>
-    </NextLink>
-  )
-}
-
-const H3 = ({ children }) => {
-  const hash = children.trim().toLowerCase().replace(/ /g, '-')
-
-  return (
-    <h3 id={hash}>
-      <Link href={'#' + hash}>{children}</Link>
-    </h3>
-  )
-}
-
-export default {
-  Video,
-  h3: H3,
-  inlineCode: InlineCode,
-  a: Link,
 }

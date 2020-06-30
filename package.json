@@ -1,31 +1,34 @@
 {
-  "name": "swr",
+  "name": "swr-site",
   "version": "1.0.0",
-  "license": "MIT",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "prettier '**/*.{js,ts,tsx}' --write"
+    "dev": "next",
+    "start": "next",
+    "build": "next build"
   },
+  "author": "Shu Ding",
+  "license": "MIT",
   "dependencies": {
-    "@mdx-js/loader": "^1.6.4",
-    "@mdx-js/react": "^1.6.4",
-    "@next/mdx": "^9.4.2",
+    "@sindresorhus/slugify": "^1.0.0",
+    "classnames": "^2.2.6",
+    "focus-visible": "^5.1.0",
     "intersection-observer": "^0.10.0",
-    "next": "^9.4.2",
+    "markdown-to-jsx": "^6.11.4",
+    "match-sorter": "^4.1.0",
+    "next": "^9.4.4",
+    "prism-react-renderer": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intersection-observer": "^8.26.2"
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  },
   "devDependencies": {
-    "@mapbox/rehype-prism": "^0.4.0",
-    "pre-commit": "^1.2.2",
-    "prettier": "^2.0.5"
-  },
-  "pre-commit": "lint"
+    "@mdx-js/loader": "^1.6.5",
+    "babel-plugin-macros": "^2.8.0",
+    "postcss-preset-env": "^6.7.0",
+    "preval.macro": "^5.0.0",
+    "tailwindcss": "^1.4.6",
+    "title": "^3.4.2"
+  }
 }

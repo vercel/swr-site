@@ -1,6 +1,8 @@
-import 'styles/global.css'
-import 'styles/code.css'
+import '.nextra/styles.css'
 
-const MyApp = ({ Component, pageProps }) => <Component {...pageProps} />
-
-export default MyApp
+export default function Nextra({ Component, pageProps }) {
+  return <>
+    <Component {...pageProps} />
+    <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"/>
+  </>
+}

@@ -1,0 +1,12 @@
+{
+  "options": "Options",
+  "global-configuration": "Global Configuration",
+  "data-fetching": "Data Fetching",
+  "revalidation": "Auto Revalidation",
+  "conditional-fetching": "Conditional Data Fetching",
+  "arguments": "Arguments",
+  "mutation": "Mutation",
+  "prefetching": "Prefetching",
+  "with-nextjs": "Usage with Next.js",
+  "suspense": "Suspense"
+}
