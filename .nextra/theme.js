@@ -72,7 +72,7 @@ const HeaderLink = ({ tag: Tag, children, ...props }) => {
       <span className="subheading-anchor" id={slug} />
       <a href={'#' + slug} className="text-current no-underline no-outline">
         {children}
-        <span className="anchor-icon" aria-hidden>#</span>
+        <span className="anchor-icon select-none" aria-hidden>#</span>
       </a>
     </Tag>
   )

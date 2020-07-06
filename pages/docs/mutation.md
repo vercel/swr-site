@@ -5,7 +5,7 @@
 You can broadcast a revalidation message globally to all SWRs with the same key by calling
 `mutate(key)`.
 
-This example shows how to automatically refetch the login info (e.g.: inside `<Profile/>`) 
+This example shows how to automatically refetch the login info (e.g.: inside `<Profile/>`)
 when the user clicks the “Logout” button.
 
 ```jsx
@@ -29,7 +29,7 @@ function App () {
 }
 ```
 
-## Mutation and Post Request
+## Mutation and POST Request
 
 In many cases, applying local mutations to data is a good way to make changes
 feel faster — no need to wait for the remote source of data.
@@ -62,7 +62,7 @@ function Profile () {
 Clicking the button in the example above will send a POST request to modify the remote data, locally update the client data and
 try to fetch the latest one (revalidate).
 
-But many POST APIs will just return the updated data directly, so we don’t need to revalidate again.  
+But many POST APIs will just return the updated data directly, so we don’t need to revalidate again.
 Here’s an example showing the “local mutate - request - update” usage:
 
 ```jsx
