@@ -72,7 +72,7 @@ export default {
       content="https://assets.vercel.com/image/upload/v1572282926/swr/twitter-card.jpg"
     />
     <meta name="apple-mobile-web-app-title" content="SWR" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" media="print" onload="this.media='all'" />
   </>,
   footer: ({ filepath }) => <>
     <div className="mt-24 flex justify-between flex-col-reverse md:flex-row items-center md:items-end">
