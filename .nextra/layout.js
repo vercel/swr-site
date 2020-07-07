@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useMemo, useContext, createContext } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useContext,
+  createContext
+} from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -57,7 +63,7 @@ function Folder({ item, anchors }) {
       </button>
       <div
         style={{
-          display: open ? '' : 'none',
+          display: open ? '' : 'none'
         }}
       >
         <Menu dir={item.children} base={item.route} anchors={anchors} />
@@ -85,16 +91,14 @@ function File({ item, anchors }) {
             {anchors.map((anchor) => {
               const slug = slugify(anchor || '')
               return (
-                <a
-                  href={'#' + slug}
-                  key={`a-${slug}`}
-                  onClick={() => setMenu(false)}
-                >
-                  <span className="flex">
-                    <span className="mr-2 opacity-25">#</span>
-                    <span className="inline-block">{anchor}</span>
-                  </span>
-                </a>
+                <li key={`a-${slug}`}>
+                  <a href={'#' + slug} onClick={() => setMenu(false)}>
+                    <span className="flex">
+                      <span className="mr-2 opacity-25">#</span>
+                      <span className="inline-block">{anchor}</span>
+                    </span>
+                  </a>
+                </li>
               )
             })}
           </ul>
@@ -133,7 +137,7 @@ function Sidebar({ show, anchors }) {
       }`}
       style={{
         top: '4rem',
-        height: 'calc(100vh - 4rem)',
+        height: 'calc(100vh - 4rem)'
       }}
     >
       <div className="sidebar w-full p-4 pb-40 md:pb-16 h-full overflow-y-auto">
@@ -198,10 +202,11 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
     }
   }, [menu])
 
-  const currentIndex = useMemo(() => flatDirectories.findIndex(
-    (dir) => dir.route === pathname
-  ), [flatDirectories, pathname])
-  
+  const currentIndex = useMemo(
+    () => flatDirectories.findIndex((dir) => dir.route === pathname),
+    [flatDirectories, pathname]
+  )
+
   const title =
     flatDirectories[currentIndex]?.title ||
     titles.find((child) => child.props.mdxType === 'h1')?.props.children ||
@@ -232,13 +237,14 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
           </div>
 
           {/* {config.search && <Search directories={flatDirectories} />} */}
-          <DocSearch/>
+          <DocSearch />
 
           {config.github ? (
             <a
               className="text-current p-2 -mr-2"
               href={config.github}
               target="_blank"
+              aria-label="GitHub Repository"
             >
               <GitHubIcon height={28} />
             </a>
@@ -268,30 +274,32 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
             <Sidebar show={menu} anchors={anchors} />
           </MenuContext.Provider>
           <SSGContext.Provider value={ssg}>
-            {
-              full
-                ? <content className="relative pt-16 w-full overflow-x-hidden">{children}</content>
-                : <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden">
-                    <main className="max-w-screen-md">
-                      <Theme>{children}</Theme>
-                      <footer className="mt-24">
-                        <nav className="flex flex-row items-center justify-between">
-                          <div>
-                            <PrevLink currentIndex={currentIndex} />
-                          </div>
+            {full ? (
+              <content className="relative pt-16 w-full overflow-x-hidden">
+                {children}
+              </content>
+            ) : (
+              <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden">
+                <main className="max-w-screen-md">
+                  <Theme>{children}</Theme>
+                  <footer className="mt-24">
+                    <nav className="flex flex-row items-center justify-between">
+                      <div>
+                        <PrevLink currentIndex={currentIndex} />
+                      </div>
 
-                          <div>
-                            <NextLink currentIndex={currentIndex} />
-                          </div>
-                        </nav>
+                      <div>
+                        <NextLink currentIndex={currentIndex} />
+                      </div>
+                    </nav>
 
-                        <hr />
+                    <hr />
 
-                        {config.footer ? config.footer(props) : null}
-                      </footer>
-                    </main>
-                  </content>
-            }
+                    {config.footer ? config.footer(props) : null}
+                  </footer>
+                </main>
+              </content>
+            )}
           </SSGContext.Provider>
         </div>
       </div>
@@ -299,6 +307,6 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
   )
 }
 
-export default filename => {
-  return props => <Layout filename={filename} {...props}/>
+export default (filename) => {
+  return (props) => <Layout filename={filename} {...props} />
 }
