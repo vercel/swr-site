@@ -51,7 +51,12 @@ function Folder({ item, anchors }) {
   }, [active])
 
   return (
-    <li className={cn(open ? 'active' : '', { 'active-route': active })}>
+    <li
+      className={cn('focus:shadow-outline', {
+        'active-route': active,
+        active: open
+      })}
+    >
       <button
         onClick={() => {
           if (active) return

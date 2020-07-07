@@ -125,7 +125,8 @@ content li {
   width: 1px;
 }
 
-.subheading-anchor + a:hover .anchor-icon {
+.subheading-anchor + a:hover .anchor-icon,
+.subheading-anchor + a:focus .anchor-icon {
   opacity: 1;
 }
 .anchor-icon {
