@@ -11,6 +11,7 @@ import Link from 'next/link'
 import slugify from '@sindresorhus/slugify'
 import 'focus-visible'
 import cn from 'classnames'
+import { SkipNavContent } from '@reach/skip-nav'
 
 import Theme from './theme'
 import SSGContext from './ssg'
@@ -285,26 +286,29 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
                 {children}
               </content>
             ) : (
-              <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden">
-                <main className="max-w-screen-md">
-                  <Theme>{children}</Theme>
-                  <footer className="mt-24">
-                    <nav className="flex flex-row items-center justify-between">
-                      <div>
-                        <PrevLink currentIndex={currentIndex} />
-                      </div>
+              <>
+                <SkipNavContent />
+                <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden">
+                  <main className="max-w-screen-md">
+                    <Theme>{children}</Theme>
+                    <footer className="mt-24">
+                      <nav className="flex flex-row items-center justify-between">
+                        <div>
+                          <PrevLink currentIndex={currentIndex} />
+                        </div>
 
-                      <div>
-                        <NextLink currentIndex={currentIndex} />
-                      </div>
-                    </nav>
+                        <div>
+                          <NextLink currentIndex={currentIndex} />
+                        </div>
+                      </nav>
 
-                    <hr />
+                      <hr />
 
-                    {config.footer ? config.footer(props) : null}
-                  </footer>
-                </main>
-              </content>
+                      {config.footer ? config.footer(props) : null}
+                    </footer>
+                  </main>
+                </content>
+              </>
             )}
           </SSGContext.Provider>
         </div>
