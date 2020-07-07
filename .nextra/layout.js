@@ -271,7 +271,7 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
             {
               full
                 ? <content className="relative pt-16 w-full overflow-x-hidden">{children}</content>
-                : <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden">
+                : <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden xl:pr-64">
                     <main className="max-w-screen-md mx-auto">
                       <Theme>{children}</Theme>
                       <footer className="mt-24">
