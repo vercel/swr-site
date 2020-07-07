@@ -244,6 +244,7 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
               className="text-current p-2 -mr-2"
               href={config.github}
               target="_blank"
+              rel="noopener"
               aria-label="GitHub Repository"
             >
               <GitHubIcon height={28} />

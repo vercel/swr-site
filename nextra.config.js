@@ -76,13 +76,13 @@ export default {
   </>,
   footer: ({ filepath }) => <>
     <div className="mt-24 flex justify-between flex-col-reverse md:flex-row items-center md:items-end">
-      <a href="https://vercel.com/?utm_source=swr" target="_blank" className="inline-flex items-center no-underline text-current font-semibold">
+      <a href="https://vercel.com/?utm_source=swr" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
         <span className="mr-1">Powered by</span><span><Vercel/></span>
       </a>
       <div className="mt-6"/>
       <a className="text-sm" href={
         'https://github.com/vercel/swr-site/tree/master/pages' + filepath
-      } target="_blank">Edit this page on GitHub</a>
+      } target="_blank" rel="noopener">Edit this page on GitHub</a>
     </div>
   </>
 }
