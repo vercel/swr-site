@@ -53,7 +53,7 @@ function Folder({ item, anchors }) {
 
   return (
     <li
-      className={cn('focus:shadow-outline', {
+      className={cn({
         'active-route': active,
         active: open
       })}
@@ -64,6 +64,7 @@ function Folder({ item, anchors }) {
           TreeState[item.route] = !open
           render((x) => !x)
         }}
+        className="focus:shadow-outline"
       >
         {item.title}
       </button>
@@ -98,7 +99,11 @@ function File({ item, anchors }) {
               const slug = slugify(anchor || '')
               return (
                 <li key={`a-${slug}`}>
-                  <a href={'#' + slug} onClick={() => setMenu(false)}>
+                  <a
+                    href={'#' + slug}
+                    onClick={() => setMenu(false)}
+                    className="focus:shadow-outline"
+                  >
                     <span className="flex">
                       <span className="mr-2 opacity-25">#</span>
                       <span className="inline-block">{anchor}</span>
@@ -116,7 +121,7 @@ function File({ item, anchors }) {
   return (
     <li className={active ? 'active' : ''}>
       <Link href={item.route}>
-        <a onClick={() => setMenu(false)}>{title}</a>
+        <a onClick={() => setMenu(false)} className="focus:shadow-outline">{title}</a>
       </Link>
     </li>
   )
