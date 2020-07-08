@@ -69,11 +69,13 @@ video {
 figure figcaption {
   @apply text-sm text-gray-600;
 }
-@media (min-width: 768px) {
+@media (min-width: 1280px) {
   figure {
-    /* allow figures to overflow, but not exceeding the viewport width */
-    @apply -mr-56;
-    max-width: calc(100vw - 20rem);
+    max-width: 130%;
+    width: calc(100vw - 32rem);
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
