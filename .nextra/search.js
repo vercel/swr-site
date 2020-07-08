@@ -111,6 +111,7 @@ const Search = ({ directories }) => {
         onKeyDown={handleKeyDown}
         onFocus={() => setShow(true)}
         ref={input}
+        aria-label="Search documentation"
       />
       {renderList && (
         <ul className="shadow-md list-none p-0 m-0 absolute left-0 md:right-0 bg-white rounded mt-1 border top-100 divide-y divide-gray-300 z-2">

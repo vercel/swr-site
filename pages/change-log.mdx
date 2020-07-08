@@ -13,7 +13,7 @@ export const getStaticProps = ({ params }) => {
 export const ReleasesRenderer = () => {
   const releases = useSSG()
   return <Markdown>{releases.map(release => {
-    return `## <a href="${release.html_url}" target="_blank">${release.tag_name}</a>\n\nPublished on ${new Date(release.published_at) .toDateString()}.\n\n${release.body}`
+    return `## <a href="${release.html_url}" target="_blank" rel="noopener">${release.tag_name}</a>\n\nPublished on ${new Date(release.published_at) .toDateString()}.\n\n${release.body}`
   }).join('\n\n')}</Markdown>
 }
 

@@ -1,8 +1,14 @@
 import '.nextra/styles.css'
+import GoogleFonts from 'next-google-fonts'
 
 export default function Nextra({ Component, pageProps }) {
-  return <>
-    <Component {...pageProps} />
-    <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"/>
-  </>
+  return (
+    <>
+      <GoogleFonts
+        href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+        rel="stylesheet"
+      />
+      <Component {...pageProps} />
+    </>
+  )
 }
