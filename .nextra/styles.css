@@ -67,7 +67,8 @@ video {
   cursor: pointer;
 }
 figure figcaption {
-  @apply text-sm text-gray-600 text-center;
+  @apply text-sm text-gray-600 text-center mx-auto;
+  max-width: 84%;
 }
 @media (min-width: 1280px) {
   figure {
