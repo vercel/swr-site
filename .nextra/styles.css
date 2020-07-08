@@ -71,7 +71,7 @@ figure figcaption {
 }
 @media (min-width: 1280px) {
   figure {
-    max-width: 130%;
+    max-width: 136%;
     width: calc(100vw - 32rem);
     position: relative;
     left: 50%;
