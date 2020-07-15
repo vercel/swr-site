@@ -16,10 +16,12 @@ import { SkipNavContent } from '@reach/skip-nav'
 import Theme from './theme'
 import SSGContext from './ssg'
 // import Search from './search'
-import DocSearch from "./docsearch";
-import GitHubIcon from "./github-icon";
-import SSGContext from "./ssg";
-import Theme from "./theme";
+import DocSearch from './docsearch'
+import GitHubIcon from './github-icon'
+import ArrowRight from './arrow-right'
+
+import getDirectories from './directories'
+import getConfig from './config'
 
 const config = getConfig();
 const directories = getDirectories();
