@@ -1,20 +1,20 @@
-import { SkipNavContent } from "@reach/skip-nav";
-import slugify from "@sindresorhus/slugify";
-import cn from "classnames";
-import "focus-visible";
-import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import React, {
-  createContext,
-  useContext,
+  useState,
   useEffect,
   useMemo,
-  useState,
-} from "react";
-import ArrowRight from "./arrow-right";
-import getConfig from "./config";
-import getDirectories from "./directories";
+  useContext,
+  createContext
+} from 'react'
+import { useRouter } from 'next/router'
+import Head from 'next/head'
+import Link from 'next/link'
+import slugify from '@sindresorhus/slugify'
+import 'focus-visible'
+import cn from 'classnames'
+import { SkipNavContent } from '@reach/skip-nav'
+
+import Theme from './theme'
+import SSGContext from './ssg'
 // import Search from './search'
 import DocSearch from "./docsearch";
 import GitHubIcon from "./github-icon";
@@ -52,8 +52,8 @@ function Folder({ item, anchors }) {
   return (
     <li
       className={cn({
-        "active-route": active,
-        active: open,
+        'active-route': active,
+        active: open
       })}
     >
       <button
@@ -68,7 +68,7 @@ function Folder({ item, anchors }) {
       </button>
       <div
         style={{
-          display: open ? "" : "none",
+          display: open ? '' : 'none'
         }}
       >
         <Menu dir={item.children} base={item.route} anchors={anchors} />
@@ -98,7 +98,7 @@ function File({ item, anchors }) {
               return (
                 <li key={`a-${slug}`}>
                   <a
-                    href={"#" + slug}
+                    href={'#' + slug}
                     onClick={() => setMenu(false)}
                     className="focus:shadow-outline"
                   >
@@ -108,7 +108,7 @@ function File({ item, anchors }) {
                     </span>
                   </a>
                 </li>
-              );
+              )
             })}
           </ul>
         </li>
@@ -119,9 +119,7 @@ function File({ item, anchors }) {
   return (
     <li className={active ? "active" : ""}>
       <Link href={item.route}>
-        <a onClick={() => setMenu(false)} className="focus:shadow-outline">
-          {title}
-        </a>
+        <a onClick={() => setMenu(false)} className="focus:shadow-outline">{title}</a>
       </Link>
     </li>
   );
@@ -147,8 +145,8 @@ function Sidebar({ show, anchors }) {
         show ? "" : "hidden"
       }`}
       style={{
-        top: "4rem",
-        height: "calc(100vh - 4rem)",
+        top: '4rem',
+        height: 'calc(100vh - 4rem)'
       }}
     >
       <div className="sidebar w-full p-4 pb-40 md:pb-16 h-full overflow-y-auto">
@@ -216,7 +214,7 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
   const currentIndex = useMemo(
     () => flatDirectories.findIndex((dir) => dir.route === pathname),
     [flatDirectories, pathname]
-  );
+  )
 
   const title =
     flatDirectories[currentIndex]?.title ||
@@ -323,5 +321,5 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
 };
 
 export default (filename) => {
-  return (props) => <Layout filename={filename} {...props} />;
-};
+  return (props) => <Layout filename={filename} {...props} />
+}
