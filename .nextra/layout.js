@@ -1,115 +1,130 @@
-import React, { useState, useEffect, useMemo, useContext, createContext } from 'react'
-import { useRouter } from 'next/router'
-import Head from 'next/head'
-import Link from 'next/link'
-import slugify from '@sindresorhus/slugify'
-import 'focus-visible'
-import cn from 'classnames'
-
-import Theme from './theme'
-import SSGContext from './ssg'
+import { SkipNavContent } from "@reach/skip-nav";
+import slugify from "@sindresorhus/slugify";
+import cn from "classnames";
+import "focus-visible";
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import ArrowRight from "./arrow-right";
+import getConfig from "./config";
+import getDirectories from "./directories";
 // import Search from './search'
-import DocSearch from './docsearch'
-import GitHubIcon from './github-icon'
-import ArrowRight from './arrow-right'
+import DocSearch from "./docsearch";
+import GitHubIcon from "./github-icon";
+import SSGContext from "./ssg";
+import Theme from "./theme";
 
-import getDirectories from './directories'
-import getConfig from './config'
-
-const config = getConfig()
-const directories = getDirectories()
-const TreeState = new Map()
-const titleType = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
-const MenuContext = createContext(false)
+const config = getConfig();
+const directories = getDirectories();
+const TreeState = new Map();
+const titleType = ["h1", "h2", "h3", "h4", "h5", "h6"];
+const MenuContext = createContext(false);
 
 const flatten = (list) => {
   return list.reduce((flat, toFlatten) => {
     return flat.concat(
       toFlatten.children ? flatten(toFlatten.children) : toFlatten
-    )
-  }, [])
-}
+    );
+  }, []);
+};
 
-const flatDirectories = flatten(directories)
+const flatDirectories = flatten(directories);
 
 function Folder({ item, anchors }) {
-  const route = useRouter().route + '/'
-  const active = route.startsWith(item.route + '/')
-  const open = TreeState[item.route] ?? true
-  const [_, render] = useState(false)
+  const route = useRouter().route + "/";
+  const active = route.startsWith(item.route + "/");
+  const open = TreeState[item.route] ?? true;
+  const [_, render] = useState(false);
 
   useEffect(() => {
     if (active) {
-      TreeState[item.route] = true
+      TreeState[item.route] = true;
     }
-  }, [active])
+  }, [active]);
 
   return (
-    <li className={cn(open ? 'active' : '', { 'active-route': active })}>
+    <li
+      className={cn({
+        "active-route": active,
+        active: open,
+      })}
+    >
       <button
         onClick={() => {
-          if (active) return
-          TreeState[item.route] = !open
-          render((x) => !x)
+          if (active) return;
+          TreeState[item.route] = !open;
+          render((x) => !x);
         }}
+        className="focus:shadow-outline"
       >
         {item.title}
       </button>
       <div
         style={{
-          display: open ? '' : 'none',
+          display: open ? "" : "none",
         }}
       >
         <Menu dir={item.children} base={item.route} anchors={anchors} />
       </div>
     </li>
-  )
+  );
 }
 
 function File({ item, anchors }) {
-  const { setMenu } = useContext(MenuContext)
-  const route = useRouter().route + '/'
-  const active = route.startsWith(item.route + '/')
+  const { setMenu } = useContext(MenuContext);
+  const route = useRouter().route + "/";
+  const active = route.startsWith(item.route + "/");
 
-  let title = item.title
+  let title = item.title;
   // if (item.title.startsWith('> ')) {
   // title = title.substr(2)
   if (anchors?.length) {
     if (active) {
       return (
-        <li className={active ? 'active' : ''}>
+        <li className={active ? "active" : ""}>
           <Link href={item.route}>
             <a>{title}</a>
           </Link>
           <ul>
             {anchors.map((anchor) => {
-              const slug = slugify(anchor || '')
+              const slug = slugify(anchor || "");
               return (
-                <a
-                  href={'#' + slug}
-                  key={`a-${slug}`}
-                  onClick={() => setMenu(false)}
-                >
-                  <span className="flex">
-                    <span className="mr-2 opacity-25">#</span>
-                    <span className="inline-block">{anchor}</span>
-                  </span>
-                </a>
-              )
+                <li key={`a-${slug}`}>
+                  <a
+                    href={"#" + slug}
+                    onClick={() => setMenu(false)}
+                    className="focus:shadow-outline"
+                  >
+                    <span className="flex">
+                      <span className="mr-2 opacity-25">#</span>
+                      <span className="inline-block">{anchor}</span>
+                    </span>
+                  </a>
+                </li>
+              );
             })}
           </ul>
         </li>
-      )
+      );
     }
   }
 
   return (
-    <li className={active ? 'active' : ''}>
+    <li className={active ? "active" : ""}>
       <Link href={item.route}>
-        <a onClick={() => setMenu(false)}>{title}</a>
+        <a onClick={() => setMenu(false)} className="focus:shadow-outline">
+          {title}
+        </a>
       </Link>
     </li>
-  )
+  );
 }
 
 function Menu({ dir, anchors }) {
@@ -117,37 +132,37 @@ function Menu({ dir, anchors }) {
     <ul>
       {dir.map((item) => {
         if (item.children) {
-          return <Folder key={item.name} item={item} anchors={anchors} />
+          return <Folder key={item.name} item={item} anchors={anchors} />;
         }
-        return <File key={item.name} item={item} anchors={anchors} />
+        return <File key={item.name} item={item} anchors={anchors} />;
       })}
     </ul>
-  )
+  );
 }
 
 function Sidebar({ show, anchors }) {
   return (
     <aside
       className={`h-screen bg-white flex-shrink-0 w-full md:w-64 md:border-r md:block fixed md:sticky z-10 ${
-        show ? '' : 'hidden'
+        show ? "" : "hidden"
       }`}
       style={{
-        top: '4rem',
-        height: 'calc(100vh - 4rem)',
+        top: "4rem",
+        height: "calc(100vh - 4rem)",
       }}
     >
       <div className="sidebar w-full p-4 pb-40 md:pb-16 h-full overflow-y-auto">
         <Menu dir={directories} anchors={anchors} />
       </div>
     </aside>
-  )
+  );
 }
 
 const NextLink = ({ currentIndex }) => {
-  let next = flatDirectories[currentIndex + 1]
+  let next = flatDirectories[currentIndex + 1];
 
   if (!config.nextLinks || !next) {
-    return null
+    return null;
   }
 
   return (
@@ -157,14 +172,14 @@ const NextLink = ({ currentIndex }) => {
         <ArrowRight className="inline ml-1 flex-shrink-0" />
       </a>
     </Link>
-  )
-}
+  );
+};
 
 const PrevLink = ({ currentIndex }) => {
-  let prev = flatDirectories[currentIndex - 1]
+  let prev = flatDirectories[currentIndex - 1];
 
   if (!config.prevLinks || !prev) {
-    return null
+    return null;
   }
 
   return (
@@ -174,50 +189,51 @@ const PrevLink = ({ currentIndex }) => {
         {prev.title}
       </a>
     </Link>
-  )
-}
+  );
+};
 
 const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
-  const [menu, setMenu] = useState(false)
-  const router = useRouter()
-  const { route, pathname } = router
+  const [menu, setMenu] = useState(false);
+  const router = useRouter();
+  const { route, pathname } = router;
 
-  const filepath = route.slice(0, route.lastIndexOf('/') + 1)
+  const filepath = route.slice(0, route.lastIndexOf("/") + 1);
   const titles = React.Children.toArray(children).filter((child) =>
     titleType.includes(child.props.mdxType)
-  )
+  );
   const anchors = titles
-    .filter((child) => child.props.mdxType === 'h2')
-    .map((child) => child.props.children)
+    .filter((child) => child.props.mdxType === "h2")
+    .map((child) => child.props.children);
 
   useEffect(() => {
     if (menu) {
-      document.body.classList.add('overflow-hidden')
+      document.body.classList.add("overflow-hidden");
     } else {
-      document.body.classList.remove('overflow-hidden')
+      document.body.classList.remove("overflow-hidden");
     }
-  }, [menu])
+  }, [menu]);
 
-  const currentIndex = useMemo(() => flatDirectories.findIndex(
-    (dir) => dir.route === pathname
-  ), [flatDirectories, pathname])
-  
+  const currentIndex = useMemo(
+    () => flatDirectories.findIndex((dir) => dir.route === pathname),
+    [flatDirectories, pathname]
+  );
+
   const title =
     flatDirectories[currentIndex]?.title ||
-    titles.find((child) => child.props.mdxType === 'h1')?.props.children ||
-    'Untitled'
+    titles.find((child) => child.props.mdxType === "h1")?.props.children ||
+    "Untitled";
 
   const props = {
     filepath: filepath + filename,
-    route
-  }
+    route,
+  };
 
   return (
     <>
       <Head>
         <title>
           {title}
-          {config.titleSuffix || ''}
+          {config.titleSuffix || ""}
         </title>
         {config.head ? config.head(props) : null}
       </Head>
@@ -232,13 +248,15 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
           </div>
 
           {/* {config.search && <Search directories={flatDirectories} />} */}
-          <DocSearch/>
+          <DocSearch />
 
           {config.github ? (
             <a
               className="text-current p-2 -mr-2"
               href={config.github}
               target="_blank"
+              rel="noopener"
+              aria-label="GitHub Repository"
             >
               <GitHubIcon height={28} />
             </a>
@@ -268,37 +286,42 @@ const Layout = ({ filename, full, title: _title, ssg = {}, children }) => {
             <Sidebar show={menu} anchors={anchors} />
           </MenuContext.Provider>
           <SSGContext.Provider value={ssg}>
-            {
-              full
-                ? <content className="relative pt-16 w-full overflow-x-hidden">{children}</content>
-                : <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden xl:pr-64">
-                    <main className="max-w-screen-md mx-auto">
-                      <Theme>{children}</Theme>
-                      <footer className="mt-24">
-                        <nav className="flex flex-row items-center justify-between">
-                          <div>
-                            <PrevLink currentIndex={currentIndex} />
-                          </div>
+            {full ? (
+              <content className="relative pt-16 w-full overflow-x-hidden">
+                {children}
+              </content>
+            ) : (
+              <>
+                <SkipNavContent />
+                <content className="relative pt-20 pb-16 px-6 md:px-8 w-full max-w-full overflow-x-hidden xl:pr-64">
+                  <main className="max-w-screen-md mx-auto">
+                    <Theme>{children}</Theme>
+                    <footer className="mt-24">
+                      <nav className="flex flex-row items-center justify-between">
+                        <div>
+                          <PrevLink currentIndex={currentIndex} />
+                        </div>
 
-                          <div>
-                            <NextLink currentIndex={currentIndex} />
-                          </div>
-                        </nav>
+                        <div>
+                          <NextLink currentIndex={currentIndex} />
+                        </div>
+                      </nav>
 
-                        <hr />
+                      <hr />
 
-                        {config.footer ? config.footer(props) : null}
-                      </footer>
-                    </main>
-                  </content>
-            }
+                      {config.footer ? config.footer(props) : null}
+                    </footer>
+                  </main>
+                </content>
+              </>
+            )}
           </SSGContext.Provider>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default filename => {
-  return props => <Layout filename={filename} {...props}/>
-}
+export default (filename) => {
+  return (props) => <Layout filename={filename} {...props} />;
+};

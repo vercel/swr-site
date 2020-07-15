@@ -1,12 +1,15 @@
 @tailwind base;
 
-@import url('https://rsms.me/inter/inter.css');
 html {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 @supports (font-variation-settings: normal) {
   html {
-    font-family: 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+      'Helvetica Neue', sans-serif;
   }
 }
 
@@ -93,18 +96,21 @@ figure figcaption {
 .sidebar ul ul {
   @apply ml-5;
 }
-.sidebar a:focus-visible, .sidebar button:focus-visible {
+.sidebar a:focus-visible,
+.sidebar button:focus-visible {
   @apply shadow-outline;
 }
 .sidebar li.active > a {
   @apply font-semibold text-black bg-gray-200;
 }
-.sidebar button, .sidebar a {
+.sidebar button,
+.sidebar a {
   @apply block w-full text-left text-base text-black no-underline text-gray-600 mt-1 p-2 rounded select-none outline-none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }
-.sidebar a:hover, .sidebar button:hover {
+.sidebar a:hover,
+.sidebar button:hover {
   @apply text-gray-900 bg-gray-100;
 }
 
@@ -129,7 +135,8 @@ content li {
   width: 1px;
 }
 
-.subheading-anchor + a:hover .anchor-icon {
+.subheading-anchor + a:hover .anchor-icon,
+.subheading-anchor + a:focus .anchor-icon {
   opacity: 1;
 }
 .anchor-icon {
@@ -162,4 +169,12 @@ input[type='search']::-webkit-search-results-decoration {
   width: 500px;
   min-width: 300px;
   max-width: calc(100vw - 50px);
+}
+
+[data-reach-skip-link] {
+  @apply sr-only;
+}
+
+[data-reach-skip-link]:focus {
+  @apply not-sr-only fixed ml-6 top-0 bg-white text-lg px-6 py-2 mt-2 outline-none shadow-outline z-50;
 }
