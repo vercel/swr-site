@@ -70,13 +70,16 @@ video {
   cursor: pointer;
 }
 figure figcaption {
-  @apply text-sm text-gray-600;
+  @apply text-sm text-gray-600 text-center mx-auto;
+  max-width: 84%;
 }
-@media (min-width: 768px) {
+@media (min-width: 1280px) {
   figure {
-    /* allow figures to overflow, but not exceeding the viewport width */
-    @apply -mr-56;
-    max-width: calc(100vw - 20rem);
+    max-width: 136%;
+    width: calc(100vw - 32rem);
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
