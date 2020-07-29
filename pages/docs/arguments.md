@@ -17,7 +17,7 @@ For example an authorized fetch request:
 useSWR('/api/user', url => fetchWithToken(url, token))
 ```
 
-This is **incorrect**. Because the identifier (also the cache key) of the data is `'/api/data'`, 
+This is **incorrect**. Because the identifier (also the cache key) of the data is `'/api/user'`, 
 so even if `token` changes, SWR will still use the same key and return the wrong data. 
 
 Instead, you can use an **array** as the `key` parameter, which contains multiple arguments of `fetcher`:
