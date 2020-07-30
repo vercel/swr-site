@@ -162,6 +162,10 @@ input[type='search']::-webkit-search-results-decoration {
   right: 0;
 }
 
+.docs-search > span {
+  width: 100%;
+}
+
 .algolia-autocomplete .algolia-docsearch-suggestion--category-header span {
   display: inline-block;
 }
