@@ -164,7 +164,7 @@ function App () {
 
 However, in some advanced use cases, the solution above doesn't work.
 
-For example, we are still implementing the "Load More" UI, but we also need to display a number 
+For example, we are still implementing the same "Load More" UI, but also need to display a number 
 about how many items are there in total. We can't use the `<Page />` solution anymore because
 the top level UI (`<App />`) needs the data inside each page:
 
@@ -188,11 +188,11 @@ function App () {
 Also, if the pagination API is **cursor based**, that solution doesn't work either. Because each page
 needs the data from the previous page, they're not isolated.
 
-That's why we introduced this new `useSWRInfinite` Hook.
+That's how this new `useSWRInfinite` Hook can help.
 
 ## useSWRInfinite
 
-`useSWRInfinite` gives us the ability to trigger dynamic number of requests with one Hook. This is how it looks:
+`useSWRInfinite` gives us the ability to trigger a number of requests with one Hook. This is how it looks:
 
 ```jsx
 const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
@@ -200,7 +200,136 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 )
 ```
 
-Similar to `useSWR`, it accepts a function to get the key, a function to fetch the data, and an `options` object.
-Besides the `useSWR` return values, it also returns the page size and a function to set the size, like a React state.
+Similar to `useSWR`, this new Hook accepts a function that returns the request key, a fetcher function, and options.
+It returns all the values that `useSWR` returns, including 2 extra values: the page size and a page size setter, like a React state.
 
+In infinite loading, one _page_ is one request, and our goal is to fetch multiple pages and render them.
 
+### API
+
+#### Parameters
+
+- `getKey`: a function that accepts the index and the previous page data, returns the key of a page
+- `fetcher`: same as `useSWR`'s [fetcher function](/docs/data-fetching)
+- `options`: accepts all the options that `useSWR` supports, with 3 extra options:
+  - `initialSize = 1`: number of pages should be loaded initially
+  - `revalidateAll = false`: always try to revalidate all pages
+  - `persistSize = false`: don't reset the page size to 1 (or `initialSize` if set) when the first page's key changes
+
+#### Return Values
+
+- `data`: an array of fetch response values of each page
+- `mutate`: same as `useSWR`'s bound mutate function but manipulates the data array
+- `size`: the number of pages _will_ be fetched and returned
+- `setSize`: set the number of pages that need to be fetched
+
+### Example 1: Index Based Paginated API
+
+For normal index based APIs:
+
+```
+GET /users?page=0&limit=10
+[
+  { name: 'Alice', ... },
+  { name: 'Bob', ... },
+  { name: 'Cathy', ... },
+  ...
+]
+```
+
+```jsx highlight=4,5,6,7,10
+// A function to get the SWR key of each page,
+// its return value will be accepted by `fetcher`.
+// If `null` is returned, the request of that page won't start.
+const getKey = (pageIndex, previousPageData) => {
+  if (previousPageData && !previousPageData.length) return null // reached the end
+  return `/users?page=${pageIndex}&limit=10`                    // SWR key
+}
+
+function App () {
+  const { data, size, setSize } = useSWRInfinite(getKey, fetcher)
+  if (!data) return 'loading'
+
+  // We can now calculate the number of all users
+  let totalUsers = 0
+  for (let i = 0; i < data.length; i++) {
+    totalUsers += data[i].length
+  }
+
+  return <div>
+    <p>{totalUsers} users listed</p>
+    {data.map((users, index) => {
+      // `data` is an array of each page's API response.
+      return users.map(user => <div key={user.id}>{user.name}</div>)
+    })}
+    <button onClick={() => setSize(size + 1)}>Load More</button>
+  </div>
+}
+```
+
+The `getKey` function is the major difference between `useSWRInfinite` and `useSWR`. 
+It accepts the index of the current page, as well as the data from the previous page.
+So both index based and cursor based pagination API can be supported nicely.
+
+Also `data` is no longer just one API response. It's an array of multiple API responses:
+
+```js
+// `data` will look like this
+[
+  [
+    { name: 'Alice', ... },
+    { name: 'Bob', ... },
+    { name: 'Cathy', ... },
+    ...
+  ],
+  [
+    { name: 'John', ... },
+    { name: 'Paul', ... },
+    { name: 'George', ... },
+    ...
+  ],
+  ...
+]
+```
+
+### Example 2: Cursor or Offset Based Paginated API
+
+Let's say the API now requires a cursor and returns the next cursor alongside with the data:
+
+```
+GET /users?cursor=123&limit=10
+{
+  data: [
+    { name: 'Alice' },
+    { name: 'Bob' },
+    { name: 'Cathy' },
+    ...
+  ],
+  nextCursor: 456
+}
+```
+
+We can change our `getKey` function to:
+
+```jsx
+const getKey = (pageIndex, previousPageData) => {
+  // reached the end
+  if (previousPageData && !previousPageData.data) return null
+
+  // first page, we don't have `previousPageData`
+  if (pageIndex === 0) return `/users?limit=10`
+
+  // add the cursor to the API endpoint
+  return `/users?cursor=${previousPageData.nextCursor}&limit=10`
+}
+```
+
+### Advanced Features
+
+[Here is an example](/examples/infinite-loading) showing how you can implement the following features with `useSWRInfinite`:
+
+- loading states
+- show a special UI if it's empty
+- disable the "Load More" button if reached the end
+- changeable data source
+- refresh the entire list
