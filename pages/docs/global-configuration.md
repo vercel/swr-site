@@ -26,7 +26,7 @@ function App () {
     <SWRConfig 
       value={{
         refreshInterval: 3000,
-        fetcher: (...args) => fetch(...args).then(res => res.json())
+        fetcher: (input, init) => fetch(input, init).then(res => res.json())
       }}
     >
       <Dashboard />
