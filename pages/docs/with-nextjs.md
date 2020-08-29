@@ -1,3 +1,5 @@
+import Callout from 'components/callout'
+
 # Usage with Next.js
 
 ## Client Side Data Fetching
@@ -22,11 +24,14 @@ You can pass the pre-fetched data as the initial value to the `initialData` opti
 
 ```jsx
 export async function getStaticProps() {
+  // `getStaticProps` is invoked on the server-side,
+  // so this `fetcher` function will be executed on the server-side.
   const posts = await fetcher('/api/posts')
   return { props: { posts } }
 }
 
 function Props (props) {
+  // Here the `fetcher` function will be executed on the client-side.
   const { data } = useSWR('/api/posts', fetcher, { initialData: props.posts })
 
   // ...
@@ -35,3 +40,8 @@ function Props (props) {
 
 The page is still pre-rendered. That means it's SEO friendly, can be cached and accessed very fast. But after hydration, it’s also fully powered by SWR in the client side. 
 Which means the data can be dynamic and update itself over time and user interactions.
+
+<Callout emoji="💡">
+  In the example above, <code>fetcher</code> is used to load the data from both client and server, 
+  and it needs to support both environments. But this is not a requirement. You can use different ways to load data from server or client.
+</Callout>
