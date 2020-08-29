@@ -24,7 +24,7 @@ You can pass the pre-fetched data as the initial value to the `initialData` opti
 
 ```jsx
 export async function getStaticProps() {
-  // `getStaticProps` happens in the server side,
+  // `getStaticProps` is invoked on the server side,
   // so this `fetcher` function will be executed in the server side.
   const posts = await fetcher('/api/posts')
   return { props: { posts } }
