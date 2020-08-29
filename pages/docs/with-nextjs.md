@@ -42,6 +42,6 @@ The page is still pre-rendered. That means it's SEO friendly, can be cached and 
 Which means the data can be dynamic and update itself over time and user interactions.
 
 <Callout emoji="💡">
-  In the example above, <code>fetcher</code> is used to load the data from both client and server side, 
+  In the example above, <code>fetcher</code> is used to load the data from both client and server, 
   and it needs to support both environments. But this is not a requirement. You can use different ways to load data from server or client.
 </Callout>
