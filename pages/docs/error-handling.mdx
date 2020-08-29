@@ -1,3 +1,6 @@
+import Callout from 'components/callout'
+import Link from 'next/link'
+
 # Error Handling
 
 If an error is thrown inside [`fetcher`](/docs/data-fetching), it will be returned as `error` by the hook. 
@@ -16,7 +19,7 @@ The `error` object will be defined if the fetch promise is rejected.
 Sometimes we want an API to return an error object alongside the status code. 
 Both of them are useful for the client.
 
-We can customize our `fetcher` to return more information. If the status code is not 2xx, 
+We can customize our `fetcher` to return more information. If the status code is not `2xx`, 
 we consider it an error even if it can be parsed as JSON:
 
 ```js
@@ -26,26 +29,29 @@ const fetcher = async url => {
   // If the status code is not in the range 200-299,
   // we still try to parse and throw it.
   if (!res.ok) {
-    const errorObject = {
-      error: await res.json(),
-      status: res.status
-    }
-    throw errorObject
+    const error = new Error('An error occurred while fetching the data.')
+    // Attach extra info to the error object.
+    error.info = await res.json()
+    error.status = res.status
+    throw error
   }
 
   return await res.json()
 }
 
 // ...
-const { error } = useSWR('/api/user', fetcher)
-// {
-//   error: {
-//     message: "You are not authorized to access this resource.",
-//     documentation_url: "..."
-//   },
-//   status: 403
+const { data, error } = useSWR('/api/user', fetcher)
+// error.info === {
+//   message: "You are not authorized to access this resource.",
+//   documentation_url: "..."
 // }
+// error.status === 403
 ```
+
+<Callout emoji="💡">
+  Note that <code>data</code> and <code>error</code> can exist at the same time. So the UI can display the existing data,
+  while knowing the upcoming request has failed. <Link href="/examples/error-handling">Here</Link> is an example.
+</Callout>
 
 ## Error Retry
 
