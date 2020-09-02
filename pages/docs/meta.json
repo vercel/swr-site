@@ -2,6 +2,7 @@
   "options": "Options",
   "global-configuration": "Global Configuration",
   "data-fetching": "Data Fetching",
+  "error-handling": "Error Handling",
   "revalidation": "Auto Revalidation",
   "conditional-fetching": "Conditional Data Fetching",
   "arguments": "Arguments",
