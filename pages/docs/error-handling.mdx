@@ -62,7 +62,7 @@ You can also override this behavior via the [onErrorRetry](/docs/options#options
 
 ```js
 useSWR('/api/user', fetcher, {
-  onErrorRetry: (error, key, option, revalidate, { retryCount }) => {
+  onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
     // Never retry on 404.
     if (error.status === 404) return
 
