@@ -4590,10 +4590,10 @@ next@^9.4.4:
     webpack "4.43.0"
     webpack-sources "1.4.3"
 
-nextra-theme-docs@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/nextra-theme-docs/-/nextra-theme-docs-0.1.9.tgz#3592833fce8416d143e094dd9aaeb9c08e033b3a"
-  integrity sha512-67BNAeWbjvdu+8j89j0w9ga1n8XOljrUCpcaac2IvYRSRuhA279aCQ7xjOkauK9ZMV54/e68RyzpAlvmUCksJA==
+nextra-theme-docs@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/nextra-theme-docs/-/nextra-theme-docs-0.1.10.tgz#466bb1d561a395cab55c6b29adb601a15a27557f"
+  integrity sha512-k5aJ02E36dcXIUDqtB3xQ+ibsI2Oy5XW/ry56Z0WEcwJLhETou2fg4fNk0UlOQGNuOXILxCPrMkJQWr/uuv0YQ==
   dependencies:
     "@mdx-js/react" "^1.6.16"
     "@reach/skip-nav" "^0.11.2"
