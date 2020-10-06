@@ -1,5 +1,6 @@
 {
   "basic": "Basic Usage",
   "auth": "Authentication",
-  "infinite-loading": "Infinite Loading"
+  "infinite-loading": "Infinite Loading",
+  "error-handling": "Error Handling"
 }
