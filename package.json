@@ -17,7 +17,7 @@
     "markdown-to-jsx": "^6.11.4",
     "next": "^9.4.4",
     "nextra": "^0.2.6",
-    "nextra-theme-docs": "^0.1.10",
+    "nextra-theme-docs": "^0.1.11",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intersection-observer": "^8.26.2"
