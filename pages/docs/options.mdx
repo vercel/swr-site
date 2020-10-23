@@ -21,7 +21,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 ## Options
 
 - `suspense = false`: enable React Suspense mode [(details)](/docs/suspense)
-- `fetcher = undefined`: the fetcher function
+- `fetcher = window.fetch(url).then(res => res.json())`: the fetcher function
 - `initialData`: initial data to be returned (note: This is per-hook) [(details)](/docs/with-nextjs)
 - `revalidateOnMount`: enable or disable automatic revalidation when component is mounted (by default revalidation occurs on mount when initialData is not set, use this flag to force behavior)
 - `revalidateOnFocus = true`: auto revalidate when window gets focused [(details)](/docs/revalidation)
