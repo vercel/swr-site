@@ -126,7 +126,7 @@ function App () {
   const [cnt, setCnt] = useState(1)
 
   const list = []
-  for (let i = 0; i < num; i++) {
+  for (let i = 0; i < cnt; i++) {
     // 🚨 This is wrong! Commonly, you can't use hooks inside a loop.
     const { data } = useSWR(`/api/data?page=${i}`)
     list.push(data)
