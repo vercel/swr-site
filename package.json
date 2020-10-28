@@ -15,9 +15,9 @@
     "focus-visible": "^5.1.0",
     "intersection-observer": "^0.10.0",
     "markdown-to-jsx": "^6.11.4",
-    "next": "^9.4.4",
+    "next": "^10.0.0",
     "nextra": "^0.2.6",
-    "nextra-theme-docs": "^0.1.11",
+    "nextra-theme-docs": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intersection-observer": "^8.26.2"
