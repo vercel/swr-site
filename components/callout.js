@@ -2,6 +2,6 @@
 export default ({ children, background = 'bg-orange-100', emoji = '💡' }) => {
   return <p className={`${background} flex rounded-lg callout`}>
     <span className="pl-3 pr-2 py-2 select-none text-xl">{emoji}</span>
-    <span className="pr-4 py-2">{children}</span>
+    <span className="pr-4 py-2 -mt-6">{children}</span>
   </p>
 }

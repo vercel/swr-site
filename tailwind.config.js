@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ['./components/**/*.js', './pages/**/*.md', './pages/**/*.mdx'],
+  purge: ['./components/**/*.js', './pages/**/*.md', './pages/**/*.mdx', './theme.config.js'],
   theme: {
     screens: {
       sm: '640px',

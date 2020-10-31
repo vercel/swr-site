@@ -23,6 +23,7 @@
     "react-intersection-observer": "^8.26.2"
   },
   "devDependencies": {
+    "cssnano": "^4.1.10",
     "postcss-preset-env": "^6.7.0",
     "tailwindcss": "^1.4.6"
   }
