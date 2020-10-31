@@ -22,3 +22,5 @@
 .callout p {
   margin-top: 0;
 }
+
+@tailwind utilities;
