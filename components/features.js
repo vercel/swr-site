@@ -9,7 +9,7 @@ const Feature = ({ text, icon }) => (
 
 export default () => (
   <div>
-    <p className="text-lg mb-2 text-gray-600 md:text-xl">React Hooks library for data fetching</p>
+    <p className="text-lg mb-2 text-gray-600 md:text-xl">用于请求数据的 React Hooks 库</p>
     <div className={styles.features}>
       <Feature
         text="Lightweight"
