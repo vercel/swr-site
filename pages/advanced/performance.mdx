@@ -5,7 +5,7 @@ SWR provides critical functionality in all kinds of web apps, so **performance**
 SWR’s built-in **caching** and **[deduplication](/advanced/performance#deduplication)** skips unnecessary network requests, but 
 the performance of the `useSWR` hook itself still matters. In a complex app, there could be hundreds of `useSWR` calls in a single page render.
 
-SWR ensures there are:
+SWR ensures that your app has:
 - _no unnecessary requests_
 - _no unnecessary re-renders_
 - _no unnecessary code imported_
@@ -100,7 +100,6 @@ Data      // => end retrying, get the data
 
 The exact same process has happened internally, there was an error from the first request, then we got the data from the retry.
 However, **SWR only updates the states that are used by the component**, which is only `data` now. 
-That said, SWR has the ability to collect state dependencies automatically.
 
 If you are not always using all these 3 states, you are already benefitting from this feature. 
 At [Vercel](https://vercel.com), this optimization results in ~60% fewer re-renders.
