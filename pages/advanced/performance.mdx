@@ -1,11 +1,11 @@
 # Performance
 
-As a library that serves the very fundamental functionality of all kinds of web apps, one of SWR’s top priorities is **performance**. 
+SWR provides critical functionality in all kinds of web apps, so **performance** is a top priority. 
 
-Although most of the time the actual request won’t be triggered because of SWR’s built-in **caching** and **[deduplication](/advanced/performance#deduplication)**, 
+SWR’s built-in **caching** and **[deduplication](/advanced/performance#deduplication)** skips unnecessary network requests, but 
 the performance of the `useSWR` hook itself still matters. In a complex app, there could be hundreds of `useSWR` calls in a single page render.
 
-SWR uses the following techniques to ensure there is:
+SWR ensures there are:
 - _no unnecessary requests_
 - _no unnecessary re-renders_
 - _no unnecessary code imported_
@@ -14,7 +14,7 @@ without any code changes from you.
 
 ## Deduplication
 
-It’s very common to have SWR hooks reused in your app. For example you have an app to render the current user’s avatar 5 times:
+It’s very common to reuse SWR hooks in your app. For example, an app that renders the current user’s avatar 5 times:
 
 ```jsx
 function useUser () {
@@ -41,9 +41,9 @@ function App () {
 }
 ```
 
-Each `<Avatar>` component has a `useSWR` hook inside. Since they have the same SWR key and are rendered at the almost same time, **only 1 request will be made**.
+Each `<Avatar>` component has a `useSWR` hook inside. Since they have the same SWR key and are rendered at the almost same time, **only 1 network request will be made**.
 
-You can reuse your data hooks (like `useUser` in the example above) as much as you want, without being worried about performance or duplicated requests.
+You can reuse your data hooks (like `useUser` in the example above) everywhere, without worrying about performance or duplicated requests.
 
 There is also a [`dedupingInterval` option](/docs/options) for overriding the default deduplication interval.
 
@@ -52,7 +52,7 @@ There is also a [`dedupingInterval` option](/docs/options) for overriding the de
 SWR **deep compares** data changes by default. If the `data` value isn’t changed, a re-render will not be triggered.
 
 You can also customize the comparison function via the [`compare` option](/docs/options) if you want to change the behavior. 
-For example some API responses return a server timestamp that you might want to exclude from the data diff.
+For example, some API responses return a server timestamp that you might want to exclude from the data diff.
 
 ## Dependency Collection
 
@@ -78,9 +78,9 @@ undefined Error true      // => start retrying
 Data undefined false      // => end retrying, get the data
 ```
 
-The state changes make totally sense. But that also means our component was **rendered 5 times**.
+The state changes make sense. But that also means our component **rendered 5 times**.
 
-Now we change our component to only use `data`:
+If we change our component to only use `data`:
 
 ```jsx
 function App () {
@@ -90,7 +90,7 @@ function App () {
 }
 ```
 
-The magic happens — there are only **2 lines of logs** now:
+The magic happens — there are only **2 re-renders** now:
 
 ```js
 // console.log(data)
@@ -103,7 +103,7 @@ However, **SWR only updates the states that are used by the component**, which i
 That said, SWR has the ability to collect state dependencies automatically.
 
 If you are not always using all these 3 states, you are already benefitting from this feature. 
-It reduces ~60% unnecessary re-renders for [us](https://vercel.com).
+At [Vercel](https://vercel.com), this optimization results in ~60% fewer re-renders.
 
 ## Tree Shaking
 

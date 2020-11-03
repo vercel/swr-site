@@ -10,7 +10,7 @@ There’re many ways to prefetch the data for SWR. For top level requests, [`rel
 
 Just put it inside your HTML `<head>`. It’s easy, fast and native.
 
-It will prefetch the data as long as the HTML loads, even before the JavaScript starts to download. All your incoming fetch requests with the same URL will reuse the result (including SWR, of course).
+It will prefetch the data when the HTML loads, even before JavaScript starts to download. All your incoming fetch requests with the same URL will reuse the result (including SWR, of course).
 
 ## Programmatically Prefetch
 
