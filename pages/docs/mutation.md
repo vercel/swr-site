@@ -5,7 +5,7 @@
 You can broadcast a revalidation message globally to all SWRs with the same key by calling
 `mutate(key)`.
 
-This example shows how to automatically refetch the login info (e.g.: inside `<Profile/>`)
+This example shows how to automatically refetch the login info (e.g. inside `<Profile/>`)
 when the user clicks the “Logout” button.
 
 ```jsx
