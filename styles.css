@@ -1,3 +1,5 @@
+@tailwind utilities;
+
 .docs-search > span {
   width: 100%;
 }
@@ -19,6 +21,6 @@
   @apply not-sr-only fixed ml-6 top-0 bg-white text-lg px-6 py-2 mt-2 outline-none shadow-outline z-50;
 }
 
-.callout p {
-  margin-top: 0;
+code {
+  @apply text-sm;
 }

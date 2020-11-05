@@ -7,8 +7,8 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head />
-        <SkipNavLink />
         <body>
+          <SkipNavLink />
           <Main />
           <NextScript />
           <script

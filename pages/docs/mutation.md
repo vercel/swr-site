@@ -77,14 +77,22 @@ mutate('/api/user', updateUser(newUser)) // `updateUser` is a Promise of the req
 
 ## Mutate Based on Current Data
 
-In many cases, you are receiving a single value back from your API and want to update a list of them.
+Sometimes, you want to update a part of your data based on the current data.
 
 With `mutate`, you can pass an async function which will receive the current cached value, if any, and let you return an updated document.
 
 ```jsx
-mutate('/api/users', async users => {
-  const user = await fetcher('/api/users/1')
-  return [user, ...users.slice(1)]
+mutate('/api/todos', async todos => {
+  // let's update the todo with ID `1` to be completed,
+  // this API returns the updated data
+  const updatedTodo = await fetch('/api/todos/1', {
+    method: 'PATCH'
+    body: JSON.stringify({ completed: true })
+  })
+
+  // filter the list, and return it with the updated item
+  const filteredTodos = todos.filter(todo => todo.id !== '1')
+  return [...filteredTodos, updatedTodo]
 })
 ```
 
