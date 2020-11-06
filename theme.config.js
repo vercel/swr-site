@@ -76,7 +76,7 @@ export default {
       content="https://assets.vercel.com/image/upload/v1572282926/swr/twitter-card.jpg"
     />
     <meta name="apple-mobile-web-app-title" content="SWR" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" media="print" onLoad="this.media='all'" />
   </>,
   footerText: <a href="https://vercel.com/?utm_source=swr" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
     <span className="mr-1">Powered by</span><span><Vercel/></span>
