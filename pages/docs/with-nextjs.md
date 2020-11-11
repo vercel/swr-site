@@ -30,7 +30,7 @@ export async function getStaticProps() {
   return { props: { posts } }
 }
 
-function Props (props) {
+function Posts (props) {
   // Here the `fetcher` function will be executed on the client-side.
   const { data } = useSWR('/api/posts', fetcher, { initialData: props.posts })
 
