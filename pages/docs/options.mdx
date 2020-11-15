@@ -17,6 +17,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `error`: error thrown by `fetcher` (or undefined)  
 - `isValidating`: if there's a request or revalidation loading  
 - `mutate(data?, shouldRevalidate?)`: function to mutate the cached data
+- `revalidate()`: function to trigger revalidation manually
 
 ## Options
 
