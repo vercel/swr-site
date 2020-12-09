@@ -5119,14 +5119,15 @@ nextra-theme-docs@^0.2.6:
     tailwindcss "^1.8.3"
     title "^3.4.2"
 
-nextra@^0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/nextra/-/nextra-0.2.7.tgz#9d6558e12a9fcc044b236d4c20e43d082c7bc2c6"
-  integrity sha512-eg5NzADHfiel/KiYJTgLOAbAC6AlZUUAyzo11Z7nHVyMoMU+xFX0IA2sDALjEso91UYZkZjvlUqL9/OFQhkRJw==
+nextra@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/nextra/-/nextra-0.3.1.tgz#61b2d0ac86f5fedb6cf50ad88727cb880e245ebe"
+  integrity sha512-P/PcHKqz1SrXqWf21TNFUGMJtfM4/yG5CYpV3BW7EJnIihBELd2oKNVm47RsDLNQ0ycpb6iS6vexwWAuymb8Zw==
   dependencies:
     "@mdx-js/loader" "^2.0.0-next.8"
     gray-matter "^4.0.2"
     loader-utils "^2.0.0"
+    slash "^3.0.0"
 
 node-abi@^2.7.0:
   version "2.19.1"
@@ -6995,6 +6996,11 @@ simple-swizzle@^0.2.2:
   integrity sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
   dependencies:
     is-arrayish "^0.3.1"
+
+slash@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
+  integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
