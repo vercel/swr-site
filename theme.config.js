@@ -80,5 +80,9 @@ export default {
   </>,
   footerText: <a href="https://vercel.com/?utm_source=swr" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
     <span className="mr-1">Powered by</span><span><Vercel/></span>
-  </a>
+  </a>,
+  i18n: [
+    { locale: 'en-US', text: 'English' },
+    { locale: 'zh-CN', text: '简体中文' }
+  ]
 }
