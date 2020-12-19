@@ -78,9 +78,26 @@ export default {
     <meta name="apple-mobile-web-app-title" content="SWR" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" media="print" onLoad="this.media='all'" />
   </>,
-  footerText: <a href="https://vercel.com/?utm_source=swr" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
-    <span className="mr-1">Powered by</span><span><Vercel/></span>
-  </a>,
+  footerEditOnGitHubText: ({locale}) => {
+    switch (locale) {
+      case 'zh-CN':
+        return '在 GitHub 上编辑本页'
+      default:
+        return 'Edit this page on GitHub'
+    }
+  },
+  footerText: ({locale}) => {
+    switch (locale) {
+      case 'zh-CN':
+        return <a href="https://vercel.com/?utm_source=swr_zh-cn" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
+          <span className="mr-2">由</span><span className="mr-2"><Vercel/></span>驱动
+        </a>
+      default:
+        return <a href="https://vercel.com/?utm_source=swr" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
+          <span className="mr-1">Powered by</span><span><Vercel/></span>
+        </a>
+    }
+  },
   i18n: [
     { locale: 'en-US', text: 'English' },
     { locale: 'zh-CN', text: '简体中文' }
