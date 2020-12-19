@@ -11,8 +11,8 @@ const Vercel = ({ height = 20 }) => (
 )
 
 export default {
-  github: 'https://github.com/vercel/swr',
-  siteGithub: 'https://github.com/vercel/swr-site',
+  repository: 'https://github.com/vercel/swr',
+  docsRepository: 'https://github.com/vercel/swr-site',
   titleSuffix: ' – SWR',
   customSearch: <DocSearch/>,
   logo: <>
