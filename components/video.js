@@ -41,12 +41,12 @@ export default ({ src, caption, ratio }) => {
   }, [inView])
 
   return (
-    <figure>
+    <div style={{ position: 'relative', margin: '2rem 1rem' }}>
       <div style={{ paddingBottom: ratio * 100 + '%' }}/>
       <video loop muted autoPlay playsInline ref={setRefs}>
         <source src={src} type="video/mp4" />
       </video>
-      {caption && <figcaption>{caption}</figcaption>}
-    </figure>
+      {caption && <figcaption style={{ fontSize: '.9rem', textAlign: 'center' }}>{caption}</figcaption>}
+    </div>
   )
 }
