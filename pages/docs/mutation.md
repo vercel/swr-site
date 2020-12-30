@@ -86,7 +86,7 @@ mutate('/api/todos', async todos => {
   // let's update the todo with ID `1` to be completed,
   // this API returns the updated data
   const updatedTodo = await fetch('/api/todos/1', {
-    method: 'PATCH'
+    method: 'PATCH',
     body: JSON.stringify({ completed: true })
   })
 
