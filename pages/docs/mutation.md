@@ -79,7 +79,7 @@ mutate('/api/user', updateUser(newUser)) // `updateUser` is a Promise of the req
 
 Sometimes, you want to update a part of your data based on the current data.
 
-With `mutate`, you can pass an async function which will receive the current cached value, if any, and let you return an updated document.
+With `mutate`, you can pass an async function which will receive the current cached value, if any, and returns an updated document.
 
 ```jsx
 mutate('/api/todos', async todos => {
