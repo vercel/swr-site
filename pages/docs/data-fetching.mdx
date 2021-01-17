@@ -56,7 +56,7 @@ Or using GraphQL with libs like [graphql-request](https://github.com/prisma-labs
 ```js
 import { request } from 'graphql-request'
 
-const fetcher = query => request('https://api.graph.cool/simple/v1/movies', query)
+const fetcher = query => request('/api/graphql', query)
 
 function App () {
   const { data, error } = useSWR(
