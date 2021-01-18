@@ -32,6 +32,10 @@ function App () {
 }
 ```
 
+<Callout>
+  Note that the `suspense` option is not allowed to change in the lifecycle.
+</Callout>
+
 In Suspense mode, `data` is always the fetch response (so you don't need to check if it's `undefined`).
 But if an error occurred, you need to use an [error boundary](https://reactjs.org/docs/concurrent-mode-suspense.html#handling-errors) to catch it:
 
