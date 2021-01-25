@@ -29,6 +29,36 @@ function App () {
 }
 ```
 
+You can also use the `revalidate` function that `useSWR` returns.
+
+```jsx
+import useSWR from 'swr'
+
+function App () {
+  const { data, revalidate } = useSWR('/api/user', fetcher);
+  return (
+    <div>
+      <Profile />
+      <button onClick={() => {
+        // set the cookie as expired
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+
+        // tell all SWRs with this key to revalidate
+        revalidate()
+      }}>
+        Logout
+      </button>
+    </div>
+  )
+}
+```
+
+`revalidate` accepts `retryCount` and `dedupe` as an option argument.
+
+```jsx
+revalidate({ retryCount, dedupe })
+```
+
 ## Mutation and POST Request
 
 In many cases, applying local mutations to data is a good way to make changes
