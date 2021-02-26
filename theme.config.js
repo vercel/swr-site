@@ -1,4 +1,5 @@
 import DocSearch from 'components/docsearch'
+import { useRouter } from 'next/router'
 
 const Logo = ({ height }) => <svg height={height} viewBox="0 0 291 69" fill="none">
   <path d="M0 36.53c.07 17.6 14.4 32.01 32.01 32.01a32.05 32.05 0 0032.01-32V32a13.2 13.2 0 0123.4-8.31h20.7A32.07 32.07 0 0077.2 0a32.05 32.05 0 00-32 32.01v4.52A13.2 13.2 0 0132 49.71a13.2 13.2 0 01-13.18-13.18 3.77 3.77 0 00-3.77-3.77H3.76A3.77 3.77 0 000 36.53zM122.49 68.54a32.14 32.14 0 01-30.89-23.7h20.67a13.16 13.16 0 0023.4-8.3V32A32.05 32.05 0 01167.68 0c17.43 0 31.64 14 32 31.33l.1 5.2a13.2 13.2 0 0023.4 8.31h20.7a32.07 32.07 0 01-30.91 23.7c-17.61 0-31.94-14.42-32.01-32l-.1-4.7v-.2a13.2 13.2 0 00-13.18-12.81 13.2 13.2 0 00-13.18 13.18v4.52a32.05 32.05 0 01-32.01 32.01zM247.94 23.7a13.16 13.16 0 0123.4 8.31 3.77 3.77 0 003.77 3.77h11.3a3.77 3.77 0 003.76-3.77A32.05 32.05 0 00258.16 0a32.07 32.07 0 00-30.92 23.7h20.7z" fill="currentColor"/>
@@ -10,16 +11,24 @@ const Vercel = ({ height = 20 }) => (
   </svg>
 )
 
+const TITLE_WITH_TRANSLATIONS = {
+  'en-US': 'React Hooks library for data fetching',
+  'zh-CN': '用于数据请求的 React Hooks 库'
+}
+
 export default {
   repository: 'https://github.com/vercel/swr',
   docsRepository: 'https://github.com/vercel/swr-site',
   titleSuffix: ' – SWR',
   customSearch: <DocSearch/>,
-  logo: <>
-    <Logo height={18}/>
-    <span className="mx-2 font-extrabold hidden md:inline">SWR</span>
-    <span className="text-gray-600 font-normal hidden md:inline whitespace-no-wrap">React Hooks for data fetching</span>
-  </>,
+  logo: () => {
+    const { locale } = useRouter()
+    return <>
+      <Logo height={18}/>
+      <span className="mx-2 font-extrabold hidden md:inline">SWR</span>
+      <span className="text-gray-600 font-normal hidden md:inline whitespace-no-wrap">{TITLE_WITH_TRANSLATIONS[locale]}</span>
+    </>
+  },
   head: <>
     {/* Favicons, meta */}
     <link
@@ -78,7 +87,28 @@ export default {
     <meta name="apple-mobile-web-app-title" content="SWR" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" media="print" onLoad="this.media='all'" />
   </>,
-  footerText: <a href="https://vercel.com/?utm_source=swr" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
-    <span className="mr-1">Powered by</span><span><Vercel/></span>
-  </a>
+  footerEditOnGitHubText: ({locale}) => {
+    switch (locale) {
+      case 'zh-CN':
+        return '在 GitHub 上编辑本页'
+      default:
+        return 'Edit this page on GitHub'
+    }
+  },
+  footerText: ({locale}) => {
+    switch (locale) {
+      case 'zh-CN':
+        return <a href="https://vercel.com/?utm_source=swr_zh-cn" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
+          <span className="mr-2">由</span><span className="mr-2"><Vercel/></span>驱动
+        </a>
+      default:
+        return <a href="https://vercel.com/?utm_source=swr" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
+          <span className="mr-1">Powered by</span><span><Vercel/></span>
+        </a>
+    }
+  },
+  i18n: [
+    { locale: 'en-US', text: 'English' },
+    { locale: 'zh-CN', text: '简体中文' }
+  ]
 }

@@ -1,0 +1,50 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# API 选项
+
+```js
+const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
+```
+
+## 参数
+
+- `key`: 请求的唯一 key string（或者是 function / array / null） [（高级用法）](/docs/conditional-fetching)  
+- `fetcher`:（_可选_）一个请求数据的 Promise 返回函数 [（详情）](/docs/data-fetching) 
+- `options`:（_可选_）该 SWR hook 的选项对象
+
+## 返回值
+- `data`: 通过 `fetcher` 用给定的 key 获取的数据（如未完全加载，返回 undefined）
+- `error`: `fetcher` 抛出的错误（或者是 undefined）
+- `isValidating`: 是否有请求或重新验证加载  
+- `mutate(data?, shouldRevalidate?)`: 更改缓存数据的函数
+
+## 选项
+
+- `suspense = false`: 启用 React Suspense 模式 [（详情）](/docs/suspense)
+- `fetcher = window.fetch(url).then(res => res.json())`: fetcher 函数
+- `initialData`: 要返回的初始数据 (注意：是每个 hook) [（详情）](/docs/with-nextjs)
+- `revalidateOnMount`: 在挂载组件时启用或禁用自动重新验证 (默认情况下，当没有设置 initialData 时，在挂载时进行重新验证，使用该 flag 强制行为)
+- `revalidateOnFocus = true`: 窗口聚焦时自动重新验证 [（详情）](/docs/revalidation)
+- `revalidateOnReconnect = true`: 浏览器恢复网络连接时自动重新验证（通过 `navigator.onLine`） [（详情）](/docs/revalidation)
+- `refreshInterval = 0`: 轮询间隔 (默认 disabled) [（详情）](/docs/revalidation)
+- `refreshWhenHidden = false`: 窗口不可见时进行轮询（如果启用了 `refreshInterval`）
+- `refreshWhenOffline = false`: 浏览器离线时轮询（由 `navigator.onLine` 确定）
+- `shouldRetryOnError = true`: fetcher 有错误时重试
+- `dedupingInterval = 2000`: 在该时间段内使用相同的 key 进行重复数据删除请求
+- `focusThrottleInterval = 5000`: 在一段时间内只重新验证一次
+- `loadingTimeout = 3000`: 超时触发 `onLoadingSlow` 事件
+- `errorRetryInterval = 5000`: 错误重试的时间间隔
+- `errorRetryCount`: 错误重试的最大次数
+- `onLoadingSlow(key, config)`: 请求加载时间过长时的回调函数（参考 `loadingTimeout`）
+- `onSuccess(data, key, config)`: 请求成功完成时的回调函数
+- `onError(err, key, config)`: 请求返回错误时的回调函数
+- `onErrorRetry(err, key, config, revalidate, revalidateOps)`: 错误重试的处理函数
+- `compare(a, b)`: 比较函数，用来检测返回的数据何时已更改，以防止伪造的重新渲染。默认情况下使用 [dequal](https://github.com/lukeed/dequal)。
+- `isPaused()`: 用于暂停所有数据请求，如果返回值为 `true`，请求的数据和错误都会被忽略。默认返回值为 `false`。
+
+<Callout emoji="💡">
+  网络较慢（2G, {'<='} 70Kbps）时， 默认情况下 <code>errorRetryInterval</code> 是 10s， {' '}
+  <code>loadingTimeout</code> 是 5s。
+</Callout>
+
+你还可以使用 [全局配置](/docs/global-configuration) 来提供默认选项。

@@ -23,7 +23,7 @@ Together with SWR, you can pre-render the page for SEO, and also have features s
 You can pass the pre-fetched data as the initial value to the `initialData` option. For example together with [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation):
 
 ```jsx
-export async function getStaticProps() {
+ export async function getStaticProps() {
   // `getStaticProps` is invoked on the server-side,
   // so this `fetcher` function will be executed on the server-side.
   const posts = await fetcher('/api/posts')
