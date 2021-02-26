@@ -3,17 +3,17 @@ import Callout from 'nextra-theme-docs/callout'
 import Bleed from 'nextra-theme-docs/bleed'
 import Link from 'next/link'
 
-# 自动重新验证
+# 自动重新请求
 
 <Callout>
-  如果你想手动重新验证数据，请查看 <Link href="/docs/mutation"><a href="/docs/mutation">mutation</a></Link>。
+  如果你想手动重新请求数据，请查看 <Link href="/docs/mutation"><a href="/docs/mutation">mutation</a></Link>。
 </Callout>
 
-## 聚焦时重新验证
+## 聚焦时重新请求
 
-当你重新聚焦一个页面或在标签页之间切换时，SWR 会自动重新验证数据。
+当你重新聚焦一个页面或在标签页之间切换时，SWR 会自动重新请求数据。
 
-这对于立即同步到最新状态非常有用。对于在 stale mobile tabs 或**休眠**的笔记本电脑等情况下刷新数据也很有帮助。
+这个功能非常实用，可以保持网站同步到最新数据。对于在长时间位于后台的标签页，或**休眠**的电脑等情况下刷新数据也很有帮助。
 
 <Bleed>
   <Video
@@ -25,7 +25,7 @@ import Link from 'next/link'
 
 该特性默认是启用的。你可以通过 [`revalidateOnFocus`](/docs/options) 选项禁用它。
 
-## 间隔重新验证
+## 定期重新请求
 
 在很多情况下，数据会因为多个设备、多个用户、多个选项卡而发生改变。那么我们如何随着时间的推移更新屏幕上的数据呢？
 
@@ -47,10 +47,10 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 还有其他选项，例如 `refreshWhenHidden` 和 `refreshWhenOffline`。这两项默认都是禁用的，所以当网页不在屏幕上或没有网络连接时，SWR 不会请求。
 
-## 重新连接时重新验证
+## 重新连接时重新请求
 
-当用户重新联机时重新验证非常有用。这种情况经常发生在用户解锁了他们的计算机但网络还没有连上时。
+当用户重新联机时重新请求非常有用。这种情况经常发生在用户解锁了他们的计算机但网络还没有连上时。
 
-为了确保数据始终是最新的，SWR 会在网络恢复时自动重新验证。
+为了确保数据始终是最新的，SWR 会在网络恢复时自动重新请求。
 
 该特性默认是启用的。你可以通过 [`revalidateOnReconnect`](/docs/options) 选项禁用它。
