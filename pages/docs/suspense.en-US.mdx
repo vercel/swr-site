@@ -2,7 +2,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 # Suspense
 
-<Callout emoji="🚨" background="bg-red-200">
+<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
   Suspense is current an <strong>experimental</strong> feature of React. These APIs may change significantly and without a warning before they become a part of React.
   <br/>
   <a href="https://reactjs.org/docs/concurrent-mode-suspense.html" target="_blank" rel="noopener">More information</a>
@@ -31,6 +31,10 @@ function App () {
   )
 }
 ```
+
+<Callout>
+  Note that the `suspense` option is not allowed to change in the lifecycle.
+</Callout>
 
 In Suspense mode, `data` is always the fetch response (so you don't need to check if it's `undefined`).
 But if an error occurred, you need to use an [error boundary](https://reactjs.org/docs/concurrent-mode-suspense.html#handling-errors) to catch it:

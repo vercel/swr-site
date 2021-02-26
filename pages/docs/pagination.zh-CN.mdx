@@ -207,9 +207,15 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
   - `revalidateAll = false`: 始终尝试重新验证所有页面
   - `persistSize = false`: 当第一页的 key 发生变化时，不将 page size（或者 `initialSize` 如果设置了该参数）重置为1
 
+<Callout>
+  请注意，`initialSize` 选项并不支持在渲染过程中发生改变。
+</Callout>
+
 #### 返回值
 
 - `data`: 一个数组，每个页面请求的响应值
+- `error`: 与 `useSWR` 的 `error` 返回值相同
+- `isValidating`: 与 `useSWR` 的 `isValidating` 返回值相同
 - `mutate`: 和 `useSWR` 的绑定 mutate 函数一样，但是操作 data 数组
 - `size`: _即将_请求和返回的页面数
 - `setSize`: 设置需要请求的页面数

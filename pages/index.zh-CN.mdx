@@ -1,16 +1,16 @@
-import Callout from 'nextra-theme-docs/callout'
-import Features from 'components/features'
+import Callout from "nextra-theme-docs/callout";
+import Features from "components/features";
 
 # SWR
 
-<Features/>
+<Features />
 
-“SWR” 这个名字来自于 `stale-while-revalidate`。一种由 [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861) 推广的 HTTP 缓存失效策略。SWR 是一种策略，它首先从缓存中返回数据（过期的），然后发送 fetch 请求（重新验证），最后得到最新数据。
+“SWR” 这个名字来自于 `stale-while-revalidate`：一种由 [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861) 推广的 HTTP 缓存失效策略。这种策略首先从缓存中返回数据（过期的），同时发送 fetch 请求（重新验证），最后得到最新数据。
 
 <Callout emoji="✅">
-  使用 SWR，组件将<strong>不断的</strong><strong>自动</strong>获得数据更新流。
-  <br/>
-  UI 也总是<strong>快速响应</strong>。
+  使用 SWR，组件将会<strong>不断地</strong>、<strong>自动</strong>获得最新数据流。
+  <br />
+  UI 也会一直保持<strong>快速响应</strong>。
 </Callout>
 
 ## 概览
@@ -43,13 +43,14 @@ function Profile() {
 - TypeScript ready
 - React Native
 
-SWR 涵盖了速度，正确性和稳定性的各个方面，以帮你建立更好的体验：
+SWR 涵盖了性能，正确性和稳定性的各个方面，以帮你建立更好的体验：
+
 - 快速页面导航
 - 间隔轮询
 - 数据依赖
 - 聚焦时重新验证
 - 网络恢复时重新验证
-- 本地更改 (Optimistic UI)
+- 本地缓存更新 (Optimistic UI)
 - 智能错误重试
 - 分页和滚动位置恢复
 - React Suspense
@@ -58,9 +59,21 @@ SWR 涵盖了速度，正确性和稳定性的各个方面，以帮你建立更�
 ## 社区
 
 <p className="flex h-6">
-  <img alt="stars" src="https://badgen.net/github/stars/vercel/swr" className="inline-block mr-2"/>
-  <img alt="downloads" src="https://badgen.net/npm/dt/swr" className="inline-block mr-2"/>
-  <img alt="license" src="https://badgen.net/npm/license/swr" className="inline-block mr-2"/>
+  <img
+    alt="stars"
+    src="https://badgen.net/github/stars/vercel/swr"
+    className="inline-block mr-2"
+  />
+  <img
+    alt="downloads"
+    src="https://badgen.net/npm/dt/swr"
+    className="inline-block mr-2"
+  />
+  <img
+    alt="license"
+    src="https://badgen.net/npm/license/swr"
+    className="inline-block mr-2"
+  />
 </p>
 
 SWR 由 [Next.js](https://nextjs.org)（React 框架）背后的同一团队创建。  

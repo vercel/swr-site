@@ -63,7 +63,7 @@ function Profile () {
 }
 ```
 
-Clicking the button in the example above will send a POST request to modify the remote data, locally update the client data and
+Clicking the button in the example above will locally update the client data, send a POST request to modify the remote data and
 try to fetch the latest one (revalidate).
 
 But many POST APIs will just return the updated data directly, so we don’t need to revalidate again.
@@ -79,14 +79,14 @@ mutate('/api/user', updateUser(newUser)) // `updateUser` is a Promise of the req
 
 Sometimes, you want to update a part of your data based on the current data.
 
-With `mutate`, you can pass an async function which will receive the current cached value, if any, and let you return an updated document.
+With `mutate`, you can pass an async function which will receive the current cached value, if any, and returns an updated document.
 
 ```jsx
 mutate('/api/todos', async todos => {
   // let's update the todo with ID `1` to be completed,
   // this API returns the updated data
   const updatedTodo = await fetch('/api/todos/1', {
-    method: 'PATCH'
+    method: 'PATCH',
     body: JSON.stringify({ completed: true })
   })
 

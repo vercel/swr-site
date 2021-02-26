@@ -80,7 +80,7 @@ mutate('/api/todos', async todos => {
   // 把 ID 为 1 的更新为 completed，
   // 该 API 返回更新后的数据
   const updatedTodo = await fetch('/api/todos/1', {
-    method: 'PATCH'
+    method: 'PATCH',
     body: JSON.stringify({ completed: true })
   })
 
