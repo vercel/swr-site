@@ -26,4 +26,4 @@ function prefetch () {
 }
 ```
 
-Together with techniques like [page prefetching](https://nextjs.org/docs#prefetching-pages) in Next.js, you will be able to load both next page and data instantly.
+Together with techniques like [page prefetching](https://nextjs.org/docs/api-reference/next/router#routerprefetch) in Next.js, you will be able to load both next page and data instantly.
