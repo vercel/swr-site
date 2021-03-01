@@ -28,4 +28,4 @@ function prefetch () {
 }
 ```
 
-配合 Next.js 的 [page prefetching](https://nextjs.org/docs#prefetching-pages)，你将能立即加载下一页和数据。
+配合 Next.js 的 [页面预加载](https://nextjs.org/docs/api-reference/next/router#routerprefetch)，你将能立即加载下一页和数据。
