@@ -7,7 +7,7 @@ import Link from 'next/link'
 { data, error } = useSWR(key, fetcher)
 ```
 
-这是 SWR 的基本 API。这里的 `fetcher` 是一个异步函数，它**接受** SWR 的 **`key`** 并返回数据。
+这是 SWR 的基本 API。这里的 `fetcher` 是一个异步函数，它 **接受** SWR 的 **`key`** 并返回数据。
 
 返回值将作为 `data` 传递，如果抛出错误，将作为  `error` 被捕获。
 
@@ -73,4 +73,4 @@ function App () {
 }
 ```
 
-_如果要把变量传递给 GraphQL query，请查看[多个参数](/docs/arguments)。_
+_如果要把变量传递给 GraphQL query，请查看 [多参数](/docs/arguments)。_

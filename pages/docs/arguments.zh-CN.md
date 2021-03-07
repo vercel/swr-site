@@ -16,9 +16,9 @@ useSWR('/api/user', fetcher)
 useSWR('/api/user', url => fetchWithToken(url, token))
 ```
 
-这是**错误的**。 因为数据的标识符（也是缓存 key）是 `'/api/user'`，所以即使 `token` 变了，SWR 仍然会使用相同的 key 并返回错误的数据。
+这是 **错误的**。 因为数据的标识符（也是缓存 key）是 `'/api/user'`，所以即使 `token` 变了，SWR 仍然会使用相同的 key 并返回错误的数据。
 
-相反，你可以使用一个**数组**作为参数 `key`，它包含 `fetcher` 的多个参数：
+相反，你可以使用一个 **数组** 作为参数 `key`，它包含 `fetcher` 的多个参数：
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
