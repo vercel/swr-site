@@ -43,8 +43,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `isPaused()`: 用于暂停所有数据请求，如果返回值为 `true`，请求的数据和错误都会被忽略。默认返回值为 `false`。
 
 <Callout emoji="💡">
-  网络较慢（2G, {'<='} 70Kbps）时， 默认情况下 <code>errorRetryInterval</code> 是 10s， {' '}
-  <code>loadingTimeout</code> 是 5s。
+  网络较慢（2G, {'<='} 70Kbps）时， 默认情况下 <code>errorRetryInterval</code> 为 10s， {' '}
+  <code>loadingTimeout</code> 为 5s。
 </Callout>
 
 你还可以使用 [全局配置](/docs/global-configuration) 来提供默认选项。

@@ -1,6 +1,6 @@
 # 参数
 
-默认情况下，`key` 将作为参数传递给 `fetcher`。所以下面这3个表达式是等价的：
+默认情况下，`key` 将作为参数传递给 `fetcher`。所以下面这 3 个表达式是等价的：
 
 ```js
 useSWR('/api/user', () => fetcher('/api/user'))
@@ -16,9 +16,9 @@ useSWR('/api/user', fetcher)
 useSWR('/api/user', url => fetchWithToken(url, token))
 ```
 
-这是**错误的**。 因为数据的标识符（也是缓存 key）是 `'/api/user'`，所以即使 `token` 变了，SWR 仍然会使用相同的 key 并返回错误的数据。
+这是 **错误的**。 因为数据的标识符（也是缓存 key）是 `'/api/user'`，所以即使 `token` 变了，SWR 仍然会使用相同的 key 并返回错误的数据。
 
-相反，你可以使用一个**数组**作为参数 `key`，它包含 `fetcher` 的多个参数：
+相反，你可以使用一个 **数组** 作为参数 `key`，它包含 `fetcher` 的多个参数：
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
@@ -36,7 +36,7 @@ const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
 
-现在请求的 key 是两个值的组合。SWR 在每次渲染时**浅**比较参数，如果其中任何一个发生了变化，就会触发重新验证。  
+现在请求的 key 是两个值的组合。SWR 在每次渲染时 **浅** 比较参数，如果其中任何一个发生了变化，就会触发重新验证。  
 请记住，在渲染时不应该重新创建对象，因为每次渲染时它们将被视为不同的对象：
 
 ```js
@@ -47,4 +47,4 @@ useSWR(['/api/user', { id }], query)
 useSWR(['/api/user', id], (url, id) => query(url, { id }))
 ```
 
-Dan Abramov 在[这篇博客](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect)中很好地解释了依赖关系。
+Dan Abramov 在 [这篇博客](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect) 中很好地解释了依赖关系。

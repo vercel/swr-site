@@ -1,4 +1,3 @@
-import DocSearch from 'components/docsearch'
 import { useRouter } from 'next/router'
 
 const Logo = ({ height }) => <svg height={height} viewBox="0 0 291 69" fill="none">
@@ -20,7 +19,8 @@ export default {
   repository: 'https://github.com/vercel/swr',
   docsRepository: 'https://github.com/vercel/swr-site',
   titleSuffix: ' – SWR',
-  customSearch: <DocSearch/>,
+  search: true,
+  UNSTABLE_stork: true,
   logo: () => {
     const { locale } = useRouter()
     return <>

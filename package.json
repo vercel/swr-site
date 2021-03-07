@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "start": "next",
-    "build": "next build"
+    "start": "next start",
+    "build": "STORK_PATH=$(pwd)/bin/stork.bin next build"
   },
   "author": "Shu Ding",
   "license": "MIT",
@@ -16,8 +16,8 @@
     "intersection-observer": "^0.10.0",
     "markdown-to-jsx": "^6.11.4",
     "next": "^10.0.7",
-    "nextra": "^0.4.1",
-    "nextra-theme-docs": "^1.1.2",
+    "nextra": "^0.4.3",
+    "nextra-theme-docs": "^1.1.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-intersection-observer": "^8.26.2"
