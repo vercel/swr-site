@@ -1,6 +1,6 @@
 # 参数
 
-默认情况下，`key` 将作为参数传递给 `fetcher`。所以下面这3个表达式是等价的：
+默认情况下，`key` 将作为参数传递给 `fetcher`。所以下面这 3 个表达式是等价的：
 
 ```js
 useSWR('/api/user', () => fetcher('/api/user'))
@@ -36,7 +36,7 @@ const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
 
-现在请求的 key 是两个值的组合。SWR 在每次渲染时**浅**比较参数，如果其中任何一个发生了变化，就会触发重新验证。  
+现在请求的 key 是两个值的组合。SWR 在每次渲染时 **浅** 比较参数，如果其中任何一个发生了变化，就会触发重新验证。  
 请记住，在渲染时不应该重新创建对象，因为每次渲染时它们将被视为不同的对象：
 
 ```js
@@ -47,4 +47,4 @@ useSWR(['/api/user', { id }], query)
 useSWR(['/api/user', id], (url, id) => query(url, { id }))
 ```
 
-Dan Abramov 在[这篇博客](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect)中很好地解释了依赖关系。
+Dan Abramov 在 [这篇博客](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect) 中很好地解释了依赖关系。

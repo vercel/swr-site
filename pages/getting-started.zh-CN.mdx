@@ -22,7 +22,7 @@ npm install swr
 对于返回 JSON 数据的普通 RESTful APIs，首先需要创建一个 `fetcher` 函数，这个函数只是原生 `fetch` 的包装：
 
 ```jsx
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const fetcher = (...args) => fetch(...args).then((res) => res.json())
 ```
 
 <Callout emoji="💡">
@@ -39,13 +39,13 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 import useSWR from "swr";
 
 function Profile() {
-  const { data, error } = useSWR("/api/user/123", fetcher);
+  const { data, error } = useSWR("/api/user/123", fetcher)
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
 
   // 渲染数据
-  return <div>hello {data.name}!</div>;
+  return <div>hello {data.name}!</div>
 }
 ```
 
@@ -57,13 +57,13 @@ function Profile() {
 
 ```jsx
 function useUser(id) {
-  const { data, error } = useSWR(`/api/user/${id}`, fetcher);
+  const { data, error } = useSWR(`/api/user/${id}`, fetcher)
 
   return {
     user: data,
     isLoading: !error && !data,
     isError: error,
-  };
+  }
 }
 ```
 
@@ -71,11 +71,11 @@ function useUser(id) {
 
 ```jsx
 function Avatar({ id }) {
-  const { user, isLoading, isError } = useUser(id);
+  const { user, isLoading, isError } = useUser(id)
 
-  if (isLoading) return <Spinner />;
-  if (isError) return <Error />;
-  return <img src={user.avatar} />;
+  if (isLoading) return <Spinner />
+  if (isError) return <Error />
+  return <img src={user.avatar} />
 }
 ```
 
@@ -118,24 +118,24 @@ function Avatar({ id }) {
 // 页面组件
 
 function Page() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
 
   // 请求数据
   useEffect(() => {
     fetch("/api/user")
       .then((res) => res.json())
-      .then((data) => setUser(data));
-  }, []);
+      .then((data) => setUser(data))
+  }, [])
 
   // 全局加载状态
-  if (!user) return <Spinner />;
+  if (!user) return <Spinner />
 
   return (
     <div>
       <Navbar user={user} />
       <Content user={user} />
     </div>
-  );
+  )
 }
 
 // 子组件
@@ -146,15 +146,15 @@ function Navbar({ user }) {
       ...
       <Avatar user={user} />
     </div>
-  );
+  )
 }
 
 function Content({ user }) {
-  return <h1>Welcome back, {user.name}</h1>;
+  return <h1>Welcome back, {user.name}</h1>
 }
 
 function Avatar({ user }) {
-  return <img src={user.avatar} alt={user.name} />;
+  return <img src={user.avatar} alt={user.name} />
 }
 ```
 
@@ -188,20 +188,20 @@ function Navbar() {
 }
 
 function Content() {
-  const { user, isLoading } = useUser();
-  if (isLoading) return <Spinner />;
-  return <h1>Welcome back, {user.name}</h1>;
+  const { user, isLoading } = useUser()
+  if (isLoading) return <Spinner />
+  return <h1>Welcome back, {user.name}</h1>
 }
 
 function Avatar() {
-  const { user, isLoading } = useUser();
-  if (isLoading) return <Spinner />;
-  return <img src={user.avatar} alt={user.name} />;
+  const { user, isLoading } = useUser()
+  if (isLoading) return <Spinner />
+  return <img src={user.avatar} alt={user.name} />
 }
 ```
 
-现在数据已**绑定**到需要该数据的组件上，并且所有组件都是相互**独立**的。所有的父组件都不需要关心关于数据或数据传递的任何信息。它们只是渲染。现在代码更简单，更易于维护了。
+现在数据已 **绑定** 到需要该数据的组件上，并且所有组件都是相互 **独立** 的。所有的父组件都不需要关心关于数据或数据传递的任何信息。它们只是渲染。现在代码更简单，更易于维护了。
 
-最美妙的是只有 **1 个请求**发送到 API，因为它们使用相同的 SWR key，并且请求自动**重复数据删除**、**缓存**和**共享**。
+最棒的是，只会有 **1 个请求** 发送到 API，因为它们使用相同的 SWR key，因此请求会被自动 **去除重复**、**缓存** 和 **共享**。
 
-而且，应用现在能够在[用户聚焦或网络重连](/docs/revalidation)时重新请求数据！这意味着当用户的笔记本电脑从睡眠状态唤醒或用户在切换浏览器标签页时，数据将自动刷新。
+而且，你的应用现在能够在 [用户聚焦或网络重连](/docs/revalidation) 时重新请求数据！这意味着当用户的笔记本电脑从睡眠状态唤醒，或用户在切换浏览器标签页时，数据将自动刷新。
