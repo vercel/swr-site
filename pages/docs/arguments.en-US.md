@@ -10,7 +10,7 @@ useSWR('/api/user', fetcher)
 
 ## Multiple Arguments
 
-In some scenarios, it's useful pass multiple arguments (can be any value or object) to the `fetcher` function. 
+In some scenarios, it's useful to pass multiple arguments (can be any value or object) to the `fetcher` function. 
 For example an authorized fetch request:
 
 ```js
