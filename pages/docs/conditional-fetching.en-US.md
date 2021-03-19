@@ -11,7 +11,7 @@ const { data } = useSWR(shouldFetch ? '/api/data' : null, fetcher)
 // ...or return a falsy value
 const { data } = useSWR(() => shouldFetch ? '/api/data' : null, fetcher)
 
-// ... or throw an error when user.id is not defined
+// ...or throw an error when user.id is not defined
 const { data } = useSWR(() => '/api/data?uid=' + user.id, fetcher)
 ```
 
