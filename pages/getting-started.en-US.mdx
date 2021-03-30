@@ -191,14 +191,14 @@ function Navbar () {
   </div>
 }
 
-function Content () {
-  const { user, isLoading } = useUser()
+function Content ( {id} ) {
+  const { user, isLoading } = useUser(id)
   if (isLoading) return <Spinner />
   return <h1>Welcome back, {user.name}</h1>
 }
 
-function Avatar () {
-  const { user, isLoading } = useUser()
+function Avatar ( {id} ) {
+  const { user, isLoading } = useUser(id)
   if (isLoading) return <Spinner />
   return <img src={user.avatar} alt={user.name} />
 }
