@@ -71,7 +71,7 @@ useSWR('/api/user', fetcher, {
     if (retryCount >= 10) return
 
     // 5秒后重试。
-    setTimeout(() => revalidate({ retryCount: retryCount + 1 }), 5000)
+    setTimeout(() => revalidate({ retryCount: retryCount }), 5000)
   }
 })
 ```
