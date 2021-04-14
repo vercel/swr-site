@@ -4,7 +4,7 @@ import Link from 'next/link'
 # Data Fetching
 
 ```js
-{ data, error } = useSWR(key, fetcher)
+const { data, error } = useSWR(key, fetcher)
 ```
 
 This is the very fundamental API of SWR. The `fetcher` here is an async function that **accepts the `key`** of SWR, and returns the data.
