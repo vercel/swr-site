@@ -2,7 +2,7 @@
 
 ## Conditional
 
-Use `null` or pass a function as `key` to conditionally fetch data. If the function throws or returns a falsy value, SWR will not start the request.
+Use `null` or pass a function as `key` to conditionally fetch data. If the function throws or returns a false value, SWR will not start the request.
 
 ```js
 // conditionally fetch
