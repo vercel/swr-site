@@ -5,16 +5,17 @@ import Features from 'components/features'
 
 <Features/>
 
-The name “SWR” is derived from `stale-while-revalidate`, a HTTP cache invalidation strategy popularized by [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861). 
-SWR is a strategy to first return the data from cache (stale), then send the fetch request (revalidate), and finally come with the up-to-date data.
+“SWR” という名前は、 [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861) で提唱された HTTP キャッシュ無効化戦略である `stale-while-revalidate` に由来しています。
+SWR は、まずキャッシュからデータを返し(stale)、次にフェッチリクエストを送り(revalidate)、最後に最新のデータを持ってくるという戦略です。
 
 <Callout emoji="✅">
-  With SWR, components will get a stream of data updates <strong>constantly</strong> and <strong>automatically</strong>.
+  SWR では、 コンポーネントはデータの更新を<strong>継続的</strong>かつ<strong>自動的</strong>に受け取る事が出来ます。
   <br/>
-  And the UI will be always <strong>fast</strong> and <strong>reactive</strong>.
+  そして、 UI は常に<strong>高速</strong>で<strong>リアクティブ</strong>
+  なモノになります。
 </Callout>
 
-## Overview
+## 概要
 
 ```jsx
 import useSWR from 'swr'
@@ -28,36 +29,36 @@ function Profile() {
 }
 ```
 
-In this example, the `useSWR` hook accepts a `key` string and a `fetcher` function. `key` is a unique identifier of the data (normally the API URL) 
-and will be passed to `fetcher`. `fetcher` can be any asynchronous function which returns the data, you can use the native fetch or tools like Axios.
+この例では、`useSWR` フックは `key` 文字列と `fetcher` 関数を受け取ります。 `key` はデータの一意な識別子( 通常は API の URL )で、`fetcher` に渡されます。
+`fetcher` はデータを返す任意の非同期関数で、ネイティブの fetch や Axios のようなツールを使うことが出来ます。
 
-The hook returns 2 values: `data` and `error`, based on the status of the request.
+このフックは、リクエストの状態に基づいて `data` と `error` の 2 つの値を返します。
 
-## Features
+## 特徴
 
-With just one single line of code, you can simplify the logic of data fetching in your project, and also have all these amazing features out-of-the-box:
+たった 1 行のコードで、プロジェクト内のデータ取得のロジックを単純化し、さらにこれらの素晴らしい機能をすぐに利用できるようになります:
 
-- **Jamstack** oriented
-- **Fast**, **lightweight** and **reusable** data fetching
-- Built-in **cache** and request deduplication
-- **Real-time** experience
-- Transport and protocol agnostic
-- TypeScript ready
+- **Jamstack** 指向
+- **速い**、 **軽量** そして **再利用可能** なデータの取得
+- 組み込みの **キャッシュ** とリクエストの重複排除
+- **リアルタイム** な体験
+- トランスポートとプロトコルにとらわれない
+- TypeScript 対応
 - React Native
 
-SWR has you covered in all aspects of speed, correctness, and stability to help you build better experiences:
-- Fast page navigation
-- Polling on interval
-- Data dependency
-- Revalidation on focus
-- Revalidation on network recovery
-- Local mutation (Optimistic UI)
-- Smart error retry
-- Pagination and scroll position recovery
+SWR は、スピード、正確性、安定性のすべての面をカバーし、より良い体験を構築するのに役立ちます:
+- 高速なページナビゲーション
+- 定期的にポーリングする
+- データの依存関係
+- フォーカス時の再検証
+- ネットワーク回復時の再検証
+- ローカルキャッシュの更新 (Optimistic UI)
+- スマートなエラーの再試行
+- ページネーションとスクロールポジションの回復
 - React Suspense
 - ...
 
-## Community
+## コミュニティ
 
 <p className="flex h-6">
   <img alt="stars" src="https://badgen.net/github/stars/vercel/swr" className="inline-block mr-2"/>
@@ -65,7 +66,7 @@ SWR has you covered in all aspects of speed, correctness, and stability to help 
   <img alt="license" src="https://badgen.net/npm/license/swr" className="inline-block mr-2"/>
 </p>
 
-SWR is created by the same team behind [Next.js](https://nextjs.org), the React framework.  
-Follow [@vercel](https://twitter.com/vercel) on Twitter for future project updates.
+SWR は、React フレームワークである [Next.js](https://nextjs.org) と同じチームによって作られています。
+今後のプロジェクトのアップデートについては、Twitter で [@vercel](https://twitter.com/vercel) をフォローしてください。
 
-Feel free to join the [discussions on GitHub](https://github.com/vercel/swr/discussions)!
+お気軽に [GitHub のディスカッション](https://github.com/vercel/swr/discussions) に参加してください！
