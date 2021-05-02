@@ -1,33 +1,32 @@
-# Conditional Fetching
+# 条件付きフェッチ
 
-## Conditional
+## 条件付き
 
-Use `null` or pass a function as `key` to conditionally fetch data. If the function throws or returns a falsy value, SWR will not start the request.
+条件付きでデータを取得するには `null` を使用するか、 `key` として関数を渡します。関数がスローまたは falsy な値を返した場合、 SWR はリクエストを開始しません。
 
 ```js
-// conditionally fetch
+// 条件付きでフェッチする
 const { data } = useSWR(shouldFetch ? '/api/data' : null, fetcher)
 
-// ...or return a falsy value
+// ...または、falsyな値を返します
 const { data } = useSWR(() => shouldFetch ? '/api/data' : null, fetcher)
 
-// ...or throw an error when user.id is not defined
+// ...または、user.id が定義されてない場合にスローします
 const { data } = useSWR(() => '/api/data?uid=' + user.id, fetcher)
 ```
 
-## Dependent
+## 依存性
 
-SWR also allows you to fetch data that depends on other data. It ensures the maximum possible parallelism (avoiding waterfalls), as well as serial fetching when a piece of dynamic data is required for the next data fetch to happen.
+SWR では、他のデータに依存するデータをフェッチする事もできます。これにより、可能な限り最大の並列性(ウォーターフォールの回避)を確保すると共に、次のデータフェッチのために動的なデータの一部が必要な場合には、シリアルフェッチを行うことができます。
 
 ```js
 function MyProjects () {
   const { data: user } = useSWR('/api/user')
   const { data: projects } = useSWR(() => '/api/projects?uid=' + user.id)
-  // When passing a function, SWR will use the return
-  // value as `key`. If the function throws or returns
-  // falsy, SWR will know that some dependencies are not
-  // ready. In this case `user.id` throws when `user`
-  // isn't loaded.
+  // 関数を渡す場合、SWRは戻り値を`key`として使用します。
+  // 関数がスローまたはfalsyな値を返す場合、
+  // SWRはいくつかの依存関係が準備できてない事を知ることが出来ます。
+  // この例では、`user.id`は`user`がロードされてない時にスローします。
 
   if (!projects) return 'loading...'
   return 'You have ' + projects.length + ' projects'
