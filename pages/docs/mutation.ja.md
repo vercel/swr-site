@@ -1,12 +1,11 @@
-# Mutation
+# ミューテーション
 
-## Revalidate
+## 再検証
 
-You can broadcast a revalidation message globally to all SWRs with the same key by calling
-`mutate(key)`.
+同じキーで `mutate(key)` を呼び出すことによって、SWR 全体に再検証のメッセージを送ることができます。
 
-This example shows how to automatically refetch the login info (e.g. inside `<Profile/>`)
-when the user clicks the “Logout” button.
+次の例では、ユーザーが "Logout" ボタンをクリックしたときに、ログイン情報
+（例えば `<Profile/> `の中身）を自動的に取得する方法を示します。
 
 ```jsx
 import useSWR, { mutate } from 'swr'
@@ -16,10 +15,10 @@ function App () {
     <div>
       <Profile />
       <button onClick={() => {
-        // set the cookie as expired
+        // クッキーを期限切れとして設定します
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
 
-        // tell all SWRs with this key to revalidate
+        // このキーを使用してすべての SWR に再検証するように指示します
         mutate('/api/user')
       }}>
         Logout
@@ -29,13 +28,13 @@ function App () {
 }
 ```
 
-## Mutation and POST Request
+## ミューテーションと POST リクエスト
 
-In many cases, applying local mutations to data is a good way to make changes
-feel faster — no need to wait for the remote source of data.
+多くの場合、データにローカルミューテーションを適用することは、変更をより速く
+感じさせるための良い方法です。データのリモートソースを待つ必要はありません。
 
-With `mutate`, you can update your local data programmatically, while
-revalidating and finally replace it with the latest data.
+`mutate` を使用すると、再検証の間にプログラムでローカルデータを更新しておき、
+最終的に最新のデータに置き換えることができます。
 
 ```jsx
 import useSWR, { mutate } from 'swr'
@@ -49,13 +48,13 @@ function Profile () {
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
         
-        // update the local data immediately, but disable the revalidation
+        // 再検証をせずに直ちにローカルデータを更新します
         mutate('/api/user', { ...data, name: newName }, false)
         
-        // send a request to the API to update the source
+        // ソースを更新するために API にリクエストを送信します
         await requestUpdateUsername(newName)
         
-        // trigger a revalidation (refetch) to make sure our local data is correct
+        // ローカルデータが最新であることを確かめるために再検証（再取得）を起動します
         mutate('/api/user')
       }}>Uppercase my name!</button>
     </div>
@@ -63,58 +62,58 @@ function Profile () {
 }
 ```
 
-Clicking the button in the example above will locally update the client data, send a POST request to modify the remote data and
-try to fetch the latest one (revalidate).
+上記の例でボタンをクリックすると、ローカルでクライアントデータを更新し、
+リモートデータを修正するための POST リクエストを送信して、最新のデータを取得します（再検証）。
 
-But many POST APIs will just return the updated data directly, so we don’t need to revalidate again.
-Here’s an example showing the “local mutate - request - update” usage:
+ただし、多くの POST API は更新されたデータを直接返すだけなので、再度再検証する必要はありません。
+「ローカルミューテート - リクエスト - 更新」の使用法を示す例を次に示します。
 
 ```jsx
-mutate('/api/user', newUser, false)      // use `false` to mutate without revalidation
-mutate('/api/user', updateUser(newUser)) // `updateUser` is a Promise of the request,
-                                         // which returns the updated document
+mutate('/api/user', newUser, false)      // 再検証せずに変更するには、`false` を使用します
+mutate('/api/user', updateUser(newUser)) // `updateUser` は、このリクエストの Promise であり、
+                                         // 更新されたドキュメントを返します
 ```
 
-## Mutate Based on Current Data
+## 現在のデータにもとづいたミューテート
 
-Sometimes, you want to update a part of your data based on the current data.
+現在のデータにもとづいて、データの一部を更新したい場合があります。
 
-With `mutate`, you can pass an async function which will receive the current cached value, if any, and returns an updated document.
+`mutate` を使用すると、現在キャッシュされている値がある場合はそれを受け取り、更新されたドキュメントを返す非同期関数を渡すことができます。
 
 ```jsx
 mutate('/api/todos', async todos => {
-  // let's update the todo with ID `1` to be completed,
-  // this API returns the updated data
+  // 完了するために ID `1` で todo を更新しましょう。
+  // この API は更新されたデータを返します。
   const updatedTodo = await fetch('/api/todos/1', {
     method: 'PATCH',
     body: JSON.stringify({ completed: true })
   })
 
-  // filter the list, and return it with the updated item
+  // リストをフィルタリングし、更新されたアイテムを返します
   const filteredTodos = todos.filter(todo => todo.id !== '1')
   return [...filteredTodos, updatedTodo]
 })
 ```
 
-## Returned Data from Mutate
+## ミューテートから返されたデータ
 
-Most probably, you need some data to update the cache. The data is resolved or returned from the promise or async function you passed to `mutate`.
+ほとんどの場合、キャッシュを更新するためにいくつかのデータが必要です。データは、`mutate` に渡された promise や非同期関数から解決または返されます。
 
-The function will return an updated document to let `mutate` update the corresponding cache value. It could throw an error somehow, every time when you call it.
+この関数は、`mutate` が対応するキャッシュ値を更新できるように、更新されたドキュメントを返します。呼び出すたびに、なんらかのエラーが発生する可能性があります。
 
 ```jsx
 try {
   const user = await mutate('/api/user', updateUser(newUser))
 } catch (error) {
-  // Handle an error while updating the user here
+  // ここでユーザーの更新中にエラーを処理します
 }
 ```
 
-## Bound Mutate
+## バウンドミューテート
 
-The SWR object returned by `useSWR` also contains a `mutate()` function that is pre-bound to the SWR's key.
+`useSWR` によって返される SWR オブジェクトには、SWR のキーに事前にバインドされている `mutate()` 関数も含まれています。
 
-It is functionally equivalent to the global `mutate` function but does not require the `key` parameter.
+機能的にはグローバルな `mutate` 関数と同等ですが、`key` パラメーターは必要ありません。
 
 ```jsx
 import useSWR from 'swr'
@@ -127,10 +126,10 @@ function Profile () {
       <h1>My name is {data.name}.</h1>
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
-        // send a request to the API to update the data
+        // このデータを更新するために API へリクエストを送ります
         await requestUpdateUsername(newName)
-        // update the local data immediately and revalidate (refetch)
-        // NOTE: key is not required when using useSWR's mutate as it's pre-bound
+        // ローカルデータをすぐに更新し、再検証（再フェッチ）します
+        // 注：useSWR の mutate を事前にバインドされているものとして使用する場合にはキーは必要ありません
         mutate({ ...data, name: newName })
       }}>Uppercase my name!</button>
     </div>
