@@ -1,18 +1,18 @@
 import Callout from 'nextra-theme-docs/callout'
 
-# Suspense
+# サスペンス
 
 <Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
-  Suspense is current an <strong>experimental</strong> feature of React. These APIs may change significantly and without a warning before they become a part of React.
+  サスペンスは現在、React の<strong>実験的な</strong>機能です。これらの API は、React の一部になる前に、警告なしに大幅に変更される可能性があります。
   <br/>
-  <a href="https://reactjs.org/docs/concurrent-mode-suspense.html" target="_blank" rel="noopener">More information</a>
+  <a href="https://reactjs.org/docs/concurrent-mode-suspense.html" target="_blank" rel="noopener">詳しい情報</a>
 </Callout>
 
 <Callout>
-  Note that React Suspense is not yet supported in SSR mode.
+  React サスペンスは SSR モードではまだサポートされていないことに注意してください。
 </Callout>
 
-You can enable the `suspense` option to use SWR with React Suspense:
+React サスペンスで SWR を使用するには、 `suspense` オプションを有効にします。
 
 ```jsx
 import { Suspense } from 'react'
@@ -33,11 +33,11 @@ function App () {
 ```
 
 <Callout>
-  Note that the `suspense` option is not allowed to change in the lifecycle.
+  `suspense` オプションは、ライフサイクル内では変更できないことに注意してください。
 </Callout>
 
-In Suspense mode, `data` is always the fetch response (so you don't need to check if it's `undefined`).
-But if an error occurred, you need to use an [error boundary](https://reactjs.org/docs/concurrent-mode-suspense.html#handling-errors) to catch it:
+サスペンスモードでの `data` は常にフェッチのレスポンスです（よって `undefined` かどうかをチェックする必要はありません）。
+ただし、エラーが発生した場合は、エラーをキャッチするために[エラーバウンダリー](https://reactjs.org/docs/concurrent-mode-suspense.html#handling-errors)を使う必要があります：
 
 ```jsx
 <ErrorBoundary fallback={<h2>Could not fetch posts.</h2>}>
@@ -49,28 +49,28 @@ But if an error occurred, you need to use an [error boundary](https://reactjs.or
 
 ---
 
-### Note: With Conditional Fetching
+### 注：条件付きフェッチを使用する場合
 
-Normally, when you enabled `suspense` it's guaranteed that `data` will always be ready on render:
+通常、`suspense` を有効にすると、レンダリング時に `data` が常に準備ができていることが保証されます：
 
 ```jsx
 function Profile () {
   const { data } = useSWR('/api/user', fetcher, { suspense: true })
 
-  // `data` will never be `undefined`
+  // `data` は決して `undefined` にはなりません
   // ...
 }
 ```
 
-However, when using it together with conditional fetching or dependent fetching, `data` will be `undefined` if the request is **paused**:
+ただし、条件付きフェッチまたは依存フェッチと一緒に使用すると、リクエストが**一時停止**された場合に `data` は `undefined` なります：
 
 ```jsx
 function Profile () {
   const { data } = useSWR(isReady ? '/api/user' : null, fetcher, { suspense: true })
 
-  // `data` will be `undefined` if `isReady` is false
+  // `isReady` が false のときには `data` は `undefined` になります
   // ...
 }
 ```
 
-If you want to read more technical details about this restriction, check [the discussion here](https://github.com/vercel/swr/pull/357#issuecomment-627089889).
+この制限に関する技術的な詳細を読みたい場合は、[こちらの議論](https://github.com/vercel/swr/pull/357#issuecomment-627089889)を確認してください。
