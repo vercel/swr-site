@@ -16,12 +16,12 @@ export const ReleasesRenderer = () => {
         .replace(/&#39;/g, "'")
         .replace(/@([a-zA-Z0-9_-]+)(?=(,| ))/g, '<a href="https://github.com/$1" target="_blank" rel="noopener">@$1</a>')
       return `## <a href="${release.html_url}" target="_blank" rel="noopener">${release.tag_name}</a> 
-Published on ${new Date(release.published_at) .toDateString()}.\n\n${body}`}).join('\n\n')
+${new Date(release.published_at) .toDateString()} に公開\n\n${body}`}).join('\n\n')
   }</Markdown>
 }
 
-# Change Log
+# 変更履歴
 
-Please visit the [SWR release page](https://github.com/vercel/swr/releases) for all history releases.
+すべてのリリース履歴については、 [SWR のリリースページ](https://github.com/vercel/swr/releases) にアクセスしてください。
 
 <ReleasesRenderer/>
