@@ -1,29 +1,29 @@
-# Prefetching Data
+# データのプリフェッチ
 
-## Top-Level Page Data
+## トップレベルのページデータ
 
-There’re many ways to prefetch the data for SWR. For top level requests, [`rel="preload"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content) is highly recommended:
+SWR のデータをプリフェッチする方法はたくさんあります。トップレベルのリクエストでは、 [`rel="preload"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content) を強く推奨します。
 
 ```html
 <link rel="preload" href="/api/data" as="fetch" crossorigin="anonymous">
 ```
 
-Just put it inside your HTML `<head>`. It’s easy, fast and native.
+HTMLの `<head>` の中に入れるだけです。簡単、速い、そしてネイティブです。
 
-It will prefetch the data when the HTML loads, even before JavaScript starts to download. All your incoming fetch requests with the same URL will reuse the result (including SWR, of course).
+JavaScriptのダウンロードが開始される前であっても、HTMLの読み込み時にデータをプリフェッチします。同じ URL で受信したすべてのフェッチリクエストは、その結果を再利用します（もちろん、 SWR を含む）。
 
-## Programmatically Prefetch
+## プログラムによるプリフェッチ
 
-Sometimes, you want to preload a resource conditionally. For example, preloading the data when the user is [hovering](https://github.com/GoogleChromeLabs/quicklink) [a](https://github.com/guess-js/guess) [link](https://instant.page). The most inituitive way is to have a function to refetch and set the cache via the global [mutate](/docs/mutation):
+しばしば、リソースを条件付きでプリロードしたい場合があります。例えば、ユーザーが [hovering](https://github.com/GoogleChromeLabs/quicklink) [a](https://github.com/guess-js/guess) [link](https://instant.page) にカーソルを合わせたときにデータをプリロードするような場合です。最も直観的な方法は、グローバルミューテートを使ってキャッシュを再取得し、設定する関数を作成することです。
 
 ```js
 import { mutate } from 'swr'
 
 function prefetch () {
   mutate('/api/data', fetch('/api/data').then(res => res.json()))
-  // the second parameter is a Promise
-  // SWR will use the result when it resolves
+  // 2番目のパラメータはPromise
+  // SWRは、その結果を解決する際に使用します。
 }
 ```
 
-Together with techniques like [page prefetching](https://nextjs.org/docs/api-reference/next/router#routerprefetch) in Next.js, you will be able to load both next page and data instantly.
+Next.js の [ページプリフェッチ](https://nextjs.org/docs/api-reference/next/router#routerprefetch) などの技術と合わせて、次のページとデータの両方を瞬時に読み込むことができるようになります。
