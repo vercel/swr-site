@@ -3,54 +3,54 @@ import Callout from 'nextra-theme-docs/callout'
 import Bleed from 'nextra-theme-docs/bleed'
 import Link from 'next/link'
 
-# Automatic Revalidation
+# 自動再検証
 
 <Callout>
-  If you want to manually revalidate the data, check <Link href="/docs/mutation"><a href="/docs/mutation">mutation</a></Link>.
+  データを手動で再検証する場合は、<Link href="/docs/mutation"><a href="/docs/mutation">ミューテーション</a></Link>を確認してください。
 </Callout>
 
-## Revalidate on Focus
+## フォーカス時の再検証
 
-When you re-focus a page or switch between tabs, SWR automatically revalidates data.
+ページにフォーカスを合わせるかタグを切りかえると、SWR は自動的にデータを再検証します。
 
-This can be useful to immediately synchronize to the latest state. This is helpful for refreshing data in scenarios like stale mobile tabs, or laptops that **went to sleep**.
+これは、すぐに最新の状態に同期するのに便利です。古いモバイルタブや**スリープ状態になった**ラップトップなどのシナリオでデータを更新する場合に役立ちます。
 
 <Bleed>
   <Video
     src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/focus-revalidate.mp4"
-    caption="Video: using focus revalidation to automatically sync login state between pages."
+    caption="ビデオ：フォーカスの再検証を使用して、ページ間でログイン状態を自動的に同期します。"
     ratio={307/768}
   />
 </Bleed>
 
-This feature is enabled by default. You can disable it via the [`revalidateOnFocus`](/docs/options) option.
+この機能はデフォルトで有効になっています。[`revalidateOnFocus`](/docs/options) オプションで無効にできます。
 
-## Revalidate on Interval
+## 定期的な再検証
 
-In many cases, data changes because of multiple devices, multiple users, multiple tabs. How can we over time update the data on screen?
+多くの場合、複数のデバイス、複数のユーザー、複数のタブが原因でデータが変更されます。画面上のデータを時間の経過とともに更新するにはどうすればよいのでしょうか？
 
-SWR will give you the option to automatically refetch data. It’s **smart** which means refetching will only happen if the component associated with the hook is **on screen**.
+SWRには、データを自動的に再フェッチするオプションがあります。その動きは非常に**スマート**で、フックに関連付けられているコンポーネントが**画面に表示されている**場合にのみ、再フェッチが行われます。
 
 <Bleed>
   <Video
     src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/refetch-interval.mp4"
-    caption="Video: when a user makes a change, both sessions will eventually render the same data."
+    caption="ビデオ：ユーザーが変更を加えると、両方のセッションで最終的に同じデータをレンダリングします。"
     ratio={307/768}
   />
 </Bleed>
 
-You can enable it by setting a [`refreshInterval`](/docs/options) value:
+[`refreshInterval`](/docs/options) 値を設定することで有効にできます：
 
 ```js
 useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 ```
 
-There're also options such as `refreshWhenHidden` and `refreshWhenOffline`. Both are disabled by default so SWR won't fetch when the webpage is not on screen, or there's no network connection.
+`refreshWhenHidden` や `refreshWhenOffline` などのオプションもあります。両方ともデフォルトで無効になっているため、ウェブページが画面に表示されていない場合、またはネットワーク接続がない場合、SWR はフェッチしません
 
-## Revalidate on Reconnect
+## 再接続時の再検証
 
-It's useful to also revalidate when the user is back online. This scenario happens a lot when the user unlocks their computer, but the internet is not yet connected at the same moment.
+ユーザーがオンラインに戻ったときに再検証することも役立ちます。このシナリオは、ユーザーがコンピューターのロックを解除したときに頻繁に発生しますが、この時点ではまだインターネットは接続されていません。
 
-To make sure the data is always up-to-date, SWR automatically revalidates when network recovers.
+データが常に最新であることを確認するために、SWR はネットワークが回復したときに自動的に再検証します。
 
-This feature is enabled by default. You can disable it via the [`revalidateOnReconnect`](/docs/options) option.
+この機能はデフォルトで有効になっています。[`revalidateOnReconnect`](/docs/options) オプションで無効にできます。
