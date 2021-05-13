@@ -1,6 +1,6 @@
-# Arguments
+# 引数
 
-By default, `key` will be passed to `fetcher` as the argument. So the following 3 expressions are equivalent:
+デフォルトで `key` は引数として `fetcher` に渡されます。したがって、次の三つの式は同等です：
 
 ```js
 useSWR('/api/user', () => fetcher('/api/user'))
@@ -8,46 +8,46 @@ useSWR('/api/user', url => fetcher(url))
 useSWR('/api/user', fetcher)
 ```
 
-## Multiple Arguments
+## 複数の引数
 
-In some scenarios, it's useful to pass multiple arguments (can be any value or object) to the `fetcher` function. 
-For example an authorized fetch request:
+一部のシナリオでは、`fetcher` 関数に複数の引数（任意の値またはオブジェクト）を渡すと便利です。
+たとえば、認証されたフェッチリクエスト：
 
 ```js
 useSWR('/api/user', url => fetchWithToken(url, token))
 ```
 
-This is **incorrect**. Because the identifier (also the cache key) of the data is `'/api/user'`, 
-even if `token` changes, SWR will still use the same key and return the wrong data. 
+これは**正しくありません**。データの識別子（キャッシュキーも） `'/api/user'` であるため、
+`token` が変更された場合でも、SWR は同じキーを使用してしまい間違ったデータを返します。
 
-Instead, you can use an **array** as the `key` parameter, which contains multiple arguments of `fetcher`:
+代わりに、`fetcher` の複数の引数を含む**配列**を `key` パラメーターとして使用できます。
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 ```
 
-The function `fetchWithToken` still accepts the same 2 arguments, but the cache key will also be associated with `token` now.
+この関数 `fetchWithToken` は引き続き同じ二つの引数を受け取りますが、キャッシュキーも `token` と関連付けられます。
 
-## Passing Objects
+## オブジェクトの受け渡し
 
-Say you have another function that fetches data with a user scope: `fetchWithUser(api, user)`. You can do the following:
+ユーザースコープでデータをフェッチする別の関数 `fetchWithUser(api, user)` があるとします。次のようなことができます：
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
-// ...and pass it as an argument to another query
+// ...そして、これを引数として別のクエリに渡します
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
 
-The key of the request is now the combination of both values. SWR **shallowly** compares
-the arguments on every render, and triggers revalidation if any of them has changed.  
-Keep in mind that you should not recreate objects when rendering, as they will be treated as different objects on every render:
+リクエストのキーは、両方の値の組み合わせになりました。SWR は、すべてのレンダリングで
+引数を**浅く**比較し、引数のいずれかが変更された場合は再検証を開始します。
+オブジェクトはレンダリングごとに異なるオブジェクトとして扱われるため、レンダリング時にオブジェクトを再作成しないでください。
 
 ```js
-// Don’t do this! Deps will be changed on every render.
+// このようにしないでください！深さをもつオブジェクトはレンダリングごとに変更されます。
 useSWR(['/api/user', { id }], query)
 
-// Instead, you should only pass “stable” values.
+// 代わりに、"安定した" 値のみを渡す必要があります。
 useSWR(['/api/user', id], (url, id) => query(url, { id }))
 ```
 
-Dan Abramov explains dependencies very well in [this blog post](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect).
+Dan Abramov は、[こちらのブログ投稿](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect) で依存関係について非常によく説明しています。
