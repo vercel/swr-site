@@ -1,9 +1,9 @@
 import Callout from 'nextra-theme-docs/callout'
 import Link from 'next/link'
 
-# Error Handling
+# エラーハンドリング
 
-If an error is thrown inside [`fetcher`](/docs/data-fetching), it will be returned as `error` by the hook. 
+もし [`fetcher`](/docs/data-fetching) 内でエラーが投げられた場合、フックは `error` として返します。
 
 ```js
 const fetcher = url => fetch(url).then(r => r.json())
@@ -12,25 +12,25 @@ const fetcher = url => fetch(url).then(r => r.json())
 const { data, error } = useSWR('/api/user', fetcher)
 ```
 
-The `error` object will be defined if the fetch promise is rejected.
+フェッチの promise がリジェクトされた場合、 `error` オブジェクトが定義されます。
 
-## Status Code and Error Object
+## ステータスコードとエラーオブジェクト
 
-Sometimes we want an API to return an error object alongside the status code. 
-Both of them are useful for the client.
+しばしば、 API にステータスコードと一緒にエラーオブジェクトを返して欲しいと思うことがあります。
+どちらもクライアントにとっては便利なものです。
 
-We can customize our `fetcher` to return more information. If the status code is not `2xx`, 
-we consider it an error even if it can be parsed as JSON:
+`fetcher` をカスタマイズすることで、より多くの情報を返すことができます。もしステータスコードが `2xx` でない場合は、
+たとえ JSON としてパースできたとしても、エラーとみなします。
 
 ```js
 const fetcher = async url => {
   const res = await fetch(url)
 
-  // If the status code is not in the range 200-299,
-  // we still try to parse and throw it.
+  // もしステータスコードが 200-299 の範囲内では無い場合、
+  // レスポンスをパースして投げようとします。
   if (!res.ok) {
     const error = new Error('An error occurred while fetching the data.')
-    // Attach extra info to the error object.
+    // エラーオブジェクトに追加情報を付与します。
     error.info = await res.json()
     error.status = res.status
     throw error
@@ -49,53 +49,53 @@ const { data, error } = useSWR('/api/user', fetcher)
 ```
 
 <Callout emoji="💡">
-  Note that <code>data</code> and <code>error</code> can exist at the same time. So the UI can display the existing data,
-  while knowing the upcoming request has failed. 
+  <code>データ</code> と <code>エラー</code> は同時に存在することに注意してください。そのため、 UI は次のリクエストが失敗したことを知りながら、
+  既存のデータを表示することができます。
 </Callout>
 
-[Here](/examples/error-handling) we have an example.
+[ここ](/examples/error-handling)ではその例を紹介しています。
 
-## Error Retry
+## エラー時の再試行
 
-SWR uses the [exponential backoff algorithm](https://en.wikipedia.org/wiki/Exponential_backoff) to retry the request on error.
-The algorithm allows the app to recover from errors quickly, but not waste resources retrying too often.
+SWR は [exponential backoff アルゴリズム](https://en.wikipedia.org/wiki/Exponential_backoff)を使用して、エラー時にリクエストを再試行します。
+このアルゴリズムにより、アプリはエラーから素早く回復することができますが、再試行しすぎてリソースを無駄にすることはありません。
 
-You can also override this behavior via the [onErrorRetry](/docs/options#options) option:
+また [onErrorRetry](/docs/options#options) オプションで、この動作をオーバーライドすることもできます:
 
 ```js
 useSWR('/api/user', fetcher, {
   onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-    // Never retry on 404.
+    // 404では再試行しない。
     if (error.status === 404) return
 
-    // Never retry for a specific key.
+    // 特定のキーでは再試行しない。
     if (key === '/api/user') return
 
-    // Only retry up to 10 times.
+    // 再試行は10回までしかできません。
     if (retryCount >= 10) return
 
-    // Retry after 5 seconds.
+    // 5秒後に再試行します。
     setTimeout(() => revalidate({ retryCount }), 5000)
   }
 })
 ```
 
-This callback gives you the flexibility to retry based on various conditions. You can also disable it by setting `shouldRetryOnError: false`.
+このコールバックは、様々な条件にもとづいて再試行する柔軟性を提供します。 `shouldRetryOnError: false` を設定することで、この機能を無効にすることもできます。
 
-It's also possible to provide it via the [Global Configuration](/docs/global-configuration) context.
+また、 [グローバルな設定](/docs/global-configuration)のコンテキストを介して提供することもできます。
 
-## Global Error Report
+## グローバルエラーの報告
 
-You can always get the `error` object inside the component reactively. 
-But in case you want to handle the error globally, to notify the UI to show a [toast](https://vercel.com/design/toast) or a [snackbar](https://material.io/components/snackbars), or report it somewhere such as [Sentry](https://sentry.io),
-there's an [`onError`](/docs/options#options) event:
+コンポーネント内の `error` オブジェクトをいつでもリアクティブに取得することができます。
+ただし、エラーをグローバルに処理したり、 [トースト](https://vercel.com/design/toast) や [スナックバー](https://material.io/components/snackbars) を表示するように UI に通知したり、 [Sentry](https://sentry.io) などの場所で報告する場合は、
+[`onError`](/docs/options#options) イベントがあります:
 
 ```jsx
 <SWRConfig value={{
   onError: (error, key) => {
     if (error.status !== 403 && error.status !== 404) {
-      // We can send the error to Sentry,
-      // or show a notification UI.
+      // エラーをSentryに送信するか、
+      // 通知UIを表示することができます。
     }
   }
 }}>
