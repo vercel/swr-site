@@ -1,9 +1,9 @@
 {
-  "index": "Introduction",
-  "getting-started": "Getting Started",
-  "docs": "Documentation",
-  "advanced": "Advanced",
-  "examples": "Examples",
-  "change-log": "Change Log",
-  "about": "About"
+  "index": "前書き",
+  "getting-started": "はじめに",
+  "docs": "ドキュメント",
+  "advanced": "高度な使い方",
+  "examples": "例",
+  "change-log": "変更履歴",
+  "about": "このサイトについて"
 }
