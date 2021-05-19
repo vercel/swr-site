@@ -12,7 +12,8 @@ const Vercel = ({ height = 20 }) => (
 
 const TITLE_WITH_TRANSLATIONS = {
   'en-US': 'React Hooks library for data fetching',
-  'zh-CN': '用于数据请求的 React Hooks 库'
+  'zh-CN': '用于数据请求的 React Hooks 库',
+  'es-ES': 'Biblioteca React Hooks para la obtención de datos',
 }
 
 export default {
@@ -91,6 +92,8 @@ export default {
     switch (locale) {
       case 'zh-CN':
         return '在 GitHub 上编辑本页'
+      case 'es-ES':
+        return 'Edite esta página en GitHub'
       default:
         return 'Edit this page on GitHub'
     }
@@ -101,6 +104,10 @@ export default {
         return <a href="https://vercel.com/?utm_source=swr_zh-cn" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
           <span className="mr-2">由</span><span className="mr-2"><Vercel/></span>驱动
         </a>
+      case 'es-ES':
+      return <a href="https://vercel.com/?utm_source=swr_es-es" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
+      <span className="mr-2">Desarrollado por</span><span className="mr-2"><Vercel/></span>
+    </a>
       default:
         return <a href="https://vercel.com/?utm_source=swr" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
           <span className="mr-1">Powered by</span><span><Vercel/></span>
@@ -109,6 +116,7 @@ export default {
   },
   i18n: [
     { locale: 'en-US', text: 'English' },
+    { locale: 'es-ES', text: 'Español' },
     { locale: 'zh-CN', text: '简体中文' }
   ]
 }
