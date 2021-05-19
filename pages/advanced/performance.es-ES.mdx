@@ -81,7 +81,7 @@ En el peor de los casos (la primera solicitud falló, entonces el reitento fue e
 
 ```js
 // console.log(data, error, isValidating)
-undefined undefined false // => hydration / initial render
+
 undefined undefined true  // => start fetching
 undefined Error false     // => end fetching, got an error
 undefined Error true      // => start retrying
