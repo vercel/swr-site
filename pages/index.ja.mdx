@@ -6,13 +6,12 @@ import Features from 'components/features'
 <Features/>
 
 “SWR” という名前は、 [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861) で提唱された HTTP キャッシュ無効化戦略である `stale-while-revalidate` に由来しています。
-SWR は、まずキャッシュからデータを返し(stale)、次にフェッチリクエストを送り(revalidate)、最後に最新のデータを持ってくるという戦略です。
+SWR は、まずキャッシュからデータを返し（stale）、次にフェッチリクエストを送り（revalidate）、最後に最新のデータを持ってくるという戦略です。
 
 <Callout emoji="✅">
-  SWR では、 コンポーネントはデータの更新を<strong>継続的</strong>かつ<strong>自動的</strong>に受け取る事が出来ます。
+  SWR では、 コンポーネントはデータの更新を<strong>継続的</strong>かつ<strong>自動的</strong>に受け取る事ができます。
   <br/>
-  そして、 UI は常に<strong>高速</strong>で<strong>リアクティブ</strong>
-  なモノになります。
+  そして、 UI は常に<strong>高速</strong>で<strong>リアクティブ</strong>なモノになります。
 </Callout>
 
 ## 概要
@@ -29,14 +28,14 @@ function Profile() {
 }
 ```
 
-この例では、`useSWR` フックは `key` 文字列と `fetcher` 関数を受け取ります。 `key` はデータの一意な識別子( 通常は API の URL )で、`fetcher` に渡されます。
-`fetcher` はデータを返す任意の非同期関数で、ネイティブの fetch や Axios のようなツールを使うことが出来ます。
+この例では、`useSWR` フックは `key` 文字列と `fetcher` 関数を受け取ります。 `key` はデータの一意な識別子（通常は API の URL）で、`fetcher` に渡されます。
+`fetcher` はデータを返す任意の非同期関数で、ネイティブの fetch や Axios のようなツールを使うことができます。
 
-このフックは、リクエストの状態に基づいて `data` と `error` の 2 つの値を返します。
+このフックは、リクエストの状態にもとづいて `data` と `error` の二つの値を返します。
 
 ## 特徴
 
-たった 1 行のコードで、プロジェクト内のデータ取得のロジックを単純化し、さらにこれらの素晴らしい機能をすぐに利用できるようになります:
+たった 1 行のコードで、プロジェクト内のデータ取得のロジックを単純化し、さらにこれらの素晴らしい機能をすぐに利用できるようになります：
 
 - **Jamstack** 指向
 - **速い**、 **軽量** そして **再利用可能** なデータの取得
@@ -46,13 +45,13 @@ function Profile() {
 - TypeScript 対応
 - React Native
 
-SWR は、スピード、正確性、安定性のすべての面をカバーし、より良い体験を構築するのに役立ちます:
+SWR は、スピード、正確性、安定性のすべての面をカバーし、より良い体験を構築するのに役立ちます：
 - 高速なページナビゲーション
 - 定期的にポーリングする
 - データの依存関係
 - フォーカス時の再検証
 - ネットワーク回復時の再検証
-- ローカルキャッシュの更新 (Optimistic UI)
+- ローカルミューテーション（Optimistic UI）
 - スマートなエラーの再試行
 - ページネーションとスクロールポジションの回復
 - React Suspense
