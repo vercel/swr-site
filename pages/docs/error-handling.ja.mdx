@@ -57,7 +57,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 ## エラー時の再試行
 
-SWR は [exponential backoff アルゴリズム](https://en.wikipedia.org/wiki/Exponential_backoff)を使用して、エラー時にリクエストを再試行します。
+SWR は [exponential backoff アルゴリズム](https://en.wikipedia.org/wiki/Exponential_backoff) を使用して、エラー時にリクエストを再試行します。
 このアルゴリズムにより、アプリはエラーから素早く回復することができますが、再試行しすぎてリソースを無駄にすることはありません。
 
 また [onErrorRetry](/docs/options#options) オプションで、この動作をオーバーライドすることもできます:
@@ -82,7 +82,7 @@ useSWR('/api/user', fetcher, {
 
 このコールバックは、様々な条件にもとづいて再試行する柔軟性を提供します。 `shouldRetryOnError: false` を設定することで、この機能を無効にすることもできます。
 
-また、 [グローバルな設定](/docs/global-configuration)のコンテキストを介して提供することもできます。
+また、 [グローバルな設定](/docs/global-configuration) のコンテキストを介して提供することもできます。
 
 ## グローバルエラーの報告
 
