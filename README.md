@@ -14,5 +14,4 @@ And visit `localhost:3000` to preview your changes.
 ## Contributors
 
 - https://github.com/vercel/swr-site/graphs/contributors
-- Simplified Chinese translation done by Fang Lu ([@huzhengen](https://github.com/huzhengen))
-- Spanish translation done by Markoz Peña ([@markozxuu](https://twitter.com/markozxuu)) 
+- Simplified Chinese translation done by @huzhengen
