@@ -4,7 +4,7 @@ import Link from 'next/link'
 # 数据请求
 
 ```js
-{ data, error } = useSWR(key, fetcher)
+const { data, error } = useSWR(key, fetcher)
 ```
 
 这是 SWR 的基本 API。这里的 `fetcher` 是一个异步函数，它 **接受** SWR 的 **`key`** 并返回数据。
