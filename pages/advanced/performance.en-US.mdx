@@ -67,18 +67,17 @@ function App () {
 }
 ```
 
-In the worst case (the first request failed, then the retry was successful), you will see 5 lines of logs:
+In the worst case (the first request failed, then the retry was successful), you will see 4 lines of logs:
 
 ```js
 // console.log(data, error, isValidating)
-undefined undefined false // => hydration / initial render
 undefined undefined true  // => start fetching
 undefined Error false     // => end fetching, got an error
 undefined Error true      // => start retrying
 Data undefined false      // => end retrying, get the data
 ```
 
-The state changes make sense. But that also means our component **rendered 5 times**.
+The state changes make sense. But that also means our component **rendered 4 times**.
 
 If we change our component to only use `data`:
 

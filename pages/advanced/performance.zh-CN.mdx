@@ -13,7 +13,7 @@ SWR 确保你的应用具有：
 
 ## 重复数据删除
 
-在应用中重用 SWR hooks 非常常见。例如，一个应用渲染5次当前用户的头像：
+在应用中重用 SWR hooks 非常常见。例如，一个应用渲染 5 次当前用户的头像：
 
 ```jsx
 function useUser () {
@@ -64,18 +64,17 @@ function App () {
 }
 ```
 
-在最坏的情况下（第一个请求失败，然后重试成功），你将看到 5 行日志：
+在最坏的情况下（第一个请求失败，然后重试成功），你将看到 4 行日志：
 
 ```js
 // console.log(data, error, isValidating)
-undefined undefined false // => hydration / 初始渲染
 undefined undefined true  // => 开始 fetching
 undefined Error false     // => 结束 fetching，出现错误
 undefined Error true      // => 开始重试
 Data undefined false      // => 重试结束，得到数据
 ```
 
-状态的改变是有道理的。但这也意味着组件 **渲染了 5 次**。
+状态的改变是有道理的。但这也意味着组件 **渲染了 4 次**。
 
 如果我们将组件更改为只使用 `data`：
 
@@ -97,7 +96,7 @@ Data      // => 重试结束，得到数据
 
 内部发生了完全相同的过程，第一个请求出现了错误，然后我们重试得到了数据。但是，**SWR 只更新了组件使用的状态**，即：`data`。 
 
-如果你不是总使用这3种状态，那么你已经从这个特性中获益了。在 [Vercel](https://vercel.com)，这个优化减少了约 60% 的重新渲染。
+如果你不是总使用这3种状态，那么你已经从这个特性中获益了。在 [Vercel](https://vercel.com) 的实际应用中，这个优化减少了约 60% 的重新渲染。
 
 ## Tree Shaking
 
