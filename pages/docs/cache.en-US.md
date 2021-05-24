@@ -1,7 +1,7 @@
 # Custom Cache
 
-By default, SWR is using a global cache to store data sharing among all hooks. Besides that, there's a new way to customize your own cache provider.
-New property `cache` and a new API `createCache` are now introduced in `swr@beta`. This API is intended to resolve problem of using SWR with various, diverse storages.
+By default, SWR uses a global cache to store and share data across all components. Now, there's a new way to customize it with your own cache provider.
+The new `cache` configuration and `createCache`  API are now introduced in `swr@beta`. They're intended to solve problems of using SWR with more customized storages, and providing direct access to the cache.
 
 ## Create Custom Cache
 
