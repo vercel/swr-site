@@ -7,7 +7,6 @@
   "conditional-fetching": "Conditional Data Fetching",
   "arguments": "Arguments",
   "mutation": "Mutation",
-  "cache": "Cache",
   "pagination": "Pagination",
   "prefetching": "Prefetching",
   "with-nextjs": "Usage with Next.js",

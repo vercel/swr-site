@@ -1,3 +1,5 @@
+import Callout from 'nextra-theme-docs/callout'
+
 # Custom Cache
 
 By default, SWR uses a global cache to store and share data across all components. Now, there's a new way to customize it with your own cache provider.
@@ -32,6 +34,10 @@ const { mutate, cache } = createCache(provider)
 useSWR(key, fetcher, { cache })
 ```
 
+<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
+  `createCache` should not be called inside render, it should be a global singleton.
+</Callout>
+
 ### `provider`
 
 The provider is used to let user manage cache values directly, and the interface should match the following definition:
@@ -46,6 +52,11 @@ interface Cache<Data = any> {
 
 Those methods are being used inside SWR to manage cache. Beyond SWR itself, now user can access the cached keys, values from `provider` directly.
 For instance if the provider is a Map instance, you'll be able to access the used keys through provider by using `Map.prototype.keys()`.
+
+<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
+  You shouldn't write to cache, instead always use mutate to keep the state and cache consistent.
+</Callout>
+
 
 ## Manipulate Cache
 
@@ -73,22 +84,22 @@ With the flexibilities of those atomic APIs, you can compose them with your cust
 In the below example, `partialMutate` can receive a glob pattern string as key, and be used to mutate the ones who matched this pattern.
 
 ```js
-function partialMutate(k, data, shouldRevalidate = true) {
+function regexMutate(key, data, shouldRevalidate = true) {
   const keys = [];
-  if (k.endsWith("*")) {
-    const prefix = k.replace("*", "");
-    for (const key of provider.keys()) {
-      if (!key.includes("@") && key.startsWith(prefix)) {
-        keys.push(key);
+  if (key instanceof RegExp) {
+    for (const k of provider.keys()) {
+      if (key.test(k)) {
+        keys.push(k);
       }
     }
   } else {
-    keys.push(k);
+    keys.push(key);
   }
+
   const mutations = keys.map((k) => mutate(k, data, shouldRevalidate));
   return Promise.all(mutations);
 }
 
-partialMutate('key-*') // revalidate keys starting with key-
-partialMutate('*') // revalidate every used keys
+partialMutate(/^key-/) // revalidate keys starting with `key-`
+partialMutate('key-a') // revalidate `key-a`
 ```
