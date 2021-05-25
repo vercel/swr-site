@@ -27,7 +27,7 @@ function Profile() {
 }
 ```
 
-该示例中中，`useSWR` hook 接受一个字符串 `key` 和一个函数 `fetcher`。`key` 是数据的唯一标识符（通常是 API URL），并传递给 `fetcher`。`fetcher` 可以是任何返回数据的异步函数，你可以使用原生的 fetch 或 Axios 之类的工具。
+该示例中，`useSWR` hook 接受一个字符串 `key` 和一个函数 `fetcher`。`key` 是数据的唯一标识符（通常是 API URL），并传递给 `fetcher`。`fetcher` 可以是任何返回数据的异步函数，你可以使用原生的 fetch 或 Axios 之类的工具。
 
 基于请求的状态，这个 hook 返回 2 个值：`data` 和 `error`。
 
