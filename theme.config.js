@@ -20,7 +20,7 @@ const TITLE_WITH_TRANSLATIONS = {
 export default {
   repository: 'https://github.com/vercel/swr',
   docsRepository: 'https://github.com/vercel/swr-site',
-  titleSuffix: ' – SWR',
+  titleSuffix: '', // It was left empty with the intention of avoiding duplicated title on homepage ---> SWR - SWR
   search: true,
   UNSTABLE_stork: true,
   logo: () => {
