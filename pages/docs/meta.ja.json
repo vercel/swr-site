@@ -1,0 +1,14 @@
+{
+  "options": "オプション",
+  "global-configuration": "グローバルな設定",
+  "data-fetching": "データの取得",
+  "error-handling": "エラーハンドリング",
+  "revalidation": "自動再検証",
+  "conditional-fetching": "条件付きフェッチ",
+  "arguments": "引数",
+  "mutation": "ミューテーション",
+  "pagination": "ページネーション",
+  "prefetching": "プリフェッチ",
+  "with-nextjs": "Next.jsでの利用",
+  "suspense": "サスペンス"
+}

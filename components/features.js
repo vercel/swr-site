@@ -12,7 +12,8 @@ const Feature = ({ text, icon }) => (
 const TITLE_WITH_TRANSLATIONS = {
   'en-US': 'React Hooks library for data fetching',
   'es-ES': 'Biblioteca React Hooks para la obtención de datos',
-  'zh-CN': '用于数据请求的 React Hooks 库'
+  'zh-CN': '用于数据请求的 React Hooks 库',
+  'ja': 'データ取得のための React Hooks ライブラリ',
 }
 
 export default () => {
