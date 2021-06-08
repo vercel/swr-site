@@ -2,6 +2,10 @@ import Callout from 'nextra-theme-docs/callout'
 
 # Custom Cache
 
+<Callout emoji="⚠️" background="bg-yellow-200 dark:text-gray-800">
+  This feature is only available in `swr@beta` yet
+</Callout>
+
 By default, SWR uses a global cache to store and share data across all components. Now, there's a new way to customize it with your own cache provider.
 The new `cache` configuration and `createCache`  API are now introduced in `swr@beta`. They're intended to solve problems of using SWR with more customized storages, and providing direct access to the cache.
 
