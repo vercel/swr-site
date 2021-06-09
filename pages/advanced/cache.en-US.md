@@ -2,8 +2,8 @@ import Callout from 'nextra-theme-docs/callout'
 
 # Custom Cache
 
-<Callout emoji="⚠️" background="bg-yellow-200 dark:text-gray-800">
-  This feature is only available in `swr@beta` yet
+<Callout emoji={<span style={{fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'}}>⚠️</span>}>
+  This is still a beta feature. Please install `swr@beta` to try it out.
 </Callout>
 
 By default, SWR uses a global cache to store and share data across all components. Now, there's a new way to customize it with your own cache provider.
