@@ -160,7 +160,7 @@ function Avatar({ user }) {
 
 通常，我们需要将所有的数据请求都保存在顶级组件中，并为树深处的每个组件添加 props。如果我们给页面添加更多的数据依赖，代码将变得更加难以维护。
 
-虽然我们可以避免使用 [Context](https://reactjs.org/docs/context.html) 传递 props，但仍然存在动态内容问题：页面内容中的组件可以是动态的，顶级组件可能不知道其子组件将需要什么数据。
+虽然我们可以使用 [Context](https://reactjs.org/docs/context.html) 来避免传递 props，但仍然存在动态内容问题：页面内容中的组件可以是动态的，顶级组件可能不知道其子组件将需要什么数据。
 
 SWR 完美地解决了这个问题。使用我们刚刚创建的 `useUser` hook，可以将代码重构为:
 
