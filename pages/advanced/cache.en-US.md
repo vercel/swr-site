@@ -88,16 +88,17 @@ With the flexibilities of those atomic APIs, you can compose them with your cust
 In the below example, `partialMutate` can receive a glob pattern string as key, and be used to mutate the ones who matched this pattern.
 
 ```js
-function regexMutate(key, data, shouldRevalidate = true) {
+function partialMutate(matcher, data, shouldRevalidate = true) {
   const keys = [];
-  if (key instanceof RegExp) {
+  if (matcher instanceof RegExp) {
+    // `provider` is your cache implementation, for example a `Map()`
     for (const k of provider.keys()) {
-      if (key.test(k)) {
+      if (matcher.test(k)) {
         keys.push(k);
       }
     }
   } else {
-    keys.push(key);
+    keys.push(matcher);
   }
 
   const mutations = keys.map((k) => mutate(k, data, shouldRevalidate));
