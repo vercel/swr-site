@@ -26,13 +26,13 @@ You can pass the pre-fetched data as the initial value to the `initialData` opti
  export async function getStaticProps() {
   // `getStaticProps` is invoked on the server-side,
   // so this `fetcher` function will be executed on the server-side.
-  const posts = await fetcher('/api/posts')
+  const posts = await fetcher('https://jsonplaceholder.typicode.com/posts')
   return { props: { posts } }
 }
 
 function Posts (props) {
   // Here the `fetcher` function will be executed on the client-side.
-  const { data } = useSWR('/api/posts', fetcher, { initialData: props.posts })
+  const { data } = useSWR('https://jsonplaceholder.typicode.com/posts', fetcher, { initialData: props.posts })
 
   // ...
 }
