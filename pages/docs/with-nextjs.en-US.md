@@ -32,7 +32,7 @@ You can pass the pre-fetched data as the initial value to the `initialData` opti
 
 function Posts (props) {
   // Here the `fetcher` function will be executed on the client-side.
-  const { data } = useSWR('https://jsonplaceholder.typicode.com/posts', fetcher, { initialData: props.posts })
+  const { data } = useSWR('/api/posts', fetcher, { initialData: props.posts })
 
   // ...
 }
