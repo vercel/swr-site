@@ -48,9 +48,9 @@ The provider is used to let user manage cache values directly, and the interface
 
 ```ts
 interface Cache<Data = any> {
-  get(key: Key): Data | null | undefined
-  set(key: Key, value: Data): void
-  delete(key: Key): void
+  get(key: string): Data | null | undefined
+  set(key: string, value: Data): void
+  delete(key: string): void
 }
 ```
 
@@ -58,13 +58,13 @@ Those methods are being used inside SWR to manage cache. Beyond SWR itself, now 
 For instance if the provider is a Map instance, you'll be able to access the used keys through provider by using `Map.prototype.keys()`.
 
 <Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
-  You shouldn't write to cache, instead always use mutate to keep the state and cache consistent.
+  In most cases, you shouldn't directly manipulate cached data. Instead always use mutate to keep the state and cache consistent.
 </Callout>
 
 
-## Manipulate Cache
+### `mutate`
 
-The usage of mutate is similar with usage described in `Mutation` section. For instance, if you want to revalidate keys.
+The usage of the `mutate` function returned by `createCache`, is similar to the global `mutate` function described on the [Mutation page](/docs/mutation), but bound to the specific cache provider. For instance, if you want to revalidate some keys from the given cache:
 
 ```jsx
 const { cache, mutate } = createCache(new Map());
@@ -82,13 +82,15 @@ export default function App() {
 }
 ```
 
-### Example
+## Examples
+
+### Mutate Multiple Keys
 
 With the flexibilities of those atomic APIs, you can compose them with your custom logic, such as scheduling partial mutations.
 In the below example, `partialMutate` can receive a glob pattern string as key, and be used to mutate the ones who matched this pattern.
 
 ```js
-function partialMutate(matcher, data, shouldRevalidate = true) {
+function matchMutate(matcher, data, shouldRevalidate = true) {
   const keys = [];
   if (matcher instanceof RegExp) {
     // `provider` is your cache implementation, for example a `Map()`
@@ -105,6 +107,6 @@ function partialMutate(matcher, data, shouldRevalidate = true) {
   return Promise.all(mutations);
 }
 
-partialMutate(/^key-/) // revalidate keys starting with `key-`
-partialMutate('key-a') // revalidate `key-a`
+matchMutate(/^key-/) // revalidate keys starting with `key-`
+matchMutate('key-a') // revalidate `key-a`
 ```
