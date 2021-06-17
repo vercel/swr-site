@@ -62,9 +62,9 @@ For instance if the provider is a Map instance, you'll be able to access the use
 </Callout>
 
 
-## Mutate
+### `mutate`
 
-The usage of mutate is similar with usage described in `Mutation` section. For instance, if you want to revalidate keys.
+The usage of the `mutate` function returned by `createCache`, is similar to the global `mutate` function described on the [Mutation page](/docs/mutation), but bound to the specific cache provider. For instance, if you want to revalidate some keys from the given cache:
 
 ```jsx
 const { cache, mutate } = createCache(new Map());
@@ -82,7 +82,7 @@ export default function App() {
 }
 ```
 
-## Example
+## Examples
 
 ### Mutate Multiple Keys
 
