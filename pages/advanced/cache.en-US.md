@@ -82,7 +82,9 @@ export default function App() {
 }
 ```
 
-### Example: Mutate Multiple Keys
+## Example
+
+### Mutate Multiple Keys
 
 With the flexibilities of those atomic APIs, you can compose them with your custom logic, such as scheduling partial mutations.
 In the below example, `partialMutate` can receive a glob pattern string as key, and be used to mutate the ones who matched this pattern.
