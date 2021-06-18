@@ -82,7 +82,7 @@ export default function App() {
 
 ### 更改多个 Key
 
-利用这些原子 API 的灵活性，你可以使用你自己的逻辑来写，例如做部分更改。在下面的示例中，`matchMutate` 接收一个 glob 模式字符串作为 key，对匹配该模式的进行更改。
+利用这些原子 API 的灵活性，你可以使用你自己的逻辑来写，例如做部分更改。在下面的示例中，`matchMutate` 接收一个正则表达式作为 key，对匹配该模式的进行更改。
 
 ```js
 function matchMutate(matcher, data, shouldRevalidate = true) {
@@ -102,6 +102,6 @@ function matchMutate(matcher, data, shouldRevalidate = true) {
   return Promise.all(mutations);
 }
 
-matchMutate(/^key-/) // 重新验证以 `key-` 开头的 key
-matchMutate('key-a') // 重新验证 `key-a`
+matchMutate(/^key-/) // 重新请求以 `key-` 开头的 key
+matchMutate('key-a') // 重新请求 `key-a`
 ```
