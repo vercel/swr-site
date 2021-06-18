@@ -87,7 +87,7 @@ export default function App() {
 ### Mutate Multiple Keys
 
 With the flexibilities of those atomic APIs, you can compose them with your custom logic, such as scheduling partial mutations.
-In the below example, `partialMutate` can receive a glob pattern string as key, and be used to mutate the ones who matched this pattern.
+In the below example, `matchMutate` can receive a glob pattern string as key, and be used to mutate the ones who matched this pattern.
 
 ```js
 function matchMutate(matcher, data, shouldRevalidate = true) {
