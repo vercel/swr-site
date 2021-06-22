@@ -112,28 +112,15 @@ matchMutate('key-a') // 重新请求 `key-a`
 
 ```js
 function createProvider() {
-  const map = new Map()
-  const provider = {
-    set(key, value) {
-      map.set(key, value)
-      localStorage.setItem(key, JSON.stringify(value))
-    },
+  const map = new Map(localStorage.getItem('app-cache') || [])
 
-    get(key) {
-      // Some perimitave value like undefined is hard to be serialize/deserialize within localStorage.
-      // So it's better alwats to have a sync map warpped on top of it.
-      // In order to keep the consistence and realibility.
-      return map.get(key)
-    },
+  window.addEventListener('beforeunload', () => {
+    localStorage.setItem('app-cache', map.entries())
+  })
 
-    delete(key) {
-      map.delete(key)
-      localStorage.removeItem(key)
-    },
-  }
-  return provider
+  return map
 }
 
 const provider = createProvider()
-const { cache, mutate } = createCache()
+const { cache, mutate } = createCache(provider)
 ```
