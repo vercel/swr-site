@@ -3,7 +3,7 @@ import Callout from 'nextra-theme-docs/callout'
 # 自定义缓存
 
 <Callout emoji={<span style={{fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'}}>⚠️</span>}>
-  这还只是 beta 版。请安装 `swr@beta` 来试用。
+这还只是 beta 版。请安装 `swr@beta` 来试用。
 </Callout>
 
 默认情况下，SWR 使用全局缓存来存储和共享所有组件的数据。现在有了一种新方法，可以用你自己的缓存 provider 来定制。`swr@beta` 引入了新的 `cache` 配置和 `createCache` API。它们旨在解决 SWR 使用更多定制存储的问题，并提供对缓存的直接访问。
@@ -52,7 +52,7 @@ interface Cache<Data = any> {
 }
 ```
 
-在 SWR 中使用这些方法来管理缓存。除了 SWR 本身，现在用户可以直接从  `provider` 访问缓存的 key 和 value。例如，如果 provider 是一个 Map 实例，则可以使用 `Map.prototype.keys()` 通过 provider 访问使用的 key。
+在 SWR 中使用这些方法来管理缓存。除了 SWR 本身，现在用户可以直接从 `provider` 访问缓存的 key 和 value。例如，如果 provider 是一个 Map 实例，则可以使用 `Map.prototype.keys()` 通过 provider 访问使用的 key。
 
 <Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
   在大多数情况下，不应该直接操作缓存数据。 而应该使用 mutate 来保持状态和缓存一致。
@@ -63,18 +63,18 @@ interface Cache<Data = any> {
 `createCache` 返回的 `mutate` 函数的用法类似于[数据更改](/docs/mutation)里描述的全局 `mutate` 函数，但要绑定到特定的缓存 provider。比如你想重新验证给定缓存的一些 key。
 
 ```jsx
-const { cache, mutate } = createCache(new Map());
+const { cache, mutate } = createCache(new Map())
 
 export default function App() {
   return (
     <SWRConfig value={{ cache }}>
       <div className="App">
         <Section />
-        <button onClick={() => mutate("A")}>revalidate A</button>
-        <button onClick={() => mutate("B")}>revalidate B</button>
+        <button onClick={() => mutate('A')}>revalidate A</button>
+        <button onClick={() => mutate('B')}>revalidate B</button>
       </div>
     </SWRConfig>
-  );
+  )
 }
 ```
 
@@ -86,22 +86,41 @@ export default function App() {
 
 ```js
 function matchMutate(matcher, data, shouldRevalidate = true) {
-  const keys = [];
+  const keys = []
   if (matcher instanceof RegExp) {
     // `provider` 是你的缓存实现，例如 `Map()`
     for (const k of provider.keys()) {
       if (matcher.test(k)) {
-        keys.push(k);
+        keys.push(k)
       }
     }
   } else {
-    keys.push(matcher);
+    keys.push(matcher)
   }
 
-  const mutations = keys.map((k) => mutate(k, data, shouldRevalidate));
-  return Promise.all(mutations);
+  const mutations = keys.map((k) => mutate(k, data, shouldRevalidate))
+  return Promise.all(mutations)
 }
 
 matchMutate(/^key-/) // 重新请求以 `key-` 开头的 key
 matchMutate('key-a') // 重新请求 `key-a`
+```
+
+### 将缓存内容同步到 LocalStorage
+
+在某些情况下你可能希望将缓存内容同步到 `localStorage`, 这样在下次在重新加载整个应用的时候可以更容易从一些长期存储的数据中恢复应用的状态。
+
+```js
+function createProvider() {
+  const map = new Map(localStorage.getItem('app-cache') || [])
+
+  window.addEventListener('beforeunload', () => {
+    localStorage.setItem('app-cache', map.entries())
+  })
+
+  return map
+}
+
+const provider = createProvider()
+const { cache, mutate } = createCache(provider)
 ```

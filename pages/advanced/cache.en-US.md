@@ -3,11 +3,11 @@ import Callout from 'nextra-theme-docs/callout'
 # Custom Cache
 
 <Callout emoji={<span style={{fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'}}>⚠️</span>}>
-  This is still a beta feature. Please install `swr@beta` to try it out.
+This is still a beta feature. Please install `swr@beta` to try it out.
 </Callout>
 
 By default, SWR uses a global cache to store and share data across all components. Now, there's a new way to customize it with your own cache provider.
-The new `cache` configuration and `createCache`  API are now introduced in `swr@beta`. They're intended to solve problems of using SWR with more customized storages, and providing direct access to the cache.
+The new `cache` configuration and `createCache` API are now introduced in `swr@beta`. They're intended to solve problems of using SWR with more customized storages, and providing direct access to the cache.
 
 ## Create Custom Cache
 
@@ -61,24 +61,23 @@ For instance if the provider is a Map instance, you'll be able to access the use
   In most cases, you shouldn't directly manipulate cached data. Instead always use mutate to keep the state and cache consistent.
 </Callout>
 
-
 ### `mutate`
 
 The usage of the `mutate` function returned by `createCache`, is similar to the global `mutate` function described on the [Mutation page](/docs/mutation), but bound to the specific cache provider. For instance, if you want to revalidate some keys from the given cache:
 
 ```jsx
-const { cache, mutate } = createCache(new Map());
+const { cache, mutate } = createCache(new Map())
 
 export default function App() {
   return (
     <SWRConfig value={{ cache }}>
       <div className="App">
         <Section />
-        <button onClick={() => mutate("A")}>revalidate A</button>
-        <button onClick={() => mutate("B")}>revalidate B</button>
+        <button onClick={() => mutate('A')}>revalidate A</button>
+        <button onClick={() => mutate('B')}>revalidate B</button>
       </div>
     </SWRConfig>
-  );
+  )
 }
 ```
 
@@ -91,22 +90,41 @@ In the below example, `matchMutate` can receive a regex expression as key, and b
 
 ```js
 function matchMutate(matcher, data, shouldRevalidate = true) {
-  const keys = [];
+  const keys = []
   if (matcher instanceof RegExp) {
     // `provider` is your cache implementation, for example a `Map()`
     for (const k of provider.keys()) {
       if (matcher.test(k)) {
-        keys.push(k);
+        keys.push(k)
       }
     }
   } else {
-    keys.push(matcher);
+    keys.push(matcher)
   }
 
-  const mutations = keys.map((k) => mutate(k, data, shouldRevalidate));
-  return Promise.all(mutations);
+  const mutations = keys.map((k) => mutate(k, data, shouldRevalidate))
+  return Promise.all(mutations)
 }
 
 matchMutate(/^key-/) // revalidate keys starting with `key-`
 matchMutate('key-a') // revalidate `key-a`
+```
+
+### Sync Cache to LocalStorage
+
+You might want to sync your cached states to `localStorage` in some special cases, to recover from the persisted state more easily next time while reloading the app.
+
+```js
+function createProvider() {
+  const map = new Map(localStorage.getItem('app-cache') || [])
+
+  window.addEventListener('beforeunload', () => {
+    localStorage.setItem('app-cache', map.entries())
+  })
+
+  return map
+}
+
+const provider = createProvider()
+const { cache, mutate } = createCache(provider)
 ```
