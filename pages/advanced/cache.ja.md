@@ -1,26 +1,26 @@
 import Callout from 'nextra-theme-docs/callout'
 
-# Custom Cache
+# カスタムキャッシュ
 
 <Callout emoji={<span style={{fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'}}>⚠️</span>}>
-  This is still a beta feature. Please install `swr@beta` to try it out.
+  この機能はまだベータ版です。試すには `swr@beta` をインストールしてください。
 </Callout>
 
-By default, SWR uses a global cache to store and share data across all components. Now, there's a new way to customize it with your own cache provider.
-The new `cache` configuration and `createCache`  API are now introduced in `swr@beta`. They're intended to solve problems of using SWR with more customized storages, and providing direct access to the cache.
+デフォルトでは、 SWR はグローバルキャッシュを使用して、すべてのコンポーネント間でデータを保存し共有しますが、今回キャッシュプロバイダーを使用してカスタマイズする方法が追加されました。新しい `cache` 設定と `createCache` API が `swr@beta` に導入されています。
+これらは、よりカスタマイズされたストレージを SWR で使用する際の問題を解決するためのもので、キャッシュに直接アクセスできるようになっています。
 
-## Create Custom Cache
+## カスタムキャッシュの作成
 
 ### `createCache`
 
-This API receive a underlay cache `provider` as argument. Returns an object, with `cache` instance that could be consumed by SWR hooks,
-and `mutate` API to manipulate the corresponding cache. Note that it's not the global `mutate` API.
+この API は、キャッシュの基礎となる `provider` を引数で受け取り、 SWR フックで使用可能な `cache` インスタンスと
+対応するキャッシュを操作するための `mutate` API を含むオブジェクトを返します。 グローバル `mutate` API では無いことに注意してください。
 
 ```js
 const { mutate, cache } = createCache(provider)
 ```
 
-You can pass down `cache` through SWRConfig or the `useSWR` hook options.
+また、SWRConfig や `useSWR` フックのオプションでも `cache` を渡すことができます。
 
 ```jsx
 import { SWRConfig, createCache } from 'swr'
@@ -29,22 +29,22 @@ const provider = new Map()
 
 const { mutate, cache } = createCache(provider)
 
-// pass to SWR context
+// SWR コンテキストに渡す
 <SWRConfig value={{ cache }}>
   <Page />
 </SWRConfig>
 
-// or pass to hook options
+// または、フックオプションに渡す
 useSWR(key, fetcher, { cache })
 ```
 
 <Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
-  `createCache` should not be called inside render, it should be a global singleton.
+  `createCache` は、描画内部で呼び出すべきではなく、グローバルなシングルトンであるべきです。
 </Callout>
 
 ### `provider`
 
-The provider is used to let user manage cache values directly, and the interface should match the following definition:
+プロバイダーは、ユーザーがキャッシュ値を直接管理できるようにするために使用され、インターフェースは次の定義に一致する必要があります：
 
 ```ts
 interface Cache<Data = any> {
@@ -54,17 +54,17 @@ interface Cache<Data = any> {
 }
 ```
 
-Those methods are being used inside SWR to manage cache. Beyond SWR itself, now user can access the cached keys, values from `provider` directly.
-For instance if the provider is a Map instance, you'll be able to access the used keys through provider by using `Map.prototype.keys()`.
+これらのメソッドは、 SWR 内部でキャッシュを管理するために使用されています。 SWR 自体を越えて、ユーザーはキャッシュされたキー、つまり `provider` からの値に直接アクセスできるようになりました。
+たとえば `provider` が Map インスタンスの場合、 `Map.prototype.keys()` を使用して、プロバイダー経由で使用されているキーにアクセスすることができます。
 
 <Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
-  In most cases, you shouldn't directly manipulate cached data. Instead always use mutate to keep the state and cache consistent.
+  ほとんどの場合、キャッシュデータを直接操作するべきではありません。代わりに、常に mutate を使用してステートとキャッシュの一貫性を保つようにしてください。
 </Callout>
 
 
 ### `mutate`
 
-The usage of the `mutate` function returned by `createCache`, is similar to the global `mutate` function described on the [Mutation page](/docs/mutation), but bound to the specific cache provider. For instance, if you want to revalidate some keys from the given cache:
+`createCache` によって返された `mutate` 関数の使い方は、[ミューテーションのページ](/docs/mutation) で解説されているグローバル `muate` 関数と同様ですが、特定のキャッシュプロバイダーにバインドされています。たとえば、指定されたキャッシュからいくつかのキーを再検証したい場合は、次のようにします：
 
 ```jsx
 const { cache, mutate } = createCache(new Map());
@@ -82,18 +82,18 @@ export default function App() {
 }
 ```
 
-## Examples
+## 実例
 
-### Mutate Multiple Keys
+### 複数のキーを変更する
 
-With the flexibilities of those atomic APIs, you can compose them with your custom logic, such as scheduling partial mutations.
-In the below example, `matchMutate` can receive a regex expression as key, and be used to mutate the ones who matched this pattern.
+これらのアトミックな API の柔軟性により、部分的な変更をスケジューリングするなど、独自のロジックで構成することができます。
+以下の例では、 `matchMutate` は正規表現をキーとして受け取り、パターンに一致したモノを変更するために使用することができます。
 
 ```js
 function matchMutate(matcher, data, shouldRevalidate = true) {
   const keys = [];
   if (matcher instanceof RegExp) {
-    // `provider` is your cache implementation, for example a `Map()`
+    // `provider` は、たとえば `Map()` のような、キャッシュの実装です。
     for (const k of provider.keys()) {
       if (matcher.test(k)) {
         keys.push(k);
@@ -107,6 +107,6 @@ function matchMutate(matcher, data, shouldRevalidate = true) {
   return Promise.all(mutations);
 }
 
-matchMutate(/^key-/) // revalidate keys starting with `key-`
-matchMutate('key-a') // revalidate `key-a`
+matchMutate(/^key-/) // `key-` で始まるキーを再検証する
+matchMutate('key-a') // `key-a` の再検証する
 ```
