@@ -29,7 +29,7 @@ SWR と一緒に使えば、 SEO のためにページを事前にレンダリ�
  export async function getStaticProps() {
   // `getStaticProps`がサーバー側で呼び出されるので、
   // この`fetcher`関数はサーバーサイドで実行されます。
-  const posts = await fetcher('/api/posts')
+  const posts = await fetcher('https://jsonplaceholder.typicode.com/posts')
   return { props: { posts } }
 }
 
