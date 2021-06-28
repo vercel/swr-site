@@ -27,7 +27,7 @@ Puedes pasar los pre-fetched data como valor inicial a la opción `initialData`.
  export async function getStaticProps() {
   // `getStaticProps` se invoca en el lado del servidor,
   //  por lo que esta función `fetcher` se ejecutará en el server-side.
-  const posts = await fetcher('/api/posts')
+  const posts = await fetcher('https://jsonplaceholder.typicode.com/posts')
   return { props: { posts } }
 }
 
