@@ -26,7 +26,7 @@ import Callout from 'nextra-theme-docs/callout'
  export async function getStaticProps() {
   // 在服务器端调用 `getStaticProps`，
   // 所以 `fetcher` 函数将在服务端执行。
-  const posts = await fetcher('/api/posts')
+  const posts = await fetcher('https://jsonplaceholder.typicode.com/posts')
   return { props: { posts } }
 }
 
