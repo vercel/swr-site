@@ -16,8 +16,8 @@
     "intersection-observer": "^0.10.0",
     "markdown-to-jsx": "^6.11.4",
     "next": "^10.0.7",
-    "nextra": "^0.4.3",
-    "nextra-theme-docs": "^1.1.4",
+    "nextra": "^1.0.0-beta.1",
+    "nextra-theme-docs": "^1.2.0-beta.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-intersection-observer": "^8.26.2"
@@ -26,5 +26,9 @@
     "cssnano": "^4.1.10",
     "postcss-preset-env": "^6.7.0",
     "tailwindcss": "^1.4.6"
+  },
+  "prettier": {
+    "embeddedLanguageFormatting": "off",
+    "htmlWhitespaceSensitivity": "strict"
   }
 }

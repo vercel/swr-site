@@ -2,7 +2,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 # カスタムキャッシュ
 
-<Callout emoji={<span style={{fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'}}>⚠️</span>}>
+<Callout emoji="⚠️">
   この機能はまだベータ版です。試すには `swr@beta` をインストールしてください。
 </Callout>
 
@@ -38,7 +38,7 @@ const { mutate, cache } = createCache(provider)
 useSWR(key, fetcher, { cache })
 ```
 
-<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
+<Callout emoji="🚨" type="error">
   `createCache` は、描画内部で呼び出すべきではなく、グローバルなシングルトンであるべきです。
 </Callout>
 
@@ -57,7 +57,7 @@ interface Cache<Data = any> {
 これらのメソッドは、 SWR 内部でキャッシュを管理するために使用されています。 SWR 自体を越えて、ユーザーはキャッシュされたキー、つまり `provider` からの値に直接アクセスできるようになりました。
 たとえば `provider` が Map インスタンスの場合、 `Map.prototype.keys()` を使用して、プロバイダー経由で使用されているキーにアクセスすることができます。
 
-<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
+<Callout emoji="🚨" type="error">
   ほとんどの場合、キャッシュデータを直接操作するべきではありません。代わりに、常に mutate を使用してステートとキャッシュの一貫性を保つようにしてください。
 </Callout>
 
