@@ -2,6 +2,8 @@ node_modules
 .next
 .DS_Store
 yarn-error.log
+.yalc
+yalc.lock
 
 public/*.st
 public/*.toml

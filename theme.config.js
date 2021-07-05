@@ -36,8 +36,10 @@ export default {
     return (
       <>
         <Logo height={18} />
-        <span className="mx-2 font-extrabold hidden md:inline">SWR</span>
-        <span className="text-gray-600 font-normal hidden md:inline whitespace-no-wrap">
+        <span className="mx-2 font-extrabold hidden md:inline select-none">
+          SWR
+        </span>
+        <span className="text-gray-600 font-normal hidden lg:!inline whitespace-no-wrap">
           {TITLE_WITH_TRANSLATIONS[locale]}
         </span>
       </>
