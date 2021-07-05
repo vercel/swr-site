@@ -30,7 +30,7 @@ export default {
   docsRepositoryBase: "https://github.com/vercel/swr-site/blob/master/pages",
   titleSuffix: " – SWR",
   search: true,
-  UNSTABLE_stork: true,
+  unstable_stork: true,
   logo: () => {
     const { locale } = useRouter();
     return (
@@ -104,7 +104,7 @@ export default {
       />
     </>
   ),
-  footerEditOnGitHubText: ({ locale }) => {
+  footerEditLink: ({ locale }) => {
     switch (locale) {
       case "zh-CN":
         return "在 GitHub 上编辑本页";
