@@ -116,10 +116,13 @@ matchMutate('key-a') // `key-a` の再検証する
 
 ```js
 function createProvider() {
-  const map = new Map(localStorage.getItem('app-cache') || [])
+  const map = new Map(JSON.parse(localStorage.getItem('app-cache')) || [])
+
   window.addEventListener('beforeunload', () => {
-    localStorage.setItem('app-cache', map.entries())
+    const appCache = JSON.stringify(Array.from(map.entries()))
+    localStorage.setItem('app-cache', appCache)
   })
+
   return map
 }
 const provider = createProvider()
