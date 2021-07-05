@@ -19,7 +19,7 @@ npm install swr
 
 ## Inicio rápido
 
-Para APIs RESTFul normales con datos JSON, primero necesita crear una función `fethcer`, que no es más que una envoltura 
+Para APIs RESTFul normales con datos JSON, primero necesita crear una función `fethcer`, que no es más que una envoltura
 del `fetch` nativo:
 
 ```jsx
@@ -89,7 +89,7 @@ que especificar qué datos utiliza el componente.
 
 ## Ejemplo
 
-En un ejemplo del mundo real, nuestro sitio web muestra una barra de navegación y el contenido, 
+En un ejemplo del mundo real, nuestro sitio web muestra una barra de navegación y el contenido,
 ambos dependen del `user`:
 
 <div className="mt-8" />
@@ -119,10 +119,10 @@ ambos dependen del `user`:
   ></path>
 </svg>
 
-Tradicionalmente, obtenemos los datos una vez utilizando `useEffect` en el componente de nivel superiror, y pasarlo a los componentes hijos 
+Tradicionalmente, obtenemos los datos una vez utilizando `useEffect` en el componente de nivel superiror, y pasarlo a los componentes hijos
 a través de props (fíjate que por ahora no manejamos el estado de error):
 
-```jsx highlight=7,8,9,10,11,17,18,27
+```jsx highlight=7-11,17,18,27
 // componente de la página
 
 function Page() {
@@ -165,8 +165,9 @@ function Avatar({ user }) {
   return <img src={user.avatar} alt={user.name} />
 }
 ```
+
 Por lo general, necesitamos mantener todos los datos que se obtienen en el componente de nivel superiror y
-añadir las props a cada componente dentro del árbol. El código será más difícil de mantener si añadimos más 
+añadir las props a cada componente dentro del árbol. El código será más difícil de mantener si añadimos más
 dependencia de datos a la página.
 
 Aunque podamos evitar pasar props usando [Context](https://reactjs.org/docs/context.html), sigue existiendo problema con el contenido dinámico:
@@ -207,13 +208,13 @@ function Avatar() {
 }
 
 ```
+
 Los datos ahora estan vinculados a los componentes que los necesitan, y todos los componentes son independientes entre sí.
 Todo los componentes padre no necesitan saber nada sobre los datos o el paso del mismo. Sólo se renderizaran. El código es mucho
 más sencillo y fácil de mantener ahora.
 
-Lo más bonito es que sólo se enviará **1 request** a la API, porque utilizan la misma clave de SWR y la solicitud se **desduplica**, 
+Lo más bonito es que sólo se enviará **1 request** a la API, porque utilizan la misma clave de SWR y la solicitud se **desduplica**,
 se almacena en **caché** y se **comparte** automáticamente.
 
 También, la aplicación tiene ahora la capacidad de volver a obtener los datos cuando [el usuario se centra o se reconecta a la red!](/docs/revalidation)
 Esto significa que, cuando el laptop del usuario se despierte de la suspeción o cambie de pestaña del navegador, los datos se actualizarán automáticamente.
-
