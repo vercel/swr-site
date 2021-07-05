@@ -1,9 +1,29 @@
+---
+title: React Hooks for Data Fetching
+---
+
 import Callout from 'nextra-theme-docs/callout'
 import Features from 'components/features'
+import Bleed from 'nextra-theme-docs/bleed'
 
-# SWR
+<style jsx global>{`
+body {
+  background-image: radial-gradient(#ddd 1px, transparent 0),
+    radial-gradient(#ddd 1px, transparent 0);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
+.dark body {
+  background-image: radial-gradient(#333 1px, transparent 0),
+    radial-gradient(#333 1px, transparent 0);
+}
+`}</style>
 
-<Features/>
+<h1 className="text-center font-extrabold md:text-5xl mt-8">SWR</h1>
+
+<Bleed full>
+  <Features/>
+</Bleed>
 
 The name “SWR” is derived from `stale-while-revalidate`, a HTTP cache invalidation strategy popularized by [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861).
 SWR is a strategy to first return the data from cache (stale), then send the fetch request (revalidate), and finally come with the up-to-date data.
