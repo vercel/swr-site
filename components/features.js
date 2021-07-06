@@ -52,7 +52,7 @@ export default () => {
                 width="24"
                 height="24"
                 stroke="currentColor"
-                strokeWidth="1.5"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
@@ -80,7 +80,7 @@ export default () => {
                 stroke="currentColor"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="1.5"
+                strokeWidth="2"
                 shapeRendering="geometricPrecision"
                 viewBox="0 0 24 24"
               >
@@ -98,7 +98,7 @@ export default () => {
                 stroke="currentColor"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="1.5"
+                strokeWidth="2"
                 shapeRendering="geometricPrecision"
                 viewBox="0 0 24 24"
               >
@@ -137,7 +137,7 @@ export default () => {
                 stroke="currentColor"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="1.5"
+                strokeWidth="2"
                 shapeRendering="geometricPrecision"
                 viewBox="0 0 24 24"
               >
@@ -177,7 +177,7 @@ export default () => {
                 stroke="currentColor"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="1.5"
+                strokeWidth="2"
                 shapeRendering="geometricPrecision"
                 viewBox="0 0 24 24"
               >
