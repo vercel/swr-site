@@ -9,4 +9,23 @@ module.exports = withNextra({
     locales: ["en-US", "zh-CN", "es-ES", "ja"],
     defaultLocale: "en-US",
   },
+  redirects: () => {
+    return [
+      {
+        source: "/advanced/performance",
+        destination: "/docs/advanced/performance",
+        statusCode: 301,
+      },
+      {
+        source: "/advanced/cache",
+        destination: "/docs/advanced/cache",
+        statusCode: 301,
+      },
+      {
+        source: "/change-log",
+        destination: "/docs/change-log",
+        statusCode: 301,
+      },
+    ];
+  },
 });
