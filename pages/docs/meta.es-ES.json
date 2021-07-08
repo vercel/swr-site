@@ -1,4 +1,5 @@
 {
+  "getting-started": "Comienza",
   "options": "Opciones",
   "global-configuration": "Configuración Global",
   "data-fetching": "Obtención De Datos",
@@ -10,5 +11,7 @@
   "pagination": "Paginación",
   "prefetching": "Prefetching",
   "with-nextjs": "Uso Con Next.js",
-  "suspense": "Suspense"
+  "suspense": "Suspense",
+  "advanced": "Avanzado",
+  "change-log": "Registro de cambios"
 }

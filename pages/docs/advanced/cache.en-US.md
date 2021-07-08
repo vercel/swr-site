@@ -2,7 +2,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 # Custom Cache
 
-<Callout emoji={<span style={{fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'}}>⚠️</span>}>
+<Callout emoji="⚠️">
 This is still a beta feature. Please install `swr@beta` to try it out.
 </Callout>
 
@@ -38,7 +38,7 @@ const { mutate, cache } = createCache(provider)
 useSWR(key, fetcher, { cache })
 ```
 
-<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
+<Callout emoji="🚨" type="error">
   `createCache` should not be called inside render, it should be a global singleton.
 </Callout>
 
@@ -57,7 +57,7 @@ interface Cache<Data = any> {
 Those methods are being used inside SWR to manage cache. Beyond SWR itself, now user can access the cached keys, values from `provider` directly.
 For instance if the provider is a Map instance, you'll be able to access the used keys through provider by using `Map.prototype.keys()`.
 
-<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
+<Callout emoji="🚨" type="error">
   In most cases, you shouldn't directly manipulate cached data. Instead always use mutate to keep the state and cache consistent.
 </Callout>
 

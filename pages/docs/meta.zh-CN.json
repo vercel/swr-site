@@ -1,4 +1,5 @@
 {
+  "getting-started": "入门",
   "options": "选项",
   "global-configuration": "全局配置",
   "data-fetching": "数据请求",
@@ -10,5 +11,7 @@
   "pagination": "分页",
   "prefetching": "预请求",
   "with-nextjs": "配合 Next.js 使用",
-  "suspense": "Suspense"
+  "suspense": "Suspense",
+  "advanced": "高级",
+  "change-log": "更新日志"
 }

@@ -1,9 +1,19 @@
 {
-   "index": "Introducción",
-   "getting-started": "Comienza",
-   "docs": "Documentación",
-   "advanced": "Avanzado",
-   "examples": "Ejemplos",
-   "change-log": "Registro de cambios",
-   "about": "Sobre"
+  "index": {
+    "title": "Introducción",
+    "type": "nav",
+    "hidden": true
+  },
+  "docs": {
+    "title": "Docs",
+    "type": "nav"
+  },
+  "examples": {
+    "title": "Ejemplos",
+    "type": "nav"
+  },
+  "blog": {
+    "title": "Blog",
+    "type": "nav"
+  }
 }

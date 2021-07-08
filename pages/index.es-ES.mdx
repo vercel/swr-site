@@ -1,16 +1,38 @@
+---
+title: Biblioteca React Hooks para la obtención de datos
+---
+
 import Callout from "nextra-theme-docs/callout";
 import Features from "components/features";
+import Bleed from 'nextra-theme-docs/bleed'
 
-# SWR
+<style jsx global>{`
+body {
+  background-image: radial-gradient(#ddd 1px, transparent 0),
+    radial-gradient(#ddd 1px, transparent 0);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
+.dark body {
+  background-image: radial-gradient(#333 1px, transparent 0),
+    radial-gradient(#333 1px, transparent 0);
+}
+`}</style>
 
-<Features />
+{
+// wrapped with {} to mark it as javascript so mdx will not put it under a p tag
+}
+{<h1 className="text-center font-extrabold md:text-5xl mt-8">SWR</h1>}
+
+<Bleed full>
+  <Features/>
+</Bleed>
 
 El nombre “SWR” es derivado de `stale-while-revalidate`, una estrategia de invalidación de caché HTTP popularizada por [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861).
 SWR es una estrategia para devolver primero los datos en caché (obsoletos), luego envíe la solicitud de recuperación (revalidación), y finalmente entrege los datos actualizados.
 
 <Callout emoji="✅">
-   Con SWR, el componente obtendrá <strong>constante</strong> y <strong>automáticamente</strong> el último flujo de datos.
-   <br />
+   Con SWR, el componente obtendrá <strong>constante</strong> y <strong>automáticamente</strong> el último flujo de datos.<br />
    Y la interfaz de usuario será siempre <strong>rápida</strong> y <strong>reactiva</strong>.
 </Callout>
 
@@ -44,7 +66,6 @@ Con una sola línea de código, puede simplificar la obtención de datos en su p
 - Agnóstico al transporte y al protocolo
 - TypeScript ready
 - React Native
-
 
 SWR le cubre en todos los aspectos de velocidad, correción, y estabilidad para ayudarle a construir mejores experiencias:
 
