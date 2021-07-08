@@ -1,15 +1,37 @@
-import Callout from "nextra-theme-docs/callout";
-import Features from "components/features";
+---
+title: 用于数据请求的 React Hooks 库
+---
 
-# SWR
+import Callout from "nextra-theme-docs/callout"
+import Features from "components/features"
+import Bleed from 'nextra-theme-docs/bleed'
 
-<Features />
+<style jsx global>{`
+body {
+  background-image: radial-gradient(#ddd 1px, transparent 0),
+    radial-gradient(#ddd 1px, transparent 0);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
+.dark body {
+  background-image: radial-gradient(#333 1px, transparent 0),
+    radial-gradient(#333 1px, transparent 0);
+}
+`}</style>
+
+{
+// wrapped with {} to mark it as javascript so mdx will not put it under a p tag
+}
+{<h1 className="text-center font-extrabold md:text-5xl mt-8">SWR</h1>}
+
+<Bleed full>
+  <Features/>
+</Bleed>
 
 “SWR” 这个名字来自于 `stale-while-revalidate`：一种由 [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861) 推广的 HTTP 缓存失效策略。这种策略首先从缓存中返回数据（过期的），同时发送 fetch 请求（重新验证），最后得到最新数据。
 
 <Callout emoji="✅">
-  使用 SWR，组件将会<strong>不断地</strong>、<strong>自动</strong>获得最新数据流。
-  <br />
+  使用 SWR，组件将会<strong>不断地</strong>、<strong>自动</strong>获得最新数据流。<br/>
   UI 也会一直保持<strong>快速响应</strong>。
 </Callout>
 

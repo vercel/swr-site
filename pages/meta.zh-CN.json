@@ -1,9 +1,19 @@
 {
-  "index": "简介",
-  "getting-started": "入门",
-  "docs": "文档",
-  "advanced": "高级",
-  "examples": "示例",
-  "change-log": "更新日志",
-  "about": "关于"
+  "index": {
+    "title": "简介",
+    "type": "nav",
+    "hidden": true
+  },
+  "docs": {
+    "title": "文档",
+    "type": "nav"
+  },
+  "examples": {
+    "title": "示例",
+    "type": "nav"
+  },
+  "blog": {
+    "title": "博客",
+    "type": "nav"
+  }
 }

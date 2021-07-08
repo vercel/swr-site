@@ -1,27 +1,54 @@
 .features {
   display: flex;
   flex-wrap: wrap;
-  margin: 2.5rem -.5rem 2rem;
+  margin: 2.5rem 0 2rem;
+  justify-content: space-around;
 }
-
 .feature {
-  flex: 0 0 33%;
   align-items: center;
   display: inline-flex;
-  padding: 0 0.5rem 1.5rem;
-  margin: 0 auto;
+  padding-bottom: 1.5rem;
+}
+.features > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 0.5rem;
 }
 .feature h4 {
   margin: 0 0 0 0.5rem;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   white-space: nowrap;
 }
 @media (max-width: 860px) {
   .feature {
     padding-left: 0;
+    justify-content: center;
   }
   .feature h4 {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 660px) {
+  .features > div {
+    flex: 0 0 50%;
+  }
+}
+@media (max-width: 420px) {
+  .feature {
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 370px) {
+  .features > div {
+    flex: 0 0 100%;
+    padding: 0 1rem;
+  }
+  .feature {
+    padding-bottom: 0.75rem;
+  }
+  .feature h4 {
+    font-size: 1rem;
   }
 }

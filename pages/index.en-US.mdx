@@ -1,16 +1,36 @@
+---
+title: React Hooks for Data Fetching
+---
+
 import Callout from 'nextra-theme-docs/callout'
 import Features from 'components/features'
+import Bleed from 'nextra-theme-docs/bleed'
 
-# SWR
+<style jsx global>{`
+body {
+  background-image: radial-gradient(#ddd 1px, transparent 0),
+    radial-gradient(#ddd 1px, transparent 0);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
+.dark body {
+  background-image: radial-gradient(#333 1px, transparent 0),
+    radial-gradient(#333 1px, transparent 0);
+}
+`}</style>
 
-<Features/>
+{
+// wrapped with {} to mark it as javascript so mdx will not put it under a p tag
+}
+{<h1 className="text-center font-extrabold md:text-5xl mt-8">SWR</h1>}
 
-The name “SWR” is derived from `stale-while-revalidate`, a HTTP cache invalidation strategy popularized by [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861). 
+<Bleed full><Features/></Bleed>
+
+The name “SWR” is derived from `stale-while-revalidate`, a HTTP cache invalidation strategy popularized by [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861).
 SWR is a strategy to first return the data from cache (stale), then send the fetch request (revalidate), and finally come with the up-to-date data.
 
 <Callout emoji="✅">
-  With SWR, components will get a stream of data updates <strong>constantly</strong> and <strong>automatically</strong>.
-  <br/>
+  With SWR, components will get a stream of data updates <strong>constantly</strong> and <strong>automatically</strong>.<br/>
   And the UI will be always <strong>fast</strong> and <strong>reactive</strong>.
 </Callout>
 
@@ -28,7 +48,7 @@ function Profile() {
 }
 ```
 
-In this example, the `useSWR` hook accepts a `key` string and a `fetcher` function. `key` is a unique identifier of the data (normally the API URL) 
+In this example, the `useSWR` hook accepts a `key` string and a `fetcher` function. `key` is a unique identifier of the data (normally the API URL)
 and will be passed to `fetcher`. `fetcher` can be any asynchronous function which returns the data, you can use the native fetch or tools like Axios.
 
 The hook returns 2 values: `data` and `error`, based on the status of the request.
@@ -46,6 +66,7 @@ With just one single line of code, you can simplify the logic of data fetching i
 - React Native
 
 SWR has you covered in all aspects of speed, correctness, and stability to help you build better experiences:
+
 - Fast page navigation
 - Polling on interval
 - Data dependency

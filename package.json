@@ -15,16 +15,20 @@
     "focus-visible": "^5.1.0",
     "intersection-observer": "^0.10.0",
     "markdown-to-jsx": "^6.11.4",
-    "next": "^10.0.7",
-    "nextra": "^0.4.3",
-    "nextra-theme-docs": "^1.1.4",
+    "next": "^11.0.1",
+    "nextra": "^1.0.0-beta.2",
+    "nextra-theme-docs": "^1.2.0-beta.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-intersection-observer": "^8.26.2"
   },
   "devDependencies": {
-    "cssnano": "^4.1.10",
-    "postcss-preset-env": "^6.7.0",
-    "tailwindcss": "^1.4.6"
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.5",
+    "tailwindcss": "^2.2.4"
+  },
+  "prettier": {
+    "embeddedLanguageFormatting": "off",
+    "htmlWhitespaceSensitivity": "strict"
   }
 }

@@ -128,7 +128,7 @@ function App () {
   }
 
   return <div>
-    {list.map((data, i) => 
+    {list.map((data, i) =>
       <div key={i}>{
         data.map(item => <div key={item.id}>{item.name}</div>)
       }</div>)}
@@ -192,9 +192,9 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 )
 ```
 
-和 `useSWR` 类似，这个新的 Hook 接受一个函数，该函数返回请求的 key、1个 fetcher 函数和 options。它返回 `useSWR` 的所有返回值，还包括2个额外的值：page size 和 page size setter，类似一个 React state。
+和 `useSWR` 类似，这个新的 Hook 接受一个函数，该函数返回请求的 key、1 个 fetcher 函数和 options。它返回 `useSWR` 的所有返回值，还包括 2 个额外的值：page size 和 page size setter，类似一个 React state。
 
-在无限加载中，一个_页面_是一个请求，我们的目标是请求多页面并渲染它们。
+在无限加载中，一个 _页面_ 是一个请求，我们的目标是请求多页面并渲染它们。
 
 ### API
 
@@ -202,10 +202,10 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 - `getKey`: 一个函数，接受索引和上一页数据，返回页面的 key
 - `fetcher`: 和 `useSWR` 的 [fetcher 函数](/docs/data-fetching) 一样
-- `options`: 接受 `useSWR` 支持的所有选项，以及3个额外选项：
+- `options`: 接受 `useSWR` 支持的所有选项，以及 3 个额外选项：
   - `initialSize = 1`: 最初应加载的页面数量
   - `revalidateAll = false`: 始终尝试重新验证所有页面
-  - `persistSize = false`: 当第一页的 key 发生变化时，不将 page size（或者 `initialSize` 如果设置了该参数）重置为1
+  - `persistSize = false`: 当第一页的 key 发生变化时，不将 page size（或者 `initialSize` 如果设置了该参数）重置为 1
 
 <Callout>
   请注意，`initialSize` 选项并不支持在渲染过程中发生改变。
@@ -217,10 +217,10 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 - `error`: 与 `useSWR` 的 `error` 返回值相同
 - `isValidating`: 与 `useSWR` 的 `isValidating` 返回值相同
 - `mutate`: 和 `useSWR` 的绑定 mutate 函数一样，但是操作 data 数组
-- `size`: _即将_请求和返回的页面数
+- `size`: *即将*请求和返回的页面数
 - `setSize`: 设置需要请求的页面数
 
-### 示例1：基于索引的分页 API
+### 示例 1：基于索引的分页 API
 
 普通的基于索引的 API：
 
@@ -287,7 +287,7 @@ function App () {
 ]
 ```
 
-### 示例2：基于游标或偏移的分页 API
+### 示例 2：基于游标或偏移的分页 API
 
 假设现在 API 需要一个游标，并将下一个游标和数据一起返回：
 

@@ -1,4 +1,5 @@
 {
+  "getting-started": "はじめに",
   "options": "オプション",
   "global-configuration": "グローバルな設定",
   "data-fetching": "データの取得",
@@ -10,5 +11,7 @@
   "pagination": "ページネーション",
   "prefetching": "プリフェッチ",
   "with-nextjs": "Next.jsでの利用",
-  "suspense": "サスペンス"
+  "suspense": "サスペンス",
+  "advanced": "高度な使い方",
+  "change-log": "変更履歴"
 }

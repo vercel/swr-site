@@ -1,9 +1,19 @@
 {
-  "index": "前書き",
-  "getting-started": "はじめに",
-  "docs": "ドキュメント",
-  "advanced": "高度な使い方",
-  "examples": "例",
-  "change-log": "変更履歴",
-  "about": "このサイトについて"
+  "index": {
+    "title": "前書き",
+    "type": "nav",
+    "hidden": true
+  },
+  "docs": {
+    "title": "ドキュメント",
+    "type": "nav"
+  },
+  "examples": {
+    "title": "例",
+    "type": "nav"
+  },
+  "blog": {
+    "title": "ブログ",
+    "type": "nav"
+  }
 }

@@ -2,7 +2,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 # 自定义缓存
 
-<Callout emoji={<span style={{fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'}}>⚠️</span>}>
+<Callout emoji="⚠️">
 这还只是 beta 版。请安装 `swr@beta` 来试用。
 </Callout>
 
@@ -36,7 +36,7 @@ const { mutate, cache } = createCache(provider)
 useSWR(key, fetcher, { cache })
 ```
 
-<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
+<Callout emoji="🚨" type="error">
   `createCache` 不应该在渲染内部调用，它应该是一个全局单例。
 </Callout>
 
@@ -54,7 +54,7 @@ interface Cache<Data = any> {
 
 在 SWR 中使用这些方法来管理缓存。除了 SWR 本身，现在用户可以直接从 `provider` 访问缓存的 key 和 value。例如，如果 provider 是一个 Map 实例，则可以使用 `Map.prototype.keys()` 通过 provider 访问使用的 key。
 
-<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
+<Callout emoji="🚨" type="error">
   在大多数情况下，不应该直接操作缓存数据。 而应该使用 mutate 来保持状态和缓存一致。
 </Callout>
 
