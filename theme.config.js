@@ -26,7 +26,7 @@ const TITLE_WITH_TRANSLATIONS = {
 };
 
 export default {
-  repository: "https://github.com/vercel/swr",
+  github: "https://github.com/vercel/swr",
   docsRepositoryBase: "https://github.com/vercel/swr-site/blob/master/pages",
   titleSuffix: " – SWR",
   search: true,
