@@ -6,7 +6,7 @@ import Features from 'components/features'
 <Features/>
 
 "SWR"이라는 이름은 [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861)에 의해 알려진 HTTP 캐시 무효 전략인 `stale-while-revalidate`에서 유래되었습니다. 
-SWR은 먼저 캐시(스태일)로부터 데이터를 리턴한 후, fetch 요청(재검증)을 하고, 최종적으로 최신화된 데이터를 가져오는 전략입니다.
+SWR은 먼저 캐시(스태일)로부터 데이터를 반환한 후, fetch 요청(재검증)을 하고, 최종적으로 최신화된 데이터를 가져오는 전략입니다.
 
 <Callout emoji="✅">
   SWR을 사용하면 컴포넌트는 <strong>지속적</strong>이며 <strong>자동으로</strong> 데이터 업데이트 스트림을 받게 됩니다.
@@ -31,11 +31,11 @@ function Profile() {
 이 예시에서, `useSWR` hook은 `key` 문자열과 `fetcher` 함수를 받습니다. `key`는 데이터의 고유한 식별자이며(일반적으로 API URL) 
 `fetcher`로 전달될 것입니다. `fetcher`는 데이터를 반환하는 어떠한 비동기 함수도 될 수 있습니다. 네이티브 fetch 또는 Axios와 같은 도구를 사용할 수 있습니다.
 
-hook은 두 개의 값을 리턴합니다: 요청의 상태에 기반한 `data`와 `error`.
+hook은 두 개의 값을 반환합니다: 요청의 상태에 기반한 `data`와 `error`.
 
 ## 기능
 
-단 한 줄의 코드로 프로젝트 내의 데이터 가져오기 로직을 단순화 할 수 있으며, 다음과 같은 모든 놀라운 기능들을 바로 사용할 수도 있습니다.
+단 한 줄의 코드로 프로젝트 내의 데이터 가져오기 로직을 단순화할 수 있으며, 다음과 같은 모든 놀라운 기능들을 바로 사용할 수도 있습니다.
 
 - **Jamstack** 지향
 - **빠르고**, **가볍고**, **재사용 가능한** 데이터 가져오기
