@@ -15,6 +15,7 @@ const TITLE_WITH_TRANSLATIONS = {
   'zh-CN': '用于数据请求的 React Hooks 库',
   'es-ES': 'Biblioteca React Hooks para la obtención de datos',
   'ja': 'データ取得のための React Hooks ライブラリ',
+  'ko': '데이터 가져오기를 위한 React Hooks 라이브러리',
 }
 
 export default {
@@ -97,6 +98,8 @@ export default {
         return 'Edite esta página en GitHub'
       case 'ja':
         return 'Github で編集する'
+      case 'ko':
+        return 'Github에서 이 페이지 편집하기'
       default:
         return 'Edit this page on GitHub'
     }
@@ -114,6 +117,10 @@ export default {
       case 'ja':
         return <a href="https://vercel.com/?utm_source=swr_ja" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
             <span className="mr-2">提供</span><span className="mr-2"><Vercel/></span>
+          </a>
+      case 'ko':
+        return <a href="https://vercel.com/?utm_source=swr_ko" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
+            <span className="mr-2">Powered by</span><span className="mr-2"><Vercel/></span>
           </a>
       default:
         return <a href="https://vercel.com/?utm_source=swr" target="_blank" rel="noopener" className="inline-flex items-center no-underline text-current font-semibold">
