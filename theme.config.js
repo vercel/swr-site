@@ -23,7 +23,7 @@ const TITLE_WITH_TRANSLATIONS = {
   "zh-CN": "用于数据请求的 React Hooks 库",
   "es-ES": "Biblioteca React Hooks para la obtención de datos",
   ja: "データ取得のための React Hooks ライブラリ",
-  ko: "데이터 가져오기를 위한 React Hooks 라이브러리",
+  ko: "데이터 가져오기를 위한 React Hooks",
 };
 
 export default {
@@ -114,7 +114,7 @@ export default {
       case "ja":
         return "Github で編集する";
       case "ko":
-        return 'Github에서 이 페이지 편집하기'
+        return "Github에서 이 페이지 편집하기";
       default:
         return "Edit this page on GitHub";
     }

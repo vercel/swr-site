@@ -1,4 +1,5 @@
 {
+  "getting-started": "시작하기",
   "options": "옵션",
   "global-configuration": "전역 설정",
   "data-fetching": "데이터 가져오기",
@@ -10,5 +11,7 @@
   "pagination": "페이지네이션",
   "prefetching": "프리패칭",
   "with-nextjs": "Next.js와 함께 사용",
-  "suspense": "서스펜스"
+  "suspense": "서스펜스",
+  "advanced": "고급",
+  "change-log": "변경 로그"
 }

@@ -2,7 +2,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 # 커스텀 캐시
 
-<Callout emoji={<span style={{fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'}}>⚠️</span>}>
+<Callout emoji="⚠️">
 아직 베타 기능입니다. 사용해보려면 `swr@beta`를 설치해주세요.
 </Callout>
 
@@ -38,7 +38,7 @@ const { mutate, cache } = createCache(provider)
 useSWR(key, fetcher, { cache })
 ```
 
-<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
+<Callout emoji="🚨" type="error">
   `createCache`는 렌더링 내에서 호출되어서는 안 되며 전역 싱글톤이어야 합니다.
 </Callout>
 
@@ -57,7 +57,7 @@ interface Cache<Data = any> {
 SWR 내에서 캐시를 관리하기 위해 이러한 메서드를 사용합니다. SWR 자체를 넘어 사용자는 이제 `provider`의 캐시 된 키, 값에 직접 접근할 수 있습니다.
 예를 들어 provider가 Map 인스턴스라면 `Map.prototype.keys()`를 사용하여 provider를 통해 사용된 키에 접근할 수 있습니다.
 
-<Callout emoji="🚨" background="bg-red-200 dark:text-gray-800">
+<Callout emoji="🚨" type="error">
   대부분의 경우 캐시 된 데이터를 직접 조작하지 않아야 합니다. 대신에 뮤테이트를 사용하여 상태와 캐시를 일관성 있게 유지하세요.
 </Callout>
 

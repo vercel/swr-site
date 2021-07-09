@@ -1,16 +1,36 @@
+---
+title: 데이터 가져오기를 위한 React Hooks
+---
+
 import Callout from 'nextra-theme-docs/callout'
 import Features from 'components/features'
+import Bleed from 'nextra-theme-docs/bleed'
 
-# SWR
+<style jsx global>{`
+body {
+  background-image: radial-gradient(#ddd 1px, transparent 0),
+    radial-gradient(#ddd 1px, transparent 0);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
+.dark body {
+  background-image: radial-gradient(#333 1px, transparent 0),
+    radial-gradient(#333 1px, transparent 0);
+}
+`}</style>
 
-<Features/>
+{
+// wrapped with {} to mark it as javascript so mdx will not put it under a p tag
+}
+{<h1 className="text-center font-extrabold md:text-5xl mt-8">SWR</h1>}
+
+<Bleed full><Features/></Bleed>
 
 "SWR"이라는 이름은 [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861)에 의해 알려진 HTTP 캐시 무효 전략인 `stale-while-revalidate`에서 유래되었습니다. 
 SWR은 먼저 캐시(스태일)로부터 데이터를 반환한 후, fetch 요청(재검증)을 하고, 최종적으로 최신화된 데이터를 가져오는 전략입니다.
 
 <Callout emoji="✅">
-  SWR을 사용하면 컴포넌트는 <strong>지속적</strong>이며 <strong>자동으로</strong> 데이터 업데이트 스트림을 받게 됩니다.
-  <br/>
+  SWR을 사용하면 컴포넌트는 <strong>지속적</strong>이며 <strong>자동으로</strong> 데이터 업데이트 스트림을 받게 됩니다.<br/>
   그리고 UI는 항상 <strong>빠르고</strong> <strong>반응적</strong>입니다.
 </Callout>
 
@@ -46,6 +66,7 @@ hook은 두 개의 값을 반환합니다: 요청의 상태에 기반한 `data`�
 - React Native
 
 SWR은 더 나은 경험을 구축할 수 있도록 속도, 정확성, 안정성의 모든 측면을 다룹니다.
+
 - 빠른 페이지 네비게이션
 - 인터벌 폴링
 - 데이터 의존성
