@@ -129,3 +129,31 @@ function createProvider() {
 const provider = createProvider()
 const { cache, mutate } = createCache(provider)
 ```
+
+### Cache Garbage Collection
+
+You can leverage any underlying provider to implement the outdate key elimination mechanism.
+Here we use a **Least Recently Used Map** as provider to kick out the old keys.
+
+```js
+import useSWR, { createCache } from 'swr'
+import { LRUMap } from 'lru_map'
+import { useEffect, useState } from 'react'
+
+// Only keep 8 keys in cache, including keys for error and isValidating
+const lru = new LRUMap(8)
+
+const provider = {
+  get(k) {
+    return lru.get(k)
+  },
+  set(k, v) {
+    return lru.set(k, v)
+  },
+  delete(k) {
+    return lru.delete(k)
+  }
+}
+
+const { cache } = createCache(provider)
+```
