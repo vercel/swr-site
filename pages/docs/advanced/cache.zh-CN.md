@@ -125,3 +125,21 @@ function createProvider() {
 const provider = createProvider()
 const { cache, mutate } = createCache(provider)
 ```
+
+### 在测试用例之间重置 Cache
+
+```js
+let provider
+
+describe('test suite', async () => {
+  beforeEach(() => {
+    provider = new Map()
+  })
+
+  it('test case', async () => {
+    const { cache } = createCache(provider)
+    useSWR(key, fetcher, { cache })
+    // ...
+  })
+})
+```
