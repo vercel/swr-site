@@ -92,7 +92,7 @@ export default function App() {
 function matchMutate(matcher, data, shouldRevalidate = true) {
   const keys = []
   if (matcher instanceof RegExp) {
-    // `provider`는 캐시 구현입니다, 에: `Map()`
+    // `provider`는 캐시 구현입니다, 예: `Map()`
     for (const k of provider.keys()) {
       if (matcher.test(k)) {
         keys.push(k)
@@ -106,7 +106,7 @@ function matchMutate(matcher, data, shouldRevalidate = true) {
   return Promise.all(mutations)
 }
 
-matchMutate(/^key-/) // `key~`로 시작하는 키 갱싱하기
+matchMutate(/^key-/) // `key~`로 시작하는 키 갱신하기
 matchMutate('key-a') // `key-a` 갱신하기
 ```
 
