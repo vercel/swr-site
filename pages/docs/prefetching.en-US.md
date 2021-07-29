@@ -14,7 +14,7 @@ It will prefetch the data when the HTML loads, even before JavaScript starts to 
 
 ## Programmatically Prefetch
 
-Sometimes, you want to preload a resource conditionally. For example, preloading the data when the user is [hovering](https://github.com/GoogleChromeLabs/quicklink) [a](https://github.com/guess-js/guess) [link](https://instant.page). The most inituitive way is to have a function to refetch and set the cache via the global [mutate](/docs/mutation):
+Sometimes, you want to preload a resource conditionally. For example, preloading the data when the user is [hovering](https://github.com/GoogleChromeLabs/quicklink) [a](https://github.com/guess-js/guess) [link](https://instant.page). The most intuitive way is to have a function to refetch and set the cache via the global [mutate](/docs/mutation):
 
 ```js
 import { mutate } from 'swr'
