@@ -203,7 +203,14 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 Similar to `useSWR`, this new Hook accepts a function that returns the request key, a fetcher function, and options.
 It returns all the values that `useSWR` returns, including 2 extra values: the page size and a page size setter, like a React state.
 
-In infinite loading, one _page_ is one request, and our goal is to fetch multiple pages and render them.
+In infinite loading, one _page_ is one request, and our goal is to fetch multiple pages and render them.  
+
+<Callout>
+  Since [`1.0.0-beta.9`](https://github.com/vercel/swr/releases/tag/1.0.0-beta.9), `useSWRInfinite` must be imported this way:
+  ```javascript
+    import useSWRInfinite from 'swr/infinite';
+  ```
+</Callout>
 
 ### API
 
