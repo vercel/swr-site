@@ -16,7 +16,7 @@ import Callout from 'nextra-theme-docs/callout'
 ## 프리렌더링
 
 페이지가 반드시 프리렌더링 되어야 한다면, Next.js는 [두 가지 형식의 프리렌더링](https://nextjs.org/docs/basic-features/data-fetching)을 지원합니다: 
-**정적 생성(SSG)**과 **서버 사이드 렌더링(SSR)**.
+**정적 생성(SSG)** 과 **서버 사이드 렌더링(SSR)**.
 
 SWR을 함께 사용하여 SEO를 위한 페이지를 프리렌더링할 수 있으며 클라이언트 사이드에서 캐싱, 갱신, 포커스 추적, 인터벌 시에 다시 가져오기와 같은 기능들도 사용할 수 있습니다.
 
