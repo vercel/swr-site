@@ -18,23 +18,38 @@ This approach works well for user dashboard pages, for example. Because a dashbo
 If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
 **Static Generation (SSG)** and **Server-side Rendering (SSR)**.
 
-Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval in the client side.
+Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
 You can pass the pre-fetched data as the initial value to the `initialData` option. For example together with [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation):
 
 ```jsx
- export async function getStaticProps() {
-  // `getStaticProps` is invoked on the server-side,
-  // so this `fetcher` function will be executed on the server-side.
+export async function getStaticProps() {
+  // `getStaticProps` is invoked on server side,
   const posts = await fetcher('https://jsonplaceholder.typicode.com/posts')
-  return { props: { posts } }
+  return {
+    props: {
+      initialState: [
+        ['/api/posts', posts],
+      ]
+    }
+  };
 }
 
-function Posts (props) {
+function Posts(props) {
   // Here the `fetcher` function will be executed on the client-side.
-  const { data } = useSWR('/api/posts', fetcher, { initialData: props.posts })
+  const { data } = useSWR('/api/posts', fetcher)
 
   // ...
+}
+
+export default function Page({ initialState }) {
+  // Initializing cache only on initial render
+  const [scope] = useState(() => createCache(new Map(initialState)));
+  return (
+    <SWRConfig value={{ cache: scope.cache }}>
+      <Posts />
+    </SWRConfig>
+  );
 }
 ```
 
