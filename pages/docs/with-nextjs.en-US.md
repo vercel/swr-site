@@ -20,43 +20,40 @@ If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](ht
 
 Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
-You can pass the pre-fetched data as the initial value to the `initialData` option. For example together with [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation):
+You can use the `fallbackValues` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks. 
+For example with `getStaticProps`:
 
 ```jsx
-export async function getStaticProps() {
-  // `getStaticProps` is invoked on server side,
-  const posts = await fetcher('https://jsonplaceholder.typicode.com/posts')
+ export async function getStaticProps () {
+  // `getStaticProps` is executed on the server side.
+  const article = await getArticleFromAPI()
   return {
     props: {
-      initialState: [
-        ['/api/posts', posts],
-      ]
+      fallbackValues: {
+        '/api/article': article
+      }
     }
-  };
+  }
 }
 
-function Posts(props) {
-  // Here the `fetcher` function will be executed on the client-side.
-  const { data } = useSWR('/api/posts', fetcher)
-
-  // ...
+function Article() {
+  // `data` will always be available as it's in `fallbackValues`.
+  const { data } = useSWR('/api/article', fetcher)
+  return <h1>{data.title}</h1>
 }
 
-export default function Page({ initialState }) {
-  // Initializing cache only on initial render
-  const [scope] = useState(() => createCache(new Map(initialState)));
+export default function Page({ fallbackValues }) {
+  // SWR hooks inside the `SWRConfig` boundary will use those values.
   return (
-    <SWRConfig value={{ cache: scope.cache }}>
-      <Posts />
+    <SWRConfig value={{ fallbackValues }}>
+      <Article />
     </SWRConfig>
-  );
+  )
 }
 ```
 
-The page is still pre-rendered. That means it's SEO friendly, can be cached and accessed very fast. But after hydration, it’s also fully powered by SWR in the client side. 
-Which means the data can be dynamic and update itself over time and user interactions.
+The page is still pre-rendered. It's SEO friendly, fast to response, but also fully powered by SWR on the client side. The data can be dynamic and self-updated over time.
 
 <Callout emoji="💡">
-  In the example above, <code>fetcher</code> is used to load the data from both client and server, 
-  and it needs to support both environments. But this is not a requirement. You can use different ways to load data from server or client.
+  The `Article` component will render the pre-generated data first, and after the page is hydrated, it will fetch the latest data again to keep it refresh.
 </Callout>
