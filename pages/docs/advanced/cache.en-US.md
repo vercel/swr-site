@@ -1,149 +1,174 @@
 import Callout from 'nextra-theme-docs/callout'
 
-# Custom Cache
+# Cache
+
+By default, SWR uses a global cache to store and share data across all components. But you can also customize this behavior with the `provider` option of `SWRConfig`. 
+
+Cache providers are intended to enable SWR with more customized storages.
 
 <Callout emoji="⚠️">
-This is still a beta feature. Please install `swr@beta` to try it out.
+  In most cases, you shouldn't directly _write_ to the cache, which might cause undefined behaviors of SWR. If you need to manually mutate a key, please consider using the SWR APIs.<br/><br/>
+  See also: [Mutation](/docs/mutation), Testing.
 </Callout>
 
-By default, SWR uses a global cache to store and share data across all components. Now, there's a new way to customize it with your own cache provider.
-The new `cache` configuration and `createCache` API are now introduced in `swr@beta`. They're intended to solve problems of using SWR with more customized storages, and providing direct access to the cache.
+## Cache Provider
 
-## Create Custom Cache
+A cache provider is Map-like object which matches the following TypeScript definition (you can import it from `swr`):
 
-### `createCache`
-
-This API receive a underlay cache `provider` as argument. Returns an object, with `cache` instance that could be consumed by SWR hooks,
-and `mutate` API to manipulate the corresponding cache. Note that it's not the global `mutate` API.
-
-```js
-const { mutate, cache } = createCache(provider)
-```
-
-You can pass down `cache` through SWRConfig or the `useSWR` hook options.
-
-```jsx
-import { SWRConfig, createCache } from 'swr'
-
-const provider = new Map()
-
-const { mutate, cache } = createCache(provider)
-
-// pass to SWR context
-<SWRConfig value={{ cache }}>
-  <Page />
-</SWRConfig>
-
-// or pass to hook options
-useSWR(key, fetcher, { cache })
-```
-
-<Callout emoji="🚨" type="error">
-  `createCache` should not be called inside render, it should be a global singleton.
-</Callout>
-
-### `provider`
-
-The provider is used to let user manage cache values directly, and the interface should match the following definition:
-
-```ts
-interface Cache<Data = any> {
-  get(key: string): Data | null | undefined
+```typescript
+interface Cache<Data> {
+  get(key: string): Data | undefined
   set(key: string, value: Data): void
   delete(key: string): void
 }
 ```
 
-Those methods are being used inside SWR to manage cache. Beyond SWR itself, now user can access the cached keys, values from `provider` directly.
-For instance if the provider is a Map instance, you'll be able to access the used keys through provider by using `Map.prototype.keys()`.
+For example, a JavaScript Map instance can be directly used as the cache provider for SWR.
 
-<Callout emoji="🚨" type="error">
-  In most cases, you shouldn't directly manipulate cached data. Instead always use mutate to keep the state and cache consistent.
-</Callout>
+## Create Cache Provider
 
-### `mutate`
-
-The usage of the `mutate` function returned by `createCache`, is similar to the global `mutate` function described on the [Mutation page](/docs/mutation), but bound to the specific cache provider. For instance, if you want to revalidate some keys from the given cache:
+The `provider` option of `SWRConfig` receives a function that returns a [cache provider](#cache-provider). The provider will then be used by all SWR hooks inside that `SWRConfig` boundary. For example:
 
 ```jsx
-const { cache, mutate } = createCache(new Map())
+import useSWR, { SWRConfig } from 'swr'
 
-export default function App() {
+function App() {
   return (
-    <SWRConfig value={{ cache }}>
-      <div className="App">
-        <Section />
-        <button onClick={() => mutate('A')}>revalidate A</button>
-        <button onClick={() => mutate('B')}>revalidate B</button>
-      </div>
+    <SWRConfig value={{ provider: () => new Map() }}>
+      <Page/>
     </SWRConfig>
   )
 }
 ```
 
-## Examples
+All SWR hooks inside `<Page/>` will read and write from that Map instance. You can also use other cache provider implementations as well for your specific use case.
 
-### Mutate Multiple Keys
+<Callout>
+  In the example above, when the `<App/>` component is re-mounted, the provider will also be re-creacted. Normally cache providers need to be put in a higher level in the component tree.
+</Callout>
 
-With the flexibilities of those atomic APIs, you can compose them with your custom logic, such as scheduling partial mutations.
-In the below example, `matchMutate` can receive a regex expression as key, and be used to mutate the ones who matched this pattern.
+<Callout type="warning" emoji="⚠️">
+   If a cache provider is used, the global `mutate` will **not** work for SWR hooks under that `<SWRConfig>` boundary. Please use [this](#access-current-cache-provider) instead. 
+</Callout>
 
-```js
-function matchMutate(matcher, data, shouldRevalidate = true) {
-  const keys = []
-  if (matcher instanceof RegExp) {
-    // `provider` is your cache implementation, for example a `Map()`
-    for (const k of provider.keys()) {
-      if (matcher.test(k)) {
-        keys.push(k)
-      }
-    }
-  } else {
-    keys.push(matcher)
-  }
+## Extend Cache Provider
 
-  const mutations = keys.map((k) => mutate(k, data, shouldRevalidate))
-  return Promise.all(mutations)
-}
+When multiple `<SWRConfig>` components are nested, cache provider can be overriden or extended. 
 
-matchMutate(/^key-/) // revalidate keys starting with `key-`
-matchMutate('key-a') // revalidate `key-a`
+The first argument for the `provider` function is the cache provider of the upper-level `<SWRConfig>` (or the default cache if there's no parent `<SWRConfig>`), you can use it to extend the cache provider:
+
+```jsx
+<SWRConfig value={{ provider: (cache) => newCache }}>
+  ...
+</SWRConfig>
 ```
 
-### Sync Cache to LocalStorage
+The [Example](#example) below describes one of the use cases of this.
 
-You might want to sync your cached states to `localStorage` in some special cases, to recover from the persisted state more easily next time while reloading the app.
+## Access Current Cache Provider
+
+When inside a React component, you need to use the [`useSWRConfig`](#) hook to get access to the current cache provider as well as other configurations including `mutate`:
+
+```jsx
+import { useSWRConfig } from 'swr'
+
+function Avatar() {
+  const { cache, mutate, ...extraConfig } = useSWRConfig()
+  // ...
+}
+```
+
+If it's not under any `<SWRConfig>`, it will return the default configurations.
+
+## Examples
+
+### Mutate Multiple Keys from RegEx
+
+With the flexibility of the cache provider API, you can even build a "partial mutation" helper.
+
+In the example below, `matchMutate` can receive a regex expression as key, and be used to mutate the ones who matched this pattern.
 
 ```js
-function createProvider() {
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache')) || [])
+function useMatchMutate() {
+  const { cache, mutate } = useSWRConfig()
+  return (matcher, ...args) => {
+    if (!(cache instanceof Map)) {
+      throw new Error('matchMutate requires the cache provider to be a Map instance')
+    }
 
+    const keys = []
+
+    for (const key of cache.keys()) {
+      if (matcher.test(key)) {
+        keys.push(key)
+      }
+    }
+
+    const mutations = keys.map((key) => mutate(key, ...args))
+    return Promise.all(mutations)
+  }
+}
+```
+
+Then inside your component:
+
+```jsx
+function Button() {
+  const matchMutate = useMatchMutate()
+  return <button onClick={() => matchMutate(/^\/api\//)}>
+    Revalidate all keys start with "/api/"
+  </button>
+}
+```
+
+<Callout>
+  Note that this example requires the cache provider to be a Map instance.
+</Callout>
+
+### LocalStorage Based Persistent Cache
+
+You might want to sync your cache to `localStorage`. Here's an example implementation:
+
+```jsx
+function localStorageProvider() {
+  // When initializing, we restore the data from `localStorage` into a map.
+  const map = new Map(JSON.parse(localStorage.getItem('swr-cache') || '[]'))
+
+  // Before unloading the app, we write back all the data into `localStorage`.
   window.addEventListener('beforeunload', () => {
     const appCache = JSON.stringify(Array.from(map.entries()))
     localStorage.setItem('app-cache', appCache)
   })
 
+  // We still use the map for write & read for performance.
   return map
 }
-
-const provider = createProvider()
-const { cache, mutate } = createCache(provider)
 ```
 
-### Reset Cache Among Tests
+Then use it as a provider:
 
-```js
-let provider
+```jsx
+<SWRConfig value={{ provider: localStorageProvider }}>
+  <App/>
+</SWRConfig>
+```
 
+<Callout>
+  As an improvement, you can also use the memory cache as a buffer, and write to `localStorage` periodically.
+</Callout>
+
+### Reset Cache Between Test Cases
+
+When testing your application, you might want to reset the SWR cache between test cases. You can simply wrap you application with an empty cache provider. Here's an example with Jest:
+
+```jsx
 describe('test suite', async () => {
-  beforeEach(() => {
-    provider = new Map()
-  })
-
   it('test case', async () => {
-    const { cache } = createCache(provider)
-    useSWR(key, fetcher, { cache })
-    // ...
+    render(
+      <SWRConfig value={{ provider: () => new Map() }}>
+        <App/>
+      </SWRConfig>
+    )
   })
 })
 ```
