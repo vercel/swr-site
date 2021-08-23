@@ -23,7 +23,12 @@ module.exports = withNextra({
       },
       {
         source: "/advanced/cache",
-        destination: "/docs/advanced/cache",
+        destination: "/docs/cache",
+        statusCode: 301,
+      },
+      {
+        source: "/docs/advanced/cache",
+        destination: "/docs/cache",
         statusCode: 301,
       },
       {

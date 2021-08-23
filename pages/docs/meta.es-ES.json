@@ -11,6 +11,7 @@
   "pagination": "Paginación",
   "prefetching": "Prefetching",
   "with-nextjs": "Uso Con Next.js",
+  "cache": "Cache",
   "suspense": "Suspense",
   "advanced": "Avanzado",
   "change-log": "Registro de cambios"

@@ -11,6 +11,7 @@
   "pagination": "ページネーション",
   "prefetching": "プリフェッチ",
   "with-nextjs": "Next.jsでの利用",
+  "cache": "キャッシュ",
   "suspense": "サスペンス",
   "advanced": "高度な使い方",
   "change-log": "変更履歴"
