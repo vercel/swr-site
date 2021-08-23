@@ -1,6 +1,6 @@
 import Callout from 'nextra-theme-docs/callout'
 
-# Middleware
+# Middlewares
 
 <Callout emoji="✅">
   Please update to the latest version (≥ 1.0.0) to use this option.

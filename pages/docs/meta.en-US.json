@@ -12,7 +12,7 @@
   "prefetching": "Prefetching",
   "with-nextjs": "Usage with Next.js",
   "suspense": "Suspense",
-  "middleware": "Middleware",
+  "middlewares": "Middlewares",
   "advanced": "Advanced",
   "change-log": "Change Log"
 }
