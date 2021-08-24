@@ -21,7 +21,7 @@ If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](ht
 
 Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
-You can use the `fallbackValues` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks. 
+You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks. 
 For example with `getStaticProps`:
 
 ```jsx
@@ -30,7 +30,7 @@ For example with `getStaticProps`:
   const article = await getArticleFromAPI()
   return {
     props: {
-      fallbackValues: {
+      fallback: {
         '/api/article': article
       }
     }
@@ -38,15 +38,15 @@ For example with `getStaticProps`:
 }
 
 function Article() {
-  // `data` will always be available as it's in `fallbackValues`.
+  // `data` will always be available as it's in `fallback`.
   const { data } = useSWR('/api/article', fetcher)
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallbackValues }) {
+export default function Page({ fallback }) {
   // SWR hooks inside the `SWRConfig` boundary will use those values.
   return (
-    <SWRConfig value={{ fallbackValues }}>
+    <SWRConfig value={{ fallback }}>
       <Article />
     </SWRConfig>
   )
