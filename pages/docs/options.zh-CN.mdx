@@ -35,13 +35,15 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: 超时触发 `onLoadingSlow` 事件
 - `errorRetryInterval = 5000`: 错误重试的时间间隔
 - `errorRetryCount`: 错误重试的最大次数
-- `fallbackValues`: fallback data to be returned [(details)](/docs/with-nextjs)
+- `fallback`: a map of multiple fallback data to be returned [(details)](/docs/with-nextjs)
+- `fallbackData`: 此 hook 需要返回的初始数据 [（详情）](/docs/with-nextjs)
 - `onLoadingSlow(key, config)`: 请求加载时间过长时的回调函数（参考 `loadingTimeout`）
 - `onSuccess(data, key, config)`: 请求成功完成时的回调函数
 - `onError(err, key, config)`: 请求返回错误时的回调函数
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: 错误重试的处理函数
 - `compare(a, b)`: 比较函数，用来检测返回的数据何时已更改，以防止伪造的重新渲染。默认情况下使用 [dequal](https://github.com/lukeed/dequal)。
 - `isPaused()`: 用于暂停所有数据请求，如果返回值为 `true`，请求的数据和错误都会被忽略。默认返回值为 `false`。
+- `use`: array of middleware functions [(details)](/docs/middleware)
 
 <Callout emoji="💡">
   网络较慢（2G, {'<='} 70Kbps）时， 默认情况下 <code>errorRetryInterval</code> 为 10s， {' '}

@@ -35,13 +35,15 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: onLoadingSlow 이벤트를 트리거 하기 위한 타임아웃
 - `errorRetryInterval = 5000`: 에러 재시도 인터벌
 - `errorRetryCount`: 최대 에러 재시도 수
-- `fallbackValues`: fallback data to be returned [(details)](/docs/with-nextjs)
+- `fallback`: a map of multiple fallback data to be returned [(details)](/docs/with-nextjs)
+- `fallbackData`: 반환될 초기 데이터(노트: hook 별로 존재) [(상세내용)](/docs/with-nextjs)
 - `onLoadingSlow(key, config)`: 요청을 로드하는 데 너무 오래 걸리는 경우의 콜백 함수(`loadingTimeout`을 보세요)
 - `onSuccess(data, key, config)`: 요청이 성공적으로 종료되었을 경우의 콜백 함수
 - `onError(err, key, config)`: 요청이 에러를 반환했을 경우의 콜백 함수
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: 에러 재시도 핸들러
 - `compare(a, b)`: 비논리적인 리렌더러를 회피하기 위해 반환된 데이터가 변경되었는지를 감지하는데 사용하는 비교 함수. 기본적으로 [dequal](https://github.com/lukeed/dequal)을 사용합니다.
 - `isPaused()`: 갱신의 중지 여부를 감지하는 함수. `true`가 반환될 경우 가져온 데이터와 에러는 무시합니다. 기본적으로는 `false`를 반환합니다.
+- `use`: array of middleware functions [(details)](/docs/middleware)
 
 <Callout emoji="💡">
   느린 네트워크(2G, {'<='} 70Kbps)에서는, 기본적으로 <code>errorRetryInterval</code>이 10초이며, 

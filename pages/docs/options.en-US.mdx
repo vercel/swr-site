@@ -35,13 +35,15 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: timeout to trigger the onLoadingSlow event
 - `errorRetryInterval = 5000`: error retry interval
 - `errorRetryCount`: max error retry count
-- `fallbackValues`: fallback data to be returned [(details)](/docs/with-nextjs)
+- `fallback`: a map of multiple fallback data to be returned [(details)](/docs/with-nextjs)
+- `fallbackData`: initial data to be returned (note: This is per-hook) [(details)](/docs/with-nextjs)
 - `onLoadingSlow(key, config)`: callback function when a request takes too long to load (see `loadingTimeout`)
 - `onSuccess(data, key, config)`: callback function when a request finishes successfully
 - `onError(err, key, config)`: callback function when a request returns an error
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: handler for error retry
 - `compare(a, b)`: comparison function used to detect when returned data has changed, to avoid spurious rerenders. By default, [dequal](https://github.com/lukeed/dequal) is used.
 - `isPaused()`: function to detect whether pause revalidations, will ignore fetched data and errors when it returns `true`. Returns `false` by default.
+- `use`: array of middleware functions [(details)](/docs/middleware)
 
 <Callout emoji="💡">
   When under a slow network (2G, {'<='} 70Kbps), <code>errorRetryInterval</code> will be 10s, and{' '}

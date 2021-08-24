@@ -13,6 +13,7 @@
   "with-nextjs": "Next.js SSG and SSR",
   "cache": "Cache",
   "suspense": "Suspense",
+  "middleware": "Middleware",
   "advanced": "Advanced",
   "change-log": "Change Log"
 }
