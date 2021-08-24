@@ -86,28 +86,29 @@ exit  A
 
 ### Request Logger
 
-Let's build a simple request logger middleware as an example. It simply prints out all the fetcher requests sent from the SWR hook.
+Let's build a simple request logger middleware as an example. It prints out all the fetcher requests sent from this SWR hook. You can also use this middleware for all SWR hooks by adding it to `SWRConfig`.
 
 
 ```jsx
 import useSWR from 'swr'
 
-const fetcher (key) => fetch(`/api?key=${key}`).then(res => res.text())
+const fetcher = (url) => fetch(url).then(res => res.json())
 
-const loggerMiddleware = (useSWRNext) => (key, fetcher, config) => {
-  console.log(`Request to /api with param key=${key}`)
-  return useSWRNext(key, fetcher, config)
+function logger(useSWRNext) {
+  return (key, fetcher, config) => {
+    return useSWRNext(key, (...args) => {
+      console.log('SWR Request:', key)
+      return fetcher(...args)
+    }, config)
+  }
 }
 
-useSWR(key, fetcher, {
-  middlewares: [loggerMiddleware]
-})
+useSWR(key, fetcher, { middleware: [logger] })
 ```
 
-Every time the SWR hook runs, it will output to the console:
+Every time the request is fired, it outputs the SWR key to the console:
 
 ```
-Request to /api with param key=key1
-Request to /api with param key=key2
-Request to /api with param key=key3
+SWR Request: /api/user1
+SWR Request: /api/user2
 ```
