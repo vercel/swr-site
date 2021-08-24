@@ -6,16 +6,16 @@ import Callout from 'nextra-theme-docs/callout'
   Please update to the latest version (≥ 1.0.0) to use this option.
 </Callout>
 
-Option `middleware` is the new addition in SWR 1.0, giving user ability to compose multiple data processors. This option let you apply any data transformers onto SWR hooks and extend the their functionality easily.
+The option `middlewares` is a new addition in SWR 1.0. It lets you execute code before and after SWR hooks, giving users the ability to attach processors to SWR for extending its functionality. 
 
 ## Usage
 
 ### API
 
-Middleware can access the previous wrapped or original `useSWR` hook, and return a function with arguments of `useSWR`. Expect to return the transformed data with the composition of hook, arguments and your optional operations here.
+A middleware can access to the previous wrapped or original `useSWR` hook, and return a function with arguments of `useSWR`. Expect to return the transformed data with the composition of hook, arguments and your optional operations here.
 
 ```jsx
-const middleware(useSWRNext) => (key, fetcher, config) => {
+const middleware = (useSWRNext) => (key, fetcher, config) => {
   // enter phase ...
   const swr = useSWRNext(key, fetcher, config)
   // exit phase ...
