@@ -28,11 +28,11 @@ function myMiddleware (useSWRNext) {
 You can pass an array of middleware as an option to `SWRConfig` or `useSWR`:
 
 ```jsx
-<SWRConfig value={{ middleware: [myMiddleware] }}>
+<SWRConfig value={{ use: [myMiddleware] }}>
 
 // or...
 
-useSWR(key, fetcher, { middleware: [myMiddleware] })
+useSWR(key, fetcher, { use: [myMiddleware] })
 ```
 
 ### Extend

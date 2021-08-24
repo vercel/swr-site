@@ -12,6 +12,7 @@
   "prefetching": "Prefetching",
   "with-nextjs": "Uso Con Next.js",
   "suspense": "Suspense",
+  "middleware": "Middleware",
   "advanced": "Avanzado",
   "change-log": "Registro de cambios"
 }

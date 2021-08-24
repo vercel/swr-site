@@ -12,6 +12,7 @@
   "prefetching": "预请求",
   "with-nextjs": "配合 Next.js 使用",
   "suspense": "Suspense",
+  "middleware": "Middleware",
   "advanced": "高级",
   "change-log": "更新日志"
 }
