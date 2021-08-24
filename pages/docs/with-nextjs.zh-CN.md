@@ -13,7 +13,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 这种方法适用于登录后的页面（控制面板）等。因为登录后的页面是一个私有的、特定于用户的页面，与 SEO 无关，页面也不需要预渲染。数据经常更新，这需要即时数据加载。
 
-## Pre-rendering
+## Pre-rendering with Default Data
 
 If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
 **Static Generation (SSG)** and **Server-side Rendering (SSR)**.

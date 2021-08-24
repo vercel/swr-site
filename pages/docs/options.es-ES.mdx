@@ -37,8 +37,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: tiempo de espera para activar el evento onLoadingSlow
 - `errorRetryInterval = 5000`: error retry interval
 - `errorRetryCount`: número máximo de reintentos de error
-- `fallback`: a map of multiple fallback data to be returned [(details)](/docs/with-nextjs)
-- `fallbackData`: datos iniciales a devolver (nota: Esto es por un hook) [(detalles)](/docs/with-nextjs)
+- `fallback`: a map of multiple fallback data to be returned [(example)](/docs/with-nextjs)
+- `fallbackData`: datos iniciales a devolver (nota: Esto es por un hook)
 - `onLoadingSlow(key, config)`: función callback cuando una petición tarda demasiado en cargase (véase: `loadingTimeout`)
 - `onSuccess(data, key, config)`: función callback cuando una petición termina con éxito
 - `onError(err, key, config)`: función callback cuando una petición devuelve un error

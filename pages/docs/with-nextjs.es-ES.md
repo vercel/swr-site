@@ -14,7 +14,7 @@ Así es como funciona:
 
 Este enfoque funciona bien, por ejemplo, para páginas que son dashboard. Dado que un dashboard es una página privada y específica del usuario, el SEO no es relevante y la página no necesita ser pre-rendering. Los datos se actualizan con frecuencia, lo que requiere la obtención de datos en el momento de la solicitud.
 
-## Pre-rendering
+## Pre-rendering with Default Data
 
 If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
 **Static Generation (SSG)** and **Server-side Rendering (SSR)**.

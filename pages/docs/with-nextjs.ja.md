@@ -15,7 +15,7 @@ import Callout from 'nextra-theme-docs/callout'
 このアプローチは、たとえばユーザーのダッシュボードページなどで有効です。ダッシュボードは、ユーザー専用のプライベートなページであるため SEO は関係なく、
 ページを事前にレンダリングする必要もありません。データは頻繁に更新されるため、リクエスト時のデータ取得処理が必要です。
 
-## Pre-rendering
+## Pre-rendering with Default Data
 
 If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
 **Static Generation (SSG)** and **Server-side Rendering (SSR)**.

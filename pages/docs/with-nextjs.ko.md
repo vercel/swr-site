@@ -13,7 +13,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 이런 접근은 사용자 대시보드 페이지 같은 곳에 적합합니다. 대시보드는 비공개용이며 사용자별 페이지이므로 SEO와 관계가 없고 페이지를 프리렌더링할 필요도 없습니다. 데이터는 빈번하게 업데이트되므로 요청 시에 데이터를 가져와야 합니다.
 
-## Pre-rendering
+## Pre-rendering with Default Data
 
 If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
 **Static Generation (SSG)** and **Server-side Rendering (SSR)**.

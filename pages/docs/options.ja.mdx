@@ -35,8 +35,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: `onLoadingSlow` イベントをトリガーするためのタイムアウト
 - `errorRetryInterval = 5000`: エラー再試行の間隔
 - `errorRetryCount`: 最大エラー再試行回数
-- `fallback`: a map of multiple fallback data to be returned [(details)](/docs/with-nextjs)
-- `fallbackData`: 返される初期データ（注：フックごとに） [（詳細）](/docs/with-nextjs)
+- `fallback`: a map of multiple fallback data to be returned [(example)](/docs/with-nextjs)
+- `fallbackData`: 返される初期データ（注：フックごとに）
 - `onLoadingSlow(key, config)`: リクエストの読み込みに時間がかかりすぎる場合のコールバック関数（`loadingTimeout` を参照してください）
 - `onSuccess(data, key, config)`: リクエストが正常に終了したときのコールバック関数
 - `onError(err, key, config)`: リクエストがエラーを返したときのコールバック関数
