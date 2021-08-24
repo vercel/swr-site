@@ -1,12 +1,12 @@
 import Callout from 'nextra-theme-docs/callout'
 
-# Middlewares
+# Middleware
 
 <Callout emoji="✅">
   Please update to the latest version (≥ 1.0.0) to use this option.
 </Callout>
 
-The `middlewares` option is a new addition in SWR 1.0 that enables you to execute code before and after SWR hooks.
+The `use` option is a new addition in SWR 1.0 that enables you to execute code before and after SWR hooks.
 
 ## Usage
 
@@ -41,14 +41,14 @@ Middleware will be extended like regular options. For example:
 
 ```jsx
 function Bar () {
-  useSWR(key, fetcher, { middleware: [c] })
+  useSWR(key, fetcher, { use: [c] })
   // ...
 }
 
 function Foo() {
   return (
-    <SWRConfig value={{ middleware: [a] }}>
-      <SWRConfig value={{ middleware: [b] }}>
+    <SWRConfig value={{ use: [a] }}>
+      <SWRConfig value={{ use: [b] }}>
         <Bar/>
       </SWRConfig>
     </SWRConfig>
@@ -59,7 +59,7 @@ function Foo() {
 is equivalent to:
 
 ```js
-useSWR(key, fetcher, { middleware: [a, b, c] })
+useSWR(key, fetcher, { use: [a, b, c] })
 ```
 
 ### Multiple Middleware
@@ -67,7 +67,7 @@ useSWR(key, fetcher, { middleware: [a, b, c] })
 Each middleware wraps the next middleware, and the last one just wraps the SWR hook. For example:
 
 ```jsx
-useSWR(key, fetcher, { middleware: [a, b, c] })
+useSWR(key, fetcher, { use: [a, b, c] })
 ```
 
 The order of middleware executions will be `a → b → c`, as shown below:
@@ -93,7 +93,7 @@ Let's build a simple request logger middleware as an example. It prints out all 
 function logger(useSWRNext) {
   return (key, fetcher, config) => {
     // Add logger to the original fetcher.
-    const entendedFetcher = (...args) => {
+    const extendedFetcher = (...args) => {
       console.log('SWR Request:', key)
       return fetcher(...args)
     }
@@ -104,7 +104,7 @@ function logger(useSWRNext) {
 }
 
 // ... inside your component
-useSWR(key, fetcher, { middleware: [logger] })
+useSWR(key, fetcher, { use: [logger] })
 ```
 
 Every time the request is fired, it outputs the SWR key to the console:
