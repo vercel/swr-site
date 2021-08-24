@@ -96,10 +96,14 @@ const fetcher = (url) => fetch(url).then(res => res.json())
 
 function logger(useSWRNext) {
   return (key, fetcher, config) => {
-    return useSWRNext(key, (...args) => {
+    // Add logger to the original fetcher.
+    const entendedFetcher = (...args) => {
       console.log('SWR Request:', key)
       return fetcher(...args)
-    }, config)
+    }
+
+    // Execute the hook with the new fetcher.
+    return useSWRNext(key, extendedFetcher, config)
   }
 }
 
