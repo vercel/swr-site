@@ -34,3 +34,9 @@ function App () {
   )
 }
 ```
+
+---
+
+### Cache Provider
+
+除去以上所列的 [选项](/docs/options)，`SWRConfig` 还接受一个可选的 `provider` 函数。详细信息请参考 [缓存](/docs/cache) 这一节。

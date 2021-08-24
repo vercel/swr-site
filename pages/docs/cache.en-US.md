@@ -8,7 +8,7 @@ Cache providers are intended to enable SWR with more customized storages.
 
 <Callout emoji="⚠️">
   In most cases, you shouldn't directly _write_ to the cache, which might cause undefined behaviors of SWR. If you need to manually mutate a key, please consider using the SWR APIs.<br/><br/>
-  See also: [Mutation](/docs/mutation), Testing.
+  See also: [Mutation](/docs/mutation), [Reset Cache Between Test Cases](#reset-cache-between-test-cases).
 </Callout>
 
 ## Cache Provider
