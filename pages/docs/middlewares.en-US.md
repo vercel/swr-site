@@ -90,10 +90,6 @@ Let's build a simple request logger middleware as an example. It prints out all 
 
 
 ```jsx
-import useSWR from 'swr'
-
-const fetcher = (url) => fetch(url).then(res => res.json())
-
 function logger(useSWRNext) {
   return (key, fetcher, config) => {
     // Add logger to the original fetcher.
@@ -107,6 +103,7 @@ function logger(useSWRNext) {
   }
 }
 
+// ... inside your component
 useSWR(key, fetcher, { middleware: [logger] })
 ```
 
