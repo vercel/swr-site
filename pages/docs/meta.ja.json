@@ -12,6 +12,7 @@
   "prefetching": "プリフェッチ",
   "with-nextjs": "Next.jsでの利用",
   "suspense": "サスペンス",
+  "middleware": "Middleware",
   "advanced": "高度な使い方",
   "change-log": "変更履歴"
 }

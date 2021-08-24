@@ -1,11 +1,10 @@
 import Callout from 'nextra-theme-docs/callout'
 
-
 # API Options
 
 ```js
 
-const { data, error, isValidating, mutate } = useSWR(key, fetcher, options) 
+const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
 ## Parámetros
@@ -26,11 +25,11 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `suspense = false`: activar el modo React Suspense [(detalles)](/docs/suspense)
 - `fetcher = window.fetch(url).then(res => res.json())`: la fetcher función
 - `initialData`: datos iniciales a devolver (nota: Esto es por un hook) [(detalles)](/docs/with-nextjs)
-- `revalidateOnMount`: activar o desactivar la revalidación automática cuando se monta el componente 
-(por defecto la revalidación se produce en el montaje cuando initialData no está establecido, utilice esta flag para forzar el comportamiento)
+- `revalidateOnMount`: activar o desactivar la revalidación automática cuando se monta el componente
+  (por defecto la revalidación se produce en el montaje cuando initialData no está establecido, utilice esta flag para forzar el comportamiento)
 - `revalidateOnFocus = true`: revalidación automática cuanto window gets focused [(detalles)](/docs/revalidation)
-- `revalidateOnReconnect = true`: revalidación automática cuando el navegador recupera la conexión a la red 
-(a través de `navigator.onLine`) [(detalles)](/docs/revalidation)
+- `revalidateOnReconnect = true`: revalidación automática cuando el navegador recupera la conexión a la red
+  (a través de `navigator.onLine`) [(detalles)](/docs/revalidation)
 - `refreshInterval = 0`: polling interval (desactivado por defecto) [(detalles)](/docs/revalidation)
 - `refreshWhenHidden = false`: polling cuando window es invisible (si `refreshInterval` está activado)
 - `refreshWhenOffline = false`: polling cuando el navegador está desconectado (determinado por `navigator.onLine`)
@@ -39,14 +38,15 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `focusThrottleInterval = 5000`: sólo revalidar una vez durante un periodo de tiempo
 - `loadingTimeout = 3000`: tiempo de espera para activar el evento onLoadingSlow
 - `errorRetryInterval = 5000`: error retry interval
-- `errorRetryCount`:  número máximo de reintentos de error
+- `errorRetryCount`: número máximo de reintentos de error
 - `onLoadingSlow(key, config)`: función callback cuando una petición tarda demasiado en cargase (véase: `loadingTimeout`)
 - `onSuccess(data, key, config)`: función callback cuando una petición termina con éxito
 - `onError(err, key, config)`: función callback cuando una petición devuelve un error
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: manejador para el reintento de error
 - `compare(a, b)`: función de comparación utilizada para detectar cuando los datos devueltos han cambiado,
-para evitar spurious rerenders. Por defecto, se utiliza [dequal](https://github.com/lukeed/dequal).
+  para evitar spurious rerenders. Por defecto, se utiliza [dequal](https://github.com/lukeed/dequal).
 - `isPaused()`: para detectar si pause revalidations, ignorará los datos obtenidos y los errores cuando devuelva `true`. Devuelve `false` por defecto.
+- `use`: array of middleware functions [(details)](/docs/middleware)
 
 <Callout emoji="💡">
 Cuando una red lenta (2G, {'<='} 70Kbps), `errorRetryInterval` serian 10 segundos, y 
