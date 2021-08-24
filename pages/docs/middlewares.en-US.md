@@ -6,30 +6,30 @@ import Callout from 'nextra-theme-docs/callout'
   Please update to the latest version (≥ 1.0.0) to use this option.
 </Callout>
 
-The option `middlewares` is a new addition in SWR 1.0. It lets you execute code before and after SWR hooks, giving users the ability to attach processors to SWR for extending its functionality. 
+The `middlewares` option is a new addition in SWR 1.0 that enables you to execute code before and after SWR hooks.
 
 ## Usage
 
 ### API
 
-A middleware can access to the previous wrapped or original `useSWR` hook, and return a function with arguments of `useSWR`. Expect to return the transformed data with the composition of hook, arguments and your optional operations here.
+Middleware receive the return value of a `useSWR` hook and pass it along to the next middleware, if any. You can transform the data, extend the return value with new attributes, and perform any additional operations before or after the hook runs.
 
 ```jsx
 const middleware = (useSWRNext) => (key, fetcher, config) => {
-  // enter phase ...
+  // Before hook runs...
   const swr = useSWRNext(key, fetcher, config)
-  // exit phase ...
+  // After hook runs...
   return swr
 }
 ```
 
-Grab your middlewares into an array then pass to useSWR
+Pass middleware as an array to any `useSWR` hook.
 
 ## Example
 
 ### Request Logger
 
-Let's build a simple request logger middleware as example. Then use it to print out all the fetcher requests sending from SWR hook.
+Let's build a simple request logger middleware as an example. It simply prints out all the fetcher requests sent from the SWR hook.
 
 
 ```jsx
@@ -47,7 +47,7 @@ useSWR(key, fetcher, {
 })
 ```
 
-Output in console
+Every time the SWR hook runs, it will output to the console:
 
 ```
 Request to /api with param key=key1
@@ -57,16 +57,15 @@ Request to /api with param key=key3
 
 ### Nested Middlewares
 
-Middlwares are applied like layers of onions as the common practice of JavaScript community. 
+Middlwares are applied on top of each other, as commonly found in other libraries. If you pass multiple middleware to one hook:
 
-If you have multiple fetcher inside one hook
 ```jsx
 useSWR(key, fetcher, {
   middlewares: [A, B, C]
 })
 ```
 
-The execute order will be `A -> B -> C` like below:
+The order of execution will be `A → B → C`, as shown below:
 ```
 enter A
   enter B
@@ -76,7 +75,7 @@ enter A
 exit  A
 ```
 
-If you have any middleware configured in `SWRConfig`, it will obey the order from most outside to most inside. The order will be `A -> B`
+If you have any middleware configured in `SWRConfig`, the outermost middleware will run first. In the following example, the order will be `A → B`:
 
 ```
 <SWRConfig value={{middlewares: [A]}}>
