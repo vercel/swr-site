@@ -13,7 +13,7 @@ Cache providers are intended to enable SWR with more customized storages.
 
 ## Cache Provider
 
-A cache provider is Map-like object which matches the following TypeScript definition (you can import it from `swr`):
+A cache provider is Map-like object which matches the following TypeScript definition (which can be imported from `swr`):
 
 ```typescript
 interface Cache<Data> {
@@ -23,7 +23,7 @@ interface Cache<Data> {
 }
 ```
 
-For example, a JavaScript Map instance can be directly used as the cache provider for SWR.
+For example, a [JavaScript Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) instance can be directly used as the cache provider for SWR.
 
 ## Create Cache Provider
 
@@ -44,7 +44,7 @@ function App() {
 All SWR hooks inside `<Page/>` will read and write from that Map instance. You can also use other cache provider implementations as well for your specific use case.
 
 <Callout>
-  In the example above, when the `<App/>` component is re-mounted, the provider will also be re-creacted. Normally cache providers need to be put in a higher level in the component tree.
+  In the example above, when the `<App/>` component is re-mounted, the provider will also be re-creacted. Cache providers should be put higher in the component tree, or outside of render.
 </Callout>
 
 <Callout type="warning" emoji="⚠️">
