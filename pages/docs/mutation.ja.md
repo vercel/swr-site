@@ -42,9 +42,10 @@ function App () {
 最終的に最新のデータに置き換えることができます。
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function Profile () {
+  const { mutate } = useSWRConfig()
   const { data } = useSWR('/api/user', fetcher)
 
   return (

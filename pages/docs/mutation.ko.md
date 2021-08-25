@@ -42,9 +42,10 @@ function App () {
 프로그래밍 방식으로 업데이트할 수 있습니다.
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function Profile () {
+  const { mutate } = useSWRConfig()
   const { data } = useSWR('/api/user', fetcher)
 
   return (
