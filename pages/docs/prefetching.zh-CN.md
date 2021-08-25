@@ -29,3 +29,15 @@ function prefetch () {
 ```
 
 配合 Next.js 的 [页面预加载](https://nextjs.org/docs/api-reference/next/router#routerprefetch)，你将能立即加载下一页和数据。
+
+## Pre-fill Data
+
+If you want to pre-fill existing data into the SWR cache, you can use the `fallbackData` option. For example:
+
+```jsx
+useSWR('/api/data', fetcher, { fallbackData: prefetchedData })
+```
+
+If SWR hasn't fetched the data yet, this hook will return `prefetchedData` as a fallback. 
+
+You can also configure this for all SWR hooks and multiple keys with `<SWRConfig>` and the `fallback` option. Check [Next.js SSG and SSR](/docs/with-nextjs) for more details.

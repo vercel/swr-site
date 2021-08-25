@@ -35,7 +35,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: onLoadingSlow 이벤트를 트리거 하기 위한 타임아웃
 - `errorRetryInterval = 5000`: 에러 재시도 인터벌
 - `errorRetryCount`: 최대 에러 재시도 수
-- `fallback`: a map of multiple fallback data to be returned [(example)](/docs/with-nextjs)
+- `fallback`: a key-value object of multiple fallback data [(example)](/docs/with-nextjs)
 - `fallbackData`: 반환될 초기 데이터(노트: hook 별로 존재)
 - `onLoadingSlow(key, config)`: 요청을 로드하는 데 너무 오래 걸리는 경우의 콜백 함수(`loadingTimeout`을 보세요)
 - `onSuccess(data, key, config)`: 요청이 성공적으로 종료되었을 경우의 콜백 함수

@@ -3,7 +3,7 @@ import Callout from 'nextra-theme-docs/callout'
 # Middleware
 
 <Callout emoji="✅">
-  Please update to the latest version (≥ 1.0.0) to use this option.
+  Please update to the latest version (≥ 1.0.0) to use this feature.
 </Callout>
 
 The `use` option is a new addition in SWR 1.0 that enables you to execute code before and after SWR hooks.
