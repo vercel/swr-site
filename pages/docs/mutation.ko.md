@@ -2,16 +2,18 @@
 
 ## 갱신하기
 
-`mutate(key)`를 
-호출하여 동일한 키를 사용하는 모든 SWR에 전역으로 갱신 메시지를 브로드캐스팅할 수 있습니다.
+You can get the `mutate` function from the `useSWRConfig()` hook, and broadcast a revalidation message
+globally to other SWR hooks<sup>*</sup> using the same key by calling `mutate(key)`.
 
 이 예시는 유저가 “로그아웃” 버튼을 클릭할 때 로그인 정보(예, `<Profile/>` 내부)를 자동으로 갱신하는
 방법을 보여줍니다.
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function App () {
+  const { mutate } = useSWRConfig()
+
   return (
     <div>
       <Profile />
@@ -28,6 +30,8 @@ function App () {
   )
 }
 ```
+
+*: _It broadcasts to SWR hooks under the same [cache provider](/docs/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks._
 
 ## 뮤테이션과 POST 요청
 
