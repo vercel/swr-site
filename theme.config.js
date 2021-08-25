@@ -32,6 +32,7 @@ export default {
   titleSuffix: " – SWR",
   search: true,
   unstable_stork: true,
+  floatTOC: true,
   logo: () => {
     const { locale } = useRouter();
     return (
