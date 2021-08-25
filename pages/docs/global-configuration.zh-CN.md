@@ -40,3 +40,25 @@ function App () {
 ### Cache Provider
 
 除去以上所列的 [选项](/docs/options)，`SWRConfig` 还接受一个可选的 `provider` 函数。详细信息请参考 [缓存](/docs/cache) 这一节。
+
+```jsx
+<SWRConfig value={{ provider: () => new Map() }}>
+  <Dashboard />
+</SWRConfig>
+```
+
+### Access To Global Configurations
+
+You can use the `useSWRConfig` hook to get the global configurations, as well as `mutate`:
+
+```jsx
+import { useSWRConfig } from 'swr'
+
+function Component () {
+  const { refreshInterval, mutate, ...restConfig } = useSWRConfig()
+
+  // ...
+}
+```
+
+Nested configurations will be extended. If no `<SWRConfig>` is used, it will return the default ones.
