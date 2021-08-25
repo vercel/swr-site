@@ -17,7 +17,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `data`: `fetcher`가 이행한 주어진 키에 대한 데이터(로드되지 않았다면 undefined)
 - `error`: `fetcher`가 던진 에러(또는 undefined)
 - `isValidating`: 요청이나 갱신 로딩의 여부
-- `mutate(data?, shouldRevalidate?)`: 캐시 된 데이터를 뮤테이트하기 위한 함수
+- `mutate(data?, shouldRevalidate?)`: 캐시 된 데이터를 뮤테이트하기 위한 함수 [（상세내용）](/docs/mutation)
 
 ## 옵션
 
