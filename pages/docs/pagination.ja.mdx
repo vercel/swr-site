@@ -195,6 +195,9 @@ function App () {
 `useSWRInfinite` は、一つのフックで多数のリクエストを開始する機能を提供します。このような形になります：
 
 ```jsx
+import useSWRInfinite from 'swr/infinite'
+
+// ...
 const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
@@ -203,7 +206,12 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 `useSWR` と同様に、この新しいフックは、リクエストキー、フェッチャー関数、およびオプションを返す関数を受け取ります。
 これは `useSWR` が返すすべての値を返します。これらの値には、ページサイズと、React の状態のようなページサイズのセッターの二つの追加の値が含まれます。
 
-無限ローディングでは、1 _ページ_が一つのリクエストであり、目標は複数ページをフェッチしてレンダリングすることです。
+無限ローディングでは、1 *ページ*が一つのリクエストであり、目標は複数ページをフェッチしてレンダリングすることです。
+
+<Callout emoji="⚠️">
+  If you are using SWR 0.x versions, `useSWRInfinite` needs to be imported from `swr`:<br/>
+  `import { useSWRInfinite } from 'swr'`
+</Callout>
 
 ### API
 
@@ -226,7 +234,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 - `error`: `useSWR` の `error` と同じ
 - `isValidating`: `useSWR` の `isValidating` と同じ
 - `mutate`: `useSWR` のバインドされたミューテート関数と同じですが、データ配列を操作します
-- `size`: フェッチして返される_だろう_ページ数
+- `size`: フェッチして返される*だろう*ページ数
 - `setSize`: フェッチする必要のあるページ数を設定します
 
 ### 例 1： インデックスにもとづいたページネーション API

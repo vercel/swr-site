@@ -187,6 +187,9 @@ function App () {
 `useSWRInfinite` 让我们能够通过一个 Hook 触发多个请求。就像下面这样：
 
 ```jsx
+import useSWRInfinite from 'swr/infinite'
+
+// ...
 const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
@@ -195,6 +198,11 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 和 `useSWR` 类似，这个新的 Hook 接受一个函数，该函数返回请求的 key、1 个 fetcher 函数和 options。它返回 `useSWR` 的所有返回值，还包括 2 个额外的值：page size 和 page size setter，类似一个 React state。
 
 在无限加载中，一个 _页面_ 是一个请求，我们的目标是请求多页面并渲染它们。
+
+<Callout emoji="⚠️">
+  If you are using SWR 0.x versions, `useSWRInfinite` needs to be imported from `swr`:<br/>
+  `import { useSWRInfinite } from 'swr'`
+</Callout>
 
 ### API
 
