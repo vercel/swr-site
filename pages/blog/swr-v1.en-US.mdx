@@ -209,7 +209,7 @@ If you are using TypeScript, the following type names have been changed for cons
 
 If you are using a beta version of SWR, or any undocumented features, please be aware of the following changes:
 
-- `import { cache } from 'swr'` is removed, use the new [Cache Provider API](/docs/advanced/cache#access-current-cache-provider) instead.
+- `import { cache } from 'swr'` is removed, use the new [`useSWRConfig` API](#useswrconfig) instead.
 - `import { createCache } from 'swr'` is removed, use the new [Cache Provider API](/docs/advanced/cache) instead.
 - `revalidateWhenStale` is renamed to `revalidateIfStale`.
 - `middlewares` is renamed to `use`.
@@ -220,7 +220,7 @@ Read the full Changelog [on GitHub](https://github.com/vercel/swr/releases).
 
 ## What’s Next
 
-In future releases, we will keep improving the library while maintaining it’s stability. We are also aiming to embrace the future React, as several new features and improvements in 1.0 are already preparing for that. In addition, we are also working on new features to improve the experience of doing data-fetching in React, and the experience of using this library.
+In future releases, we will keep improving the library while maintaining the stability. We are also aiming to embrace the future React, as several new features and improvements in 1.0 are already preparing for that. In addition, we are also working on new features to improve the experience of doing data-fetching in React, and the experience of using this library.
 
 If you have any feedback about this release, please [let us know](https://github.com/vercel/swr/discussions).
 
