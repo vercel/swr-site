@@ -12,7 +12,8 @@ The `use` option is a new addition in SWR 1.0 that enables you to execute code b
 
 ### API
 
-Middleware receive the next middleware hook `useSWRNext`, and return a `useSWR` hook like function with similar arguments. Compose `useSWRNext` and the arguments to get the return value from next middleware. You can transform the data, extend the return value with new attributes inside that function, and perform any additional operations before or after the hook runs.
+Middleware receive the SWR hook and can execute logic before and after running it. If there are multiple middleware, each middleware receives the next middleware hook. The last middleware in the list will receive the original SWR hook `useSWR` first.
+
 
 ```jsx
 function myMiddleware (useSWRNext) {
