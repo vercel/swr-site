@@ -42,6 +42,21 @@ module.exports = withNextra({
         destination: "/blog/swr-v1",
         statusCode: 301,
       },
+      {
+        source: "/blog",
+        destination: "/blog/swr-v1",
+        statusCode: 302,
+      },
+      {
+        source: "/docs",
+        destination: "/docs/getting-started",
+        statusCode: 302,
+      },
+      {
+        source: "/examples",
+        destination: "/examples/basic",
+        statusCode: 302,
+      },
     ];
   },
 });
