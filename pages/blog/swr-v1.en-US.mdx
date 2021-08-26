@@ -99,7 +99,7 @@ More information can be found [here](/docs/global-configuration#access-to-global
 
 ### Middleware
 
-Middleware for SWR is a new way for you to build and share abstractions on top of SWR hooks:
+SWR Middleware provide a new way for you to build and reuse abstractions on top of SWR hooks:
 
 ```jsx
 <SWRConfig value={{ use: [...middleware] }}>
@@ -108,7 +108,7 @@ Middleware for SWR is a new way for you to build and share abstractions on top o
 useSWR(key, fetcher, { use: [...middleware] })
 ```
 
-A lot of new ideas can be implemented based on this feature, and we've built 2 examples: [_Request Logger_](/docs/middleware#request-logger) and [_Keep Previous Data When Changing the Key_](/docs/middleware#keep-previous-result).
+A lot of new ideas can be implemented with this feature, and we've built 2 examples: [_Request Logger_](/docs/middleware#request-logger) and [_Keep Previous Data When Changing the Key_](/docs/middleware#keep-previous-result).
 
 Check the [Middleware API](/docs/middleware) for more details.
 
@@ -217,6 +217,12 @@ If you are using a beta version of SWR, or any undocumented features, please be 
 ### Changelog
 
 Read the full Changelog [on GitHub](https://github.com/vercel/swr/releases).
+
+## What’s Next
+
+In future releases, we will keep improving the library while maintaining it’s stability. We are also aiming to embrace the future React, as several new features and improvements in 1.0 are already preparing for that. In addition, we are also working on new features to improve the experience of doing data-fetching in React, and the experience of using this library.
+
+If you have any feedback about this release, please [let us know](https://github.com/vercel/swr/discussions).
 
 ## Thank You!
 

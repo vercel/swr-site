@@ -119,7 +119,8 @@ SWR Request: /api/user2
 Sometimes you want the data returned by `useSWR` to be "laggy". Even if the key changes,
 you still want it to return the previous result until the new data has loaded.
 
-This can be built as a laggy middleware together with `useRef`:
+This can be built as a laggy middleware together with `useRef`. In this example, we are also going to
+extend the returned object of the `useSWR` hook:
 
 ```jsx
 import { useRef, useEffect, useCallback } from 'react'

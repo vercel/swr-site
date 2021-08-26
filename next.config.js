@@ -37,6 +37,11 @@ module.exports = withNextra({
         destination: "/docs/change-log",
         statusCode: 301,
       },
+      {
+        source: "/blog/swr-1",
+        destination: "/blog/swr-v1",
+        statusCode: 301,
+      },
     ];
   },
 });
