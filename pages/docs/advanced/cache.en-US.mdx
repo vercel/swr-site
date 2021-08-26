@@ -11,7 +11,7 @@ import Callout from 'nextra-theme-docs/callout'
   See also: [Mutation](/docs/mutation), [Reset Cache Between Test Cases](#reset-cache-between-test-cases).
 </Callout>
 
-By default, SWR uses a global cache to store and share data across all components. But you can also customize this behavior with the `provider` option of `SWRConfig`. 
+By default, SWR uses a global cache to store and share data across all components. But you can also customize this behavior with the `provider` option of `SWRConfig`.
 
 Cache providers are intended to enable SWR with more customized storages.
 
@@ -51,23 +51,17 @@ All SWR hooks inside `<Page/>` will read and write from that Map instance. You c
   In the example above, when the `<App/>` component is re-mounted, the provider will also be re-creacted. Cache providers should be put higher in the component tree, or outside of render.
 </Callout>
 
-<Callout type="warning" emoji="⚠️">
+import { Cache } from 'components/diagrams/cache'
+
+<div className="my-8">
+  <Cache/>
+</div>
+
+When nested, SWR hooks will use the upper-level cache provider. If there is no upper-level cache provider, it fallbacks to the default cache provider, which is an empty `Map`.
+
+<Callout emoji="⚠️">
    If a cache provider is used, the global `mutate` will **not** work for SWR hooks under that `<SWRConfig>` boundary. Please use [this](#access-current-cache-provider) instead. 
 </Callout>
-
-## Extend Cache Provider
-
-When multiple `<SWRConfig>` components are nested, cache provider can be overriden or extended. 
-
-The first argument for the `provider` function is the cache provider of the upper-level `<SWRConfig>` (or the default cache if there's no parent `<SWRConfig>`), you can use it to extend the cache provider:
-
-```jsx
-<SWRConfig value={{ provider: (cache) => newCache }}>
-  ...
-</SWRConfig>
-```
-
-The [Example](#example) below describes one of the use cases of this.
 
 ## Access Current Cache Provider
 
@@ -83,6 +77,22 @@ function Avatar() {
 ```
 
 If it's not under any `<SWRConfig>`, it will return the default configurations.
+
+## Experimental: Extend Cache Provider
+
+<Callout emoji="🧪">
+   This is an experimental feature, the behavior might change in future upgrades.
+</Callout>
+
+When multiple `<SWRConfig>` components are nested, cache provider can be extended.
+
+The first argument for the `provider` function is the cache provider of the upper-level `<SWRConfig>` (or the default cache if there's no parent `<SWRConfig>`), you can use it to extend the cache provider:
+
+```jsx
+<SWRConfig value={{ provider: (cache) => newCache }}>
+  ...
+</SWRConfig>
+```
 
 ## Examples
 
@@ -158,7 +168,7 @@ Then use it as a provider:
 ```
 
 <Callout>
-  As an improvement, you can also use the memory cache as a buffer, and write to `localStorage` periodically.
+  As an improvement, you can also use the memory cache as a buffer, and write to `localStorage` periodically. You can also implement a similar layered cache with IndexedDB or WebSQL.
 </Callout>
 
 ### Reset Cache Between Test Cases
@@ -175,4 +185,15 @@ describe('test suite', async () => {
     )
   })
 })
+```
+
+### Access to the Cache
+
+Alert: you should not write to the cache directly, it might cause undefined behavior.
+
+```jsx
+const { cache } = useSWRConfig()
+
+cache.get(key) // Get the current data for a key.
+cache.clear()  // ⚠️ Clear all the cache. SWR will revalidate upon re-render.
 ```

@@ -75,7 +75,7 @@ useSWR(key, fetcher, { use: [a, b, c] })
 
 The order of middleware executions will be `a → b → c`, as shown below:
 
-```
+```plaintext
 enter a
   enter b
     enter c

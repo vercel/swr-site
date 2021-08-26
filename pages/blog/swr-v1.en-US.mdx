@@ -1,7 +1,7 @@
 import Callout from 'nextra-theme-docs/callout'
 import Bleed from 'nextra-theme-docs/bleed'
 
-import Authors, { Author } from '../../components/authors'
+import Authors, { Author } from 'components/authors'
 
 # Announcing SWR 1.0
 
@@ -79,17 +79,21 @@ By default SWR uses a single global cache to store all the data. In 1.0 you are 
 </SWRConfig>
 ```
 
-This new cache provider API is also more compatible with concurrent rendering of React 18. If you are adding a cache provider, make sure to use the global `mutate` function returned from `useSWRConfig()`. You can read the docs [Cache Provider](/docs/advanced/cache) for more details.
+You can use this new feature to do many powerful things. We have a couple of examples here: [_Mutate Multiple Keys with RegEx_](/docs/advanced/cache#mutate-multiple-keys-from-regex), [_LocalStorage Based Persistent Cache_](/docs/advanced/cache#localstorage-based-persistent-cache), [_Reset Cache Between Tests_](/docs/advanced/cache#reset-cache-between-test-cases).
+
+This new cache provider API is also more compatible with concurrent rendering of React 18. If you are adding a cache provider, make sure to use the global `mutate` function returned from `useSWRConfig()`.
+
+You can read the docs [Cache Provider](/docs/advanced/cache) for more details.
 
 ### useSWRConfig()
 
-There is a new Hook API to return all global configurations, including the cache provider and the global `mutate` function:
+There is a new Hook API to return all global configurations, including the current cache provider and global `mutate` function:
 
 ```jsx
 import { useSWRConfig } from 'swr'
 
 function Foo () {
-  const { refreshInterval, mutate, ...restConfig } = useSWRConfig()
+  const { refreshInterval, cache, mutate, ...restConfig } = useSWRConfig()
 
   // ...
 }
@@ -228,4 +232,4 @@ If you have any feedback about this release, please [let us know](https://github
 
 Special thanks to [Toru Kobayashi](https://twitter.com/koba04) and [Yixuan Xu](https://twitter.com/yixuanxu94) for their contributions to the library, and [Paco Coursey](https://twitter.com/pacocoursey), [uttk](https://github.com/uttk), [Tomohiro SHIOYA](https://github.com/shioyang), [Markoz Peña](https://github.com/markozxuu), [SeulGi Choi](https://github.com/cs09g), [Fang Lu](https://github.com/huzhengen) for their work on the translations and docs. This release can't happen without them.
 
-We also want to thank the entire community, our [110 contributors](https://github.com/vercel/swr/graphs/contributors), and everyone who helped and gave us feedback!
+We also want to thank the entire community, our [110 contributors](https://github.com/vercel/swr/graphs/contributors) (+ [docs contributors](https://github.com/vercel/swr-site/graphs/contributors)), and everyone who helped and gave us feedback!
