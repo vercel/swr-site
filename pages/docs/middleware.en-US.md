@@ -12,13 +12,17 @@ The `use` option is a new addition in SWR 1.0 that enables you to execute code b
 
 ### API
 
-Middleware receive the return value of a `useSWR` hook and pass it along to the next middleware, if any. You can transform the data, extend the return value with new attributes, and perform any additional operations before or after the hook runs.
+Middleware receive the SWR hook and can execute logic before and after running it. If there are multiple middleware, each middleware receives the next middleware hook. The last middleware in the list will receive the original SWR hook `useSWR` first.
+
 
 ```jsx
 function myMiddleware (useSWRNext) {
   return (key, fetcher, config) => {
     // Before hook runs...
+    
+    // Compose `useSWRNext` and arguments
     const swr = useSWRNext(key, fetcher, config)
+
     // After hook runs...
     return swr
   }
@@ -73,13 +77,13 @@ useSWR(key, fetcher, { use: [a, b, c] })
 The order of middleware executions will be `a → b → c`, as shown below:
 
 ```
-enter A
-  enter B
-    enter C
+enter a
+  enter b
+    enter c
       useSWR()
-    exit  C
-  exit  B
-exit  A
+    exit  c
+  exit  b
+exit  a
 ```
 
 ## Examples
