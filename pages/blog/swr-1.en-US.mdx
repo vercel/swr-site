@@ -18,7 +18,7 @@ Almost 2 years ago we [open sourced](https://twitter.com/vercel/status/118891100
 
 [Performance](/docs/advanced/performance) is one of the most important features of SWR. In 1.0, we made the library significantly smaller **without removing any existing feature**:
 
-- 41% smaller core (24% smaller when gzipped, 3.9 kB)
+- 41% smaller core (24% smaller when gzipped, **3.9 kB**)
 - 52% smaller package install size
 - Improved tree-shaking
 
@@ -62,7 +62,7 @@ import useSWRImmutable from 'swr/immutable'
 
 // ...
 
-useSWRImmutable(key, value, options)
+useSWRImmutable(key, fetcher, options)
 ```
 
 It has the exact same API as the `useSWR` hook, but it will never revalidate upon tab focus or network recovery. There's also a new option `revalidateIfStale` you can use to control the behavior precisely. More information can be found [here](/docs/revalidation#disable-automatic-revalidations).
@@ -108,21 +108,23 @@ Middleware for SWR is a new way for you to build and share abstractions on top o
 useSWR(key, fetcher, { use: [...middleware] })
 ```
 
-A lot of new ideas can be implemented based on this feature, and we've built 2 examples: _Request Logger_ and _Keep Previous Result_. Check the [Middleware API](/docs/middleware) for more details.
+A lot of new ideas can be implemented based on this feature, and we've built 2 examples: [_Request Logger_](/docs/middleware#request-logger) and [_Keep Previous Data When Changing the Key_](/docs/middleware#keep-previous-result).
 
-### Improvements and More Tests
+Check the [Middleware API](/docs/middleware) for more details.
 
-Since 0.x, we've made tons of small improvements and bugfixes. SWR now has 153 tests that cover most of the edge cases that might happen in data fetching. Check the [Changelog](https://github.com/vercel/swr/releases) for more details.
+### Improvements and Better Test Coverage
+
+Since 0.x, we've made tons of small improvements and bugfixes. SWR now has 153 tests that cover most of the edge cases that might happen in data fetching. Read the [Changelog](https://github.com/vercel/swr/releases) for more details.
 
 ### Docs Translations
 
-Thanks to our contributors, the SWR documentation site now has translations of 5 different languages:
+Thanks to our [contributors](https://github.com/vercel/swr-site/graphs/contributors) and Nextra’s [i18n feature](https://nextra.vercel.app/features/i18n), the SWR documentation site now has translations of 5 different languages:
 
-- English
-- Spanish
-- Simplified Chinese
-- Japanese
-- Korean
+- [English](https://swr.vercel.app)
+- [Spanish](https://swr.vercel.app/es-ES)
+- [Simplified Chinese](https://swr.vercel.app/zh-CN)
+- [Japanese](https://swr.vercel.app/ja)
+- [Korean](https://swr.vercel.app/ko)
 
 ## Migration Guide
 
@@ -189,7 +191,7 @@ This is **not** a breaking change, but we will now _recommend_ to always use the
 
 If you are not using a cache provider, the current global import `import { mutate } from 'swr'` still works.
 
-### Rename Types
+### Renamed Types
 
 If you are using TypeScript, the following type names have been changed for consistency:
 
