@@ -43,3 +43,7 @@ article > main + div a.font-semibold {
   font-weight: 500;
   letter-spacing: -0.01rem;
 }
+
+.dark .invert-on-dark {
+  filter: invert(1) brightness(1.8);
+}
