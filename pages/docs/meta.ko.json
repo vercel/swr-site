@@ -11,7 +11,6 @@
   "pagination": "페이지네이션",
   "prefetching": "프리패칭",
   "with-nextjs": "Next.js SSG and SSR",
-  "cache": "캐시",
   "suspense": "서스펜스",
   "middleware": "Middleware",
   "advanced": "고급",

@@ -35,7 +35,7 @@ function App () {
 }
 ```
 
----
+## Extra APIs
 
 ### Cache Provider
 

@@ -2,17 +2,17 @@ import Callout from 'nextra-theme-docs/callout'
 
 # Middleware
 
-<Callout emoji="✅">
-  Please update to the latest version (≥ 1.0.0) to use this feature.
+<Callout>
+  Upgrade to the latest version (≥ 1.0.0) to use this feature.
 </Callout>
 
-The `use` option is a new addition in SWR 1.0 that enables you to execute code before and after SWR hooks.
+The middleware feature is a new addition in SWR 1.0 that enables you to execute logic before and after SWR hooks.
 
 ## Usage
 
-### API
+Middleware receive the SWR hook and can execute logic before and after running it. If there are multiple middleware, each middleware receives the next middleware hook. The last middleware in the list will receive the SWR hook.
 
-Middleware receive the return value of a `useSWR` hook and pass it along to the next middleware, if any. You can transform the data, extend the return value with new attributes, and perform any additional operations before or after the hook runs.
+### API
 
 ```jsx
 function myMiddleware (useSWRNext) {

@@ -2,5 +2,6 @@
   "basic": "Basic Usage",
   "auth": "Authentication",
   "infinite-loading": "Infinite Loading",
-  "error-handling": "Error Handling"
+  "error-handling": "Error Handling",
+  "ssr": "Next.js SSR"
 }

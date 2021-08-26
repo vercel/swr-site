@@ -2,14 +2,18 @@ import Callout from 'nextra-theme-docs/callout'
 
 # Cache
 
+<Callout>
+  Upgrade to the latest version (≥ 1.0.0) to use this feature.
+</Callout>
+
+<Callout emoji="⚠️">
+  In most cases, you shouldn't directly _write_ to the cache, which might cause undefined behaviors of SWR. If you need to manually mutate a key, please consider using the SWR APIs.<br/>
+  See also: [Mutation](/docs/mutation), [Reset Cache Between Test Cases](#reset-cache-between-test-cases).
+</Callout>
+
 By default, SWR uses a global cache to store and share data across all components. But you can also customize this behavior with the `provider` option of `SWRConfig`. 
 
 Cache providers are intended to enable SWR with more customized storages.
-
-<Callout emoji="⚠️">
-  In most cases, you shouldn't directly _write_ to the cache, which might cause undefined behaviors of SWR. If you need to manually mutate a key, please consider using the SWR APIs.<br/><br/>
-  See also: [Mutation](/docs/mutation), [Reset Cache Between Test Cases](#reset-cache-between-test-cases).
-</Callout>
 
 ## Cache Provider
 
