@@ -49,13 +49,13 @@ function App () {
 
 ### Access To Global Configurations
 
-You can use the `useSWRConfig` hook to get the global configurations, as well as `mutate`:
+You can use the `useSWRConfig` hook to get the global configurations, as well as [`mutate`](/docs/mutation) and [`cache`](/docs/advanced/cache):
 
 ```jsx
 import { useSWRConfig } from 'swr'
 
 function Component () {
-  const { refreshInterval, mutate, ...restConfig } = useSWRConfig()
+  const { refreshInterval, mutate, cache, ...restConfig } = useSWRConfig()
 
   // ...
 }
