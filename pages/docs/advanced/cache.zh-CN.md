@@ -71,7 +71,7 @@ The [Example](#example) below describes one of the use cases of this.
 
 ## Access Current Cache Provider
 
-When inside a React component, you need to use the [`useSWRConfig`](#) hook to get access to the current cache provider as well as other configurations including `mutate`:
+When inside a React component, you need to use the [`useSWRConfig`](/docs/global-configuration#access-to-global-configurations) hook to get access to the current cache provider as well as other configurations including `mutate`:
 
 ```jsx
 import { useSWRConfig } from 'swr'

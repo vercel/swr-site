@@ -24,3 +24,16 @@
 code {
   @apply text-sm;
 }
+
+.prism-code.language-diff .inserted.prefix,
+.prism-code.language-diff .deleted.prefix {
+  user-select: none;
+  @apply opacity-30;
+}
+
+.prism-code.language-diff .inserted.line {
+  @apply text-green-600;
+}
+.prism-code.language-diff .deleted.line {
+  @apply text-red-600;
+}

@@ -81,4 +81,6 @@ useSWR(key, fetcher, {
 useSWRImmutable(key, fetcher)
 ```
 
+The `revalidateIfStale` controls if SWR should revalidate when it mounts and there is stale data.
+
 These 2 hooks above do the **exact same** thing. Once the data is cached, they will never request it again.

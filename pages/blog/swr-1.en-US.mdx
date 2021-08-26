@@ -1,0 +1,220 @@
+import Callout from 'nextra-theme-docs/callout'
+import Bleed from 'nextra-theme-docs/bleed'
+
+# Announcing SWR 1.0
+
+Almost 2 years ago we [open sourced](https://twitter.com/vercel/status/1188911002626097157) SWR, the tiny data fetching React library that people love. Today we are reaching another milestone: announcing the 1.0 version of SWR!
+
+## What’s New
+
+### Smaller Size
+
+[Performance](/docs/advanced/performance) is one of the most important features of SWR. In 1.0, we made the library significantly smaller **without removing any existing feature**:
+
+- 41% smaller core (24% smaller when gzipped, 3.9 kB)
+- 52% smaller package install size
+- Improved tree-shaking
+
+There're many reasons to make the library lightweight: your application will have a smaller bundle, a leaner runtime, and a smaller `node_modules` directory.
+
+We’ve also improved the bundling of the package, and it now supports path imports:
+
+```js
+import useSWR from 'swr'
+import useSWRInfinite from 'swr/infinite'
+```
+
+If you are not using `useSWRInfinite`, it will not be included in your application.
+
+### Fallback Data
+
+In 1.0, there’s a new `fallback` option that you can provide any pre-fetched data as the initial value of all SWR hooks with specific keys:
+
+```jsx
+<SWRConfig value={{
+  fallback: {
+    '/api/user': { name: 'Bob', ... },
+    '/api/items': ...,
+    ...
+  }
+}}>
+  <App/>
+</SWRConfig>
+```
+
+This is very helpful for scenarios such as SSG, SSR, and data mockup for testing. Check the docs [Next.js SSG and SSR](/docs/with-nextjs) for more details.
+
+For better consistency and to avoid confusion, the old `initialData` is now renamed to `fallbackData`. And it still provides a single fallback value for the given hook.
+
+### Immutable Mode
+
+Sometimes you want to mark the resource as **immutable**, that will never change with revalidations. So it's great to disable automatic revalidations for it and always request once. Now there's a helper Hook to make this easier:
+
+```jsx
+import useSWRImmutable from 'swr/immutable'
+
+// ...
+
+useSWRImmutable(key, value, options)
+```
+
+It has the exact same API as the `useSWR` hook, but it will never revalidate upon tab focus or network recovery. There's also a new option `revalidateIfStale` you can use to control the behavior precisely. More information can be found [here](/docs/revalidation#disable-automatic-revalidations).
+
+### Custom Cache Provider
+
+By default SWR uses a single global cache to store all the data. In 1.0 you are able to customize it with the new `provider` option:
+
+```jsx
+<SWRConfig value={{
+  provider: () => myCache
+}}>
+  <App/>
+</SWRConfig>
+```
+
+This new cache provider API is also more compatible with concurrent rendering of React 18. If you are adding a cache provider, make sure to use the global `mutate` function returned from `useSWRConfig()`. You can read the docs [Cache Provider](/docs/advanced/cache) for more details.
+
+### useSWRConfig()
+
+There is a new Hook API to return all global configurations, including the cache provider and the global `mutate` function:
+
+```jsx
+import { useSWRConfig } from 'swr'
+
+function Foo () {
+  const { refreshInterval, mutate, ...restConfig } = useSWRConfig()
+
+  // ...
+}
+```
+
+More information can be found [here](/docs/global-configuration#access-to-global-configurations).
+
+### Middleware
+
+Middleware for SWR is a new way for you to build and share abstractions on top of SWR hooks:
+
+```jsx
+<SWRConfig value={{ use: [...middleware] }}>
+
+// ... or directly in `useSWR`:
+useSWR(key, fetcher, { use: [...middleware] })
+```
+
+A lot of new ideas can be implemented based on this feature, and we've built 2 examples: _Request Logger_ and _Keep Previous Result_. Check the [Middleware API](/docs/middleware) for more details.
+
+### Improvements and More Tests
+
+Since 0.x, we've made tons of small improvements and bugfixes. SWR now has 153 tests that cover most of the edge cases that might happen in data fetching. Check the [Changelog](https://github.com/vercel/swr/releases) for more details.
+
+### Docs Translations
+
+Thanks to our contributors, the SWR documentation site now has translations of 5 different languages:
+
+- English
+- Spanish
+- Simplified Chinese
+- Japanese
+- Korean
+
+## Migration Guide
+
+### Update `useSWRInfinite` Imports
+
+`useSWRInfinite` needs to be imported from `swr/infinite`:
+
+```diff
+- import { useSWRInfinite } from 'swr'
++ import useSWRInfinite from 'swr/infinite'
+```
+
+If you are using the corresponding types, update the import path too:
+
+```diff
+- import { SWRInfiniteConfiguration, SWRInfiniteResponse } from 'swr'
++ import { SWRInfiniteConfiguration, SWRInfiniteResponse } from 'swr/infinite'
+```
+
+### Change `revalidate` to `mutate`
+
+`useSWR` no longer returns the `revalidate` method, change to `mutate` instead:
+
+```diff
+- const { revalidate } = useSWR(key, fetcher, options)
++ const { mutate } = useSWR(key, fetcher, options)
+
+
+  // ...
+
+
+- revalidate()
++ mutate()
+```
+
+### Rename `initialData` to `fallbackData`
+
+```diff
+- useSWR(key, fetcher, { initialData: ... })
++ useSWR(key, fetcher, { fallbackData: ... })
+```
+
+### No More Default Fetcher
+
+SWR no longer provides the default fetcher (a `fetch` call that parses the data as JSON). Simply create one if you're relying on it.
+
+### Recommend to Use the Hook-Returned `mutate`
+
+This is **not** a breaking change, but we will now _recommend_ to always use the `mutate` returned from the `useSWRConfig` hook:
+
+```diff
+- import { mutate } from 'swr'
++ import { useSWRConfig } from 'swr'
+
+
+  function Foo () {
++   const { mutate } = useSWRConfig()
+
+    return <button onClick={() => mutate('key')}>
+      Mutate Key
+    </button>
+  }
+```
+
+If you are not using a cache provider, the current global import `import { mutate } from 'swr'` still works.
+
+### Rename Types
+
+If you are using TypeScript, the following type names have been changed for consistency:
+
+| 0.x (deprecated)               | 1.0                        | Note                    |
+| ------------------------------ | -------------------------- | ----------------------- |
+| `ConfigInterface`              | `SWRConfiguration`         |                         |
+| `keyInterface`                 | `Key`                      |                         |
+| `responseInterface`            | `SWRResponse`              |                         |
+| `RevalidateOptionInterface`    | `RevalidatorOptions`       |                         |
+| `revalidateType`               | `Revalidator`              |                         |
+| `SWRInfiniteResponseInterface` | `SWRInfiniteResponse`      | moved to `swr/infinite` |
+| `SWRInfiniteConfigInterface`   | `SWRInfiniteConfiguration` | moved to `swr/infinite` |
+
+### Beta and Unofficial Feature Users
+
+If you are using a beta version of SWR, or any undocumented features, please be aware of the following changes:
+
+- `import { cache } from 'swr'` is removed, use the new [Cache Provider API](/docs/advanced/cache#access-current-cache-provider) instead.
+- `import { createCache } from 'swr'` is removed, use the new [Cache Provider API](/docs/advanced/cache) instead.
+- `revalidateWhenStale` is renamed to `revalidateIfStale`.
+- `middlewares` is renamed to `use`.
+
+### Changelog
+
+Read the full Changelog [on GitHub](https://github.com/vercel/swr/releases).
+
+## What’s Next
+
+[TODO]
+
+## Thank You!
+
+Special thanks to [Toru Kobayashi](https://twitter.com/koba04) and [Yixuan Xu](https://twitter.com/yixuanxu94) for their contributions to the library, and [Paco Coursey](https://twitter.com/pacocoursey), [uttk](https://github.com/uttk), [Tomohiro SHIOYA](https://github.com/shioyang), [Markoz Peña](https://github.com/markozxuu), [SeulGi Choi](https://github.com/cs09g), [Fang Lu](https://github.com/huzhengen) for their work on the translations and docs. This release can't happen without them.
+
+We also want to thank the entire community, our [110 contributors](https://github.com/vercel/swr/graphs/contributors), and everyone who helped and gave us feedback!
