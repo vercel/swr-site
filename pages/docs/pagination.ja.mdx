@@ -241,7 +241,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 通常のインデックスにもとづいた API の場合：
 
-```
+```plaintext
 GET /users?page=0&limit=10
 [
   { name: 'Alice', ... },
@@ -310,7 +310,7 @@ function App () {
 
 API がカーソルを必要とし、データと一緒に次のカーソルを返すとしましょう：
 
-```
+```plaintext
 GET /users?cursor=123&limit=10
 {
   data: [

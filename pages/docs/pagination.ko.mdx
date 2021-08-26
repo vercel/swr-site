@@ -241,7 +241,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 API 기반 일반 인덱스:
 
-```
+```plaintext
 GET /users?page=0&limit=10
 [
   { name: 'Alice', ... },
@@ -310,7 +310,7 @@ function App () {
 
 이제 API가 커서를 요구하고 데이터와 함께 다음 커서를 반환한다고 해봅시다.
 
-```
+```plaintext
 GET /users?cursor=123&limit=10
 {
   data: [

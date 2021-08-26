@@ -243,7 +243,7 @@ En la carga infinita, una _page_ es una petición, y nuestro objetivo es obtener
 
 Para las APIs normales basadas en índices:
 
-```
+```plaintext
 GET /users?page=0&limit=10
 [
   { name: 'Alice', ... },
@@ -312,7 +312,7 @@ Además, la `data` ya no son sólo es una respuesta de la API. Es una array de m
 
 Digamos que la API ahora requiere un cursor y devuelve el siguiente cursor junto con los datos:
 
-```
+```plaintext
 GET /users?cursor=123&limit=10
 {
   data: [

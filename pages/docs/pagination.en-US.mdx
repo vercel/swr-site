@@ -241,7 +241,7 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
 
 For normal index based APIs:
 
-```
+```plaintext
 GET /users?page=0&limit=10
 [
   { name: 'Alice', ... },
@@ -310,7 +310,7 @@ Also `data` is no longer just one API response. It's an array of multiple API re
 
 Let's say the API now requires a cursor and returns the next cursor alongside with the data:
 
-```
+```plaintext
 GET /users?cursor=123&limit=10
 {
   data: [

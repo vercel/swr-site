@@ -232,7 +232,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 普通的基于索引的 API：
 
-```
+```plaintext
 GET /users?page=0&limit=10
 [
   { name: 'Alice', ... },
@@ -299,7 +299,7 @@ function App () {
 
 假设现在 API 需要一个游标，并将下一个游标和数据一起返回：
 
-```
+```plaintext
 GET /users?cursor=123&limit=10
 {
   data: [
