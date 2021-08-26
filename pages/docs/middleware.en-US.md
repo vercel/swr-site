@@ -10,7 +10,7 @@ The middleware feature is a new addition in SWR 1.0 that enables you to execute 
 
 ## Usage
 
-Middleware receive the SWR hook and can execute logic before and after running it. If there are multiple middleware, each middleware receives the next middleware hook. The last middleware in the list will receive the SWR hook.
+Middleware receive the SWR hook and can execute logic before and after running it. If there are multiple middleware, each middleware wraps the next middleware. The last middleware in the list will receive the original SWR hook `useSWR`.
 
 ### API
 
@@ -18,7 +18,10 @@ Middleware receive the SWR hook and can execute logic before and after running i
 function myMiddleware (useSWRNext) {
   return (key, fetcher, config) => {
     // Before hook runs...
+    
+    // Handle the next middleware, or the `useSWR` hook if this is the last one.
     const swr = useSWRNext(key, fetcher, config)
+
     // After hook runs...
     return swr
   }
@@ -73,13 +76,13 @@ useSWR(key, fetcher, { use: [a, b, c] })
 The order of middleware executions will be `a → b → c`, as shown below:
 
 ```
-enter A
-  enter B
-    enter C
+enter a
+  enter b
+    enter c
       useSWR()
-    exit  C
-  exit  B
-exit  A
+    exit  c
+  exit  b
+exit  a
 ```
 
 ## Examples
