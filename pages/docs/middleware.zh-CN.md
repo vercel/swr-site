@@ -12,13 +12,16 @@ import Callout from 'nextra-theme-docs/callout'
 
 ### API
 
-中间件接收 `useSWR` hook 的返回值并将其传递给下一个中间件（如果有的话）。你可以转换数据，使用新属性扩展返回值，还可以在 hook 运行之前或之后执行任何额外操作。
+中间件接收 SWR hook，可以在运行它之前和之后执行逻辑。如果有多个中间件，每个中间件都会接收下一个中间件 hook。最后一个中间件将首先接收到原始 SWR hook `useSWR`。
 
 ```jsx
 function myMiddleware (useSWRNext) {
   return (key, fetcher, config) => {
     // hook 运行之前...
+
+    // 把 `useSWRNext` 和参数组合起来
     const swr = useSWRNext(key, fetcher, config)
+
     // hook 运行之后...
     return swr
   }
@@ -73,13 +76,13 @@ useSWR(key, fetcher, { use: [a, b, c] })
 中间件执行的顺序是 `a → b → c`，如下所示：
 
 ```
-enter A
-  enter B
-    enter C
+enter a
+  enter b
+    enter c
       useSWR()
-    exit  C
-  exit  B
-exit  A
+    exit  c
+  exit  b
+exit  a
 ```
 
 ## 示例
