@@ -21,13 +21,13 @@ Almost 2 years ago we [open sourced](https://twitter.com/vercel/status/118891100
 
 ### Smaller Size
 
-[Performance](/docs/advanced/performance) is one of the most important features of SWR. In 1.0, we made the library significantly smaller **without removing any existing feature**:
+[Performance](/docs/advanced/performance) is one of the most important features of SWR. In 1.0, we made the library significantly smaller **without removing any existing features**:
 
 - 41% smaller core (24% smaller when gzipped, **3.9 kB**)
 - 52% smaller package install size
 - Improved tree-shaking
 
-There're many reasons to make the library lightweight: your application will have a smaller bundle, a leaner runtime, and a smaller `node_modules` directory.
+There are many reasons to make the library lightweight: your application will have a smaller bundle, a leaner runtime, and a smaller `node_modules` directory.
 
 We’ve also improved the bundling of the package, and it now supports path imports:
 
@@ -56,11 +56,11 @@ In 1.0, there’s a new `fallback` option that you can provide any pre-fetched d
 
 This is very helpful for scenarios such as SSG, SSR, and data mockup for testing. Check the docs [Next.js SSG and SSR](/docs/with-nextjs) for more details.
 
-For better consistency and to avoid confusion, the old `initialData` is now renamed to `fallbackData`. And it still provides a single fallback value for the given hook.
+For better consistency and to avoid confusion, the old `initialData` is now renamed to `fallbackData`, which still provides a single fallback value for the given hook.
 
 ### Immutable Mode
 
-Sometimes you want to mark the resource as **immutable**, that will never change with revalidations. So it's great to disable automatic revalidations for it and always request once. Now there's a helper Hook to make this easier:
+Sometimes you want to mark a resource as **immutable** if it will never change. It's better to disable automatic revalidations for it and only make the request once. There is now a helper hook to make this easier:
 
 ```jsx
 import useSWRImmutable from 'swr/immutable'
@@ -238,7 +238,7 @@ Read the full Changelog [on GitHub](https://github.com/vercel/swr/releases).
 
 ## What’s Next
 
-In future releases, we will keep improving the library while maintaining the stability. We are also aiming to embrace the future React, as several new features and improvements in 1.0 are already preparing for that. In addition, we are also working on new features to improve the experience of doing data-fetching in React, and the experience of using this library.
+In future releases, we will keep improving the library while maintaining the stability. We are also aiming to embrace future React versions, as several new features and improvements in 1.0 are already preparing for that. In addition, we are also working on new features to improve the experience of doing data-fetching in React, and the experience of using this library.
 
 If you have any feedback about this release, please [let us know](https://github.com/vercel/swr/discussions).
 
