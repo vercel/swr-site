@@ -13,35 +13,47 @@ Here’s how it works:
 
 This approach works well for user dashboard pages, for example. Because a dashboard is a private, user-specific page, SEO is not relevant and the page doesn’t need to be pre-rendered. The data is frequently updated, which requires request-time data fetching.
 
-## Pre-rendering
+## Pre-rendering with Default Data
 
 If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
 **Static Generation (SSG)** and **Server-side Rendering (SSR)**.
 
-Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval in the client side.
+Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
-You can pass the pre-fetched data as the initial value to the `initialData` option. For example together with [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation):
+You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks. 
+For example with `getStaticProps`:
 
 ```jsx
- export async function getStaticProps() {
-  // `getStaticProps` is invoked on the server-side,
-  // so this `fetcher` function will be executed on the server-side.
-  const posts = await fetcher('https://jsonplaceholder.typicode.com/posts')
-  return { props: { posts } }
+ export async function getStaticProps () {
+  // `getStaticProps` is executed on the server side.
+  const article = await getArticleFromAPI()
+  return {
+    props: {
+      fallback: {
+        '/api/article': article
+      }
+    }
+  }
 }
 
-function Posts (props) {
-  // Here the `fetcher` function will be executed on the client-side.
-  const { data } = useSWR('/api/posts', fetcher, { initialData: props.posts })
+function Article() {
+  // `data` will always be available as it's in `fallback`.
+  const { data } = useSWR('/api/article', fetcher)
+  return <h1>{data.title}</h1>
+}
 
-  // ...
+export default function Page({ fallback }) {
+  // SWR hooks inside the `SWRConfig` boundary will use those values.
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
 }
 ```
 
-The page is still pre-rendered. That means it's SEO friendly, can be cached and accessed very fast. But after hydration, it’s also fully powered by SWR in the client side. 
-Which means the data can be dynamic and update itself over time and user interactions.
+The page is still pre-rendered. It's SEO friendly, fast to response, but also fully powered by SWR on the client side. The data can be dynamic and self-updated over time.
 
 <Callout emoji="💡">
-  In the example above, <code>fetcher</code> is used to load the data from both client and server, 
-  and it needs to support both environments. But this is not a requirement. You can use different ways to load data from server or client.
+  The `Article` component will render the pre-generated data first, and after the page is hydrated, it will fetch the latest data again to keep it refresh.
 </Callout>

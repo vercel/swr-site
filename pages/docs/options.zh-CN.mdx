@@ -17,14 +17,13 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `data`: 通过 `fetcher` 用给定的 key 获取的数据（如未完全加载，返回 undefined）
 - `error`: `fetcher` 抛出的错误（或者是 undefined）
 - `isValidating`: 是否有请求或重新验证加载
-- `mutate(data?, shouldRevalidate?)`: 更改缓存数据的函数
+- `mutate(data?, shouldRevalidate?)`: 更改缓存数据的函数 [（详情）](/docs/mutation)
 
 ## 选项
 
 - `suspense = false`: 启用 React Suspense 模式 [（详情）](/docs/suspense)
 - `fetcher = window.fetch(url).then(res => res.json())`: fetcher 函数
-- `initialData`: 要返回的初始数据 (注意：是每个 hook) [（详情）](/docs/with-nextjs)
-- `revalidateOnMount`: 在挂载组件时启用或禁用自动重新验证 (默认情况下，当没有设置 initialData 时，在挂载时进行重新验证，使用该 flag 强制行为)
+- `revalidateOnMount`: 在挂载组件时启用或禁用自动重新验证
 - `revalidateOnFocus = true`: 窗口聚焦时自动重新验证 [（详情）](/docs/revalidation)
 - `revalidateOnReconnect = true`: 浏览器恢复网络连接时自动重新验证（通过 `navigator.onLine`） [（详情）](/docs/revalidation)
 - `refreshInterval = 0`: 轮询间隔 (默认 disabled) [（详情）](/docs/revalidation)
@@ -36,6 +35,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: 超时触发 `onLoadingSlow` 事件
 - `errorRetryInterval = 5000`: 错误重试的时间间隔
 - `errorRetryCount`: 错误重试的最大次数
+- `fallback`: a map of multiple fallback data to be returned [(example)](/docs/with-nextjs)
+- `fallbackData`: 此 hook 需要返回的初始数据
 - `onLoadingSlow(key, config)`: 请求加载时间过长时的回调函数（参考 `loadingTimeout`）
 - `onSuccess(data, key, config)`: 请求成功完成时的回调函数
 - `onError(err, key, config)`: 请求返回错误时的回调函数

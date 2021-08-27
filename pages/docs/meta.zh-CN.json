@@ -10,7 +10,7 @@
   "mutation": "数据更改",
   "pagination": "分页",
   "prefetching": "预请求",
-  "with-nextjs": "配合 Next.js 使用",
+  "with-nextjs": "Next.js SSG 和 SSR",
   "suspense": "Suspense",
   "middleware": "Middleware",
   "advanced": "高级",

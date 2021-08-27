@@ -2,15 +2,18 @@
 
 ## Revalidar
 
-Se puede emitir un mensaje de revalidación de forma global a todos los SWRs con la misma key llamando a `mutate(key)`.
+You can get the `mutate` function from the `useSWRConfig()` hook, and broadcast a revalidation message
+globally to other SWR hooks<sup>*</sup> using the same key by calling `mutate(key)`.
 
 Este ejemplo muestra cómo recuperar automáticamente la información de login (por ejemplo, dentro de `<Profile/>`) 
 cuando el usuario hace clic en el botón "Logout".
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function App () {
+  const { mutate } = useSWRConfig()
+
   return (
     <div>
       <Profile />
@@ -37,9 +40,10 @@ Con `mutate`, puedes actualizar tus datos locales mediante programación, mientr
 sustituyes por los datos más recientes.
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function Profile () {
+  const { mutate } = useSWRConfig()
   const { data } = useSWR('/api/user', fetcher)
 
   return (

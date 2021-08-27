@@ -54,3 +54,33 @@ It's useful to also revalidate when the user is back online. This scenario happe
 To make sure the data is always up-to-date, SWR automatically revalidates when network recovers.
 
 This feature is enabled by default. You can disable it via the [`revalidateOnReconnect`](/docs/options) option.
+
+## Disable Automatic Revalidations
+
+If the resource is **immutable**, that will never change if we revalidate again, we can disable all kinds of automatic revalidations for it.
+
+Since version 1.0, SWR provides a helper hook `useSWRImmutable` to mark the resource as immutable:
+
+```js
+import useSWRImmutable from 'swr/immutable'
+
+// ...
+useSWRImmutable(key, fetcher, options)
+```
+
+It has the same API interface as the normal `useSWR` hook. You can also do the same thing by disable the following revalidation options:
+
+```js
+useSWR(key, fetcher, {
+  revalidateIfStale: false,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false
+})
+
+// equivalent to
+useSWRImmutable(key, fetcher)
+```
+
+The `revalidateIfStale` controls if SWR should revalidate when it mounts and there is stale data.
+
+These 2 hooks above do the **exact same** thing. Once the data is cached, they will never request it again.
