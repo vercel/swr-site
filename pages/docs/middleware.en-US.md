@@ -170,3 +170,42 @@ When you need a SWR hook to be laggy, you can then use this middleware:
 ```js
 const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 ```
+
+### Serialize Object Keys
+
+By default, SWR **shallow compares** (related topic: [Passing Objects – Arguments](/docs/arguments#passing-objects)) object keys just like React. This is powerful when you have multiple "chained" `useSWR` hooks, or using non serializable keys:
+
+```jsx
+// Hook that uses another hook's data as key
+const { data: user } = useSWR('API_CURRENT_USER', fetcher)
+const { data: userSettings } = useSWR(['API_USER_SETTINGS', user], fetcher)
+
+// Hook that uses a global function as key
+const { data: items } = useSWR([getItems], getItems)
+```
+
+However, in some cases you are just passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
+
+```jsx
+function serialize(useSWRNext) {
+  return (key, fetcher, config) => {
+    // Serialize the key.
+    const serializedKey = Array.isArray(key) ? JSON.stringify(key) : key
+
+    // Pass the serialized key, and unserialize it in fetcher.
+    return useSWRNext(serializedKey, (k) => fetcher(...JSON.parse(k)), config)
+  }
+}
+
+// ...
+useSWR(['/api/user', { id: '73' }], fetcher, { use: [serialize] })
+
+// ... or enable it globally with
+<SWRConfig value={{ use: [serialize] }}>
+```
+
+You don’t need to worry that object might change between renders. It’s always serialized to the same string, and the fetcher will still receive those object arguments.
+
+<Callout>
+  Furthermore, you can use libs like [fast-json-stable-stringify](https://github.com/epoberezkin/fast-json-stable-stringify) instead of `JSON.stringify` — faster and stabler.
+</Callout>
