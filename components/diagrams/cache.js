@@ -1,5 +1,5 @@
 export const Cache = () => (
-  <svg width={588} height={311} fill="none" className="invert-on-dark">
+  <svg viewBox="0 0 588 311" fill="none" className="invert-on-dark">
     <path stroke="#D2D2D2" d="M22.5 59.5h543v232h-543z" />
     <path fill="#fff" d="M40 43h116v33H40z" />
     <path
