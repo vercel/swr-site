@@ -2,5 +2,6 @@
   "basic": "基本的な使用法",
   "auth": "認証",
   "infinite-loading": "無限ローディング",
-  "error-handling": "エラーハンドリング"
+  "error-handling": "エラーハンドリング",
+  "ssr": "Next.js SSR"
 }

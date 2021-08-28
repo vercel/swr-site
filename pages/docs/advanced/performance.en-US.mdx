@@ -1,11 +1,12 @@
 # Performance
 
-SWR provides critical functionality in all kinds of web apps, so **performance** is a top priority. 
+SWR provides critical functionality in all kinds of web apps, so **performance** is a top priority.
 
-SWR’s built-in **caching** and **[deduplication](/advanced/performance#deduplication)** skips unnecessary network requests, but 
+SWR’s built-in **caching** and **[deduplication](/advanced/performance#deduplication)** skips unnecessary network requests, but
 the performance of the `useSWR` hook itself still matters. In a complex app, there could be hundreds of `useSWR` calls in a single page render.
 
 SWR ensures that your app has:
+
 - _no unnecessary requests_
 - _no unnecessary re-renders_
 - _no unnecessary code imported_
@@ -51,7 +52,7 @@ There is also a [`dedupingInterval` option](/docs/options) for overriding the de
 
 SWR **deep compares** data changes by default. If the `data` value isn’t changed, a re-render will not be triggered.
 
-You can also customize the comparison function via the [`compare` option](/docs/options) if you want to change the behavior. 
+You can also customize the comparison function via the [`compare` option](/docs/options) if you want to change the behavior.
 For example, some API responses return a server timestamp that you might want to exclude from the data diff.
 
 ## Dependency Collection
@@ -98,12 +99,12 @@ Data      // => end retrying, get the data
 ```
 
 The exact same process has happened internally, there was an error from the first request, then we got the data from the retry.
-However, **SWR only updates the states that are used by the component**, which is only `data` now. 
+However, **SWR only updates the states that are used by the component**, which is only `data` now.
 
-If you are not always using all these 3 states, you are already benefitting from this feature. 
+If you are not always using all these 3 states, you are already benefitting from this feature.
 At [Vercel](https://vercel.com), this optimization results in ~60% fewer re-renders.
 
 ## Tree Shaking
 
-The SWR package is [tree-shakeable](https://webpack.js.org/guides/tree-shaking) and side-effect free. 
+The SWR package is [tree-shakeable](https://webpack.js.org/guides/tree-shaking) and side-effect free.
 That means if you are only importing the core `useSWR` API, unused APIs like `useSWRInfinite` won't be bundled in your application.

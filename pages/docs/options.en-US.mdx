@@ -17,15 +17,15 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `data`: data for the given key resolved by `fetcher` (or undefined if not loaded)
 - `error`: error thrown by `fetcher` (or undefined)
 - `isValidating`: if there's a request or revalidation loading
-- `mutate(data?, shouldRevalidate?)`: function to mutate the cached data
+- `mutate(data?, shouldRevalidate?)`: function to mutate the cached data [(details)](/docs/mutation)
 
 ## Options
 
 - `suspense = false`: enable React Suspense mode [(details)](/docs/suspense)
 - `fetcher = window.fetch(url).then(res => res.json())`: the fetcher function
-- `initialData`: initial data to be returned (note: This is per-hook) [(details)](/docs/with-nextjs)
-- `revalidateOnMount`: enable or disable automatic revalidation when component is mounted (by default revalidation occurs on mount when initialData is not set, use this flag to force behavior)
-- `revalidateOnFocus = true`: auto revalidate when window gets focused [(details)](/docs/revalidation)
+- `revalidateIfStale = true`: automatic revalidation on mount even if there is stale data [(details)](/docs/revalidation#disable-automatic-revalidations)
+- `revalidateOnMount`: enable or disable automatic revalidation when component is mounted
+- `revalidateOnFocus = true`: automatically revalidate when window gets focused [(details)](/docs/revalidation)
 - `revalidateOnReconnect = true`: automatically revalidate when the browser regains a network connection (via `navigator.onLine`) [(details)](/docs/revalidation)
 - `refreshInterval = 0`: polling interval (disabled by default) [(details)](/docs/revalidation)
 - `refreshWhenHidden = false`: polling when the window is invisible (if `refreshInterval` is enabled)
@@ -36,6 +36,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: timeout to trigger the onLoadingSlow event
 - `errorRetryInterval = 5000`: error retry interval
 - `errorRetryCount`: max error retry count
+- `fallback`: a key-value object of multiple fallback data [(example)](/docs/with-nextjs)
+- `fallbackData`: initial data to be returned (note: This is per-hook)
 - `onLoadingSlow(key, config)`: callback function when a request takes too long to load (see `loadingTimeout`)
 - `onSuccess(data, key, config)`: callback function when a request finishes successfully
 - `onError(err, key, config)`: callback function when a request returns an error

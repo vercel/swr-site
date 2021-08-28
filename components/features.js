@@ -90,7 +90,7 @@ export default () => {
             }
           />
           <Feature
-            text="Jamstack Oriented"
+            text="SSR / ISR / SSG Ready"
             icon={
               <svg
                 width="24"
