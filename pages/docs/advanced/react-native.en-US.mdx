@@ -1,0 +1,102 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# React Native
+
+<Callout>
+  Upgrade to the latest version (≥ 1.0.0) to experience this customization.
+</Callout>
+
+Unlike React running inside the browsers, React Native has a very different use experience. For example there is no “tab focus”, switching from the background to the app is considered as a “focus” instead.
+To customize these behaviors, you can replace the default browser `focus` and `online` events listeners with React Native’s app state detection and other native ported API, and configure SWR to use them.
+
+
+## Example
+
+
+### Global Setup
+
+You can wrap your app under `SWRConfig` and preconfig all configurations there
+
+```jsx
+<SWRConfig 
+  value={{
+    /* ... */
+  }}
+>
+  <App>
+</SWRConfig>
+```
+
+### Pre-loaded Data
+
+You might want preload some data when app launches, these data are settled in SWR cache.
+
+```jsx
+<SWRConfig 
+  value={{
+    provider: () => new Map([
+      ['hello', 'swr'],
+      ['initialKey', 'initialValue']
+    ]),
+  }}
+>
+  <App />
+</SWRConfig>
+```
+
+### Customize `focus` and `reconnect` Events Detection
+
+There're few configurations you need to take care of such as `isOnline`, `isVisible`, `initFocus` and `initReconnect`.
+
+`isOnline` and `isVisible` are configs to detect if app is regarded as "active", SWR will revalidate if these conditions are matched.
+
+```jsx
+<SWRConfig
+  value={{
+    provider: () => new Map(),
+    isOnline() { return true /* customize with your own condition */ },
+    isVisible() { return true /* customize with your own condition */ },
+    initFocus(revalidate) {
+      /* Implement with your network state provider */
+    },
+    initReconnect(revalidate) {
+      /* Implement with your network state provider */ 
+    }
+  }}
+>
+  <App />
+</SWRConfig>
+```
+
+Let's take `focus` as a example since it's able to implement with React Native directly.
+
+
+```jsx
+import { AppState } from 'react-native'
+
+// ...
+
+<SWRConfig
+  value={{
+    initFocus(revalidate) {
+      let appState = AppState.currentState
+      const onAppStateChange = nextAppState => {
+        /* if it's resuming from background or inactive mode to active one, revalidate */
+        if (appState.match(/inactive|background/) && nextAppState === 'active') {
+          revalidate()
+        }
+        console.log('state change', nextAppState)
+        appState = nextAppState
+      }
+
+      // listen to the app state change
+      AppState.addEventListener('change', onAppStateChange)
+    }
+  }}
+>
+  <App>
+</SWRConfig>
+```
+
+For `initReconnect`, it will requires some native ported code to detect client side network information and decide when to revalidate.
+The implementation will be similar to `initFocus`, receiving a `revalidate` function and manage when to trigger.
