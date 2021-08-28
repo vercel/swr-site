@@ -27,23 +27,6 @@ You can wrap your app under `SWRConfig` and preconfig all configurations there
 </SWRConfig>
 ```
 
-### Pre-loaded Data
-
-You might want preload some data when app launches, these data are settled in SWR cache.
-
-```jsx
-<SWRConfig 
-  value={{
-    provider: () => new Map([
-      ['hello', 'swr'],
-      ['initialKey', 'initialValue']
-    ]),
-  }}
->
-  <App />
-</SWRConfig>
-```
-
 ### Customize `focus` and `reconnect` Events
 
 There're few configurations you need to take care of such as `isOnline`, `isVisible`, `initFocus` and `initReconnect`.
@@ -66,15 +49,9 @@ When using `initFocus` and `initReconnect`, it's required to also set up a [cust
     },
     initFocus(callback) {
       /* Register the listener with your state provider */
-      return () => {
-        /* Clean up */
-      }
     },
     initReconnect(callback) {
       /* Register the listener with your state provider */
-      return () => {
-        /* Clean up */
-      }
     }
   }}
 >
@@ -82,7 +59,7 @@ When using `initFocus` and `initReconnect`, it's required to also set up a [cust
 </SWRConfig>
 ```
 
-Let's take `initFocus` and `isVisible` as example:
+Let's take `initFocus` as example:
 
 
 ```jsx
@@ -93,9 +70,7 @@ import { AppState } from 'react-native'
 <SWRConfig
   value={{
     provider: () => new Map(),
-    isVisible: () => {
-      return AppState.currentState === 'active'
-    },
+    isVisible: () => { return true },
     initFocus(callback) {
       let appState = AppState.currentState
       
