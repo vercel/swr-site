@@ -44,23 +44,37 @@ You might want preload some data when app launches, these data are settled in SW
 </SWRConfig>
 ```
 
-### Customize `focus` and `reconnect` Events Detection
+### Customize `focus` and `reconnect` Events
 
 There're few configurations you need to take care of such as `isOnline`, `isVisible`, `initFocus` and `initReconnect`.
 
-`isOnline` and `isVisible` are configs to detect if app is regarded as "active", SWR will revalidate if these conditions are matched.
+`isOnline` and `isVisible` are functions that return a boolean, to determine if the application is "active". By default, SWR will bail out a revalidation if these conditions are not met.
+
+When using `initFocus` and `initReconnect`, it's required to also set up a [custom cache provider](/docs/advanced/cache). You can use an empty `Map()` or any storage you prefer.
 
 ```jsx
 <SWRConfig
   value={{
     provider: () => new Map(),
-    isOnline() { return true /* customize with your own condition */ },
-    isVisible() { return true /* customize with your own condition */ },
-    initFocus(revalidate) {
-      /* Implement with your network state provider */
+    isOnline() {
+      /* Customize the network state detector */
+      return true
     },
-    initReconnect(revalidate) {
-      /* Implement with your network state provider */ 
+    isVisible() {
+      /* Customize the visibility state detector */
+      return true
+    },
+    initFocus(callback) {
+      /* Register the listener with your state provider */
+      return () => {
+        /* Clean up */
+      }
+    },
+    initReconnect(callback) {
+      /* Register the listener with your state provider */
+      return () => {
+        /* Clean up */
+      }
     }
   }}
 >
@@ -68,7 +82,7 @@ There're few configurations you need to take care of such as `isOnline`, `isVisi
 </SWRConfig>
 ```
 
-Let's take `focus` as a example since it's able to implement with React Native directly.
+Let's take `initFocus` and `isVisible` as example:
 
 
 ```jsx
@@ -78,19 +92,27 @@ import { AppState } from 'react-native'
 
 <SWRConfig
   value={{
-    initFocus(revalidate) {
+    provider: () => new Map(),
+    isVisible: () => {
+      return AppState.currentState === 'active'
+    },
+    initFocus(callback) {
       let appState = AppState.currentState
-      const onAppStateChange = nextAppState => {
-        /* if it's resuming from background or inactive mode to active one, revalidate */
+      
+      const onAppStateChange = (nextAppState) => {
+        /* If it's resuming from background or inactive mode to active one */
         if (appState.match(/inactive|background/) && nextAppState === 'active') {
-          revalidate()
+          callback()
         }
-        console.log('state change', nextAppState)
         appState = nextAppState
       }
 
-      // listen to the app state change
-      AppState.addEventListener('change', onAppStateChange)
+      // Subscribe to the app state change events
+      const subscription = AppState.addEventListener('change', onAppStateChange)
+      
+      return () => {
+        subscription.remove()
+      }
     }
   }}
 >
@@ -98,5 +120,4 @@ import { AppState } from 'react-native'
 </SWRConfig>
 ```
 
-For `initReconnect`, it will requires some native ported code to detect client side network information and decide when to revalidate.
-The implementation will be similar to `initFocus`, receiving a `revalidate` function and manage when to trigger.
+For `initReconnect`, it requires some 3rd party libraries such as [NetInfo](https://github.com/react-native-netinfo/react-native-netinfo) to subscribe to the network status. The implementation will be similar to the example above: receiving a `callback` function and trigger it when the network recovers from offline, so SWR can start a revalidation to keep your data up-to-date.
