@@ -16,7 +16,7 @@ SWR 提供了一个专用 API `useSWRInfinite` 来支持常见的 UI 模式，�
 
 <div className="mt-8" />
 
-<svg viewBox="0 0 769 356" fill="none">
+<svg viewBox="0 0 769 356" fill="none" className="invert-on-dark">
 <path d="M5 0.5H763C765.485 0.5 767.5 2.51472 767.5 5V351C767.5 353.485 765.485 355.5 763 355.5H5.00002C2.51473 355.5 0.5 353.485 0.5 351V5C0.5 2.51472 2.51472 0.5 5 0.5Z" fill="white" stroke="#EEEEEE"/>
 <path d="M1 288H769" stroke="#E5E5E5"/>
 <path d="M21 26H747V40H21V26Z" fill="#E5E5E5"/>
@@ -102,7 +102,7 @@ function App () {
 
 <div className="mt-8" />
 
-<svg viewBox="0 0 769 356" fill="none">
+<svg viewBox="0 0 769 356" fill="none" className="invert-on-dark">
 <path d="M5 0.5H763C765.485 0.5 767.5 2.51472 767.5 5V351C767.5 353.485 765.485 355.5 763 355.5H5.00002C2.51473 355.5 0.5 353.485 0.5 351V5C0.5 2.51472 2.51472 0.5 5 0.5Z" fill="white" stroke="#EEEEEE"/>
 <path d="M21 26H747V40H21V26Z" fill="#E5E5E5"/>
 <path d="M21 70H747V84H21V70Z" fill="#E5E5E5"/>
@@ -187,6 +187,9 @@ function App () {
 `useSWRInfinite` 让我们能够通过一个 Hook 触发多个请求。就像下面这样：
 
 ```jsx
+import useSWRInfinite from 'swr/infinite'
+
+// ...
 const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
@@ -195,6 +198,11 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 和 `useSWR` 类似，这个新的 Hook 接受一个函数，该函数返回请求的 key、1 个 fetcher 函数和 options。它返回 `useSWR` 的所有返回值，还包括 2 个额外的值：page size 和 page size setter，类似一个 React state。
 
 在无限加载中，一个 _页面_ 是一个请求，我们的目标是请求多页面并渲染它们。
+
+<Callout emoji="⚠️">
+  If you are using SWR 0.x versions, `useSWRInfinite` needs to be imported from `swr`:<br/>
+  `import { useSWRInfinite } from 'swr'`
+</Callout>
 
 ### API
 
@@ -224,7 +232,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 普通的基于索引的 API：
 
-```
+```plaintext
 GET /users?page=0&limit=10
 [
   { name: 'Alice', ... },
@@ -291,7 +299,7 @@ function App () {
 
 假设现在 API 需要一个游标，并将下一个游标和数据一起返回：
 
-```
+```plaintext
 GET /users?cursor=123&limit=10
 {
   data: [

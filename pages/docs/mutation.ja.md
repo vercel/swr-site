@@ -2,16 +2,18 @@
 
 ## 再検証
 
-同じキーで `mutate(key)` を呼び出すことによって、
-SWR 全体に再検証のメッセージを送ることができます。
+You can get the `mutate` function from the `useSWRConfig()` hook, and broadcast a revalidation message
+globally to other SWR hooks<sup>*</sup> using the same key by calling `mutate(key)`.
 
 次の例では、ユーザーが "Logout" ボタンをクリックしたときに、ログイン情報
 （例えば `<Profile/> `の中身）を自動的に取得する方法を示します。
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function App () {
+  const { mutate } = useSWRConfig()
+
   return (
     <div>
       <Profile />
@@ -29,6 +31,8 @@ function App () {
 }
 ```
 
+*: _It broadcasts to SWR hooks under the same [cache provider](/docs/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks._
+
 ## ミューテーションと POST リクエスト
 
 多くの場合、データにローカルミューテーションを適用することは、変更をより速く
@@ -38,9 +42,10 @@ function App () {
 最終的に最新のデータに置き換えることができます。
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function Profile () {
+  const { mutate } = useSWRConfig()
   const { data } = useSWR('/api/user', fetcher)
 
   return (

@@ -17,14 +17,14 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `data`: `fetcher`가 이행한 주어진 키에 대한 데이터(로드되지 않았다면 undefined)
 - `error`: `fetcher`가 던진 에러(또는 undefined)
 - `isValidating`: 요청이나 갱신 로딩의 여부
-- `mutate(data?, shouldRevalidate?)`: 캐시 된 데이터를 뮤테이트하기 위한 함수
+- `mutate(data?, shouldRevalidate?)`: 캐시 된 데이터를 뮤테이트하기 위한 함수 [（상세내용）](/docs/mutation)
 
 ## 옵션
 
 - `suspense = false`: React Suspense 모드를 활성화 [(상세내용)](/docs/suspense)
 - `fetcher = window.fetch(url).then(res => res.json())`: fetcher 함수
-- `initialData`: 반환될 초기 데이터(노트: hook 별로 존재) [(상세내용)](/docs/with-nextjs)
-- `revalidateOnMount`: 컴포넌트가 마운트되었을 때 자동 갱신 활성화 또는 비활성화(기본적으로 갱신은 마운트에서 initialData가 설정되지 않았을 때 발생함, 동작을 강제하려면 이 플래그를 사용)
+- `revalidateIfStale = true`: automatic revalidation on mount even if there is stale data [(details)](/docs/revalidation#disable-automatic-revalidations)
+- `revalidateOnMount`: 컴포넌트가 마운트되었을 때 자동 갱신 활성화 또는 비활성화
 - `revalidateOnFocus = true`: 창이 포커싱되었을 때 자동 갱신 [(상세내용)](/docs/revalidation)
 - `revalidateOnReconnect = true`: 브라우저가 네트워크 연결을 다시 얻었을 때 자동으로 갱신(`navigator.onLine`을 통해) [(상세내용)](/docs/revalidation)
 - `refreshInterval = 0`: 인터벌 폴링(기본적으로는 비활성화) [(상세내용)](/docs/revalidation)
@@ -36,6 +36,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: onLoadingSlow 이벤트를 트리거 하기 위한 타임아웃
 - `errorRetryInterval = 5000`: 에러 재시도 인터벌
 - `errorRetryCount`: 최대 에러 재시도 수
+- `fallback`: a key-value object of multiple fallback data [(example)](/docs/with-nextjs)
+- `fallbackData`: 반환될 초기 데이터(노트: hook 별로 존재)
 - `onLoadingSlow(key, config)`: 요청을 로드하는 데 너무 오래 걸리는 경우의 콜백 함수(`loadingTimeout`을 보세요)
 - `onSuccess(data, key, config)`: 요청이 성공적으로 종료되었을 경우의 콜백 함수
 - `onError(err, key, config)`: 요청이 에러를 반환했을 경우의 콜백 함수

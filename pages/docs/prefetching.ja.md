@@ -27,3 +27,15 @@ function prefetch () {
 ```
 
 Next.js の [ページプリフェッチ](https://nextjs.org/docs/api-reference/next/router#routerprefetch) などの技術と合わせて、次のページとデータの両方を瞬時に読み込むことができるようになります。
+
+## Pre-fill Data
+
+If you want to pre-fill existing data into the SWR cache, you can use the `fallbackData` option. For example:
+
+```jsx
+useSWR('/api/data', fetcher, { fallbackData: prefetchedData })
+```
+
+If SWR hasn't fetched the data yet, this hook will return `prefetchedData` as a fallback. 
+
+You can also configure this for all SWR hooks and multiple keys with `<SWRConfig>` and the `fallback` option. Check [Next.js SSG and SSR](/docs/with-nextjs) for more details.

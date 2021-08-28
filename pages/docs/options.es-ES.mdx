@@ -18,15 +18,14 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `data`: data de la key dada resueltos por el `fetcher` (o undefined si no está cargado)
 - `error`: error lanzado por el `fetcher` (o undefined)
 - `isValidating`: si hay una solicitud o carga de revalidación
-- `mutate(data?, shouldRevalidate?`: función para mutar los datos en caché
+- `mutate(data?, shouldRevalidate?`: función para mutar los datos en caché [(detalles)](/docs/mutation)
 
 ## Opciónes
 
 - `suspense = false`: activar el modo React Suspense [(detalles)](/docs/suspense)
 - `fetcher = window.fetch(url).then(res => res.json())`: la fetcher función
-- `initialData`: datos iniciales a devolver (nota: Esto es por un hook) [(detalles)](/docs/with-nextjs)
+- `revalidateIfStale = true`: automatic revalidation on mount even if there is stale data [(details)](/docs/revalidation#disable-automatic-revalidations)
 - `revalidateOnMount`: activar o desactivar la revalidación automática cuando se monta el componente
-  (por defecto la revalidación se produce en el montaje cuando initialData no está establecido, utilice esta flag para forzar el comportamiento)
 - `revalidateOnFocus = true`: revalidación automática cuanto window gets focused [(detalles)](/docs/revalidation)
 - `revalidateOnReconnect = true`: revalidación automática cuando el navegador recupera la conexión a la red
   (a través de `navigator.onLine`) [(detalles)](/docs/revalidation)
@@ -39,6 +38,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: tiempo de espera para activar el evento onLoadingSlow
 - `errorRetryInterval = 5000`: error retry interval
 - `errorRetryCount`: número máximo de reintentos de error
+- `fallback`: a key-value object of multiple fallback data [(example)](/docs/with-nextjs)
+- `fallbackData`: datos iniciales a devolver (nota: Esto es por un hook)
 - `onLoadingSlow(key, config)`: función callback cuando una petición tarda demasiado en cargase (véase: `loadingTimeout`)
 - `onSuccess(data, key, config)`: función callback cuando una petición termina con éxito
 - `onError(err, key, config)`: función callback cuando una petición devuelve un error

@@ -10,7 +10,7 @@
   "mutation": "Mutation",
   "pagination": "Pagination",
   "prefetching": "Prefetching",
-  "with-nextjs": "Usage with Next.js",
+  "with-nextjs": "Next.js SSG and SSR",
   "suspense": "Suspense",
   "middleware": "Middleware",
   "advanced": "Advanced",

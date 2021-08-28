@@ -34,3 +34,31 @@ function App () {
   )
 }
 ```
+
+## Extra APIs
+
+### Cache Provider
+
+Besides all the [options](/docs/options) listed, `SWRConfig` also accepts an optional `provider` function. Please refer to the [Cache](/docs/cache) section for more details.
+
+```jsx
+<SWRConfig value={{ provider: () => new Map() }}>
+  <Dashboard />
+</SWRConfig>
+```
+
+### Access To Global Configurations
+
+You can use the `useSWRConfig` hook to get the global configurations, as well as [`mutate`](/docs/mutation) and [`cache`](/docs/advanced/cache):
+
+```jsx
+import { useSWRConfig } from 'swr'
+
+function Component () {
+  const { refreshInterval, mutate, cache, ...restConfig } = useSWRConfig()
+
+  // ...
+}
+```
+
+Nested configurations will be extended. If no `<SWRConfig>` is used, it will return the default ones.
