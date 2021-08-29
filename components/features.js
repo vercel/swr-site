@@ -15,6 +15,7 @@ const TITLE_WITH_TRANSLATIONS = {
   "zh-CN": "用于数据请求的 React Hooks 库",
   ja: "データ取得のための React Hooks ライブラリ",
   ko: "데이터 가져오기를 위한 React Hooks",
+  "pt-BR": "React Hooks para Busca de Dados",
 };
 
 export default () => {

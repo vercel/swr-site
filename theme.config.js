@@ -24,6 +24,7 @@ const TITLE_WITH_TRANSLATIONS = {
   "es-ES": "Biblioteca React Hooks para la obtención de datos",
   ja: "データ取得のための React Hooks ライブラリ",
   ko: "데이터 가져오기를 위한 React Hooks",
+  "pt-BR": "React Hooks para Busca de Dados",
 };
 
 export default {
@@ -134,6 +135,8 @@ export default {
         return "Github で編集する";
       case "ko":
         return "Github에서 이 페이지 편집하기";
+      case "pt-BR":
+        return "Edite esta página no GitHub";
       default:
         return "Edit this page on GitHub";
     }
@@ -197,6 +200,20 @@ export default {
             </span>
           </a>
         );
+      case "pt-BR":
+        return (
+          <a
+            href="https://vercel.com/?utm_source=swr_pt-br"
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center no-underline text-current font-semibold"
+          >
+            <span className="mr-2">Desenvolvido por</span>
+            <span className="mr-2">
+              <Vercel />
+            </span>
+          </a>
+        );
       default:
         return (
           <a
@@ -219,5 +236,6 @@ export default {
     { locale: "zh-CN", text: "简体中文" },
     { locale: "ja", text: "日本語" },
     { locale: "ko", text: "한국어" },
+    { locale: "pt-BR", text: "Português do Brasil" },
   ],
 };
