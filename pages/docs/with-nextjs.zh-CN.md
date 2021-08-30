@@ -13,19 +13,18 @@ import Callout from 'nextra-theme-docs/callout'
 
 这种方法适用于登录后的页面（控制面板）等。因为登录后的页面是一个私有的、特定于用户的页面，与 SEO 无关，页面也不需要预渲染。数据经常更新，这需要即时数据加载。
 
-## Pre-rendering with Default Data
+## 使用默认数据进行预渲染
 
-If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
-**Static Generation (SSG)** and **Server-side Rendering (SSR)**.
+如果页面必须进行预渲染, Next.js 支持 [两种形式](https://nextjs.org/docs/basic-features/data-fetching)： **静态生成 (SSG)** 和 **服务器渲染 (SSR)**。
 
-Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
+与SWR一起使用，你可以通过预渲染页面来获得 SEO , 并且还可以拥有缓存，重新验证，焦点跟踪，客户端周期性请求数据的功能。
 
-You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks. 
-For example with `getStaticProps`:
+你可以使用 [`SWRConfig`](/docs/global-configuration) 的 `fallback` 选项将预先请求的数据作为所有 SWR hooks 的初始值传递。
+例如使用 `getStaticProps` :
 
 ```jsx
  export async function getStaticProps () {
-  // `getStaticProps` is executed on the server side.
+  // `getStaticProps` 在服务器端执行。
   const article = await getArticleFromAPI()
   return {
     props: {
@@ -37,13 +36,13 @@ For example with `getStaticProps`:
 }
 
 function Article() {
-  // `data` will always be available as it's in `fallback`.
+  // `data` 将始终是可用的。因为它在`fallback`中。
   const { data } = useSWR('/api/article', fetcher)
   return <h1>{data.title}</h1>
 }
 
 export default function Page({ fallback }) {
-  // SWR hooks inside the `SWRConfig` boundary will use those values.
+  // 被`SWRConfig` 所包裹的 SWR hooks 将能够使用这些值。
   return (
     <SWRConfig value={{ fallback }}>
       <Article />
@@ -52,8 +51,8 @@ export default function Page({ fallback }) {
 }
 ```
 
-The page is still pre-rendered. It's SEO friendly, fast to response, but also fully powered by SWR on the client side. The data can be dynamic and self-updated over time.
+该页面仍然是预渲染的。 它对SEO友好，并能够快速的响应。同时在客户端方面获得了来自SWR的完全支持。随着时间的推移，窗口中的数据将持续是动态且自我更新的。
 
 <Callout emoji="💡">
-  The `Article` component will render the pre-generated data first, and after the page is hydrated, it will fetch the latest data again to keep it refresh.
+  `Article` 组件会先渲染预先生成的数据，并且在页面 hydrate 后，它将再次获取最新数据，以保持数据的时效性。
 </Callout>
