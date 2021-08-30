@@ -2,14 +2,16 @@
 
 ## 重新验证
 
-你可以通过调用 `mutate(key)` 全局的向所有具有相同 key 的 SWR 广播重新验证消息。
+你可以使用 `useSWRConfig()` 所返回的 `mutate` 函数，来广播重新验证的消息给其他的 SWR hook<sup>*</sup>。使用同一个 key 调用 `mutate(key)` 即可。
 
-该示例显示了当用户点击 “注销” 按钮时如何自动重新请求登录信息（例如：在 `<Profile/>` 内）。
+以下示例显示了当用户点击 “注销” 按钮时如何自动重新请求登录信息（例如在 `<Profile/>` 内）：
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function App () {
+  const { mutate } = useSWRConfig()
+
   return (
     <div>
       <Profile />
@@ -27,6 +29,8 @@ function App () {
 }
 ```
 
+*: _通常情况下 mutate 会广播给同一个 [cache provider](/docs/cache) 下面的 SWR hooks。如果没有设置 cache provider，即会广播给所有的 SWR hooks。_
+
 ## 与 POST 请求配合使用
 
 在很多情况中，对数据应用本地 mutation 是一种让更改感觉更快的好办法 - 无需等待远程数据源。
@@ -34,9 +38,10 @@ function App () {
 使用 `mutate`，你可以以编程方式更新本地数据，同时重新验证并最终将其替换为最新数据。
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function Profile () {
+  const { mutate } = useSWRConfig()
   const { data } = useSWR('/api/user', fetcher)
 
   return (

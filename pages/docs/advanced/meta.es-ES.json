@@ -1,3 +1,5 @@
 {
-  "performance": "Rendimiento"
+  "cache": "Cache",
+  "performance": "Rendimiento",
+  "react-native": "React Native"
 }

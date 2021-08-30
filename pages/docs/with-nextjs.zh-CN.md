@@ -13,33 +13,47 @@ import Callout from 'nextra-theme-docs/callout'
 
 这种方法适用于登录后的页面（控制面板）等。因为登录后的页面是一个私有的、特定于用户的页面，与 SEO 无关，页面也不需要预渲染。数据经常更新，这需要即时数据加载。
 
-## 预渲染
+## Pre-rendering with Default Data
 
-如果页面必须预渲染，Next.js 支持 [2 种形式的预渲染](https://nextjs.org/docs/basic-features/data-fetching)：  
-**静态生成（Static Site Generation, SSG）** 和 **服务端渲染（Server-side Rendering, SSR）**。
+If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
+**Static Generation (SSG)** and **Server-side Rendering (SSR)**.
 
-用 SWR，你可以为了 SEO 预渲染页面，并且还有诸如缓存、重新验证、聚焦跟踪、在客户端间隔重新请求等功能。
+Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
-你可以将预请求的数据作为初始值传递给 `initialData` 选项。比如和 [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation) 一起：
+You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks. 
+For example with `getStaticProps`:
 
 ```jsx
- export async function getStaticProps() {
-  // 在服务器端调用 `getStaticProps`，
-  // 所以 `fetcher` 函数将在服务端执行。
-  const posts = await fetcher('https://jsonplaceholder.typicode.com/posts')
-  return { props: { posts } }
+ export async function getStaticProps () {
+  // `getStaticProps` is executed on the server side.
+  const article = await getArticleFromAPI()
+  return {
+    props: {
+      fallback: {
+        '/api/article': article
+      }
+    }
+  }
 }
 
-function Posts (props) {
-  // 这里的 `fetcher` 函数将在客户端执行。
-  const { data } = useSWR('/api/posts', fetcher, { initialData: props.posts })
+function Article() {
+  // `data` will always be available as it's in `fallback`.
+  const { data } = useSWR('/api/article', fetcher)
+  return <h1>{data.title}</h1>
+}
 
-  // ...
+export default function Page({ fallback }) {
+  // SWR hooks inside the `SWRConfig` boundary will use those values.
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
 }
 ```
 
-页面仍然是预渲染的的。这意味着它对搜索引擎友好的，页面也可以缓存下来以供快速访问。但在页面渲染后，它在客户端还是完全由 SWR 控制。这意味着数据可以是动态的，并且可以根据时间和用户交互而自动更新。
+The page is still pre-rendered. It's SEO friendly, fast to response, but also fully powered by SWR on the client side. The data can be dynamic and self-updated over time.
 
 <Callout emoji="💡">
-  在上面的示例中，<code>fetcher</code> 用来从客户端和服务端加载数据，它需要同时支持 2 种环境。但这不是必需的。你可以使用不同的方法从服务端或客户端加载数据。
+  The `Article` component will render the pre-generated data first, and after the page is hydrated, it will fetch the latest data again to keep it refresh.
 </Callout>

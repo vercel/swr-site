@@ -10,9 +10,9 @@
   "mutation": "数据更改",
   "pagination": "分页",
   "prefetching": "预请求",
-  "with-nextjs": "配合 Next.js 使用",
+  "with-nextjs": "Next.js SSG 和 SSR",
   "suspense": "Suspense",
-  "middleware": "Middleware",
+  "middleware": "中间件",
   "advanced": "高级",
   "change-log": "更新日志"
 }

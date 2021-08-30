@@ -2,16 +2,18 @@
 
 ## Revalidate
 
-You can broadcast a revalidation message globally to all SWRs with the same key by calling
-`mutate(key)`.
+You can get the `mutate` function from the `useSWRConfig()` hook, and broadcast a revalidation message
+globally to other SWR hooks<sup>*</sup> using the same key by calling `mutate(key)`.
 
 This example shows how to automatically refetch the login info (e.g. inside `<Profile/>`)
 when the user clicks the “Logout” button.
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function App () {
+  const { mutate } = useSWRConfig()
+
   return (
     <div>
       <Profile />
@@ -29,6 +31,8 @@ function App () {
 }
 ```
 
+*: _It broadcasts to SWR hooks under the same [cache provider](/docs/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks._
+
 ## Mutation and POST Request
 
 In many cases, applying local mutations to data is a good way to make changes
@@ -38,9 +42,10 @@ With `mutate`, you can update your local data programmatically, while
 revalidating and finally replace it with the latest data.
 
 ```jsx
-import useSWR, { mutate } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 function Profile () {
+  const { mutate } = useSWRConfig()
   const { data } = useSWR('/api/user', fetcher)
 
   return (

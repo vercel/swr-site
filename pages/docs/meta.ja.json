@@ -10,7 +10,7 @@
   "mutation": "ミューテーション",
   "pagination": "ページネーション",
   "prefetching": "プリフェッチ",
-  "with-nextjs": "Next.jsでの利用",
+  "with-nextjs": "Next.js SSG and SSR",
   "suspense": "サスペンス",
   "middleware": "Middleware",
   "advanced": "高度な使い方",

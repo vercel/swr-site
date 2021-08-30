@@ -7,13 +7,13 @@ import Link from "next/link";
 
 在 React 项目目录运行以下命令：
 
-```
+```plaintext
 yarn add swr
 ```
 
 或者用 npm:
 
-```
+```plaintext
 npm install swr
 ```
 
@@ -83,7 +83,7 @@ function Avatar({ id }) {
 
 <div className="mt-8" />
 
-<svg fill="none" viewBox="0 0 769 193">
+<svg fill="none" viewBox="0 0 769 193" className="invert-on-dark">
   <path fill="#fff" d="M0 0h768v193H0z"></path>
   <mask id="a" width="32" height="32" x="720" y="11" maskUnits="userSpaceOnUse">
     <circle cx="736" cy="27" r="16" fill="#fff"></circle>
@@ -110,7 +110,7 @@ function Avatar({ id }) {
 
 传统上，我们在顶级组件中使用 `useEffect` 请求一次数据，然后通过 props 将其传递给子组件（注意，我们现在不处理错误状态）：
 
-```jsx highlight=7,8,9,10,11,17,18,27
+```jsx highlight=7-11,17,18,27
 // 页面组件
 
 function Page() {
@@ -126,23 +126,19 @@ function Page() {
   // 全局加载状态
   if (!user) return <Spinner />
 
-  return (
-    <div>
-      <Navbar user={user} />
-      <Content user={user} />
-    </div>
-  )
+  return <div>
+    <Navbar user={user} />
+    <Content user={user} />
+  </div>
 }
 
 // 子组件
 
 function Navbar({ user }) {
-  return (
-    <div>
-      ...
-      <Avatar user={user} />
-    </div>
-  )
+  return <div>
+    ...
+    <Avatar user={user} />
+  </div>
 }
 
 function Content({ user }) {
@@ -164,23 +160,19 @@ SWR 完美地解决了这个问题。使用我们刚刚创建的 `useUser` hook�
 // 页面组件
 
 function Page() {
-  return (
-    <div>
-      <Navbar />
-      <Content />
-    </div>
-  );
+  return <div>
+    <Navbar />
+    <Content />
+  </div>
 }
 
 // 子组件
 
 function Navbar() {
-  return (
-    <div>
-      ...
-      <Avatar />
-    </div>
-  );
+  return <div>
+    ...
+    <Avatar />
+  </div>
 }
 
 function Content() {

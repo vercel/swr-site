@@ -29,7 +29,7 @@ import Link from 'next/link'
 
 多くの場合、複数のデバイス、複数のユーザー、複数のタブが原因でデータが変更されます。画面上のデータを時間の経過とともに更新するにはどうすればよいのでしょうか？
 
-SWRには、データを自動的に再フェッチするオプションがあります。その動きは非常に**スマート**で、フックに関連付けられているコンポーネントが**画面に表示されている**場合にのみ、再フェッチが行われます。
+SWR には、データを自動的に再フェッチするオプションがあります。その動きは非常に**スマート**で、フックに関連付けられているコンポーネントが**画面に表示されている**場合にのみ、再フェッチが行われます。
 
 <Bleed>
   <Video
@@ -54,3 +54,33 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 データが常に最新であることを確認するために、SWR はネットワークが回復したときに自動的に再検証します。
 
 この機能はデフォルトで有効になっています。[`revalidateOnReconnect`](/docs/options) オプションで無効にできます。
+
+## Disable Automatic Revalidations
+
+If the resource is **immutable**, that will never change if we revalidate again, we can disable all kinds of automatic revalidations for it.
+
+Since version 1.0, SWR provides a helper hook `useSWRImmutable` to mark the resource as immutable:
+
+```js
+import useSWRImmutable from 'swr/immutable'
+
+// ...
+useSWRImmutable(key, fetcher, options)
+```
+
+It has the same API interface as the normal `useSWR` hook. You can also do the same thing by disable the following revalidation options:
+
+```js
+useSWR(key, fetcher, {
+  revalidateIfStale: false,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false
+})
+
+// equivalent to
+useSWRImmutable(key, fetcher)
+```
+
+The `revalidateIfStale` controls if SWR should revalidate when it mounts and there is stale data.
+
+These 2 hooks above do the **exact same** thing. Once the data is cached, they will never request it again.

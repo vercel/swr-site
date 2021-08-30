@@ -17,14 +17,14 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `data`: `fetcher` によって解決された、指定されたキーのデータ（もしくは、ロードされていない場合は undefined）
 - `error`: `fetcher` によって投げられたエラー （もしくは undefined）
 - `isValidating`: リクエストまたは再検証の読み込みがある場合
-- `mutate(data?, shouldRevalidate?)`: キャッシュされたデータを更新する関数
+- `mutate(data?, shouldRevalidate?)`: キャッシュされたデータを更新する関数 [（詳細）](/docs/mutation)
 
 ## オプション
 
 - `suspense = false`: React Suspense モードを有効にする [（詳細）](/docs/suspense)
 - `fetcher = window.fetch(url).then(res => res.json())`: フェッチャー関数
-- `initialData`: 返される初期データ（注：フックごとに） [（詳細）](/docs/with-nextjs)
-- `revalidateOnMount`: コンポーネントのマウント時に行われる自動再検証を有効または無効にします（デフォルトでは、initialData が設定されていない場合、マウント時に再検証が行われます。このフラグを使用して動作を強制します）
+- `revalidateIfStale = true`: automatic revalidation on mount even if there is stale data [(details)](/docs/revalidation#disable-automatic-revalidations)
+- `revalidateOnMount`: コンポーネントのマウント時に行われる自動再検証を有効または無効にします
 - `revalidateOnFocus = true`: ウィンドウがフォーカスされたときに自動的に再検証します [（詳細）](/docs/revalidation)
 - `revalidateOnReconnect = true`: ブラウザがネットワーク接続を回復すると自動的に再検証します（ `navigator.onLine` 経由） [（詳細）](/docs/revalidation)
 - `refreshInterval = 0`: ポーリングの間隔（デフォルトでは無効） [（詳細）](/docs/revalidation)
@@ -36,6 +36,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: `onLoadingSlow` イベントをトリガーするためのタイムアウト
 - `errorRetryInterval = 5000`: エラー再試行の間隔
 - `errorRetryCount`: 最大エラー再試行回数
+- `fallback`: a key-value object of multiple fallback data [(example)](/docs/with-nextjs)
+- `fallbackData`: 返される初期データ（注：フックごとに）
 - `onLoadingSlow(key, config)`: リクエストの読み込みに時間がかかりすぎる場合のコールバック関数（`loadingTimeout` を参照してください）
 - `onSuccess(data, key, config)`: リクエストが正常に終了したときのコールバック関数
 - `onError(err, key, config)`: リクエストがエラーを返したときのコールバック関数

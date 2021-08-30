@@ -15,37 +15,47 @@ import Callout from 'nextra-theme-docs/callout'
 このアプローチは、たとえばユーザーのダッシュボードページなどで有効です。ダッシュボードは、ユーザー専用のプライベートなページであるため SEO は関係なく、
 ページを事前にレンダリングする必要もありません。データは頻繁に更新されるため、リクエスト時のデータ取得処理が必要です。
 
-## 事前レンダリング
+## Pre-rendering with Default Data
 
-ページを事前にレンダリングする必要がある場合、 Next.js は [二種類の事前レンダリング](https://nextjs.org/docs/basic-features/data-fetching) をサポートしています：
-**Static Generation (SSG)** と **Server-side Rendering (SSR)** です。
+If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
+**Static Generation (SSG)** and **Server-side Rendering (SSR)**.
 
-SWR と一緒に使えば、 SEO のためにページを事前にレンダリングしたり、キャッシュ、再検証、フォーカストラッキング、定期的な再取得などの機能を
-クライアント側に持たせることができます。
+Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
-`initialData` オプションには、あらかじめ取得したデータを初期値として渡すことができます。たとえば、 [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation) と一緒に使うことができます：
+You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks. 
+For example with `getStaticProps`:
 
 ```jsx
- export async function getStaticProps() {
-  // `getStaticProps`がサーバー側で呼び出されるので、
-  // この`fetcher`関数はサーバーサイドで実行されます。
-  const posts = await fetcher('https://jsonplaceholder.typicode.com/posts')
-  return { props: { posts } }
+ export async function getStaticProps () {
+  // `getStaticProps` is executed on the server side.
+  const article = await getArticleFromAPI()
+  return {
+    props: {
+      fallback: {
+        '/api/article': article
+      }
+    }
+  }
 }
 
-function Posts (props) {
-  // ここでは、クライアント側で`fetcher`関数が実行されます。
-  const { data } = useSWR('/api/posts', fetcher, { initialData: props.posts })
+function Article() {
+  // `data` will always be available as it's in `fallback`.
+  const { data } = useSWR('/api/article', fetcher)
+  return <h1>{data.title}</h1>
+}
 
-  // ...
+export default function Page({ fallback }) {
+  // SWR hooks inside the `SWRConfig` boundary will use those values.
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
 }
 ```
 
-このページはまだ事前にレンダリングされています。つまり、 SEO にも強く、キャッシュにも対応し、アクセスも非常に速いということです。
-しかし、再利用後には SWR によってクライアント側が強化されています。
-これはつまり、データは動的であり、時間の経過やユーザーの操作によって更新される可能性があります。
+The page is still pre-rendered. It's SEO friendly, fast to response, but also fully powered by SWR on the client side. The data can be dynamic and self-updated over time.
 
 <Callout emoji="💡">
-  上記の例では、 <code>fetcher</code> はクライアントとサーバーの両方からデータを取得するために使用されており、
-  両方の環境をサポートする必要があります。しかし、これは必須ではありません。サーバーまたはクライアントからデータを取得するには、様々な方法を使うことができます。
+  The `Article` component will render the pre-generated data first, and after the page is hydrated, it will fetch the latest data again to keep it refresh.
 </Callout>

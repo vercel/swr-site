@@ -14,36 +14,47 @@ Así es como funciona:
 
 Este enfoque funciona bien, por ejemplo, para páginas que son dashboard. Dado que un dashboard es una página privada y específica del usuario, el SEO no es relevante y la página no necesita ser pre-rendering. Los datos se actualizan con frecuencia, lo que requiere la obtención de datos en el momento de la solicitud.
 
-## Pre-rendering
+## Pre-rendering with Default Data
 
-Si la página debe ser pre-rendering, Next.js soporta [2 formas de pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
-**Static Generation (SSG)** y **Server-side Rendering (SSR)**.
+If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
+**Static Generation (SSG)** and **Server-side Rendering (SSR)**.
 
-Junto con SWR, puede hacer pre-rendering la página para el SEO, y también tener características como el almacenamiento en caché, revalidation, el focus tracking, refetching on interval en el lado del cliente.
+Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
-Puedes pasar los pre-fetched data como valor inicial a la opción `initialData`. Por ejemplo, junto con [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation):
+You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks. 
+For example with `getStaticProps`:
 
 ```jsx
- export async function getStaticProps() {
-  // `getStaticProps` se invoca en el lado del servidor,
-  //  por lo que esta función `fetcher` se ejecutará en el server-side.
-  const posts = await fetcher('https://jsonplaceholder.typicode.com/posts')
-  return { props: { posts } }
+ export async function getStaticProps () {
+  // `getStaticProps` is executed on the server side.
+  const article = await getArticleFromAPI()
+  return {
+    props: {
+      fallback: {
+        '/api/article': article
+      }
+    }
+  }
 }
 
-function Posts (props) {
-  // Aquí la función `fetcher` se ejecutará en el client-side.
-  const { data } = useSWR('/api/posts', fetcher, { initialData: props.posts })
+function Article() {
+  // `data` will always be available as it's in `fallback`.
+  const { data } = useSWR('/api/article', fetcher)
+  return <h1>{data.title}</h1>
+}
 
-  // ...
+export default function Page({ fallback }) {
+  // SWR hooks inside the `SWRConfig` boundary will use those values.
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
 }
 ```
 
-La página sigue siendo pre-rendered. Eso significa que es amigable con el SEO, puede ser cacheada y se accede a ella muy rápido. Pero después de la hidratación, también es totalmente alimentado por SWR en el lado del cliente. Lo que significa que los datos pueden ser dinámicos y actualizarse con el tiempo y las interacciones del usuario.
+The page is still pre-rendered. It's SEO friendly, fast to response, but also fully powered by SWR on the client side. The data can be dynamic and self-updated over time.
 
 <Callout emoji="💡">
-   En el ejemplo anterior, <code>fetcher</code> se utiliza para cargar los datos tanto del cliente como del servidor, 
-   y tiene que soportar ambos entornos. Pero esto no es un requisito. Puedes utilizar diferentes formas de cargar los datos desde el servidor o desde el cliente.
+  The `Article` component will render the pre-generated data first, and after the page is hydrated, it will fetch the latest data again to keep it refresh.
 </Callout>
-
-
