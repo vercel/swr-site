@@ -75,9 +75,9 @@ function Profile () {
 「ローカルミューテート - リクエスト - 更新」の使用法を示す例を次に示します。
 
 ```jsx
-mutate('/api/user', newUser, false)      // 再検証せずに変更するには、`false` を使用します
-mutate('/api/user', updateUser(newUser)) // `updateUser` は、このリクエストの Promise であり、
-                                         // 更新されたドキュメントを返します
+mutate('/api/user', newUser, false)             // 再検証せずに変更するには、`false` を使用します
+mutate('/api/user', updateUser(newUser), false) // `updateUser` は、このリクエストの Promise であり、
+                                                // 更新されたドキュメントを返します
 ```
 
 ## 現在のデータにもとづいたミューテート

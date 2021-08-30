@@ -75,9 +75,9 @@ But many POST APIs will just return the updated data directly, so we don’t nee
 Here’s an example showing the “local mutate - request - update” usage:
 
 ```jsx
-mutate('/api/user', newUser, false)      // use `false` to mutate without revalidation
-mutate('/api/user', updateUser(newUser)) // `updateUser` is a Promise of the request,
-                                         // which returns the updated document
+mutate('/api/user', newUser, false)             // use `false` to mutate without revalidation
+mutate('/api/user', updateUser(newUser), false) // `updateUser` is a Promise of the request,
+                                                // which returns the updated document
 ```
 
 ## Mutate Based on Current Data
