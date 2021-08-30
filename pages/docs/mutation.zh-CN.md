@@ -69,9 +69,9 @@ function Profile () {
 但是很多 POST API 只会直接返回更新后的数据，所以我们不需要再次重新验证。下面这个示例展示了 “本地更改 - 请求 - 更新”的用法：
 
 ```jsx
-mutate('/api/user', newUser, false)      // 使用 `false` 进行 mutate 无需重新验证
-mutate('/api/user', updateUser(newUser)) // `updateUser` 是请求的 Promise，
-                                         // 返回 updated document
+mutate('/api/user', newUser, false)             // 使用 `false` 进行 mutate 无需重新验证
+mutate('/api/user', updateUser(newUser), false) // `updateUser` 是请求的 Promise，
+                                                // 返回 updated document
 ```
 
 ## 根据当前数据更改

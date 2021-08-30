@@ -74,9 +74,9 @@ Aquí hay un ejemplo que muestra el uso de "local mutate - request - update":
 
 
 ```jsx
-mutate('/api/user', newUser, false)      // utilice `false` para mutate sin revalidar
-mutate('/api/user', updateUser(newUser)) // `updateUser` es una Promise de la solicitud,
-                                         // que devuelve el update document
+mutate('/api/user', newUser, false)             // utilice `false` para mutate sin revalidar
+mutate('/api/user', updateUser(newUser), false) // `updateUser` es una Promise de la solicitud,
+                                                // que devuelve el update document
 ```
 
 ## Mutar basándose en los datos actuales
