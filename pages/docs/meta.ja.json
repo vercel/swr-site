@@ -10,9 +10,9 @@
   "mutation": "ミューテーション",
   "pagination": "ページネーション",
   "prefetching": "プリフェッチ",
-  "with-nextjs": "Next.js SSG and SSR",
+  "with-nextjs": "Next.js の SSG と SSR",
   "suspense": "サスペンス",
-  "middleware": "Middleware",
+  "middleware": "ミドルウェア",
   "advanced": "高度な使い方",
   "change-log": "変更履歴"
 }
