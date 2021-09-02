@@ -83,11 +83,7 @@ import { AppState } from 'react-native'
       }
 
       // Subscribe to the app state change events
-      const subscription = AppState.addEventListener('change', onAppStateChange)
-      
-      return () => {
-        subscription.remove()
-      }
+      AppState.addEventListener('change', onAppStateChange)
     }
   }}
 >
