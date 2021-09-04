@@ -55,11 +55,11 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 이 기능은 기본적으로 활성화되어 있습니다. [`revalidateOnReconnect`](/docs/options) 옵션을 통해 비활성화할 수 있습니다.
 
-## Disable Automatic Revalidations
+## 자동 갱신 비활성화하기
 
-If the resource is **immutable**, that will never change if we revalidate again, we can disable all kinds of automatic revalidations for it.
+리소스가 **불변**할 경우, 다시 갱신해도 변경되지 않습니다. 이런 경우를 대비해 모든 종류의 자동 갱신을 비활성화 할 수 있습니다.
 
-Since version 1.0, SWR provides a helper hook `useSWRImmutable` to mark the resource as immutable:
+1.0 버전부터 SWR은 리소스가 불변함을 표시할 수 있도록 `useSWRImmutable` 헬퍼 hook을 제공합니다.
 
 ```js
 import useSWRImmutable from 'swr/immutable'
@@ -68,7 +68,7 @@ import useSWRImmutable from 'swr/immutable'
 useSWRImmutable(key, fetcher, options)
 ```
 
-It has the same API interface as the normal `useSWR` hook. You can also do the same thing by disable the following revalidation options:
+일반적인 `useSWR` hook과 동일한 API 인터페이스를 갖고 있습니다. 갱신 옵션을 다음과 같이 비활성화하여 동일한 작업을 수행할 수도 있습니다.
 
 ```js
 useSWR(key, fetcher, {
@@ -77,10 +77,10 @@ useSWR(key, fetcher, {
   revalidateOnReconnect: false
 })
 
-// equivalent to
+// 다음과 동일
 useSWRImmutable(key, fetcher)
 ```
 
-The `revalidateIfStale` controls if SWR should revalidate when it mounts and there is stale data.
+`revalidateIfStale`은 마운트 시에 스태일 데이터가 존재할 경우 SWR이 갱신해야 할지 여부를 제어합니다.
 
-These 2 hooks above do the **exact same** thing. Once the data is cached, they will never request it again.
+위의 두 개의 hook은 **완전히 동일한** 작업을 수행합니다. 데이터가 캐시 되기만 하면 절대 다시 요청하지 않습니다.
