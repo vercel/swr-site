@@ -35,7 +35,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: 超时触发 `onLoadingSlow` 事件
 - `errorRetryInterval = 5000`: 错误重试的时间间隔
 - `errorRetryCount`: 错误重试的最大次数
-- `fallback`: a map of multiple fallback data to be returned [(example)](/docs/with-nextjs)
+- `fallback`: 多个回退数据的 key-value 对象[（示例）](/docs/with-nextjs)
 - `fallbackData`: 此 hook 需要返回的初始数据
 - `onLoadingSlow(key, config)`: 请求加载时间过长时的回调函数（参考 `loadingTimeout`）
 - `onSuccess(data, key, config)`: 请求成功完成时的回调函数
