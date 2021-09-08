@@ -55,11 +55,11 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 该特性默认是启用的。你可以通过 [`revalidateOnReconnect`](/docs/options) 选项禁用它。
 
-## Disable Automatic Revalidations
+## 禁用自动重新请求
 
-If the resource is **immutable**, that will never change if we revalidate again, we can disable all kinds of automatic revalidations for it.
+如果资源是**不可变的**，即使我们再怎么重新请求也永远不会发生任何改变，那么我们可以禁用它的所有的自动重新请求。
 
-Since version 1.0, SWR provides a helper hook `useSWRImmutable` to mark the resource as immutable:
+从 1.0 版本开始，SWR 提供了一个辅助 hook `useSWRImmutable` 来标记资源为不可变的：
 
 ```js
 import useSWRImmutable from 'swr/immutable'
@@ -68,7 +68,7 @@ import useSWRImmutable from 'swr/immutable'
 useSWRImmutable(key, fetcher, options)
 ```
 
-It has the same API interface as the normal `useSWR` hook. You can also do the same thing by disable the following revalidation options:
+它具有与普通 `useSWR` hook 相同的 API 接口。你还可以通过禁用以下重新请求​​选项来执行相同的操作：
 
 ```js
 useSWR(key, fetcher, {
@@ -77,10 +77,10 @@ useSWR(key, fetcher, {
   revalidateOnReconnect: false
 })
 
-// equivalent to
+// 相当于
 useSWRImmutable(key, fetcher)
 ```
 
-The `revalidateIfStale` controls if SWR should revalidate when it mounts and there is stale data.
+`revalidateIfStale` 控制 SWR 在挂载并且存在陈旧数据时是否应重新请求。
 
-These 2 hooks above do the **exact same** thing. Once the data is cached, they will never request it again.
+上面这两个 hook 做**完全相同的**事情。一旦数据被缓存，他们将永远不会再次请求它。

@@ -40,4 +40,4 @@ useSWR('/api/data', fetcher, { fallbackData: prefetchedData })
 
 当 SWR 还没有获取此次数据的时候， 这个 hook 将返回 `prefetchedData` 作为 fallback 。 
 
-你也可以为所有的 SWR hooks 和不同的 key 配置 `<SWRConfig>` 和它的 `fallback` 选项。 查看 [Next.js SSG and SSR](/docs/with-nextjs) 了解更多详细信息。
+你也可以为所有的 SWR hooks 和不同的 key 配置 `<SWRConfig>` 和它的 `fallback` 选项。 查看 [Next.js SSG 和 SSR](/docs/with-nextjs) 了解更多详细信息。
