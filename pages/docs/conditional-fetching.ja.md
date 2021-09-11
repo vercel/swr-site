@@ -23,7 +23,7 @@ SWR では、他のデータに依存するデータをフェッチすること�
 function MyProjects () {
   const { data: user } = useSWR('/api/user')
   const { data: projects } = useSWR(() => '/api/projects?uid=' + user.id)
-  // 関数を渡す場合、SWRは戻り値を`key`として使用します。
+  // 関数を渡す場合、SWRは返り値を`key`として使用します。
   // 関数がスローまたはfalsyな値を返す場合、
   // SWRはいくつかの依存関係が準備できてないことを知ることができます。
   // この例では、`user.id`は`user`がロードされてない時にスローします。

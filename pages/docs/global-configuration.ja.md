@@ -1,6 +1,6 @@
 # グローバルな設定
 
-コンテキスト `SWRConfig` によって、すべての SWR フックに対するグローバルな設定（ [オプション](/docs/options) ）を提供できます。
+`SWRConfig` コンテキストによって、すべての SWR フックに対するグローバルな設定（ [オプション](/docs/options) ）を提供できます。
 
 ```jsx
 <SWRConfig value={options}>
@@ -23,7 +23,7 @@ function Dashboard () {
 
 function App () {
   return (
-    <SWRConfig 
+    <SWRConfig
       value={{
         refreshInterval: 3000,
         fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
@@ -37,9 +37,9 @@ function App () {
 
 ## Extra APIs
 
-### Cache Provider
+### キャッシュプロバイダー
 
-Besides all the [options](/docs/options) listed, `SWRConfig` also accepts an optional `provider` function. Please refer to the [Cache](/docs/cache) section for more details.
+紹介されているすべてのオプションに加えて、 `SWRConfig` または `provider` 関数も受け入れます。詳細は[キャッシュ](/docs/cache)セクションを参照してください。
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>
@@ -47,9 +47,9 @@ Besides all the [options](/docs/options) listed, `SWRConfig` also accepts an opt
 </SWRConfig>
 ```
 
-### Access To Global Configurations
+### グローバル設定へアクセス
 
-You can use the `useSWRConfig` hook to get the global configurations, as well as [`mutate`](/docs/mutation) and [`cache`](/docs/advanced/cache):
+`useSWRConfig` フックを使ってグローバル設定、および[`ミューテーション`](/docs/mutation)と[`キャッシュ`](/docs/advanced/cache)を取得できます:
 
 ```jsx
 import { useSWRConfig } from 'swr'
@@ -61,4 +61,4 @@ function Component () {
 }
 ```
 
-Nested configurations will be extended. If no `<SWRConfig>` is used, it will return the default ones.
+ネストされた設定の場合は拡張されます。もし `<SWRConfig>` を使用してない場合は、デフォルトの値を返します。

@@ -35,9 +35,9 @@ function App () {
 }
 ```
 
-## Extra APIs
+## 额外的 API
 
-### Cache Provider
+### 缓存 Provider
 
 除去以上所列的 [选项](/docs/options)，`SWRConfig` 还接受一个可选的 `provider` 函数。详细信息请参考 [缓存](/docs/cache) 这一节。
 
@@ -47,9 +47,9 @@ function App () {
 </SWRConfig>
 ```
 
-### Access To Global Configurations
+### 访问全局配置
 
-You can use the `useSWRConfig` hook to get the global configurations, as well as [`mutate`](/docs/mutation) and [`cache`](/docs/advanced/cache):
+你可以使用 `useSWRConfig` hook 来获取全局配置，以及[`数据更改`](/docs/mutation)和[`缓存`](/docs/advanced/cache)：
 
 ```jsx
 import { useSWRConfig } from 'swr'
@@ -61,4 +61,4 @@ function Component () {
 }
 ```
 
-Nested configurations will be extended. If no `<SWRConfig>` is used, it will return the default ones.
+嵌套配置将会被扩展。如果没有使用 `<SWRConfig>`，将返回默认配置。
