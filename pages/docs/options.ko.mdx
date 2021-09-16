@@ -44,7 +44,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: 에러 재시도 핸들러
 - `compare(a, b)`: 비논리적인 리렌더러를 회피하기 위해 반환된 데이터가 변경되었는지를 감지하는데 사용하는 비교 함수. 기본적으로 [dequal](https://github.com/lukeed/dequal)을 사용합니다.
 - `isPaused()`: 갱신의 중지 여부를 감지하는 함수. `true`가 반환될 경우 가져온 데이터와 에러는 무시합니다. 기본적으로는 `false`를 반환합니다.
-- `use`: array of middleware functions [(details)](/docs/middleware)
+- `use`: 미들웨어 함수의 배열 [(상세내용)](/docs/middleware)
 
 <Callout emoji="💡">
   느린 네트워크(2G, {'<='} 70Kbps)에서는, 기본적으로 <code>errorRetryInterval</code>이 10초이며, 
