@@ -15,6 +15,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 fetch 프로미스가 거부되면 `error` 객체가 정의됩니다.
 
 ## 상태 코드와 에러 객체
+
 때로는 API가 상태 코드와 함께 에러 객체를 반환하기를 원합니다.
 모두 클라이언트에게 유용합니다.
 
@@ -70,7 +71,7 @@ useSWR('/api/user', fetcher, {
     // 특정 키에 대해 재시도 안함
     if (key === '/api/user') return
 
-    // 10번 까지만 재시도함
+    // 10번까지만 재시도함
     if (retryCount >= 10) return
 
     // 5초 후에 재시도
@@ -80,6 +81,7 @@ useSWR('/api/user', fetcher, {
 ```
 
 이 콜백을 사용하면 다양한 조건을 기반으로 유연하게 재시도할 수 있습니다. `shouldRetryOnError: false` 설정으로 비활성화할 수도 있습니다.
+
 [전역 설정](/docs/global-configuration) 컨텍스트를 통해 제공하는 것도 가능합니다.
 
 ## 전역 에러 기록

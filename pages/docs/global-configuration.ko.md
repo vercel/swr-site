@@ -35,11 +35,11 @@ function App () {
 }
 ```
 
-## Extra APIs
+## 추가 APIs
 
-### Cache Provider
+### 캐시 공급자
 
-Besides all the [options](/docs/options) listed, `SWRConfig` also accepts an optional `provider` function. Please refer to the [Cache](/docs/cache) section for more details.
+나열된 모든 [옵션](/docs/options) 외에도, `SWRConfig`는 선택적으로 `provider` 함수도 받습니다. 더 자세한 내용은 [캐시](/docs/cache) 섹션을 참고해 주세요.
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>
@@ -47,9 +47,9 @@ Besides all the [options](/docs/options) listed, `SWRConfig` also accepts an opt
 </SWRConfig>
 ```
 
-### Access To Global Configurations
+### 전역 설정에 접근하기
 
-You can use the `useSWRConfig` hook to get the global configurations, as well as [`mutate`](/docs/mutation) and [`cache`](/docs/advanced/cache):
+`useSWRConfig` hook을 사용해 전역 설정과 [`mutate`](/docs/mutation) 및 [`cache`](/docs/advanced/cache)를 얻을 수 있습니다.
 
 ```jsx
 import { useSWRConfig } from 'swr'
@@ -61,4 +61,4 @@ function Component () {
 }
 ```
 
-Nested configurations will be extended. If no `<SWRConfig>` is used, it will return the default ones.
+중첩된 설정은 확장됩니다. `<SWRConfig>`를 사용하지 않았다면 기본값을 반환합니다.
