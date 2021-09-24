@@ -4,7 +4,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 ## Obtención de datos del lado del cliente
 
-Si su página contiene datos que se actualizan con frecuencia y no necesita renderizar previamente los datos, SWR se adapta perfectamente y no se necesita una configuración especial: solo importe `useSWR` y use el hook dentro de cualquier componente que use los datos.
+Si su página contiene datos que son actualizados frecuentemente y no necesita renderizar previamente los datos, SWR se adapta perfectamente y no se necesita una configuración especial: solo importe `useSWR` y use el hook dentro de cualquier componente que use los datos.
 
 Así es como funciona:
 
@@ -12,7 +12,7 @@ Así es como funciona:
 
 - A continuación, se obtienen los datos en el lado del cliente y se muestran cuando están listos.
 
-Este enfoque funciona bien, por ejemplo, para páginas que son dashboard. Dado que un dashboard es una página privada y específica del usuario, el SEO no es relevante y la página no necesita ser pre-rendering. Los datos se actualizan con frecuencia, lo que requiere la obtención de datos en el momento de la solicitud.
+Este enfoque funciona bien, por ejemplo, para páginas que son dashboard. Dado que un dashboard es una página privada y específica del usuario, el SEO no es relevante y la página no necesita ser pre-renderizado. Los datos se actualizan con frecuencia, lo que requiere la obtención de datos en el momento de la solicitud.
 
 ## Pre-rendering with Default Data
 
