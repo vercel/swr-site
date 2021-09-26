@@ -27,14 +27,14 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `revalidateOnMount`: enable or disable automatic revalidation when component is mounted
 - `revalidateOnFocus = true`: automatically revalidate when window gets focused [(details)](/docs/revalidation)
 - `revalidateOnReconnect = true`: automatically revalidate when the browser regains a network connection (via `navigator.onLine`) [(details)](/docs/revalidation)
-- `refreshInterval = 0`: polling interval (disabled by default) [(details)](/docs/revalidation)
+- `refreshInterval = 0`: polling interval in milliseconds (disabled by default) [(details)](/docs/revalidation)
 - `refreshWhenHidden = false`: polling when the window is invisible (if `refreshInterval` is enabled)
 - `refreshWhenOffline = false`: polling when the browser is offline (determined by `navigator.onLine`)
 - `shouldRetryOnError = true`: retry when fetcher has an error
-- `dedupingInterval = 2000`: dedupe requests with the same key in this time span
-- `focusThrottleInterval = 5000`: only revalidate once during a time span
-- `loadingTimeout = 3000`: timeout to trigger the onLoadingSlow event
-- `errorRetryInterval = 5000`: error retry interval
+- `dedupingInterval = 2000`: dedupe requests with the same key in this time span in milliseconds
+- `focusThrottleInterval = 5000`: only revalidate once during a time span in milliseconds
+- `loadingTimeout = 3000`: timeout to trigger the onLoadingSlow event in milliseconds
+- `errorRetryInterval = 5000`: error retry interval in milliseconds
 - `errorRetryCount`: max error retry count
 - `fallback`: a key-value object of multiple fallback data [(example)](/docs/with-nextjs)
 - `fallbackData`: initial data to be returned (note: This is per-hook)
