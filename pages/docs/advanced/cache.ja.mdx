@@ -146,7 +146,7 @@ function Button() {
 ```jsx
 function localStorageProvider() {
   // 初期化時に、 `localStorage` から Map にデータを復元します。
-  const map = new Map(JSON.parse(localStorage.getItem('swr-cache') || '[]'))
+  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
 
   // アプリが終了する前に、すべてのデータを `localStorage` に保存します。
   window.addEventListener('beforeunload', () => {
