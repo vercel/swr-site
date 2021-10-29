@@ -127,13 +127,14 @@ useSWR(key, fetcher, { use: [...middleware] })
 
 ### 文档翻译
 
-感谢我们的 [contributor](https://github.com/vercel/swr-site/graphs/contributors) 和 Nextra 的 [i18n 功能](https://nextra.vercel.app/features/i18n)，SWR 文档现在有五种不同的语言：
+感谢我们的 [contributor](https://github.com/vercel/swr-site/graphs/contributors) 和 Nextra 的 [i18n 功能](https://nextra.vercel.app/features/i18n)，SWR 文档现在有六种不同的语言：
 
 - [英语](https://swr.vercel.app)
 - [西班牙语](https://swr.vercel.app/es-ES)
 - [简体中文](https://swr.vercel.app/zh-CN)
 - [日语](https://swr.vercel.app/ja)
 - [韩语](https://swr.vercel.app/ko)
+- [俄语](https://swr.vercel.app/ru)
 
 ## 迁移指南
 
@@ -213,7 +214,7 @@ useSWR(key, (url) => fetch(url).then(res => res.json()))
 
 如果你使用 TypeScript，为了保持一致，以下类型名已更改：
 
-| 0.x （废弃）                    | 1.0                        | Note                |
+| 0.x （废弃）                   | 1.0                        | Note                |
 | ------------------------------ | -------------------------- | ------------------- |
 | `ConfigInterface`              | `SWRConfiguration`         |                     |
 | `keyInterface`                 | `Key`                      |                     |
@@ -244,6 +245,6 @@ useSWR(key, (url) => fetch(url).then(res => res.json()))
 
 ## 致谢！
 
-特别感谢 [Toru Kobayashi](https://twitter.com/koba04) 和 [Yixuan Xu](https://twitter.com/yixuanxu94) 对 SWR 的贡献，同时感谢 [Paco Coursey](https://twitter.com/pacocoursey)、[uttk](https://github.com/uttk)、[Tomohiro SHIOYA](https://github.com/shioyang)、[Markoz Peña](https://github.com/markozxuu)、[SeulGi Choi](https://github.com/cs09g)、[Fang Lu](https://github.com/huzhengen) 在翻译和文档方面的贡献。没有他们就没有这个版本。
+特别感谢 [Toru Kobayashi](https://twitter.com/koba04) 和 [Yixuan Xu](https://twitter.com/yixuanxu94) 对 SWR 的贡献，同时感谢 [Paco Coursey](https://twitter.com/pacocoursey)、[uttk](https://github.com/uttk)、[Tomohiro SHIOYA](https://github.com/shioyang)、[Markoz Peña](https://github.com/markozxuu)、[SeulGi Choi](https://github.com/cs09g)、[Fang Lu](https://github.com/huzhengen)、[Valentin Politov](https://github.com/valentinpolitov) 在翻译和文档方面的贡献。没有他们就没有这个版本。
 
 我们还要感谢整个社区、我们的 [110 个 contributor](https://github.com/vercel/swr/graphs/contributors)（+ [45 个文档 contributor](https://github.com/vercel/swr-site/graphs/contributors)）以及所有帮助过我们以及给过我们意见的人！

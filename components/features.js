@@ -15,10 +15,44 @@ const TITLE_WITH_TRANSLATIONS = {
   "zh-CN": "用于数据请求的 React Hooks 库",
   ja: "データ取得のための React Hooks ライブラリ",
   ko: "데이터 가져오기를 위한 React Hooks",
+  ru: "React хуки для выборки данных",
+};
+
+// Transaltions for Features
+const FEATURES_WITH_TRANSLATIONS = {
+  "en-US": {
+    lightweight: "Lightweight",
+    realtime: "Realtime",
+    suspense: "Suspense",
+    pagination: "Pagination",
+    backendAgnostic: "Backend Agnostic",
+    renderingStrategies: "SSR / ISR / SSG Ready",
+    typescript: "TypeScript Ready",
+    remoteLocal: "Remote + Local",
+  },
+  "es-ES": {},
+  "zh-CN": {},
+  ja: {},
+  ko: {},
+  ru: {
+    lightweight: "Лёгкий",
+    realtime: "В реальном времени",
+    suspense: "Задержка",
+    pagination: "Пагинация",
+    backendAgnostic: "Бэкэнд-независимый",
+    renderingStrategies: "SSR / ISR / SSG",
+    typescript: "TypeScript",
+    remoteLocal: "Удалённо + Локально",
+  },
 };
 
 export default () => {
-  const { locale } = useRouter();
+  const { locale, defaultLocale } = useRouter();
+
+  const featureText = (key) =>
+    FEATURES_WITH_TRANSLATIONS[locale]?.[key] ??
+    FEATURES_WITH_TRANSLATIONS[defaultLocale][key]; // Fallback for missing translations
+
   return (
     <div className="mx-auto max-w-full w-[880px] text-center px-4 mb-10">
       <p className="text-lg mb-2 text-gray-600 md:!text-2xl">
@@ -27,7 +61,7 @@ export default () => {
       <div className={styles.features}>
         <div>
           <Feature
-            text="Lightweight"
+            text={featureText("lightweight")}
             icon={
               <svg
                 viewBox="0 0 24 24"
@@ -46,7 +80,7 @@ export default () => {
             }
           />
           <Feature
-            text="Backend Agnostic"
+            text={featureText("backendAgnostic")}
             icon={
               <svg
                 viewBox="0 0 24 24"
@@ -72,7 +106,7 @@ export default () => {
         </div>
         <div>
           <Feature
-            text="Realtime"
+            text={featureText("realtime")}
             icon={
               <svg
                 width="24"
@@ -90,7 +124,7 @@ export default () => {
             }
           />
           <Feature
-            text="SSR / ISR / SSG Ready"
+            text={featureText("renderingStrategies")}
             icon={
               <svg
                 width="24"
@@ -110,7 +144,7 @@ export default () => {
         </div>
         <div>
           <Feature
-            text="Suspense"
+            text={featureText("suspense")}
             icon={
               <svg
                 viewBox="0 0 24 24"
@@ -129,7 +163,7 @@ export default () => {
             }
           />
           <Feature
-            text="TypeScript Ready"
+            text={featureText("typescript")}
             icon={
               <svg
                 width="24"
@@ -150,7 +184,7 @@ export default () => {
         </div>
         <div>
           <Feature
-            text="Pagination"
+            text={featureText("pagination")}
             icon={
               <svg
                 viewBox="0 0 24 24"
@@ -169,7 +203,7 @@ export default () => {
             }
           />
           <Feature
-            text="Remote + Local"
+            text={featureText("remoteLocal")}
             icon={
               <svg
                 width="24"
