@@ -22,7 +22,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 ## Options
 
 - `suspense = false`: enable React Suspense mode [(details)](/docs/suspense)
-- `fetcher = window.fetch(url).then(res => res.json())`: the fetcher function
+- `fetcher(args)`: the fetcher function
 - `revalidateIfStale = true`: automatic revalidation on mount even if there is stale data [(details)](/docs/revalidation#disable-automatic-revalidations)
 - `revalidateOnMount`: enable or disable automatic revalidation when component is mounted
 - `revalidateOnFocus = true`: automatically revalidate when window gets focused [(details)](/docs/revalidation)
