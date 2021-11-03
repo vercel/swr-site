@@ -22,7 +22,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 ## オプション
 
 - `suspense = false`: React Suspense モードを有効にする [（ 詳細 ）](/docs/suspense)
-- `fetcher = window.fetch(url).then(res => res.json())`: フェッチャー関数
+- `fetcher(args)`: フェッチャー関数
 - `revalidateIfStale = true`: 古いデータがある場合でも、マウント時に自動再検証をする [（ 詳細 ）](/docs/revalidation#disable-automatic-revalidations)
 - `revalidateOnMount`: コンポーネントのマウント時に行われる自動再検証を有効または無効にします
 - `revalidateOnFocus = true`: ウィンドウがフォーカスされたときに自動的に再検証します [（ 詳細 ）](/docs/revalidation)

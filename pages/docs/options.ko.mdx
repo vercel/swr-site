@@ -22,7 +22,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 ## 옵션
 
 - `suspense = false`: React Suspense 모드를 활성화 [(상세내용)](/docs/suspense)
-- `fetcher = window.fetch(url).then(res => res.json())`: fetcher 함수
+- `fetcher(args)`: fetcher 함수
 - `revalidateIfStale = true`: 스태일 데이터가 존재할 경우 마운트시에 자동으로 갱신 [(상세내용)](/docs/revalidation#disable-automatic-revalidations)
 - `revalidateOnMount`: 컴포넌트가 마운트되었을 때 자동 갱신 활성화 또는 비활성화
 - `revalidateOnFocus = true`: 창이 포커싱되었을 때 자동 갱신 [(상세내용)](/docs/revalidation)

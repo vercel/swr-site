@@ -22,7 +22,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 ## Опции
 
 - `suspense = false`: включить режим задержки React Suspense [(подробнее)](/docs/suspense)
-- `fetcher = window.fetch(url).then(res => res.json())`: функция-fetcher
+- `fetcher(args)`: функция-fetcher
 - `revalidateIfStale = true`: автоматическая ревалидация при монтировании, даже если есть устаревшие данные [(подробнее)](/docs/revalidation#отключение-автоматических-ревалидаций)
 - `revalidateOnMount`: включить или отключить автоматическую ревалидацию при монтировании компонента
 - `revalidateOnFocus = true`: автоматически ревалидировать, когда окно фокусируется [(подробнее)](/docs/revalidation)
