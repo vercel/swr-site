@@ -63,6 +63,8 @@ The page is still pre-rendered. It's SEO friendly, fast to response, but also fu
 `useSWR` can be used with keys that are `array` and `function` types. Utilizing pre-fetched data with these kinds of keys requires serializing the `fallback` keys with `unstable_serialize`.
 
 ```jsx
+import useSWR, { unstable_serialize } from 'swr'
+
 export async function getStaticProps () {
   const article = await getArticleFromAPI(1)
   return {
