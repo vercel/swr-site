@@ -6,7 +6,20 @@ import Link from 'next/link'
 Если ошибка возникает внутри [`fetcher`-а](/docs/data-fetching), она будет возвращена хуком как `error`.
 
 ```js
-const fetcher = url => fetch(url).then(r => r.json())
+const fetcher = async (url) => {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+        const error = new Error("An error occurred while fetching the data.");
+        error.info = await res.json();
+        error.status = res.status;
+        error.statusText = res.statusText;
+        error.url = res.url;
+        throw error;
+    }
+
+    return res.json();
+};
 
 // ...
 const { data, error } = useSWR('/api/user', fetcher)

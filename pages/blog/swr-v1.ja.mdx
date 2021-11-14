@@ -182,7 +182,24 @@ useSWR(key, fetcher, { use: [...middleware] })
 SWR は、デフォルトのフェッチャー（ データを JSON として解析する `fetch` の呼び出し ）を提供しなくなりました。変更を移行する最も簡単な方法は、 `<SWRConfig>` コンポーネントを使用することです：
 
 ```jsx
-<SWRConfig value={{ fetcher: (url) => fetch(url).then(res => res.json()) }}>
+<SWRConfig
+    value={{
+        fetcher: async (url) => {
+            const res = await fetch(url);
+
+            if (!res.ok) {
+                const error = new Error("An error occurred while fetching the data.");
+                error.info = await res.json();
+                error.status = res.status;
+                error.statusText = res.statusText;
+                error.url = res.url;
+                throw error;
+            }
+
+            return res.json();
+        },
+    }}
+>
   <App/>
 </SWRConfig>
 

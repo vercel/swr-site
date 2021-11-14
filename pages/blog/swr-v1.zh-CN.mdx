@@ -182,7 +182,24 @@ useSWR(key, fetcher, { use: [...middleware] })
 SWR 不再提供默认的 fetcher（将数据解析为 JSON 的 `fetch` 调用）。迁移更改的最简单方法是使用 `<SWRConfig>` 组件：
 
 ```jsx
-<SWRConfig value={{ fetcher: (url) => fetch(url).then(res => res.json()) }}>
+<SWRConfig
+    value={{
+        fetcher: async (url) => {
+            const res = await fetch(url);
+
+            if (!res.ok) {
+                const error = new Error("An error occurred while fetching the data.");
+                error.info = await res.json();
+                error.status = res.status;
+                error.statusText = res.statusText;
+                error.url = res.url;
+                throw error;
+            }
+
+            return res.json();
+        },
+    }}
+>
   <App/>
 </SWRConfig>
 

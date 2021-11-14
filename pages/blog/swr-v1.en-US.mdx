@@ -182,7 +182,24 @@ If you are using the corresponding types, update the import path too:
 SWR no longer provides the default fetcher (a `fetch` call that parses the data as JSON). The easiest way to migrate the change is to use the `<SWRConfig>` component:
 
 ```jsx
-<SWRConfig value={{ fetcher: (url) => fetch(url).then(res => res.json()) }}>
+<SWRConfig
+    value={{
+        fetcher: async (url) => {
+            const res = await fetch(url);
+
+            if (!res.ok) {
+                const error = new Error("An error occurred while fetching the data.");
+                error.info = await res.json();
+                error.status = res.status;
+                error.statusText = res.statusText;
+                error.url = res.url;
+                throw error;
+            }
+
+            return res.json();
+        },
+    }}
+>
   <App/>
 </SWRConfig>
 

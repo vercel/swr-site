@@ -24,7 +24,20 @@ fetch ポリフィル [developit/unfetch](https://github.com/developit/unfetch) 
 ```js
 import fetch from 'unfetch'
 
-const fetcher = url => fetch(url).then(r => r.json())
+const fetcher = async (url) => {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+        const error = new Error("An error occurred while fetching the data.");
+        error.info = await res.json();
+        error.status = res.status;
+        error.statusText = res.statusText;
+        error.url = res.url;
+        throw error;
+    }
+
+    return res.json();
+};
 
 function App () {
   const { data, error } = useSWR('/api/data', fetcher)

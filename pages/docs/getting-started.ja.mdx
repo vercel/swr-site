@@ -22,7 +22,20 @@ npm install swr
 JSON データを使用する通常の RESTful API の場合、まずネイティブの `fetch` をラップした `fetcher` 関数を作成する必要があります：
 
 ```jsx
-const fetcher = (...args) => fetch(...args).then(res => res.json())
+const fetcher = async (url) => {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+        const error = new Error("An error occurred while fetching the data.");
+        error.info = await res.json();
+        error.status = res.status;
+        error.statusText = res.statusText;
+        error.url = res.url;
+        throw error;
+    }
+
+    return res.json();
+};
 ```
 
 <Callout emoji="💡">

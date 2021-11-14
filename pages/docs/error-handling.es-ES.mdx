@@ -6,7 +6,20 @@ import Link from 'next/link'
 Si se lanza un error dentro del [`fetcher`](/docs/data-fetching), será devuelto como `error` por el hook.
 
 ```js
-const fetcher = url => fetch(url).then(r => res.json()) 
+const fetcher = async (url) => {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+        const error = new Error("An error occurred while fetching the data.");
+        error.info = await res.json();
+        error.status = res.status;
+        error.statusText = res.statusText;
+        error.url = res.url;
+        throw error;
+    }
+
+    return res.json();
+};
 
 // ...
 const { data, error } = useSWR('/api/user', fetcher)
