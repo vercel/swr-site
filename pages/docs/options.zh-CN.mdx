@@ -23,6 +23,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 - `suspense = false`: 启用 React Suspense 模式 [（详情）](/docs/suspense)
 - `fetcher(args)`: fetcher 函数
+- `revalidateIfStale = true`: 即使存在陈旧数据，在组件挂载时也自动重新验证[（详情）](/docs/revalidation)
 - `revalidateOnMount`: 在挂载组件时启用或禁用自动重新验证
 - `revalidateOnFocus = true`: 窗口聚焦时自动重新验证 [（详情）](/docs/revalidation)
 - `revalidateOnReconnect = true`: 浏览器恢复网络连接时自动重新验证（通过 `navigator.onLine`） [（详情）](/docs/revalidation)
