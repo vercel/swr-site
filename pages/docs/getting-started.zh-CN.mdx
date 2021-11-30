@@ -71,7 +71,7 @@ function useUser (id) {
 
   return {
     user: data,
-    isLoading: isValidating,
+    isLoading: isValidating && !data,
     isError: error
   }
 }
