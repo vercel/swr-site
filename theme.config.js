@@ -32,7 +32,7 @@ export default {
   docsRepositoryBase: "https://github.com/vercel/swr-site/blob/master/pages",
   titleSuffix: " – SWR",
   search: true,
-  unstable_stork: true,
+  unstable_stork: false,
   floatTOC: true,
   logo: () => {
     const { locale } = useRouter();

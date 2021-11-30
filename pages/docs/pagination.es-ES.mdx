@@ -24,7 +24,7 @@ import { Pagination } from 'components/diagrams/pagination'
 ...que es un típico UI de paginación. Veamos cómo se puede implementar fácilmente con
 `useSWR`:
 
-```jsx highlight=5
+```jsx highlight="5"
 function App () {
   const [pageIndex, setPageIndex] = useState(0);
 
@@ -43,7 +43,7 @@ function App () {
 
 Además, podemos crear una abstracción para este "page component":
 
-```jsx highlight=13
+```jsx highlight="13"
 function Page ({ index }) {
   const { data } = useSWR(`/api/data?page=${index}`, fetcher);
 
@@ -67,7 +67,7 @@ Gracias a la caché de SWR, tenemos la ventaja de precargar la siguiente página
 La página siguiente se presenta dentro de un hidden div, por lo que SWR activará la obtención de datos
 de la página siguiente. Cuando el usuario navega a la siguiente página, los datos ya están allí:
 
-```jsx highlight=6
+```jsx highlight="6"
 function App () {
   const [pageIndex, setPageIndex] = useState(0);
 
@@ -97,7 +97,7 @@ import { Infinite } from 'components/diagrams/infinite'
 Para implementar esto, necesitamos hacer **número de peticiones dinámicas** en esta página. Los React Hooks tienen [un par de reglas](https://reactjs.org/docs/hooks-rules.html),
 por lo que **NO PODEMOS** hacer algo así:
 
-```jsx highlight=5,6,7,8,9
+```jsx highlight="5,6,7,8,9"
 function App () {
   const [cnt, setCnt] = useState(1)
 
@@ -120,7 +120,7 @@ function App () {
 
 En su lugar, podemos utilizar la abstracción `<Page />` que hemos creado para conseguirlo:
 
-```jsx highlight=5,6,7
+```jsx highlight="5,6,7"
 function App () {
   const [cnt, setCnt] = useState(1)
 
@@ -144,7 +144,7 @@ Por ejemplo, seguimos implementando la misma UI "Load More", pero también neces
 sobre cuántos item hay en total. No podemos utilizar la solución `<Page />` porque
 la UI de nivel superior (`<App />`) necesita los datos dentro de cada página:
 
-```jsx highlight=10
+```jsx highlight="10"
 function App () {
   const [cnt, setCnt] = useState(1)
 
@@ -227,7 +227,7 @@ GET /users?page=0&limit=10
 ]
 ```
 
-```jsx highlight=4,5,6,7,10
+```jsx highlight="4,5,6,7,10"
 // Una función para obtener la key de SWR de cada página,
 // su valor de retorno será aceptado por `fetcher`.
 // Si se devuelve `null`, la petición de esa página no se iniciará.
