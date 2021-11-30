@@ -30,8 +30,6 @@ const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 
 ## 객체 전달
 
-## Passing Objects
-
 import Callout from 'nextra-theme-docs/callout'
 
 <Callout>
