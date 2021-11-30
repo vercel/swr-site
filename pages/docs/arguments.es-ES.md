@@ -29,8 +29,6 @@ La función `fetchWithToken` sigue aceptando los mismo 2 argumentos, pero ahora 
 
 ## Pasar objectos
 
-## Passing Objects
-
 import Callout from 'nextra-theme-docs/callout'
 
 <Callout>
