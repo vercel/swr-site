@@ -63,6 +63,20 @@ function useUser(id) {
 }
 ```
 
+或者你也可以用返回的 `isValidating` 属性来表示是否正在加载数据。
+
+```jsx
+function useUser (id) {
+  const { data, error, isValidating } = useSWR(`/api/user/${id}`, fetcher)
+
+  return {
+    user: data,
+    isLoading: isValidating,
+    isError: error
+  }
+}
+```
+
 在组件中使用它：
 
 ```jsx
