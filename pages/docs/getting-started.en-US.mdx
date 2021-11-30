@@ -93,7 +93,7 @@ import { Welcome } from 'components/diagrams/welcome'
 
 Traditionally, we fetch data once using `useEffect` in the top level component, and pass it to child components via props (notice that we don't handle error state for now):
 
-```jsx highlight=7-11,17,18,27
+```jsx highlight="7-11,17,18,27"
 // page component
 
 function Page () {
@@ -141,7 +141,7 @@ components inside the page content can be dynamic, and the top level component m
 
 SWR solves the problem perfectly. With the `useUser` hook we just created, the code can be refactored to:
 
-```jsx highlight=20,26
+```jsx highlight="20,26"
 // page component
 
 function Page () {
