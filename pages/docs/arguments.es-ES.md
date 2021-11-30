@@ -29,26 +29,28 @@ La función `fetchWithToken` sigue aceptando los mismo 2 argumentos, pero ahora 
 
 ## Pasar objectos
 
-Digamos que tienes otra función que obtiene datos con un scope 
-del usuario: `fetchWithUser(api, user)`. Puedes hacer lo siguiente:
+import Callout from 'nextra-theme-docs/callout'
+
+<Callout>
+  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+</Callout>
+  
+Say you have another function that fetches data with a user scope: `fetchWithUser(api, user)`. You can do the following:
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
-// ...y pasarlo como un argumento a otra query
+
+// ...and then pass it as an argument to another useSWR hook
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
-La `key` de la solicitud es ahora la combinación de ambos valores. SWR **shallowly** compara los argumentos en cada renderización, 
-y activa la revalidación si alguno de ellos ha cambiado.
 
-Ten en cuenta que no debes recrear los objetos al renderizar, ya que serán tratados como objetos diferentes en cada render:
+You can directly pass an object as the key, and `fetcher` will receive that object too:
 
 ```js
-// No lo hagas. Los deps se cambiarán en cada render.
-useSWR(['/api/user', { id }], query)
-
-// En su lugar, sólo debe pasar valores "estables".
-useSWR(['/api/user', id], (url, id) => query(url, { id }))
+const { data: orders } = useSWR({ url: '/api/orders', args: user }, fetcher)
 ```
 
-Dan Abramov explica muy bien las dependencias en [está entrada del blog](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect).
+<Callout emoji="⚠️">
+  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed. 
+</Callout>
 
