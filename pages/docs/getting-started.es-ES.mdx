@@ -58,27 +58,39 @@ Es increíblemente fácil crear hooks de datos reutilizables sobre SWR:
 ```jsx
 
 function useUser (id) {
-    const { data, error } = useSWR(`/api/user/${id}`, fetcher)
+  const { data, error } = useSWR(`/api/user/${id}`, fetcher)
 
-    return {
-        user: data,
-        isLoading: !error && !data,
-        isError: error
-    }
+  return {
+    user: data,
+    isLoading: !error && !data,
+    isError: error
+  }
 }
+```
 
+Optionally, you can also leverage the `isValidating` property representing whether is fetching data or not.
+
+```jsx
+function useUser (id) {
+  const { data, error, isValidating } = useSWR(`/api/user/${id}`, fetcher)
+
+  return {
+    user: data,
+    isLoading: isValidating && !data,
+    isError: error
+  }
+}
 ```
 
 Y utilícelo en sus componentes:
 
 ```jsx
-
 function Avatar({ id }) {
-   const { user, isLoading, isError } = useUser(id)
+  const { user, isLoading, isError } = useUser(id)
 
-   if(isLoading) return <Spinner />
-   if (isError) return <Error />
-   return <img src={user.avatar} />
+  if(isLoading) return <Spinner />
+  if (isError) return <Error />
+  return <img src={user.avatar} />
 }
 
 ```

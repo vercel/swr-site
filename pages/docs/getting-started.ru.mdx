@@ -68,6 +68,20 @@ function useUser (id) {
 }
 ```
 
+Optionally, you can also leverage the `isValidating` property representing whether is fetching data or not.
+
+```jsx
+function useUser (id) {
+  const { data, error, isValidating } = useSWR(`/api/user/${id}`, fetcher)
+
+  return {
+    user: data,
+    isLoading: isValidating && !data,
+    isError: error
+  }
+}
+```
+
 И используйте их в своих компонентах:
 
 ```jsx
