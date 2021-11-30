@@ -30,8 +30,6 @@ const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 
 ## オブジェクトの受け渡し
 
-## Passing Objects
-
 import Callout from 'nextra-theme-docs/callout'
 
 <Callout>
