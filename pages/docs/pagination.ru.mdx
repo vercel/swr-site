@@ -196,6 +196,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 - `options`: принимает все опции, которые поддерживает `useSWR`, с 3 дополнительными опциями:
   - `initialSize = 1`: количество страниц, которые должны быть загружены изначально
   - `revalidateAll = false`: всегда пытаться ревалидировать все страницы
+  - `revalidateFirstPage = true`: always try to revalidate the first page
   - `persistSize = false`: не сбрасывать размер страницы до 1 (или `initialSize`, если установлен), когда ключ первой страницы изменяется
 
 <Callout>
