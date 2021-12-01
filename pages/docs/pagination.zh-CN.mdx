@@ -187,6 +187,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 - `options`: 接受 `useSWR` 支持的所有选项，以及 3 个额外选项：
   - `initialSize = 1`: 最初应加载的页面数量
   - `revalidateAll = false`: 始终尝试重新验证所有页面
+  - `revalidateFirstPage = true`: always try to revalidate the first page
   - `persistSize = false`: 当第一页的 key 发生变化时，不将 page size（或者 `initialSize` 如果设置了该参数）重置为 1
 
 <Callout>

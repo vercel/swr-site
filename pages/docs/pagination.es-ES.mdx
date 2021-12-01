@@ -198,6 +198,7 @@ En la carga infinita, una _page_ es una petición, y nuestro objetivo es obtener
 - `options`: acepta todas las opciones que soporta `useSWR`, con 3 opciones adicionales:
   - `initialSize = 1`: número de páginas que deben cargarse inicialmente
   - `revalidateAll = false`: intentar siempre revalidar todas las páginas
+  - `revalidateFirstPage = true`: always try to revalidate the first page
   - `persistSize = false`: no restablecer el page size a 1 (o `initialSize` si está establecido) cuando la key de la primera página cambia
 
 <Callout>
