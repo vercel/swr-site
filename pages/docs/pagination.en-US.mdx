@@ -196,6 +196,7 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
 - `options`: accepts all the options that `useSWR` supports, with 3 extra options:
   - `initialSize = 1`: number of pages should be loaded initially
   - `revalidateAll = false`: always try to revalidate all pages
+  - `revalidateFirstPage = true`: always try to revalidate the first page
   - `persistSize = false`: don't reset the page size to 1 (or `initialSize` if set) when the first page's key changes
 
 <Callout>
