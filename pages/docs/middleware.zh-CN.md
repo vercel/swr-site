@@ -177,6 +177,7 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 
 <Callout emoji="⚠️">
   In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed.
+  <br />
   If you are passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
 </Callout>
 
