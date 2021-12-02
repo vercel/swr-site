@@ -171,18 +171,14 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 
 ### 序列化对象 key
 
-默认情况下，SWR **浅比较**（相关主题：[传入对象 - 参数](/docs/arguments#passing-objects)）对象 key，像 React 一样。 当你有多个“链式” `useSWR` hook 或使用不可序列化 key 时，这非常强大：
+<Callout>
+  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+</Callout>
 
-```jsx
-// 使用另一个 hook 的数据作为 key 的 hook
-const { data: user } = useSWR('API_CURRENT_USER', fetcher)
-const { data: userSettings } = useSWR(['API_USER_SETTINGS', user], fetcher)
-
-// 使用全局函数作为 key 的 hook
-const { data: items } = useSWR([getItems], getItems)
-```
-
-但是，在某些情况下，你只是传入可序列化的对象作为 key。你可以序列化对象 key 以确保其稳定性，一个简单的中间件可以帮助你：
+<Callout emoji="⚠️">
+  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed.
+  If you are passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
+</Callout>
 
 ```jsx
 function serialize(useSWRNext) {
