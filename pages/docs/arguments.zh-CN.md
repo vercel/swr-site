@@ -28,23 +28,27 @@ const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 
 ## 传入对象
 
+import Callout from 'nextra-theme-docs/callout'
+
+<Callout>
+  从 SWR 1.1.0 开始，object-like keys 将在后台自动序列化。
+</Callout>
+
 假设你还有另一个使用用户范围来请求数据的函数：`fetchWithUser(api, user)`。你可以执行以下操作：
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
-// ...并将其作为参数传递给另一个 query
+
+// ...然后将其作为参数传递给另一个 useSWR hook
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
 
-现在请求的 key 是两个值的组合。SWR 在每次渲染时 **浅** 比较参数，如果其中任何一个发生了变化，就会触发重新验证。  
-请记住，在渲染时不应该重新创建对象，因为每次渲染时它们将被视为不同的对象：
+你可以直接传递一个对象作为 key，`fetcher` 也会接收该对象：
 
 ```js
-// 不要这样做！每次渲染时 Deps 都会变化。
-useSWR(['/api/user', { id }], query)
-
-// 相反，你应该只传递“稳定的”值。
-useSWR(['/api/user', id], (url, id) => query(url, { id }))
+const { data: orders } = useSWR({ url: '/api/orders', args: user }, fetcher)
 ```
 
-Dan Abramov 在 [这篇博客](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect) 中很好地解释了依赖关系。
+<Callout emoji="⚠️">
+  在旧版本(< 1.1.0)中，SWR 会**浅**比较每次渲染时的参数，如果其中任何一个发生了变化，就会触发重新验证。
+</Callout>
