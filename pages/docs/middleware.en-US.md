@@ -173,18 +173,14 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 
 ### Serialize Object Keys
 
-By default, SWR **shallow compares** (related topic: [Passing Objects – Arguments](/docs/arguments#passing-objects)) object keys just like React. This is powerful when you have multiple "chained" `useSWR` hooks, or using non serializable keys:
+<Callout>
+  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+</Callout>
 
-```jsx
-// Hook that uses another hook's data as key
-const { data: user } = useSWR('API_CURRENT_USER', fetcher)
-const { data: userSettings } = useSWR(['API_USER_SETTINGS', user], fetcher)
-
-// Hook that uses a global function as key
-const { data: items } = useSWR([getItems], getItems)
-```
-
-However, in some cases you are just passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
+<Callout emoji="⚠️">
+  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed.
+  If you are passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
+</Callout>
 
 ```jsx
 function serialize(useSWRNext) {
