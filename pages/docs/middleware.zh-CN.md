@@ -172,12 +172,12 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 ### 序列化对象 key
 
 <Callout>
-  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+  从 SWR 1.1.0 开始，object 类型的 keys 可以在内部自动被序列化。
 </Callout>
 
 <Callout emoji="⚠️">
-  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed.
-  If you are passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
+  在旧版本(< 1.1.0)中，SWR 会**浅**比较每次渲染时的参数，如果其中任何一个发生了变化，就会触发重新验证。
+  如果你只是传入可序列化的对象作为 key。你可以序列化对象 key 以确保其稳定性，一个简单的中间件可以帮助你：
 </Callout>
 
 ```jsx
