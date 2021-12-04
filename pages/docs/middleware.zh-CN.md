@@ -172,7 +172,7 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 ### 序列化对象 key
 
 <Callout>
-  从 SWR 1.1.0 开始，object-like keys 将在后台自动序列化。
+  从 SWR 1.1.0 开始，object 类型的 keys 可以在内部自动被序列化。
 </Callout>
 
 <Callout emoji="⚠️">
