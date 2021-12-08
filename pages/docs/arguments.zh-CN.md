@@ -31,7 +31,7 @@ const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 import Callout from 'nextra-theme-docs/callout'
 
 <Callout>
-  从 SWR 1.1.0 开始，object-like keys 将在后台自动序列化。
+  从 SWR 1.1.0 开始，object 类型的 keys 可以在内部自动被序列化。
 </Callout>
 
 假设你还有另一个使用用户范围来请求数据的函数：`fetchWithUser(api, user)`。你可以执行以下操作：
