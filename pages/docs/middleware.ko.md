@@ -174,18 +174,14 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 
 ### 객체 키 직렬화하기
 
-기본적으로 SWR은 React와 마찬가지로 객체의 키를 **얕게 비교**(관련 주제: [객체 전달 – 인자](/docs/arguments#passing-objects))합니다. 이는 "체이닝된" `useSWR` hook이 여러 개 있거나, 직렬화할 수 없는 키를 사용하는 경우에 강력합니다.
+<Callout>
+  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+</Callout>
 
-```jsx
-// 다른 hook의 데이터를 키로 사용하는 hook
-const { data: user } = useSWR('API_CURRENT_USER', fetcher)
-const { data: userSettings } = useSWR(['API_USER_SETTINGS', user], fetcher)
-
-// 전역 함수를 키로 사용하는 hook
-const { data: items } = useSWR([getItems], getItems)
-```
-
-하지만 직렬화할 수 있는 객체를 키로 전달하는 경우도 있습니다. 안정성을 보장하기 위해 객체 키를 직렬화할 수 있으며 간단한 미들웨어가 도움을 줄 수 있습니다.
+<Callout emoji="⚠️">
+  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed.
+  If you are passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
+</Callout>
 
 ```jsx
 function serialize(useSWRNext) {
