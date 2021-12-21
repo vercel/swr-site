@@ -172,12 +172,12 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 ### オブジェクトキーをシリアライズする
 
 <Callout>
-  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+  SWR 1.1.0 からは、オブジェクトのようなキーは内部で自動的にシリアライズされます。
 </Callout>
 
 <Callout emoji="⚠️">
-  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed.
-  If you are passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
+  古いバージョン（< 1.1.0）では、SWR はすべてのレンダリングで引数を**浅く**比較し、いずれかが変更された場合は再検証を実行します。
+  シリアライズ可能なオブジェクトをキーとして渡す場合、オブジェクトのキーをシリアライズして安定性を確保できます。以下のシンプルなミドルウェアが役立ちます：
 </Callout>
 
 ```jsx

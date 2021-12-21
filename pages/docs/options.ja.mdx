@@ -29,8 +29,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `revalidateOnReconnect = true`: ブラウザがネットワーク接続を回復すると自動的に再検証します（ `navigator.onLine` 経由） [（ 詳細 ）](/docs/revalidation)
 - `refreshInterval` [（ 詳細 ）](/docs/revalidation): 
   - デフォルトでは無効: `refreshInterval = 0`
-  - If set to a number, ポーリングの間隔
-  - If set to a function, the function will receive the latest data and should return the interval in milliseconds
+  - 数値が設定されている場合、ミリ秒単位のポーリングの間隔
+  - 関数を設定した場合、その関数は最新のデータを受け取り、ミリ秒単位の間隔で返す必要があります
 - `refreshWhenHidden = false`: ウィンドウが非表示の場合にポーリングします（`refreshInterval` が有効になっているときのみ）
 - `refreshWhenOffline = false`: ブラウザがオフラインのときにポーリングします（`navigator.onLine` によって決定される）
 - `shouldRetryOnError = true`: フェッチャーでエラーが発生したときに再試行します

@@ -196,7 +196,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 - `options`: `useSWR` がサポートしているすべてのオプションに加えて、三つの追加オプションを受け取ります：
   - `initialSize = 1`: 最初にロードするページ数
   - `revalidateAll = false`: 常にすべてのページに対して再検証を試みる
-  - `revalidateFirstPage = true`: always try to revalidate the first page
+  - `revalidateFirstPage = true`: 常に最初のページを再検証します
   - `persistSize = false`: 最初のページのキーが変更されたときに、ページサイズを 1 （またはセットされていれば `initialSize`）にリセットしない
 
 <Callout>
