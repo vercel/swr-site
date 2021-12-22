@@ -1,17 +1,17 @@
 # TypeScript
 
-SWR is friendly for apps which are written in TypeScript. It's type safe out of the box.
+SWR is friendly for apps written in TypeScript, with type safety out of the box.
 
 ### Basic Usage
 
-By default, SWR will also infer the type of `key` argument in `fetcher`. So you can use the preferred types of `key` and `fetcher`.
+By default, SWR will also infer the argument types of `fetcher` from `key`, so you can have the preferred types automatically.
 
 #### Basic hook
 
 ```typescript
-// `key` is inferred to be `string`
+// `key` is inferred as `string`
 useSWR('/api/user', key => {})
-// `key` will be inferred as { a: string; b: { c: string; d: number } }
+// `key` will be inferred as `{ a: string; b: { c: string; d: number } }`
 useSWR({ a: '1', b: { c: '3', d: 2 } }, key => {})
 ```
 
@@ -28,7 +28,7 @@ const { data } = useSWR(uid, fetcher)
 ```
 
 
-#### Inifinite
+#### useSWRInfinite
 
 Same for `swr/inifite`, you can either rely on the automatic type inference or explicitly sepicify the types by yourself.
 
@@ -58,7 +58,7 @@ const { data } = useSWR<User>('/api/user', fetcher)
 
 If you want to add types for other options of SWR, you can also import those types directly:
 
-```js
+```typescript
 import { useSWR } from 'swr'
 import type { SWRConfiguration } from 'swr'
 
