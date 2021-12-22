@@ -11,6 +11,7 @@
   "pagination": "ページネーション",
   "prefetching": "プリフェッチ",
   "with-nextjs": "Next.js の SSG と SSR",
+  "typescript": "Typescript",
   "suspense": "サスペンス",
   "middleware": "ミドルウェア",
   "advanced": "高度な使い方",

@@ -1,0 +1,76 @@
+# TypeScript
+
+SWR is friendly for apps which are written in TypeScript. It's type safe out of the box.
+
+### Basic Usage
+
+By default, SWR will also infer the type of `key` argument in `fetcher`. So you can use the preferred types of `key` and `fetcher`.
+
+#### Basic hook
+
+```typescript
+// `key` is inferred to be `string`
+useSWR('/api/user', key => {})
+// `key` will be inferred as { a: string; b: { c: string; d: number } }
+useSWR({ a: '1', b: { c: '3', d: 2 } }, key => {})
+```
+
+You can explicitly the types for key and fetcher arguments.
+
+```typescript
+import useSWR, { Key, Fetcher } from 'swr'
+
+
+const key: Key = 'string'
+const fetcher: Fetcher<string, string> = (k) => k + ':value'
+useSWR(key, fetcher)
+```
+
+
+#### Inifinite
+
+It's same for `swr/inifite`, you can either rely on the automatically inferring or explicitly sepicify the types.
+
+```typescript
+import { SWRInfiniteKeyLoader } from 'swr/infinite'
+
+const keyLoader: SWRInfiniteKeyLoader = (index, previousPageData) => { /* ... */ };
+const useList = () => {
+  const { data } = useSWRInfinite(keyLoader, fetcher);
+  // ...
+};
+```
+
+### Generics
+
+Speicifying the type of `data` is easy.
+
+```typescript
+const { data } = useSWR<string[]>('/api/data', fetch, config)
+```
+
+If you wanna type for all the arguments of useSWR you can also import them from `swr`:
+
+```js
+import { useSWR } from 'swr'
+import type { SWRConfiguration } from 'swr'
+
+const config: SWRConfiguration = {
+  fallbackData: "fallback",
+  revalidateOnMount: false
+  // ...
+}
+
+const { data } = useSWR<string[]>('/api/data', fetcher, config)
+```
+
+### Middleware Types
+
+```typescript
+import useSWR, { Middleware, SWRHook } from 'swr'
+
+const swrMiddleware: Middleware = (useSWRNext: SWRHook) => (key, fetcher, config) => {
+  // ...
+  return useSWRNext(key, fetcher, config)
+}
+```
