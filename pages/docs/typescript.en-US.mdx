@@ -20,36 +20,43 @@ You can explicitly the types for key and fetcher arguments.
 ```typescript
 import useSWR, { Key, Fetcher } from 'swr'
 
+const uid: Key = '<user_id>'
+const fetcher: Fetcher<string, User> = (id) => getUserById(id)
 
-const key: Key = 'string'
-const fetcher: Fetcher<string, string> = (k) => k + ':value'
-useSWR(key, fetcher)
+const { data } = useSWR(uid, fetcher)
+// `data` will be `User | undefined`.
 ```
 
 
 #### Inifinite
 
-It's same for `swr/inifite`, you can either rely on the automatically inferring or explicitly sepicify the types.
+Same for `swr/inifite`, you can either rely on the automatic type inference or explicitly sepicify the types by yourself.
 
 ```typescript
 import { SWRInfiniteKeyLoader } from 'swr/infinite'
 
-const keyLoader: SWRInfiniteKeyLoader = (index, previousPageData) => { /* ... */ };
-const useList = () => {
-  const { data } = useSWRInfinite(keyLoader, fetcher);
+const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
   // ...
-};
+}
+
+const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
 ### Generics
 
-Speicifying the type of `data` is easy.
+Speicifying the type of `data` is easy. By default, it will use the return type of `fetcher` (with `undefined` for the non-ready state) as the `data` type, but you can also pass it as a parameter:
 
 ```typescript
-const { data } = useSWR<string[]>('/api/data', fetch, config)
+// 🔹 A. Use a typed fetcher:
+// `getUser` is `(endpoint: string) => User`.
+const { data } = useSWR('/api/user', getUser)
+
+// 🔹 B. Specify the data type:
+// `fetcher` is generally returning `any`.
+const { data } = useSWR<User>('/api/user', fetcher)
 ```
 
-If you wanna type for all the arguments of useSWR you can also import them from `swr`:
+If you want to add types for other options of SWR, you can also import those types directly:
 
 ```js
 import { useSWR } from 'swr'
