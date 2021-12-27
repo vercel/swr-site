@@ -14,6 +14,10 @@ Middleware receive the SWR hook and can execute logic before and after running i
 
 ### API
 
+_Notes: The function name must be `myMiddleware`, not `MyMiddleware` or React will throw `Rules of Hook` error_
+
+[Typescipt](https://swr.vercel.app/docs/typescript#middleware-types)
+
 ```jsx
 function myMiddleware (useSWRNext) {
   return (key, fetcher, config) => {
