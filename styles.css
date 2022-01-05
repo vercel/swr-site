@@ -1,5 +1,9 @@
 @tailwind utilities;
 
+html {
+  font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1, "ss06" 1;
+}
+
 .docs-search > span {
   width: 100%;
 }
