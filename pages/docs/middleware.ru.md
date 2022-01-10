@@ -14,6 +14,10 @@ import Callout from 'nextra-theme-docs/callout'
 
 ### API
 
+_Notes: The function name shouldn't be capitalized (e.g. `myMiddleware` instead of `MyMiddleware`) or React lint rules will throw `Rules of Hook` error_
+
+[TypeScript](https://swr.vercel.app/docs/typescript#middleware-types)
+
 ```jsx
 function myMiddleware (useSWRNext) {
   return (key, fetcher, config) => {
@@ -170,18 +174,14 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 
 ### Сериализация ключей объекта
 
-По умолчанию SWR **сравнивает поверхностно** (связанный раздел: [Передача объектов – Аргументы](/docs/arguments#передача-объектов)) ключи объектов точно так же, как React. Это эффективно, когда у вас есть несколько «связанных» хуков `useSWR` или используются несериализуемые ключи:
+<Callout>
+  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+</Callout>
 
-```jsx
-// Хук, использующий в качестве ключа данные другого хука
-const { data: user } = useSWR('API_CURRENT_USER', fetcher)
-const { data: userSettings } = useSWR(['API_USER_SETTINGS', user], fetcher)
-
-// Хук, использующий в качестве ключа глобальную функцию
-const { data: items } = useSWR([getItems], getItems)
-```
-
-Однако в некоторых случаях вы просто передаёте сериализуемые объекты в качестве ключа. Вы можете сериализовать ключи объекта, чтобы обеспечить его стабильность, простое ППО может помочь:
+<Callout emoji="⚠️">
+  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed.
+  If you are passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
+</Callout>
 
 ```jsx
 function serialize(useSWRNext) {

@@ -29,23 +29,27 @@ const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 
 ## Передача объектов
 
-Скажем, у вас есть другая функция, которая извлекает данные в рамках пользователя: `fetchWithUser(api, user)`. Вы можете сделать следующее:
+import Callout from 'nextra-theme-docs/callout'
+
+<Callout>
+  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+</Callout>
+  
+Say you have another function that fetches data with a user scope: `fetchWithUser(api, user)`. You can do the following:
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
-// ...и передать его как аргумент другому запросу
+
+// ...and then pass it as an argument to another useSWR hook
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
 
-Ключом запроса теперь является комбинация обоих значений. SWR **поверхностно** сравнивает аргументы на каждом рендере и запускает повторную проверку, если какой-либо из них изменился.  
-Имейте в виду, что вы не должны воссоздавать объекты при рендеринге, так как они будут обрабатываться как разные объекты при каждом рендеринге:
+You can directly pass an object as the key, and `fetcher` will receive that object too:
 
 ```js
-// Не делайте этого! Зависимости будут изменяться при каждом рендере.
-useSWR(['/api/user', { id }], query)
-
-// Вместо этого вы должны передавать только «стабильные» значения.
-useSWR(['/api/user', id], (url, id) => query(url, { id }))
+const { data: orders } = useSWR({ url: '/api/orders', args: user }, fetcher)
 ```
 
-Дэн Абрамов очень хорошо объясняет зависимости [в этом посте](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect).
+<Callout emoji="⚠️">
+  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed. 
+</Callout>
