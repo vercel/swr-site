@@ -11,6 +11,7 @@
   "pagination": "分页",
   "prefetching": "预请求",
   "with-nextjs": "Next.js SSG 和 SSR",
+  "typescript": "Typescript",
   "suspense": "Suspense",
   "middleware": "中间件",
   "advanced": "高级",

@@ -5,21 +5,22 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
+    "debug": "NODE_OPTIONS='--inspect' next",
     "start": "next start",
-    "build": "STORK_PATH=$(pwd)/bin/stork.bin next build"
+    "build": "next build"
   },
   "author": "Shu Ding",
   "license": "Apache-2.0",
   "dependencies": {
-    "@reach/skip-nav": "^0.10.5",
+    "@reach/skip-nav": "^0.16.0",
     "focus-visible": "^5.1.0",
     "intersection-observer": "^0.10.0",
     "markdown-to-jsx": "^6.11.4",
-    "next": "^12.0.5",
-    "nextra": "^2.0.0-beta.4",
-    "nextra-theme-docs": "^2.0.0-beta.4",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "next": "^12.0.7",
+    "nextra": "^2.0.0-alpha.11",
+    "nextra-theme-docs": "^2.0.0-alpha.11",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-intersection-observer": "^8.26.2"
   },
   "devDependencies": {
