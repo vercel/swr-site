@@ -1,28 +1,28 @@
 # TypeScript
 
-SWR is friendly for apps written in TypeScript, with type safety out of the box.
+SWR は TypeScript で書かされたアプリにも対応、型の安全性をすぐに使えます。
 
-### Basic Usage
+### 基本的な使い方
 
-By default, SWR will also infer the argument types of `fetcher` from `key`, so you can have the preferred types automatically.
+デフォルトでは、SWR は `key` から `fetcher` の引数の型を推測します。そのため、優先される型を自動的に設定できます。
 
 #### useSWR
 
 ```typescript
-// `key` is inferred to be `string`
+// `key` は `string` に推測されます。
 useSWR('/api/user', key => {})
 useSWR(() => '/api/user', key => {})
 
-// `key` will be inferred as { a: string; b: { c: string; d: number } }
+// `key` は { a: string; b: { c: string; d: number } } として推測されます。
 useSWR({ a: '1', b: { c: '3', d: 2 } }, key => {})
 useSWR(() => { a: '1', b: { c: '3', d: 2 } }, key => {})
 
-// `arg0` will be inferred as string.  `arg1` will be inferred as number
+// `arg0` は文字列として推測されます。 `arg1` は数値として推測されます。
 useSWR(['user', 8], (arg0, arg1) => {})
 useSWR(() => ['user', 8], (arg0, arg1) => {})
 ```
 
-You can also explicitly specify the types for `key` and `fetcher`'s arguments.
+`key` と `fetcher` の引数の型を明示的に指定することもできます。
 
 ```typescript
 import useSWR, { Key, Fetcher } from 'swr'
@@ -31,13 +31,12 @@ const uid: Key = '<user_id>'
 const fetcher: Fetcher<string, User> = (id) => getUserById(id)
 
 const { data } = useSWR(uid, fetcher)
-// `data` will be `User | undefined`.
+// `data` は `User | undefined` となります。
 ```
-
 
 #### useSWRInfinite
 
-Same for `swr/inifite`, you can either rely on the automatic type inference or explicitly sepicify the types by yourself.
+`swr/infinite` の場合と同じように、型推論に頼るか、自分で明示的に型を指定することができます。
 
 ```typescript
 import { SWRInfiniteKeyLoader } from 'swr/infinite'
@@ -49,21 +48,21 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
-### Generics
+### ジェネリクス
 
-Speicifying the type of `data` is easy. By default, it will use the return type of `fetcher` (with `undefined` for the non-ready state) as the `data` type, but you can also pass it as a parameter:
+`data` の型定義は簡単です。デフォルトでは、`fetcher` の戻り値の型（準備ができていない場合は `undefined`）を `date` 型として使用しますが、パラメーターとして渡すこともできます：
 
 ```typescript
-// 🔹 A. Use a typed fetcher:
-// `getUser` is `(endpoint: string) => User`.
+// 🔹 A. 型付きの fetcher を使う：
+// `getUser` は `(endpoint: string) => User` になります。
 const { data } = useSWR('/api/user', getUser)
 
-// 🔹 B. Specify the data type:
-// `fetcher` is generally returning `any`.
+// 🔹 B. データ型を指定：
+// `fetcher` は 通常 `any` を返します。
 const { data } = useSWR<User>('/api/user', fetcher)
 ```
 
-If you want to add types for other options of SWR, you can also import those types directly:
+SWR オプションの型を追加したい場合は、これらの型を直接インポートすることもできます：
 
 ```typescript
 import { useSWR } from 'swr'
@@ -78,9 +77,9 @@ const config: SWRConfiguration = {
 const { data } = useSWR<string[]>('/api/data', fetcher, config)
 ```
 
-### Middleware Types
+### ミドルウェアの型
 
-There're some extra type definitions you can import to help adding types to your custom middleware.
+カスタムミドルウェアに型を追加するのに役立つ、インポート可能な追加の型定義がいくつかあります。
 
 ```typescript
 import useSWR, { Middleware, SWRHook } from 'swr'
