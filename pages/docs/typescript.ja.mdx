@@ -2,11 +2,11 @@
 
 SWR は TypeScript で書かされたアプリにも対応、型の安全性をすぐに使えます。
 
-### 基本的な使い方
+## 基本的な使い方
 
 デフォルトでは、SWR は `key` から `fetcher` の引数の型を推測します。そのため、優先される型を自動的に設定できます。
 
-#### useSWR
+### useSWR
 
 ```typescript
 // `key` は `string` に推測されます。
@@ -34,7 +34,7 @@ const { data } = useSWR(uid, fetcher)
 // `data` は `User | undefined` となります。
 ```
 
-#### useSWRInfinite
+### useSWRInfinite
 
 `swr/infinite` の場合と同じように、型推論に頼るか、自分で明示的に型を指定することができます。
 
@@ -48,7 +48,7 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
-### ジェネリクス
+## ジェネリクス
 
 `data` の型定義は簡単です。デフォルトでは、`fetcher` の戻り値の型（準備ができていない場合は `undefined`）を `date` 型として使用しますが、パラメーターとして渡すこともできます：
 
@@ -77,7 +77,7 @@ const config: SWRConfiguration = {
 const { data } = useSWR<string[]>('/api/data', fetcher, config)
 ```
 
-### ミドルウェアの型
+## ミドルウェアの型
 
 カスタムミドルウェアに型を追加するのに役立つ、インポート可能な追加の型定義がいくつかあります。
 
