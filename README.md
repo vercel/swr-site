@@ -2,11 +2,11 @@
 
 The official website for [SWR](https://github.com/vercel/swr).
 
-To develop locally, clone this repository and run the following command to start the local dev server:
+The project uses [pnpm](https://pnpm.io), [Nextra](https://nextra.vercel.app) and deploys via [Vercel](https://vercel.com). To develop it locally, clone this repository and run the following command to start the local dev server:
 
 ```bash
-yarn
-yarn dev
+pnpm install
+pnpm dev
 ```
 
 And visit `localhost:3000` to preview your changes.

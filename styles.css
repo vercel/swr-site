@@ -31,7 +31,3 @@ body {
     fixed 0 0 / 20px 20px radial-gradient(#313131 1px, transparent 0),
     fixed 10px 10px / 20px 20px radial-gradient(#313131 1px, transparent 0);
 }
-
-article pre code {
-  line-height: 1.25rem;
-}
