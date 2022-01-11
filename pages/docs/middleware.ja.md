@@ -14,7 +14,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 ### API
 
-_Notes: The function name shouldn't be capitalized (e.g. `myMiddleware` instead of `MyMiddleware`) or React lint rules will throw `Rules of Hook` error_
+_注意： 関数名は大文字にしないでください（たとえば `myMiddleware` の代わりに `MyMiddleware` を使うなど）。そうしないと、 React lint のルールが `Rules of Hook` エラーを投げます。_
 
 [TypeScript](https://swr.vercel.app/docs/typescript#middleware-types)
 
