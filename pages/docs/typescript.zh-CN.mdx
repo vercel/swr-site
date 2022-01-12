@@ -1,28 +1,28 @@
 # TypeScript
 
-SWR is friendly for apps written in TypeScript, with type safety out of the box.
+SWR 对于使用 TypeScript 编写的 app 是友好的，开箱即用，类型安全。
 
-## Basic Usage
+## 基本用法
 
-By default, SWR will also infer the argument types of `fetcher` from `key`, so you can have the preferred types automatically.
+默认情况下，SWR 会从 `key` 推断出 `fetcher` 的参数类型，因此你可以自动获得首选类型。
 
 ### useSWR
 
 ```typescript
-// `key` is inferred to be `string`
+// `key` 被推断为 `string`
 useSWR('/api/user', key => {})
 useSWR(() => '/api/user', key => {})
 
-// `key` will be inferred as { a: string; b: { c: string; d: number } }
+// `key` 将被推断为 { a: string; b: { c: string; d: number } }
 useSWR({ a: '1', b: { c: '3', d: 2 } }, key => {})
 useSWR(() => { a: '1', b: { c: '3', d: 2 } }, key => {})
 
-// `arg0` will be inferred as string.  `arg1` will be inferred as number
+// `arg0` 将被推断为 string.  `arg1` 将被推断为 number
 useSWR(['user', 8], (arg0, arg1) => {})
 useSWR(() => ['user', 8], (arg0, arg1) => {})
 ```
 
-You can also explicitly specify the types for `key` and `fetcher`'s arguments.
+你还可以显式地指定 `key` 和 `fetcher` 参数的类型。
 
 ```typescript
 import useSWR, { Key, Fetcher } from 'swr'
@@ -31,12 +31,12 @@ const uid: Key = '<user_id>'
 const fetcher: Fetcher<string, User> = (id) => getUserById(id)
 
 const { data } = useSWR(uid, fetcher)
-// `data` will be `User | undefined`.
+// `data` 将会是 `User | undefined`.
 ```
 
 ### useSWRInfinite
 
-Same for `swr/inifite`, you can either rely on the automatic type inference or explicitly specify the types by yourself.
+同样适用于 `swr/inifite`，你可以依靠自动类型推断或自己显式地指定类型。
 
 ```typescript
 import { SWRInfiniteKeyLoader } from 'swr/infinite'
@@ -50,7 +50,7 @@ const { data } = useSWRInfinite(getKey, fetcher)
 
 ## Generics
 
-Specifying the type of `data` is easy. By default, it will use the return type of `fetcher` (with `undefined` for the non-ready state) as the `data` type, but you can also pass it as a parameter:
+指定 `data` 的类型很容易。默认情况下，它将使用 `fetcher` 的返回类型（未就绪状态为 `undefined`）作为 `data` 的类型，但你也可以将其作为参数传递：
 
 ```typescript
 // 🔹 A. Use a typed fetcher:
@@ -62,7 +62,7 @@ const { data } = useSWR('/api/user', getUser)
 const { data } = useSWR<User>('/api/user', fetcher)
 ```
 
-If you want to add types for other options of SWR, you can also import those types directly:
+如果要为 SWR 的其他选项添加类型，你也可以直接导入这些类型：
 
 ```typescript
 import { useSWR } from 'swr'
@@ -79,7 +79,7 @@ const { data } = useSWR<string[]>('/api/data', fetcher, config)
 
 ## Middleware Types
 
-There're some extra type definitions you can import to help adding types to your custom middleware.
+你可以导入一些额外的类型定义，以帮助你向自定义的中间件添加类型。
 
 ```typescript
 import useSWR, { Middleware, SWRHook } from 'swr'

@@ -57,9 +57,9 @@ export default function Page({ fallback }) {
   `Article` 组件会先渲染预先生成的数据，并且在页面 hydrate 后，它将再次获取最新数据，以保持数据的时效性。
 </Callout>
 
-### Complex Keys
+### 复杂的 key
 
-`useSWR` can be used with keys that are `array` and `function` types. Utilizing pre-fetched data with these kinds of keys requires serializing the `fallback` keys with `unstable_serialize`.
+`useSWR` 可以和 `array` 以及 `function` 类型的 key 一起使用。使用这些类型的 key 预请求数据，需要使用 `unstable_serialize` 序列化 `fallback` key。
 
 ```jsx
 import useSWR, { unstable_serialize } from 'swr'
@@ -69,7 +69,7 @@ export async function getStaticProps () {
   return {
     props: {
       fallback: {
-        // unstable_serialize() array style key
+        // unstable_serialize() 数组样式的 key
         [unstable_serialize(['api', 'article', 1])]: article,
       }
     }
@@ -77,7 +77,7 @@ export async function getStaticProps () {
 }
 
 function Article() {
-  // using an array style key.
+  // 使用数组样式的 key.
   const { data } = useSWR(['api', 'article', 1], fetcher)
   return <h1>{data.title}</h1>
 }
