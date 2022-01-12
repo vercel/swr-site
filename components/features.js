@@ -31,7 +31,16 @@ const FEATURES_WITH_TRANSLATIONS = {
     remoteLocal: "Remote + Local",
   },
   "es-ES": {},
-  "zh-CN": {},
+  "zh-CN": {
+    lightweight: "Lightweight",
+    realtime: "Realtime",
+    suspense: "Suspense",
+    pagination: "Pagination",
+    backendAgnostic: "Backend Agnostic",
+    renderingStrategies: "SSR / SSG Ready",
+    typescript: "TypeScript Ready",
+    remoteLocal: "Remote + Local",
+  },
   ja: {},
   ko: {},
   ru: {
