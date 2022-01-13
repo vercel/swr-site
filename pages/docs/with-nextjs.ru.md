@@ -36,7 +36,7 @@ import Callout from 'nextra-theme-docs/callout'
 }
 
 function Article() {
-  // `data` всегда будет дуступна, так как находится в `fallback`.
+  // `data` всегда будет доступна, так как находится в `fallback`.
   const { data } = useSWR('/api/article', fetcher)
   return <h1>{data.title}</h1>
 }
