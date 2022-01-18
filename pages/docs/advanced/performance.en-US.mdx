@@ -42,7 +42,7 @@ function App () {
 }
 ```
 
-Each `<Avatar>` component has a `useSWR` hook inside. Since they have the same SWR key and are rendered at the almost same time, **only 1 network request will be made**.
+Each `<Avatar>` component has a `useSWR` hook inside. Since they have the same SWR key and are rendered almost at the same time, **only 1 network request will be made**.
 
 You can reuse your data hooks (like `useUser` in the example above) everywhere, without worrying about performance or duplicated requests.
 
