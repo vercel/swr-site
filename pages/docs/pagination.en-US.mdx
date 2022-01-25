@@ -193,7 +193,7 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
 
 - `getKey`: a function that accepts the index and the previous page data, returns the key of a page
 - `fetcher`: same as `useSWR`'s [fetcher function](/docs/data-fetching)
-- `options`: accepts all the options that `useSWR` supports, with 3 extra options:
+- `options`: accepts all the options that `useSWR` supports, with 4 extra options:
   - `initialSize = 1`: number of pages should be loaded initially
   - `revalidateAll = false`: always try to revalidate all pages
   - `revalidateFirstPage = true`: always try to revalidate the first page
