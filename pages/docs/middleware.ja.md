@@ -14,6 +14,10 @@ import Callout from 'nextra-theme-docs/callout'
 
 ### API
 
+_注意： 関数名は大文字にしないでください（たとえば `myMiddleware` の代わりに `MyMiddleware` を使うなど）。そうしないと、 React lint のルールが `Rules of Hook` エラーを投げます。_
+
+[TypeScript](https://swr.vercel.app/docs/typescript#middleware-types)
+
 ```jsx
 function myMiddleware (useSWRNext) {
   return (key, fetcher, config) => {
@@ -171,18 +175,14 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 
 ### オブジェクトキーをシリアライズする
 
-デフォルトでは、 SWR は React のように オブジェクトキーを**浅く比較**（ 関連トピック：[オブジェクトの受け渡し - 引数](/docs/arguments#オブジェクトの受け渡し) ）します。これは、複数の"チェーン"された `useSWR` がある場合、またはシリアライズできないキーを使用している場合に強力です。
+<Callout>
+  SWR 1.1.0 からは、オブジェクトのようなキーは内部で自動的にシリアライズされます。
+</Callout>
 
-```jsx
-// 別のフックのデータをキーとして使用するフック
-const { data: user } = useSWR('API_CURRENT_USER', fetcher)
-const { data: userSettings } = useSWR(['API_USER_SETTINGS', user], fetcher)
-
-// グローバル関数をキーとして使用するフック
-const { data: items } = useSWR([getItems], getItems)
-```
-
-しかし、場合によってはシリアライズ可能なオブジェクトをキーとして渡すだけな時があります。その場合は、オブジェクトキーをシリアライズして安定性を確保できます。単純なミドルウェアが役立ちます：
+<Callout emoji="⚠️">
+  古いバージョン（< 1.1.0）では、SWR はすべてのレンダリングで引数を**浅く**比較し、いずれかが変更された場合は再検証を実行します。
+  シリアライズ可能なオブジェクトをキーとして渡す場合、オブジェクトのキーをシリアライズして安定性を確保できます。以下のシンプルなミドルウェアが役立ちます：
+</Callout>
 
 ```jsx
 function serialize(useSWRNext) {

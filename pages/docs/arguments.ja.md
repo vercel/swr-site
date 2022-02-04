@@ -33,25 +33,25 @@ const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 import Callout from 'nextra-theme-docs/callout'
 
 <Callout>
-  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+  SWR 1.1.0 からは、オブジェクトのようなキーは内部で自動的にシリアライズされます。
 </Callout>
   
-Say you have another function that fetches data with a user scope: `fetchWithUser(api, user)`. You can do the following:
+あるユーザースコープでデータを取得する別の関数があるとします： `fetchWithUser(api, user)`。その場合、以下のようにできます：
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 
-// ...and then pass it as an argument to another useSWR hook
+// ...次に、それを引数として別の useSWR フックに渡します
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
 
-You can directly pass an object as the key, and `fetcher` will receive that object too:
+オブジェクトをキーとして直接渡すことができ、`fetcher` はそのオブジェクトを受け取ります：
 
 ```js
 const { data: orders } = useSWR({ url: '/api/orders', args: user }, fetcher)
 ```
 
 <Callout emoji="⚠️">
-  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed. 
+  古いバージョン（< 1.1.0）では、SWR はすべてのレンダリングで引数を**浅く**比較し、いずれかが変更された場合は再検証を実行します。
 </Callout>
   
