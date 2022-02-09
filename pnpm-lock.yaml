@@ -7,7 +7,7 @@ specifiers:
   intersection-observer: ^0.10.0
   markdown-to-jsx: ^6.11.4
   next: ^12.0.8
-  nextra: ^2.0.0-alpha.23
+  nextra: ^2.0.0-alpha.24
   nextra-theme-docs: ^2.0.0-alpha.23
   postcss: ^8.4.5
   react: ^17.0.2
@@ -21,7 +21,7 @@ dependencies:
   intersection-observer: 0.10.0
   markdown-to-jsx: 6.11.4_react@17.0.2
   next: 12.0.8_react-dom@17.0.2+react@17.0.2
-  nextra: 2.0.0-alpha.23_react@17.0.2
+  nextra: 2.0.0-alpha.24_react@17.0.2
   nextra-theme-docs: 2.0.0-alpha.23_227e7fb4dbd28186517209bc65f02635
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -1738,8 +1738,8 @@ packages:
       - '@types/react'
     dev: false
 
-  /nextra/2.0.0-alpha.23_react@17.0.2:
-    resolution: {integrity: sha512-o2Lbtf5yq2uMYOWJKhVjDpp/IL4filx++5rzrltu0fH9ERitiKarXk+S+fj0LDtAQB+rI6Q3FR/c8ER4z3DWIQ==}
+  /nextra/2.0.0-alpha.24_react@17.0.2:
+    resolution: {integrity: sha512-Vt98hlyTEWQguRnkALq9aXhUcxDVwNN3LND/NXvXCSYxZjEY6f2Ujdew1HxBn78xa3k0WCmne1Xzb39Yy9dbNg==}
     peerDependencies:
       react: '>=16.13.1'
     dependencies:
