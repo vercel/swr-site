@@ -17,6 +17,7 @@ html {
 }
 
 body {
+  overflow-x: hidden;
   background: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 0) 0%,
