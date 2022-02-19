@@ -17,9 +17,6 @@
   },
   "blog": {
     "title": "Blog",
-    "type": "page",
-    "theme": {
-      "pagination": false
-    }
+    "type": "page"
   }
 }
