@@ -1,19 +1,23 @@
 {
   "index": {
     "title": "Introduction",
-    "type": "nav",
+    "type": "page",
     "hidden": true
   },
   "docs": {
     "title": "Docs",
-    "type": "nav"
+    "type": "page"
   },
   "examples": {
     "title": "Examples",
-    "type": "nav"
+    "type": "page"
   },
   "blog": {
     "title": "Blog",
-    "type": "nav"
+    "type": "page",
+    "theme": {
+      "sidebar": false,
+      "pagination": false
+    }
   }
 }

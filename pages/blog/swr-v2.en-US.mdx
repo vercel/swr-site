@@ -1,0 +1,63 @@
+## Highlights of This Release
+
+### Optimistic Updates with Auto Error Rollback
+
+There are now some new options in `mutate`:
+
+```js
+mutate(patchUser(user), {
+  optimisticData: user,
+  populateCache: true,
+  rollbackOnError: true,
+  revalidate: true,
+})
+```
+
+Here the cache will be immediately updated to `user`, the “optimistic value”. And then a request (remote mutation) is started via `patchUser(user)` and the response will be written to the cache. If that request fails, the original result will be rolled back safely so the optimistic value will be gone. And after all those finish, a revalidation will start to fetch the latest value.
+
+This is extremely helpful for building the optimistic UI pattern.
+
+You can do the same for the global `mutate`, just remember to pass the key. Also, the current `mutate` APIs stay unchanged so `mutate(data, false)` works the same.
+
+Here's an example: https://codesandbox.io/s/swr-basic-forked-k5hps.
+
+
+
+https://user-images.githubusercontent.com/3676859/151381238-f3aba769-91b6-4bfc-9285-df1b9ef51773.mp4
+
+
+### `.mjs` Support
+
+SWR now has `.mjs` exported for bundlers that prefer this format.
+
+This doesn’t break environments that don’t support `.mjs`. An alternative `.esm.js` and CJS bundle are also published.
+
+You can read more about ES modules [here](https://2ality.com/2017/05/es-module-specifiers.html).
+
+## What's Changed
+* feat: Optimistic mutation with error rollback by @shuding in https://github.com/vercel/swr/pull/1745
+* fix: Required return type when mutating by @RKatarine in https://github.com/vercel/swr/pull/1772
+* fix: use the latest reference of fetcher with suspense mode by @koba04 in https://github.com/vercel/swr/pull/1803
+* test: add delay for flaky focus test by @huozhi in https://github.com/vercel/swr/pull/1762
+* test: remove flaky focus test case by @huozhi in https://github.com/vercel/swr/pull/1793
+* test: use @swc/jest by @huozhi in https://github.com/vercel/swr/pull/1790
+* chore: Ignore coverage report by @shuding in https://github.com/vercel/swr/pull/1744
+* chore: Merge mutation states by @shuding in https://github.com/vercel/swr/pull/1748
+* chore: Rename CONCURRENT_REQUESTS to FETCH by @shuding in https://github.com/vercel/swr/pull/1749
+* chore: Merge extra request states in cache by @shuding in https://github.com/vercel/swr/pull/1752
+* chore: support mjs exports by @huozhi in https://github.com/vercel/swr/pull/1760
+* chore: remove useless react-native field by @huozhi in https://github.com/vercel/swr/pull/1761
+* chore: comment helper by @huozhi in https://github.com/vercel/swr/pull/1757
+* chore: display name in devtool by @huozhi in https://github.com/vercel/swr/pull/1779
+* chore: simplify example development by @huozhi in https://github.com/vercel/swr/pull/1787
+* chore: build: improve watch commands by @huozhi in https://github.com/vercel/swr/pull/1788
+* chore: Update examples and dependencies by @shuding in https://github.com/vercel/swr/pull/1789
+* chore: zeit -> vercel by @huozhi in https://github.com/vercel/swr/pull/1791
+* chore: Clean up configurations by @shuding in https://github.com/vercel/swr/pull/1792
+* chore: move community health files to .github dir by @huozhi in https://github.com/vercel/swr/pull/1794
+* chore: Add link to security email directly by @huozhi in https://github.com/vercel/swr/pull/1795
+
+## New Contributors
+* @RKatarine made their first contribution in https://github.com/vercel/swr/pull/1772
+
+**Full Changelog**: https://github.com/vercel/swr/compare/1.1.2...1.2.0
