@@ -10,7 +10,10 @@
   },
   "examples": {
     "title": "Примеры",
-    "type": "page"
+    "type": "page",
+    "theme": {
+      "full": true
+    }
   },
   "blog": {
     "title": "Блог",

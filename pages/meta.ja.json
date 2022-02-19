@@ -10,7 +10,10 @@
   },
   "examples": {
     "title": "例",
-    "type": "page"
+    "type": "page",
+    "theme": {
+      "full": true
+    }
   },
   "blog": {
     "title": "ブログ",

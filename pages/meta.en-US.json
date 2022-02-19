@@ -10,13 +10,15 @@
   },
   "examples": {
     "title": "Examples",
-    "type": "page"
+    "type": "page",
+    "theme": {
+      "full": true
+    }
   },
   "blog": {
     "title": "Blog",
     "type": "page",
     "theme": {
-      "sidebar": false,
       "pagination": false
     }
   }
