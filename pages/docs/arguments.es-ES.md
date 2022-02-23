@@ -27,7 +27,7 @@ const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 
 La función `fetchWithToken` sigue aceptando los mismo 2 argumentos, pero ahora la key del caché también estará asociada al `token`.
 
-## Pasar objectos
+## Pasar objetos
 
 import Callout from 'nextra-theme-docs/callout'
 
