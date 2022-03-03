@@ -65,7 +65,7 @@ const { data } = useSWR<User>('/api/user', fetcher)
 如果要为 SWR 的其他选项添加类型，你也可以直接导入这些类型：
 
 ```typescript
-import { useSWR } from 'swr'
+import useSWR from 'swr'
 import type { SWRConfiguration } from 'swr'
 
 const config: SWRConfiguration = {
