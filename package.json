@@ -17,8 +17,8 @@
     "intersection-observer": "^0.10.0",
     "markdown-to-jsx": "^6.11.4",
     "next": "^12.1.0",
-    "nextra": "^2.0.0-alpha.36",
-    "nextra-theme-docs": "^2.0.0-alpha.36",
+    "nextra": "^2.0.0-alpha.44",
+    "nextra-theme-docs": "^2.0.0-alpha.44",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intersection-observer": "^8.26.2"
