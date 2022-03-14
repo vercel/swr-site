@@ -193,7 +193,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 - `getKey`: 인덱스와 이전 페이지 데이터를 받고 페이지의 키를 반환하는 함수
 - `fetcher`: `useSWR`의 [fetcher 함수](/docs/data-fetching)와 동일
-- `options`: `useSWR`이 지원하는 모든 옵션을 받음. 세 개의 추가 옵션을 포함:
+- `options`: `useSWR`이 지원하는 모든 옵션을 받음. 네 개의 추가 옵션을 포함:
   - `initialSize = 1`: 초기에 로드해야 하는 페이지의 수
   - `revalidateAll = false`: 항상 모든 페이지의 갱신 시도
   - `revalidateFirstPage = true`: always try to revalidate the first page
