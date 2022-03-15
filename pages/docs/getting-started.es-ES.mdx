@@ -98,7 +98,7 @@ import { Welcome } from 'components/diagrams/welcome'
   <Welcome/>
 </div>
 
-Tradicionalmente, obtenemos los datos una vez utilizando `useEffect` en el componente de nivel superiror, y pasarlo a los componentes hijos
+Tradicionalmente, obtenemos los datos una vez utilizando `useEffect` en el componente de nivel superior, y pasarlo a los componentes hijos
 a través de props (fíjate que por ahora no manejamos el estado de error):
 
 ```jsx {7-11,17,18,27}
@@ -145,7 +145,7 @@ function Avatar({ user }) {
 }
 ```
 
-Por lo general, necesitamos mantener todos los datos que se obtienen en el componente de nivel superiror y
+Por lo general, necesitamos mantener todos los datos que se obtienen en el componente de nivel superior y
 añadir las props a cada componente dentro del árbol. El código será más difícil de mantener si añadimos más
 dependencia de datos a la página.
 
