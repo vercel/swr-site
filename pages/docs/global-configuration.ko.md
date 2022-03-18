@@ -39,7 +39,7 @@ function App () {
 
 ### 캐시 공급자
 
-나열된 모든 [옵션](/docs/options) 외에도, `SWRConfig`는 선택적으로 `provider` 함수도 받습니다. 더 자세한 내용은 [캐시](/docs/cache) 섹션을 참고해 주세요.
+나열된 모든 [옵션](/docs/options) 외에도, `SWRConfig`는 선택적으로 `provider` 함수도 받습니다. 더 자세한 내용은 [캐시](/docs/advanced/cache) 섹션을 참고해 주세요.
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>

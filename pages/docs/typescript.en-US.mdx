@@ -2,11 +2,11 @@
 
 SWR is friendly for apps written in TypeScript, with type safety out of the box.
 
-### Basic Usage
+## Basic Usage
 
 By default, SWR will also infer the argument types of `fetcher` from `key`, so you can have the preferred types automatically.
 
-#### useSWR
+### useSWR
 
 ```typescript
 // `key` is inferred to be `string`
@@ -34,10 +34,9 @@ const { data } = useSWR(uid, fetcher)
 // `data` will be `User | undefined`.
 ```
 
+### useSWRInfinite
 
-#### useSWRInfinite
-
-Same for `swr/inifite`, you can either rely on the automatic type inference or explicitly sepicify the types by yourself.
+Same for `swr/inifite`, you can either rely on the automatic type inference or explicitly specify the types by yourself.
 
 ```typescript
 import { SWRInfiniteKeyLoader } from 'swr/infinite'
@@ -49,9 +48,9 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
-### Generics
+## Generics
 
-Speicifying the type of `data` is easy. By default, it will use the return type of `fetcher` (with `undefined` for the non-ready state) as the `data` type, but you can also pass it as a parameter:
+Specifying the type of `data` is easy. By default, it will use the return type of `fetcher` (with `undefined` for the non-ready state) as the `data` type, but you can also pass it as a parameter:
 
 ```typescript
 // 🔹 A. Use a typed fetcher:
@@ -66,7 +65,7 @@ const { data } = useSWR<User>('/api/user', fetcher)
 If you want to add types for other options of SWR, you can also import those types directly:
 
 ```typescript
-import { useSWR } from 'swr'
+import useSWR from 'swr'
 import type { SWRConfiguration } from 'swr'
 
 const config: SWRConfiguration = {
@@ -78,7 +77,7 @@ const config: SWRConfiguration = {
 const { data } = useSWR<string[]>('/api/data', fetcher, config)
 ```
 
-### Middleware Types
+## Middleware Types
 
 There're some extra type definitions you can import to help adding types to your custom middleware.
 

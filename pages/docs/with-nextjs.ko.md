@@ -57,3 +57,37 @@ export default function Page({ fallback }) {
 <Callout emoji="💡">
   `Article` 컴포넌트는 미리 생성된 데이터로 먼저 렌더링하고, 해당 페이지가 하이드레이트 된 후에 최신 데이터를 다시 가져와 새로 고칩니다. 
 </Callout>
+
+### Complex Keys
+
+`useSWR` can be used with keys that are `array` and `function` types. Utilizing pre-fetched data with these kinds of keys requires serializing the `fallback` keys with `unstable_serialize`.
+
+```jsx
+import useSWR, { unstable_serialize } from 'swr'
+
+export async function getStaticProps () {
+  const article = await getArticleFromAPI(1)
+  return {
+    props: {
+      fallback: {
+        // unstable_serialize() array style key
+        [unstable_serialize(['api', 'article', 1])]: article,
+      }
+    }
+  }
+}
+
+function Article() {
+  // using an array style key.
+  const { data } = useSWR(['api', 'article', 1], fetcher)
+  return <h1>{data.title}</h1>
+}
+
+export default function Page({ fallback }) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
+}
+```

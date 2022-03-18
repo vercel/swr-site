@@ -14,6 +14,10 @@ import Callout from 'nextra-theme-docs/callout'
 
 ### API
 
+_注意： 関数名は大文字にしないでください（たとえば `myMiddleware` の代わりに `MyMiddleware` を使うなど）。そうしないと、 React lint のルールが `Rules of Hook` エラーを投げます。_
+
+[TypeScript](https://swr.vercel.app/docs/typescript#middleware-types)
+
 ```jsx
 function myMiddleware (useSWRNext) {
   return (key, fetcher, config) => {

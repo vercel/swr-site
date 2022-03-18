@@ -6,25 +6,12 @@ import Callout from 'nextra-theme-docs/callout'
 import Features from 'components/features'
 import Bleed from 'nextra-theme-docs/bleed'
 
-<style jsx global>{`
-body {
-  background-image: radial-gradient(#ddd 1px, transparent 0),
-    radial-gradient(#ddd 1px, transparent 0);
-  background-position: 0 0, 25px 25px;
-  background-size: 50px 50px;
-}
-.dark body {
-  background-image: radial-gradient(#333 1px, transparent 0),
-    radial-gradient(#333 1px, transparent 0);
-}
-`}</style>
-
 {
 // wrapped with {} to mark it as javascript so mdx will not put it under a p tag
 }
 {<h1 className="text-center font-extrabold md:text-5xl mt-8">SWR</h1>}
 
-<Bleed full><Features/></Bleed>
+<Bleed><Features/></Bleed>
 
 "SWR"이라는 이름은 [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861)에 의해 알려진 HTTP 캐시 무효 전략인 `stale-while-revalidate`에서 유래되었습니다.
 SWR은 먼저 캐시(스태일)로부터 데이터를 반환한 후, fetch 요청(재검증)을 하고, 최종적으로 최신화된 데이터를 가져오는 전략입니다.
@@ -35,7 +22,7 @@ SWR은 먼저 캐시(스태일)로부터 데이터를 반환한 후, fetch 요�
 </Callout>
 
 <div className="mt-16 mb-20 text-center">
-  [시작하기](/docs/getting-started) · [예시](/examples) · [블로그](/blog) · [GitHub 리포지토리](https://github.com/vercel/swr)
+  [시작하기](/docs/getting-started) · [예시](/examples/basic) · [블로그](/blog/swr-v1) · [GitHub 리포지토리](https://github.com/vercel/swr)
 </div>
 
 ## 개요

@@ -27,23 +27,36 @@ const TITLE_WITH_TRANSLATIONS = {
   ru: "React хуки для выборки данных",
 };
 
+const FEEDBACK_LINK_WITH_TRANSLATIONS = {
+  "en-US": "Question? Give us feedback →",
+  "zh-CN": "有疑问？给我们反馈 →",
+};
+
 export default {
-  github: "https://github.com/vercel/swr",
+  projectLink: "https://github.com/vercel/swr",
   docsRepositoryBase: "https://github.com/vercel/swr-site/blob/master/pages",
   titleSuffix: " – SWR",
   search: true,
-  unstable_stork: false,
+  unstable_flexsearch: true,
   floatTOC: true,
+  feedbackLink: () => {
+    const { locale } = useRouter();
+    return (
+      FEEDBACK_LINK_WITH_TRANSLATIONS[locale] ||
+      FEEDBACK_LINK_WITH_TRANSLATIONS["en-US"]
+    );
+  },
+  feedbackLabels: "feedback",
   logo: () => {
     const { locale } = useRouter();
     return (
       <>
-        <Logo height={18} />
-        <span className="mx-2 font-extrabold hidden md:inline select-none">
+        <Logo height={12} />
+        <span
+          className="mx-2 font-extrabold hidden md:inline select-none"
+          title={"SWR: " + (TITLE_WITH_TRANSLATIONS[locale] || "")}
+        >
           SWR
-        </span>
-        <span className="text-gray-600 font-normal hidden lg:!inline whitespace-no-wrap">
-          {TITLE_WITH_TRANSLATIONS[locale]}
         </span>
       </>
     );
@@ -76,8 +89,6 @@ export default {
           color="#000000"
         />
         <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="theme-color" content="#ffffff" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="Content-Language" content="en" />
         <meta
           name="description"
@@ -128,17 +139,17 @@ export default {
   footerEditLink: ({ locale }) => {
     switch (locale) {
       case "zh-CN":
-        return "在 GitHub 上编辑本页";
+        return "在 GitHub 上编辑本页 →";
       case "es-ES":
-        return "Edite esta página en GitHub";
+        return "Edite esta página en GitHub →";
       case "ja":
-        return "Github で編集する";
+        return "Github で編集する →";
       case "ko":
-        return "Github에서 이 페이지 편집하기";
+        return "Github에서 이 페이지 편집하기 →";
       case "ru":
-        return "Редактировать на GitHub";
+        return "Редактировать на GitHub →";
       default:
-        return "Edit this page on GitHub";
+        return "Edit this page on GitHub →";
     }
   },
   footerText: ({ locale }) => {

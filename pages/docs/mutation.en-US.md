@@ -31,7 +31,7 @@ function App () {
 }
 ```
 
-*: _It broadcasts to SWR hooks under the same [cache provider](/docs/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks._
+*: _It broadcasts to SWR hooks under the same [cache provider](/docs/advanced/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks._
 
 ## Optimistic Updates
 
@@ -102,7 +102,7 @@ mutate('/api/todos', async todos => {
 
 Most probably, you need some data to update the cache. The data is resolved or returned from the promise or async function you passed to `mutate`.
 
-The function passed to `mutate` will return an updated document which is used to update the corresponding cache value. If there is an error thown while executing the function, the error will be thrown so it can be handled appropriately.
+The function passed to `mutate` will return an updated document which is used to update the corresponding cache value. If there is an error thrown while executing the function, the error will be thrown so it can be handled appropriately.
 
 ```jsx
 try {
