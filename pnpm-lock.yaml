@@ -7,8 +7,8 @@ specifiers:
   intersection-observer: ^0.10.0
   markdown-to-jsx: ^6.11.4
   next: ^12.1.0
-  nextra: ^2.0.0-alpha.34
-  nextra-theme-docs: ^2.0.0-alpha.34
+  nextra: ^2.0.0-alpha.44
+  nextra-theme-docs: ^2.0.0-alpha.44
   postcss: ^8.4.5
   react: ^17.0.2
   react-dom: ^17.0.2
@@ -21,8 +21,8 @@ dependencies:
   intersection-observer: 0.10.0
   markdown-to-jsx: 6.11.4_react@17.0.2
   next: 12.1.0_react-dom@17.0.2+react@17.0.2
-  nextra: 2.0.0-alpha.34_react@17.0.2
-  nextra-theme-docs: 2.0.0-alpha.34_caa633a00319350dbda42996613fe26c
+  nextra: 2.0.0-alpha.44_react@17.0.2
+  nextra-theme-docs: 2.0.0-alpha.44_caa633a00319350dbda42996613fe26c
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-intersection-observer: 8.33.1_react@17.0.2
@@ -1615,8 +1615,8 @@ packages:
       - babel-plugin-macros
     dev: false
 
-  /nextra-theme-docs/2.0.0-alpha.34_caa633a00319350dbda42996613fe26c:
-    resolution: {integrity: sha512-Kp+fn+jiEFvtvBygY+SmeqHBkd0917OeFWuJTXVfq6TUaQMlcv/1wiybJB+Gh6KDl8gn4zwHoX3wJxdjOW7yIA==}
+  /nextra-theme-docs/2.0.0-alpha.44_caa633a00319350dbda42996613fe26c:
+    resolution: {integrity: sha512-KeLaaQNOgkS4TWr38T7CQ7CXP5A8zgJuadmzl/uMNkq9YWS5XPIzicvmd0ltr+fCdxzBqVFAIeIX54XB/qUlYA==}
     peerDependencies:
       next: '>=9.5.3'
       react: '>=16.13.1'
@@ -1636,14 +1636,11 @@ packages:
       parse-git-url: 1.0.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-innertext: 1.1.5_react@17.0.2
       title: 3.4.3
-    transitivePeerDependencies:
-      - '@types/react'
     dev: false
 
-  /nextra/2.0.0-alpha.34_react@17.0.2:
-    resolution: {integrity: sha512-qm3iDQ3lP0beDzCbGl14QOg50US67nCQx6G53ow056Lg6idtMoGB235yWPo8IuYYPnMZLF4ewb+ESXzQBi5q8g==}
+  /nextra/2.0.0-alpha.44_react@17.0.2:
+    resolution: {integrity: sha512-PZBQAHlrZbf4sg2XEUvqe+SoI5XU/Ui4Z/9ENmGFRCrtKd3oy9Ea9uMrS6V0s8e+cwOjlKCW4TRoG24aORefog==}
     peerDependencies:
       react: '>=16.13.1'
     dependencies:
@@ -1850,15 +1847,6 @@ packages:
       object-assign: 4.1.1
       react: 17.0.2
       scheduler: 0.20.2
-    dev: false
-
-  /react-innertext/1.1.5_react@17.0.2:
-    resolution: {integrity: sha512-PWAqdqhxhHIv80dT9znP2KvS+hfkbRovFp4zFYHFFlOoQLRiawIic81gKb3U1wEyJZgMwgs3JoLtwryASRWP3Q==}
-    peerDependencies:
-      '@types/react': '>=0.0.0 <=99'
-      react: '>=0.0.0 <=99'
-    dependencies:
-      react: 17.0.2
     dev: false
 
   /react-intersection-observer/8.33.1_react@17.0.2:

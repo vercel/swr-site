@@ -33,7 +33,7 @@ function App () {
 
 *: _It broadcasts to SWR hooks under the same [cache provider](/docs/advanced/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks._
 
-## Mutation and POST Request
+## Optimistic Updates
 
 In many cases, applying local mutations to data is a good way to make changes
 feel faster — no need to wait for the remote source of data.
@@ -53,32 +53,29 @@ function Profile () {
       <h1>My name is {data.name}.</h1>
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
-        
-        // update the local data immediately, but disable the revalidation
-        mutate('/api/user', { ...data, name: newName }, false)
-        
-        // send a request to the API to update the source
-        await requestUpdateUsername(newName)
-        
-        // trigger a revalidation (refetch) to make sure our local data is correct
-        mutate('/api/user')
+        const user = { ...data, name: newName }
+        const options = { optimisticData: user, rollbackOnError: true }
+
+        // updates the local data immediately
+        // send a request to update the data
+        // triggers a revalidation (refetch) to make sure our local data is correct
+        mutate(updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
   )
 }
 ```
+> The **`updateFn`** should be a promise or asynchronous function to handle the remote mutation, it should return updated data.
 
-Clicking the button in the example above will locally update the client data, send a POST request to modify the remote data and
-try to fetch the latest one (revalidate).
+**Available Options**
 
-But many POST APIs will just return the updated data directly, so we don’t need to revalidate again.
-Here’s an example showing the “local mutate - request - update” usage:
+**`optimisticData`**: data to immediately update the client cache, usually used in optimistic UI.
 
-```jsx
-mutate('/api/user', newUser, false)             // use `false` to mutate without revalidation
-mutate('/api/user', updateUser(newUser), false) // `updateUser` is a Promise of the request,
-                                                // which returns the updated document
-```
+**`revalidate`**: should the cache revalidate once the asynchronus update resolves.
+
+**`populateCache`**: should the result of the remote mutation be written to the cache.
+
+**`rollbackOnError`**: should the cache rollback if the remote mutation errors.
 
 ## Mutate Based on Current Data
 
