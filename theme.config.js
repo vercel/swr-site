@@ -67,7 +67,9 @@ export default {
     const ogImage =
       meta.image ||
       (locale === "en-US" || locale === "es-ES"
-        ? `https://swr-card.vercel.app${route === "/" ? "" : "?title=" + title}`
+        ? `https://swr-card.vercel.app${
+            /\/index\.+/.test(route) ? "" : "?title=" + title
+          }`
         : "https://assets.vercel.com/image/upload/v1572282926/swr/twitter-card.jpg");
 
     return (
