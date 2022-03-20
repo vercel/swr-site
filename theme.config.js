@@ -62,6 +62,14 @@ export default {
     );
   },
   head: ({ title, meta }) => {
+    const { locale, route } = useRouter();
+
+    const ogImage =
+      meta.image ||
+      (locale === "en-US" || locale === "es-ES"
+        ? `https://swr-card.vercel.app${route === "/" ? "" : "?title=" + title}`
+        : "https://assets.vercel.com/image/upload/v1572282926/swr/twitter-card.jpg");
+
     return (
       <>
         {/* Favicons, meta */}
@@ -106,33 +114,15 @@ export default {
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@vercel" />
-        <meta
-          name="twitter:image"
-          content={
-            meta.image ||
-            "https://assets.vercel.com/image/upload/v1572282926/swr/twitter-card.jpg"
-          }
-        />
+        <meta name="twitter:image" content={ogImage} />
         <meta
           name="og:title"
           content={
             title ? title + " – SWR" : "SWR: React Hooks for Data Fetching"
           }
         />
-        <meta
-          name="og:image"
-          content={
-            meta.image ||
-            "https://assets.vercel.com/image/upload/v1572282926/swr/twitter-card.jpg"
-          }
-        />
+        <meta name="og:image" content={ogImage} />
         <meta name="apple-mobile-web-app-title" content="SWR" />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
-          media="print"
-          onLoad="this.media='all'"
-        />
       </>
     );
   },
