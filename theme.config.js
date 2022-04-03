@@ -62,15 +62,13 @@ export default {
     );
   },
   head: ({ title, meta }) => {
-    const { locale, route } = useRouter();
+    const { route } = useRouter();
 
     const ogImage =
       meta.image ||
-      (locale === "en-US" || locale === "es-ES"
-        ? `https://swr-card.vercel.app${
-            /\/index\.+/.test(route) ? "" : "?title=" + title
-          }`
-        : "https://assets.vercel.com/image/upload/v1572282926/swr/twitter-card.jpg");
+      `https://swr-card.vercel.app${
+        /\/index\.+/.test(route) ? "" : "?title=" + encodeURIComponent(title)
+      }`;
 
     return (
       <>
