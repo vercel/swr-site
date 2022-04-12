@@ -31,7 +31,7 @@ function App () {
 
 *: _通常情况下 mutate 会广播给同一个 [cache provider](/docs/cache) 下面的 SWR hooks。如果没有设置 cache provider，即会广播给所有的 SWR hooks。_
 
-## 与 POST 请求配合使用
+## 乐观更新
 
 在很多情况中，对数据应用本地 mutation 是一种让更改感觉更快的好办法 - 无需等待远程数据源。
 
@@ -49,30 +49,29 @@ function Profile () {
       <h1>My name is {data.name}.</h1>
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
-        
-        // 立即更新本地数据，但禁用重新验证
-        mutate('/api/user', { ...data, name: newName }, false)
-        
-        // 向 API 发送请求更新源
-        await requestUpdateUsername(newName)
-        
+        const user = { ...data, name: newName }
+        const options = { optimisticData: user, rollbackOnError: true }
+
+        // 立即更新本地数据
+        // 发送请求更新数据
         // 触发重新验证（重新请求）以确保本地数据是正确的
-        mutate('/api/user')
+        mutate(updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
   )
 }
 ```
+> **`updateFn`** 应该是一个 promise 或异步函数来处理远程更新，它应该返回更新后的数据。
 
-点击上面示例中的按钮将发送一个 POST 请求来修改远程数据，本地更新客户端数据并尝试请求最新的数据（重新验证）。
+**Available Options**
 
-但是很多 POST API 只会直接返回更新后的数据，所以我们不需要再次重新验证。下面这个示例展示了 “本地更改 - 请求 - 更新”的用法：
+**`optimisticData`**：立即更新客户端缓存的数据，通常用于 optimistic UI。
 
-```jsx
-mutate('/api/user', newUser, false)             // 使用 `false` 进行 mutate 无需重新验证
-mutate('/api/user', updateUser(newUser), false) // `updateUser` 是请求的 Promise，
-                                                // 返回 updated document
-```
+**`revalidate`**：一旦完成异步更新，缓存是否重新请求。
+
+**`populateCache`**：远程更新的结果是否写入缓存。
+
+**`rollbackOnError`**：如果远程更新出错，是否进行缓存回滚。
 
 ## 根据当前数据更改
 
