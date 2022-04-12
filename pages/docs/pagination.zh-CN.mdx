@@ -184,7 +184,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 - `getKey`: 一个函数，接受索引和上一页数据，返回页面的 key
 - `fetcher`: 和 `useSWR` 的 [fetcher 函数](/docs/data-fetching) 一样
-- `options`: 接受 `useSWR` 支持的所有选项，以及 3 个额外选项：
+- `options`: 接受 `useSWR` 支持的所有选项，以及 4 个额外选项：
   - `initialSize = 1`: 最初应加载的页面数量
   - `revalidateAll = false`: 始终尝试重新验证所有页面
   - `revalidateFirstPage = true`: 始终尝试重新验证第一页
