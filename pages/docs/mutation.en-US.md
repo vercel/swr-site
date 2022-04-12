@@ -59,7 +59,7 @@ function Profile () {
         // updates the local data immediately
         // send a request to update the data
         // triggers a revalidation (refetch) to make sure our local data is correct
-        mutate(updateFn(user), options);
+        mutate('/api/user', updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
   )
