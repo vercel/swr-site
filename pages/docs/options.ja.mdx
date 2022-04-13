@@ -22,12 +22,15 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 ## オプション
 
 - `suspense = false`: React Suspense モードを有効にする [（ 詳細 ）](/docs/suspense)
-- `fetcher = window.fetch(url).then(res => res.json())`: フェッチャー関数
-- `revalidateIfStale = true`: 古いデータがある場合でも、マウント時に自動再検証をする [（ 詳細 ）](/docs/revalidation#disable-automatic-revalidations)
+- `fetcher(args)`: フェッチャー関数
+- `revalidateIfStale = true`: 古いデータがある場合でも、自動再検証をする [（ 詳細 ）](/docs/revalidation#disable-automatic-revalidations)
 - `revalidateOnMount`: コンポーネントのマウント時に行われる自動再検証を有効または無効にします
 - `revalidateOnFocus = true`: ウィンドウがフォーカスされたときに自動的に再検証します [（ 詳細 ）](/docs/revalidation)
 - `revalidateOnReconnect = true`: ブラウザがネットワーク接続を回復すると自動的に再検証します（ `navigator.onLine` 経由） [（ 詳細 ）](/docs/revalidation)
-- `refreshInterval = 0`: ポーリングの間隔（デフォルトでは無効） [（ 詳細 ）](/docs/revalidation)
+- `refreshInterval` [（ 詳細 ）](/docs/revalidation): 
+  - デフォルトでは無効: `refreshInterval = 0`
+  - 数値が設定されている場合、ミリ秒単位のポーリングの間隔
+  - 関数を設定した場合、その関数は最新のデータを受け取り、ミリ秒単位の間隔で返す必要があります
 - `refreshWhenHidden = false`: ウィンドウが非表示の場合にポーリングします（`refreshInterval` が有効になっているときのみ）
 - `refreshWhenOffline = false`: ブラウザがオフラインのときにポーリングします（`navigator.onLine` によって決定される）
 - `shouldRetryOnError = true`: フェッチャーでエラーが発生したときに再試行します

@@ -6,25 +6,12 @@ import Callout from "nextra-theme-docs/callout";
 import Features from "components/features";
 import Bleed from 'nextra-theme-docs/bleed'
 
-<style jsx global>{`
-body {
-  background-image: radial-gradient(#ddd 1px, transparent 0),
-    radial-gradient(#ddd 1px, transparent 0);
-  background-position: 0 0, 25px 25px;
-  background-size: 50px 50px;
-}
-.dark body {
-  background-image: radial-gradient(#333 1px, transparent 0),
-    radial-gradient(#333 1px, transparent 0);
-}
-`}</style>
-
 {
 // wrapped with {} to mark it as javascript so mdx will not put it under a p tag
 }
 {<h1 className="text-center font-extrabold md:text-5xl mt-8">SWR</h1>}
 
-<Bleed full>
+<Bleed>
   <Features/>
 </Bleed>
 
@@ -37,7 +24,7 @@ SWR es una estrategia para devolver primero los datos en caché (obsoletos), lue
 </Callout>
 
 <div className="mt-16 mb-20 text-center">
-  [Get Started](/docs/getting-started) · [Examples](/examples) · [Blog](/blog) · [GitHub Repository](https://github.com/vercel/swr)
+  [Get Started](/docs/getting-started) · [Examples](/examples/basic) · [Blog](/blog/swr-v1) · [GitHub Repository](https://github.com/vercel/swr)
 </div>
 
 ## Resumen

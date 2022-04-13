@@ -22,12 +22,15 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 ## 옵션
 
 - `suspense = false`: React Suspense 모드를 활성화 [(상세내용)](/docs/suspense)
-- `fetcher = window.fetch(url).then(res => res.json())`: fetcher 함수
-- `revalidateIfStale = true`: 스태일 데이터가 존재할 경우 마운트시에 자동으로 갱신 [(상세내용)](/docs/revalidation#disable-automatic-revalidations)
+- `fetcher(args)`: fetcher 함수
+- `revalidateIfStale = true`: automatically revalidate even if there is stale data [(details)](/docs/revalidation#disable-automatic-revalidations)
 - `revalidateOnMount`: 컴포넌트가 마운트되었을 때 자동 갱신 활성화 또는 비활성화
 - `revalidateOnFocus = true`: 창이 포커싱되었을 때 자동 갱신 [(상세내용)](/docs/revalidation)
 - `revalidateOnReconnect = true`: 브라우저가 네트워크 연결을 다시 얻었을 때 자동으로 갱신(`navigator.onLine`을 통해) [(상세내용)](/docs/revalidation)
-- `refreshInterval = 0`: 인터벌 폴링(기본적으로는 비활성화) [(상세내용)](/docs/revalidation)
+- `refreshInterval` [(상세내용)](/docs/revalidation):
+  - 기본적으로는 비활성화: `refreshInterval = 0`
+  - If set to a number, 인터벌 폴링 
+  - If set to a function, the function will receive the latest data and should return the interval in milliseconds
 - `refreshWhenHidden = false`: 창이 보이지 않을 때 폴링(`refreshInterval`이 활성화된 경우)
 - `refreshWhenOffline = false`: 브라우저가 오프라인일 때 폴링(`navigator.onLine`에 의해 결정됨)
 - `shouldRetryOnError = true`: fetcher에 에러가 있을 때 재시도
@@ -47,7 +50,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `use`: 미들웨어 함수의 배열 [(상세내용)](/docs/middleware)
 
 <Callout emoji="💡">
-  느린 네트워크(2G, {'<='} 70Kbps)에서는, 기본적으로 <code>errorRetryInterval</code>이 10초이며, 
+  느린 네트워크(2G, {'<='} 70Kbps)에서는, 기본적으로 <code>errorRetryInterval</code>이 10초이며,
   <code>loadingTimeout</code>은 5초입니다.
 </Callout>
 

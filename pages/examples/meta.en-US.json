@@ -1,6 +1,7 @@
 {
   "basic": "Basic Usage",
   "auth": "Authentication",
+  "optimistic-ui": "Optimistic UI",
   "infinite-loading": "Infinite Loading",
   "error-handling": "Error Handling",
   "ssr": "Next.js SSR"

@@ -22,14 +22,14 @@ import { Pagination } from 'components/diagrams/pagination'
 
 ...что является типичной UI пагинацией. Посмотрим, как это легко реализовать с помощью `useSWR`:
 
-```jsx highlight=5
+```jsx {5}
 function App () {
   const [pageIndex, setPageIndex] = useState(0);
 
   // URL-адрес API включает индекс страницы, который является состоянием React.
   const { data } = useSWR(`/api/data?page=${pageIndex}`, fetcher);
 
-  // ... обработка состояния загразки и ошибки
+  // ... обработка состояния загрузки и ошибки
 
   return <div>
     {data.map(item => <div key={item.id}>{item.name}</div>)}
@@ -41,7 +41,7 @@ function App () {
 
 Более того, мы можем создать абстракцию для этого «компонента страницы»:
 
-```jsx highlight=13
+```jsx {13}
 function Page ({ index }) {
   const { data } = useSWR(`/api/data?page=${index}`, fetcher);
 
@@ -65,7 +65,7 @@ function App () {
 Мы рендерим следующую страницу внутри скрытого div, поэтому SWR будет запускать выборку данных следующей страницы.
 Когда пользователь переходит на следующую страницу, данные уже там:
 
-```jsx highlight=6
+```jsx {6}
 function App () {
   const [pageIndex, setPageIndex] = useState(0);
 
@@ -95,7 +95,7 @@ import { Infinite } from 'components/diagrams/infinite'
 Чтобы реализовать это, нам нужно сделать **динамическое количество запросов** на этой странице.
 У хуков React есть [пара правил](https://ru.reactjs.org/docs/hooks-rules.html), поэтому мы **НЕ МОЖЕМ** делать что-то вроде этого:
 
-```jsx highlight=5,6,7,8,9
+```jsx {5,6,7,8,9}
 function App () {
   const [cnt, setCnt] = useState(1)
 
@@ -118,7 +118,7 @@ function App () {
 
 Вместо этого мы можем использовать абстракцию `<Page />`, которую мы создали для этого:
 
-```jsx highlight=5,6,7
+```jsx {5,6,7}
 function App () {
   const [cnt, setCnt] = useState(1)
 
@@ -142,7 +142,7 @@ function App () {
 показывающее, сколько всего элементов имеется. Мы больше не можем использовать решение `<Page />`,
 потому что UI верхнего уровня (`<App />`) нужны данные внутри каждой страницы:
 
-```jsx highlight=10
+```jsx {10}
 function App () {
   const [cnt, setCnt] = useState(1)
 
@@ -196,6 +196,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 - `options`: принимает все опции, которые поддерживает `useSWR`, с 3 дополнительными опциями:
   - `initialSize = 1`: количество страниц, которые должны быть загружены изначально
   - `revalidateAll = false`: всегда пытаться ревалидировать все страницы
+  - `revalidateFirstPage = true`: always try to revalidate the first page
   - `persistSize = false`: не сбрасывать размер страницы до 1 (или `initialSize`, если установлен), когда ключ первой страницы изменяется
 
 <Callout>
@@ -225,7 +226,7 @@ GET /users?page=0&limit=10
 ]
 ```
 
-```jsx highlight=4,5,6,7,10
+```jsx {4,5,6,7,10}
 // Функция для получения ключа SWR каждой страницы,
 // её возвращаемое значение будет принято в `fetcher`.
 // Если возвращается `null`, запрос этой страницы не запускается.

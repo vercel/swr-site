@@ -30,24 +30,27 @@ const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 
 ## 객체 전달
 
-사용자 스코프를 데이터와 함께 가져오는 다른 함수가 있다고 해봅시다: `fetchWithuser(api, user)`. 다음과 같이 할 수 있습니다.
+import Callout from 'nextra-theme-docs/callout'
+
+<Callout>
+  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+</Callout>
+  
+Say you have another function that fetches data with a user scope: `fetchWithUser(api, user)`. You can do the following:
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
-// ...그리고 이를 다른 쿼리의 인자로 전달
+
+// ...and then pass it as an argument to another useSWR hook
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
 
-이 요청의 키는 이제 두 값의 조합입니다. SWR은 렌더링할 때마다 인자들을
-**얕게** 비교하여 변경된 것이 있으면 갱신을 트리거 합니다.
-렌더링할 때마다 객체들은 다른 객체로 취급되므로 렌더링 시에 객체를 다시 생성하지 않아야 함을 염두에 두세요.
+You can directly pass an object as the key, and `fetcher` will receive that object too:
 
 ```js
-// 이렇게 하지마세요! 의존성은 렌더링할 때마다 변경될 것입니다.
-useSWR(['/api/user', { id }], query)
-
-// 대신에 “안정적인” 값들만 전달하세요.
-useSWR(['/api/user', id], (url, id) => query(url, { id }))
+const { data: orders } = useSWR({ url: '/api/orders', args: user }, fetcher)
 ```
 
-Dan Abramov는 [이 블로그 글](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect)에서 의존성에 대해 아주 잘 설명하고 있습니다.
+<Callout emoji="⚠️">
+  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed. 
+</Callout>
