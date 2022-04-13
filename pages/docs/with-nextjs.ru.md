@@ -57,9 +57,9 @@ export default function Page({ fallback }) {
   Компонент `Article` сначала отрендерит предварительно сгенерированные данные, а после гидратации страницы он снова получит последние данные, чтобы они были актуальными.
 </Callout>
 
-### Complex Keys
+### Сложные ключи
 
-`useSWR` can be used with keys that are `array` and `function` types. Utilizing pre-fetched data with these kinds of keys requires serializing the `fallback` keys with `unstable_serialize`.
+`useSWR` можно использовать с ключами типа `array` и `function`. Использование предварительно загруженных данных с ключами такого типа требует сериализации ключей `fallback` с помощью `unstable_serialize`.
 
 ```jsx
 import useSWR, { unstable_serialize } from 'swr'
@@ -69,7 +69,7 @@ export async function getStaticProps () {
   return {
     props: {
       fallback: {
-        // unstable_serialize() array style key
+        // unstable_serialize() ключ массивного типа
         [unstable_serialize(['api', 'article', 1])]: article,
       }
     }
@@ -77,7 +77,7 @@ export async function getStaticProps () {
 }
 
 function Article() {
-  // using an array style key.
+  // использование ключа массивного типа.
   const { data } = useSWR(['api', 'article', 1], fetcher)
   return <h1>{data.title}</h1>
 }

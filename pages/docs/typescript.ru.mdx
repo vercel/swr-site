@@ -1,28 +1,29 @@
 # TypeScript
 
-SWR is friendly for apps written in TypeScript, with type safety out of the box.
+SWR дружелюбен к приложениям, написанным на TypeScript, с предустановленной типизацией.
 
-## Basic Usage
+## Основное использование
 
-By default, SWR will also infer the argument types of `fetcher` from `key`, so you can have the preferred types automatically.
+По умолчанию SWR также выводит типы аргументов `fetcher` из `key`, так чтобы вам были доступны предпочтительные типы автоматически.
 
 ### useSWR
 
 ```typescript
-// `key` is inferred to be `string`
+// `key` подразумевается как `string`
 useSWR('/api/user', key => {})
 useSWR(() => '/api/user', key => {})
 
-// `key` will be inferred as { a: string; b: { c: string; d: number } }
+// `key` подразумевается как { a: string; b: { c: string; d: number } }
 useSWR({ a: '1', b: { c: '3', d: 2 } }, key => {})
 useSWR(() => { a: '1', b: { c: '3', d: 2 } }, key => {})
 
-// `arg0` will be inferred as string.  `arg1` will be inferred as number
+// `arg0` подразумевается как строка.  `arg1` подразумевается как число
 useSWR(['user', 8], (arg0, arg1) => {})
 useSWR(() => ['user', 8], (arg0, arg1) => {})
 ```
 
 You can also explicitly specify the types for `key` and `fetcher`'s arguments.
+Вы также можете явно указать типы `key` и аргументов `fetcher`.
 
 ```typescript
 import useSWR, { Key, Fetcher } from 'swr'
@@ -31,12 +32,12 @@ const uid: Key = '<user_id>'
 const fetcher: Fetcher<string, User> = (id) => getUserById(id)
 
 const { data } = useSWR(uid, fetcher)
-// `data` will be `User | undefined`.
+// `data` будет `User | undefined`.
 ```
 
 ### useSWRInfinite
 
-Same for `swr/inifite`, you can either rely on the automatic type inference or explicitly specify the types by yourself.
+То же самое для `swr/inifite`, вы можете либо полагаться на автоматический вывод типа, либо явно указывать типы самостоятельно.
 
 ```typescript
 import { SWRInfiniteKeyLoader } from 'swr/infinite'
@@ -48,21 +49,21 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
-## Generics
+## Обобщения (Generics)
 
-Specifying the type of `data` is easy. By default, it will use the return type of `fetcher` (with `undefined` for the non-ready state) as the `data` type, but you can also pass it as a parameter:
+Указывать тип `data` легко. По умолчанию он будет использовать возвращаемый тип `fetcher` (с `undefined` для неготового состояния) в качестве типа `data`, но вы также можете передать его в качестве параметра:
 
 ```typescript
-// 🔹 A. Use a typed fetcher:
-// `getUser` is `(endpoint: string) => User`.
+// 🔹 A. Используйте типизированный fetcher:
+// `getUser` является `(endpoint: string) => User`.
 const { data } = useSWR('/api/user', getUser)
 
-// 🔹 B. Specify the data type:
-// `fetcher` is generally returning `any`.
+// 🔹 B. Укажите тип данных:
+// `fetcher` обычно возвращает `any`.
 const { data } = useSWR<User>('/api/user', fetcher)
 ```
 
-If you want to add types for other options of SWR, you can also import those types directly:
+Если вы хотите добавить типы для других параметров SWR, вы также можете напрямую импортировать эти типы:
 
 ```typescript
 import useSWR from 'swr'
@@ -77,9 +78,9 @@ const config: SWRConfiguration = {
 const { data } = useSWR<string[]>('/api/data', fetcher, config)
 ```
 
-## Middleware Types
+## Типы промежуточного ПО
 
-There're some extra type definitions you can import to help adding types to your custom middleware.
+Есть несколько дополнительных определений типов, которые вы можете импортировать, чтобы упростить добавление типов в ваше пользовательское промежуточное ПО.
 
 ```typescript
 import useSWR, { Middleware, SWRHook } from 'swr'
