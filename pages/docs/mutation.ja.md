@@ -33,7 +33,7 @@ function App () {
 
 *: 同じ [キャッシュプロバイダー](/docs/cache) のスコープ下では、 SWR フックに渡されます。もしキャッシュプロバイダーが無ければ、すべての SWR フックに渡されます。
 
-## ミューテーションと POST リクエスト
+## 楽観的な更新
 
 多くの場合、データにローカルミューテーションを適用することは、変更をより速く
 感じさせるための良い方法です。データのリモートソースを待つ必要はありません。
@@ -53,32 +53,30 @@ function Profile () {
       <h1>My name is {data.name}.</h1>
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
+        const user = { ...data, name: newName }
+        const options = { optimisticData: user, rollbackOnError: true }
 
         // 再検証をせずに直ちにローカルデータを更新します
-        mutate('/api/user', { ...data, name: newName }, false)
-
-        // ソースを更新するために API にリクエストを送信します
-        await requestUpdateUsername(newName)
-
+        // ソースを更新するためにリクエストを送信します
         // ローカルデータが最新であることを確かめるために再検証（再取得）を起動します
-        mutate('/api/user')
+        mutate('/api/user', updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
   )
 }
 ```
 
-上記の例でボタンをクリックすると、ローカルでクライアントデータを更新し、
-リモートデータを修正するための POST リクエストを送信して、最新のデータを取得します（再検証）。
+> **`updateFn`** は、リモートミューテーションを処理する関数は promise 関数か非同期関数でなければならず、更新されたデータを返す必要があります。
 
-ただし、多くの POST API は更新されたデータを直接返すだけなので、再度再検証する必要はありません。
-「ローカルミューテート - リクエスト - 更新」の使用法を示す例を次に示します。
+**利用可能なオプション**
 
-```jsx
-mutate('/api/user', newUser, false)             // 再検証せずに変更するには、`false` を使用します
-mutate('/api/user', updateUser(newUser), false) // `updateUser` は、このリクエストの Promise であり、
-                                                // 更新されたドキュメントを返します
-```
+**`optimisticData`**: クライアントキャッシュを直ちに更新するデータで、通常は 楽観的な UI で使用されます。
+
+**`revalidate`**: 非同期更新が解決した後、キャッシュを再検証するかどうか。
+
+**`populateCache`**: リモートミューテーションの結果をキャッシュに書き込むかどうか。
+
+**`rollbackOnError`**: リモートミューテーションでエラーが発生した場合、キャッシュをロールバックするかどうか。
 
 ## 現在のデータにもとづいたミューテート
 
