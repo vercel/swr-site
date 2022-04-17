@@ -47,7 +47,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `onError(err, key, config)`: función callback cuando una petición devuelve un error
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: manejador para el reintento de error
 - `compare(a, b)`: función de comparación utilizada para detectar cuando los datos devueltos han cambiado,
-  para evitar spurious rerenders. Por defecto, se utiliza [dequal](https://github.com/lukeed/dequal).
+  para evitar spurious rerenders. Por defecto, se utiliza [stable-hash](https://github.com/shuding/stable-hash).
 - `isPaused()`: para detectar si pause revalidations, ignorará los datos obtenidos y los errores cuando devuelva `true`. Devuelve `false` por defecto.
 - `use`: array of middleware functions [(details)](/docs/middleware)
 

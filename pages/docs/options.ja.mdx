@@ -27,7 +27,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `revalidateOnMount`: コンポーネントのマウント時に行われる自動再検証を有効または無効にします
 - `revalidateOnFocus = true`: ウィンドウがフォーカスされたときに自動的に再検証します [（ 詳細 ）](/docs/revalidation)
 - `revalidateOnReconnect = true`: ブラウザがネットワーク接続を回復すると自動的に再検証します（ `navigator.onLine` 経由） [（ 詳細 ）](/docs/revalidation)
-- `refreshInterval` [（ 詳細 ）](/docs/revalidation): 
+- `refreshInterval` [（ 詳細 ）](/docs/revalidation):
   - デフォルトでは無効: `refreshInterval = 0`
   - 数値が設定されている場合、ミリ秒単位のポーリングの間隔
   - 関数を設定した場合、その関数は最新のデータを受け取り、ミリ秒単位の間隔で返す必要があります
@@ -45,7 +45,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `onSuccess(data, key, config)`: リクエストが正常に終了したときのコールバック関数
 - `onError(err, key, config)`: リクエストがエラーを返したときのコールバック関数
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: エラー再試行のハンドラー
-- `compare(a, b)`: 誤った再レンダリングを回避するために、返されたデータがいつ変更されたかを検出するために使用される比較関数。デフォルトでは、[dequal](https://github.com/lukeed/dequal) が使用されます
+- `compare(a, b)`: 誤った再レンダリングを回避するために、返されたデータがいつ変更されたかを検出するために使用される比較関数。デフォルトでは、[stable-hash](https://github.com/shuding/stable-hash) が使用されます
 - `isPaused()`: 再検証を一時停止するかどうかを検出する関数であり、この関数が `true` を返す場合はフェッチしたデータとエラーを無視します。デフォルトでは `false` を返します
 - `use`: ミドルウェア関数の配列 [（ 詳細 ）](/docs/middleware)
 
