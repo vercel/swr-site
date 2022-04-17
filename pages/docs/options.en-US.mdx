@@ -27,9 +27,9 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `revalidateOnMount`: enable or disable automatic revalidation when component is mounted
 - `revalidateOnFocus = true`: automatically revalidate when window gets focused [(details)](/docs/revalidation)
 - `revalidateOnReconnect = true`: automatically revalidate when the browser regains a network connection (via `navigator.onLine`) [(details)](/docs/revalidation)
-- `refreshInterval` [(details)](/docs/revalidation): 
+- `refreshInterval` [(details)](/docs/revalidation):
   - Disabled by default: `refreshInterval = 0`
-  - If set to a number, polling interval in milliseconds 
+  - If set to a number, polling interval in milliseconds
   - If set to a function, the function will receive the latest data and should return the interval in milliseconds
 - `refreshWhenHidden = false`: polling when the window is invisible (if `refreshInterval` is enabled)
 - `refreshWhenOffline = false`: polling when the browser is offline (determined by `navigator.onLine`)
@@ -45,7 +45,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `onSuccess(data, key, config)`: callback function when a request finishes successfully
 - `onError(err, key, config)`: callback function when a request returns an error
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: handler for error retry
-- `compare(a, b)`: comparison function used to detect when returned data has changed, to avoid spurious rerenders. By default, [dequal](https://github.com/lukeed/dequal) is used.
+- `compare(a, b)`: comparison function used to detect when returned data has changed, to avoid spurious rerenders. By default, [stable-hash](https://github.com/shuding/stable-hash) is used.
 - `isPaused()`: function to detect whether pause revalidations, will ignore fetched data and errors when it returns `true`. Returns `false` by default.
 - `use`: array of middleware functions [(details)](/docs/middleware)
 

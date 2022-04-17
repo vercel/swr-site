@@ -27,7 +27,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `revalidateOnMount`: включить или отключить автоматическую ревалидацию при монтировании компонента
 - `revalidateOnFocus = true`: автоматически ревалидировать, когда окно фокусируется [(подробнее)](/docs/revalidation)
 - `revalidateOnReconnect = true`: автоматически ревалидировать, когда браузер восстанавливает сетевое подключение (через `navigator.onLine`) [(подробнее)](/docs/revalidation)
-- `refreshInterval` [(подробнее)](/docs/revalidation): 
+- `refreshInterval` [(подробнее)](/docs/revalidation):
   - по умолчанию отключен: `refreshInterval = 0`
   - If set to a number, интервал поллинга в миллисекундах
   - If set to a function, the function will receive the latest data and should return the interval in milliseconds
@@ -45,7 +45,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `onSuccess(data, key, config)`: колбэк-функция при успешном завершении запроса
 - `onError(err, key, config)`: колбэк-функция, когда запрос возвращает ошибку
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: обработчик повторной попытки при ошибке
-- `compare(a, b)`: функция сравнения, используемая для определения того, когда возвращаемые данные были изменены, чтобы избежать ложных повторных отрисовок. По умолчанию используется [dequal](https://github.com/lukeed/dequal).
+- `compare(a, b)`: функция сравнения, используемая для определения того, когда возвращаемые данные были изменены, чтобы избежать ложных повторных отрисовок. По умолчанию используется [stable-hash](https://github.com/shuding/stable-hash).
 - `isPaused()`: функция, определяющая, приостанавливается ли ревалидация, игнорирует полученные данные и ошибки, когда возвращает `true`. По умолчанию возвращает `false`.
 - `use`: массив middleware-функций [(подробнее)](/docs/middleware)
 
