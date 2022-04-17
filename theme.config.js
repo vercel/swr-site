@@ -90,6 +90,7 @@ export default {
           sizes="16x16"
           href="/favicon/favicon-16x16.png"
         />
+        <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <link
           rel="mask-icon"
