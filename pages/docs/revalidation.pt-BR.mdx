@@ -29,7 +29,7 @@ Essa funcionalidade é habilitada por padrão. Você pode desabilitá-la pela op
 
 Em vários casos, os dados mudam graças a diversos dispositivos, diversos usuários, diversas abas. Como podemos atualizar o estado de forma dinâmica?
 
-O SWR lhe dará a opção de reobter automaticamente. É **inteligente**, o que significa que a re-obtenção só ocorrerá se o componente associado ao hook estiver **visível em tela**.
+SWR lhe dará a opção de reobter automaticamente. É **inteligente**, o que significa que a re-obtenção só ocorrerá se o componente associado ao hook estiver **visível em tela**.
 
 <Bleed>
   <Video
@@ -45,13 +45,13 @@ Você pode habilitá-lo definindo um valor para [`refreshInterval`](/docs/option
 useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 ```
 
-Existem também opções como `refreshWhenHidden` e `refreshWhenOffline`. Ambas são desabilitados por padrão, então o SWR não fará fetch quando a página não estiver na tela, ou não houver conexão com a internet.
+Existem também opções como `refreshWhenHidden` e `refreshWhenOffline`. Ambas são desabilitados por padrão, então SWR não fará fetch quando a página não estiver na tela, ou não houver conexão com a internet.
 
 ## Revalidar ao Reconectar
 
 É útil também revalidar quando o usuário volta a ter uma conexão. Esse cenário acontece muitas vezes quando o usuário desbloqueia o computador, mas a internet ainda não está conectada no momento.
 
-Para ter certeza que os dados estão sempre atualizados, o SWR revalidará automaticamente quando a rede for recuperada.
+Para ter certeza que os dados estão sempre atualizados, SWR revalidará automaticamente quando a rede for recuperada.
 
 Essa funcionalidade é habilitada por padrão. Você pode desabilitá-la pela opção [`revalidateOnReconnect`](/docs/options).
 
@@ -59,7 +59,7 @@ Essa funcionalidade é habilitada por padrão. Você pode desabilitá-la pela op
 
 Se o recurso é **imutável**, que nunca mudará se revalidarmos novamente, podemos desabilitar todas as revalidações automáticas para ele.
 
-Desde a versão 1.0, o SWR fornece um hook `useSWRImmutable` para marcar o recurso como imutável:
+Desde a versão 1.0, SWR fornece um hook `useSWRImmutable` para marcar o recurso como imutável:
 
 ```js
 import useSWRImmutable from 'swr/immutable'
@@ -81,6 +81,6 @@ useSWR(key, fetcher, {
 useSWRImmutable(key, fetcher)
 ```
 
-O `revalidateIfStale` controla se o SWR deve revalidar quando ele é montado e há dados desatualizados.
+O `revalidateIfStale` controla se SWR deve revalidar quando ele é montado e há dados desatualizados.
 
 Esses 2 hooks acima fazem o **mesma** coisa. Uma vez que os dados são armazenados, eles nunca mais pedirão para obtê-los novamente.

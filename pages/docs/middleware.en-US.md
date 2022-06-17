@@ -22,7 +22,7 @@ _Notes: The function name shouldn't be capitalized (e.g. `myMiddleware` instead 
 function myMiddleware (useSWRNext) {
   return (key, fetcher, config) => {
     // Before hook runs...
-    
+
     // Handle the next middleware, or the `useSWR` hook if this is the last one.
     const swr = useSWRNext(key, fetcher, config)
 
@@ -95,7 +95,6 @@ exit  a
 
 Let's build a simple request logger middleware as an example. It prints out all the fetcher requests sent from this SWR hook. You can also use this middleware for all SWR hooks by adding it to `SWRConfig`.
 
-
 ```jsx
 function logger(useSWRNext) {
   return (key, fetcher, config) => {
@@ -159,7 +158,7 @@ function laggy(useSWRNext) {
     // Is it showing previous data?
     const isLagging = swr.data === undefined && laggyDataRef.current !== undefined
 
-    // Also add a `isLagging` field to SWR.
+    // Also add a `isLagging` field tSWR.
     return Object.assign({}, swr, {
       data: dataOrLaggyData,
       isLagging,

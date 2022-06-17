@@ -52,7 +52,7 @@ para determinar o estado atual da requisição, e retornar a interface correspon
 ## Torne-o Reutilizável
 
 Quando construir uma aplicação web, você pode precisar reutilizar os dados em vários lugares da interface do usuário. É muito fácil criar
-reutilizações de dados em cima do SWR:
+reutilizações de dados em cima dSWR:
 
 ```jsx
 function useUser (id) {
@@ -143,7 +143,7 @@ components inside the page content can be dynamic, and the top level component m
 Apesar que possamos evitar passar props para componentes filhos, isto é, usar [Context](https://reactjs.org/docs/context.html), ainda há o problema de conteúdo dinâmico:
 componentes dentro da página podem ser dinâmicos, e o componente principal pode não saber o que dados serão necessários por seus componentes filhos.
 
-O SWR resolve o problema perfeitamente. Com o hook `useUser`, o código pode ser refatorado para:
+SWR resolve o problema perfeitamente. Com o hook `useUser`, o código pode ser refatorado para:
 
 ```jsx {20,26}
 // page component

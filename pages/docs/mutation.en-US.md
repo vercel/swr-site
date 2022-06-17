@@ -3,7 +3,7 @@
 ## Revalidate
 
 You can get the `mutate` function from the `useSWRConfig()` hook, and broadcast a revalidation message
-globally to other SWR hooks<sup>*</sup> using the same key by calling `mutate(key)`.
+globally to other SWR hooks<sup>\*</sup> using the same key by calling `mutate(key)`.
 
 This example shows how to automatically refetch the login info (e.g. inside `<Profile/>`)
 when the user clicks the “Logout” button.
@@ -31,7 +31,7 @@ function App () {
 }
 ```
 
-*: _It broadcasts to SWR hooks under the same [cache provider](/docs/advanced/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks._
+\*: _It broadcasts tSWR hooks under the same [cache provider](/docs/advanced/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks._
 
 ## Optimistic Updates
 
@@ -65,6 +65,7 @@ function Profile () {
   )
 }
 ```
+
 > The **`updateFn`** should be a promise or asynchronous function to handle the remote mutation, it should return updated data.
 
 **Available Options**
