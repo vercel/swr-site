@@ -12,7 +12,7 @@ Basta apenas colocá-lo dentro do seu `<head>` do HTML. Ele é fácil, rápido e
 
 Irá pré-obter os dados quando o HTML carregar, antes mesmo de iniciar a baixar o JavasCRIPT. Todos os seus pedidos de obtenção de dados com o mesmo URL vão usar o resultado (inclusive SWR, de modo que você pode usar o SWR para obter os dados de página top-level).
 
-## Pré-obtenção Programática
+## Prefetching Programática
 
 As vezes, você quer pré-carregar um recurso condicionalmente. Por exemplo, você quer pré-carregar os dados quando o usuário está [passando com o mouse](https://github.com/GoogleChromeLabs/quicklink) [sob](https://github.com/guess-js/guess) um [link](https://instant.page). A forma mais intuitiva é usar uma função para re-obter e definir o cache via [mutate](/docs/mutation) global:
 
