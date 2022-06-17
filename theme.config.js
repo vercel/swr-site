@@ -22,7 +22,7 @@ const TITLE_WITH_TRANSLATIONS = {
   "en-US": "React Hooks for Data Fetching",
   "zh-CN": "用于数据请求的 React Hooks 库",
   "es-ES": "Biblioteca React Hooks para la obtención de datos",
-  "pt-BR": " React Hooks para Obtenção de Dados",
+  "pt-BR": " React Hooks para Data Fetching",
   ja: "データ取得のための React Hooks ライブラリ",
   ko: "데이터 가져오기를 위한 React Hooks",
   ru: "React хуки для выборки данных",

@@ -1,4 +1,4 @@
-# Obtenção de Dados Condicional
+# Data Fetching Condicional
 
 ## Conditional
 
