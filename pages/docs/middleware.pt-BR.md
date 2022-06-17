@@ -158,7 +158,7 @@ function laggy(useSWRNext) {
     // Está mostrando dados antigos?
     const isLagging = swr.data === undefined && laggyDataRef.current !== undefined
 
-    // Também adiciona um campo `isLagging` tSWR;
+    // Também adiciona um campo `isLagging` para SWR;
     return Object.assign({}, swr, {
       data: dataOrLaggyData,
       isLagging,

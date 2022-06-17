@@ -92,4 +92,4 @@ import { AppState } from 'react-native'
 </SWRConfig>
 ```
 
-For `initReconnect`, it requires some 3rd party libraries such as [NetInfo](https://github.com/react-native-netinfo/react-native-netinfo) to subscribe to the network status. The implementation will be similar to the example above: receiving a `callback` function and trigger it when the network recovers from offline, sSWR can start a revalidation to keep your data up-to-date.
+For `initReconnect`, it requires some 3rd party libraries such as [NetInfo](https://github.com/react-native-netinfo/react-native-netinfo) to subscribe to the network status. The implementation will be similar to the example above: receiving a `callback` function and trigger it when the network recovers from offline, so SWR can start a revalidation to keep your data up-to-date.

@@ -31,7 +31,7 @@ function App () {
 }
 ```
 
-\*: _It broadcasts tSWR hooks under the same [cache provider](/docs/advanced/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks._
+\*: _It broadcasts to SWR hooks under the same [cache provider](/docs/advanced/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks._
 
 ## Optimistic Updates
 

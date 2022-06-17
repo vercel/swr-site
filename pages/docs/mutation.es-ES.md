@@ -116,7 +116,7 @@ try {
 
 ## Bound Mutate
 
-El objetSWR devuelto por `useSWR` también contiene una función `mutate()` que está atada a la key del SWR.
+El objeto SWR devuelto por `useSWR` también contiene una función `mutate()` que está atada a la key del SWR.
 
 Es funcionalmente equivalente a la función global `mutate` pero no requiere el parámetro `key`.
 
