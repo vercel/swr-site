@@ -1,0 +1,19 @@
+{
+  "getting-started": "Comece a Usar",
+  "options": "Opções",
+  "global-configuration": "Configuração Global",
+  "data-fetching": "Busca de Dados",
+  "error-handling": "Manipulação de Erros",
+  "revalidation": "Auto-revalidação",
+  "conditional-fetching": "Busca de Dados Condicional",
+  "arguments": "Argumentos",
+  "mutation": "Mutação",
+  "pagination": "Paginação",
+  "prefetching": "Pré-busca",
+  "with-nextjs": "SSG e SSR com Next.Js",
+  "typescript": "TypeScript",
+  "suspense": "Suspense",
+  "middleware": "Middleware",
+  "advanced": "Avançado",
+  "change-log": "Change Log"
+}
