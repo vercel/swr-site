@@ -178,6 +178,20 @@ export default {
             </span>
           </a>
         );
+      case "pt-BR":
+        return (
+          <a
+            href="https://vercel.com/?utm_source=swr_es-es"
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center no-underline text-current font-semibold"
+          >
+            <span className="mr-2">Desenvolvido por</span>
+            <span className="mr-2">
+              <Vercel />
+            </span>
+          </a>
+        );
       case "ja":
         return (
           <a
