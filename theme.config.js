@@ -31,6 +31,7 @@ const TITLE_WITH_TRANSLATIONS = {
 const FEEDBACK_LINK_WITH_TRANSLATIONS = {
   "en-US": "Question? Give us feedback →",
   "zh-CN": "有疑问？给我们反馈 →",
+  "pt-BR": "Dúvidas? Nos dê feedback →",
 };
 
 export default {
@@ -134,6 +135,8 @@ export default {
         return "在 GitHub 上编辑本页 →";
       case "es-ES":
         return "Edite esta página en GitHub →";
+      case "pt-BR":
+        return "Edite essa página no GitHub →";
       case "ja":
         return "Github で編集する →";
       case "ko":
