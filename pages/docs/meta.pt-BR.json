@@ -9,7 +9,7 @@
   "arguments": "Argumentos",
   "mutation": "Mutação",
   "pagination": "Paginação",
-  "prefetching": "Pré-busca",
+  "prefetching": "Pré-obtenção",
   "with-nextjs": "SSG e SSR com Next.Js",
   "typescript": "TypeScript",
   "suspense": "Suspense",
