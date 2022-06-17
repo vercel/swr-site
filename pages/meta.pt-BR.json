@@ -1,0 +1,22 @@
+{
+  "index": {
+    "title": "Introdução",
+    "type": "page",
+    "hidden": true
+  },
+  "docs": {
+    "title": "Documentação",
+    "type": "page"
+  },
+  "examples": {
+    "title": "Exemplos",
+    "type": "page"
+  },
+  "blog": {
+    "title": "Blog",
+    "type": "page",
+    "theme": {
+      "sidebar": false
+    }
+  }
+}

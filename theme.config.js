@@ -22,6 +22,7 @@ const TITLE_WITH_TRANSLATIONS = {
   "en-US": "React Hooks for Data Fetching",
   "zh-CN": "用于数据请求的 React Hooks 库",
   "es-ES": "Biblioteca React Hooks para la obtención de datos",
+  "pt-BR": " React Hooks para Data Fetching",
   ja: "データ取得のための React Hooks ライブラリ",
   ko: "데이터 가져오기를 위한 React Hooks",
   ru: "React хуки для выборки данных",
@@ -30,6 +31,7 @@ const TITLE_WITH_TRANSLATIONS = {
 const FEEDBACK_LINK_WITH_TRANSLATIONS = {
   "en-US": "Question? Give us feedback →",
   "zh-CN": "有疑问？给我们反馈 →",
+  "pt-BR": "Dúvidas? Nos dê feedback →",
 };
 
 export default {
@@ -133,6 +135,8 @@ export default {
         return "在 GitHub 上编辑本页 →";
       case "es-ES":
         return "Edite esta página en GitHub →";
+      case "pt-BR":
+        return "Edite essa página no GitHub →";
       case "ja":
         return "Github で編集する →";
       case "ko":
@@ -236,6 +240,7 @@ export default {
     { locale: "en-US", text: "English" },
     { locale: "es-ES", text: "Español" },
     { locale: "zh-CN", text: "简体中文" },
+    { locale: "pt-BR", text: "Português Brasileiro" },
     { locale: "ja", text: "日本語" },
     { locale: "ko", text: "한국어" },
     { locale: "ru", text: "Русский" },
