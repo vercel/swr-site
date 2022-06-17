@@ -23,3 +23,4 @@ When making a change, or creating a new page, please make sure to edit all langu
 - Japanese translation done by uttk ([@uttk](https://github.com/uttk)), Tomohiro SHIOYA ([@shioyang](https://github.com/shioyang))
 - Korean translation done by SeulGi Choi ([@cs09g](https://github.com/cs09g))
 - Russian translation done by Valentin Politov ([@valentinpolitov](https://github.com/valentinpolitov))
+- Brazilian Portuguese translation done by Guilherme Sousa ([@guilherssousa](https://github.com/guilherssousa))
