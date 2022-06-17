@@ -35,8 +35,6 @@ function App () {
   Note que a opção `suspense` não é permitida a mudar no ciclo de vida.
 </Callout>
 
-In Suspense mode, `data` is always the fetch response (so you don't need to check if it's `undefined`).
-
 Em modo Suspense, `data` é sempre a resposta do fetch (então você não precisa checar se é `undefined`).
 Mas se um erro ocorreu, você precisa usar um [limite de erro (Error Boundary)](https://pt-br.reactjs.org/docs/error-boundaries.html) para o capturar:
 
@@ -52,7 +50,7 @@ Mas se um erro ocorreu, você precisa usar um [limite de erro (Error Boundary)](
 
 ### Nota: Com Fetching Condicional
 
-Normalmente, quando você habilita `suspense`, é garantido que `data` será sempre pronto na renderização:
+Normalmente, quando você habilita `suspense`, é garantido que `data` estará sempre pronto na renderização:
 
 ```jsx
 function Profile () {
@@ -63,7 +61,7 @@ function Profile () {
 }
 ```
 
-No entanto, ao usá-lo junto com busca condicional ou busca dependente, `data` será `undefined` se a solicitação estiver **pausada**:
+No entanto, ao usá-lo junto com uma busca condicional ou busca dependente, `data` será `undefined` se a solicitação estiver **pausada**:
 
 ```jsx
 function Profile () {

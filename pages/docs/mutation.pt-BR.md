@@ -65,11 +65,11 @@ function Profile () {
 }
 ```
 
-> A **`updateFn`** deve ser uma promise ou uma função assíncrona para lidar com a mutação remota, deve retornar os dados atualizados.
+> **`updateFn`** deve ser uma promise ou uma função assíncrona para lidar com a mutação remota, e deve retornar os dados atualizados.
 
 **Opções Disponíveis**
 
-**`optimisticData`**: dados para serem atualizados imediatamente no cache do cliente, comumente usado em UI otimista.
+**`optimisticData`**: dados para serem atualizados imediatamente no cache do cliente, comumente usado para UI otimista.
 
 **`revalidate`**: se o cache deve revalidar quando a atualização assíncrona resolve.
 
@@ -86,7 +86,7 @@ Com `mutate`, você pode passar uma função assíncrona que recebe o valor atua
 ```jsx
 mutate('/api/todos', async todos => {
   // Vamos atualizar o todo com ID `1` para ser completado,
-    // essa API retorna os dados atualizados
+  // essa API retorna os dados atualizados
   const updatedTodo = await fetch('/api/todos/1', {
     method: 'PATCH',
     body: JSON.stringify({ completed: true })
@@ -116,7 +116,7 @@ try {
 
 O objeto SWR retornado por `useSWR` também contém uma função `mutate()` que é vinculada ao chave do SWR.
 
-É funcionalmente equivalente à função global `mutate` mas não requer o parâmetro chave.
+É funcionalmente equivalente à função global `mutate` mas não requer o parâmetro key.
 
 ```jsx
 import useSWR from 'swr'

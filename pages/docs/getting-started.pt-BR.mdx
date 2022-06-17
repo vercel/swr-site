@@ -30,7 +30,7 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
     Veja <Link href="/docs/data-fetching"><a href="/docs/data-fetching">aqui</a></Link> para mais exemplos.
 </Callout>
 
-Então você pode importar `useSWR` e comece a usá-lo em qualquer componente funcional:
+Então você pode importar `useSWR` e começar a usá-lo em qualquer componente funcional:
 
 ```jsx
 import useSWR from 'swr'
@@ -52,7 +52,7 @@ para determinar o estado atual da requisição, e retornar a interface correspon
 ## Torne-o Reutilizável
 
 Quando construir uma aplicação web, você pode precisar reutilizar os dados em vários lugares da interface do usuário. É muito fácil criar
-reutilizações de dados em cima dSWR:
+reutilizações de dados em cima do SWR:
 
 ```jsx
 function useUser (id) {
@@ -92,7 +92,7 @@ import { Welcome } from 'components/diagrams/welcome'
 </div>
 
 Tradicionalmente, nós carregamos dados uma vez usando `useEffect` no componente principal, e passamos os dados para os componentes
-filhos via props (note que nós não tratamos o estado de erro para agora).
+filhos via props (note que nós não tratamos o estado de erro por agora).
 
 ```jsx {7-11,17,18,27}
 // componente da página
@@ -135,13 +135,10 @@ function Avatar ({ user }) {
 ```
 
 Normalmente, nós precisamos manter todos os dados de carregamento no componente principal e adicionar props para todos os componentes.
-O código fica mais difícil de manter se adicionarmos mais dependência de dados à página.
+O código fica mais difícil de manter se adicionarmos mais dependências de dados à página.
 
-Although we can avoid passing props using [Context](https://reactjs.org/docs/context.html), there's still the dynamic content problem:
-components inside the page content can be dynamic, and the top level component might not know what data will be needed by its child components.
-
-Apesar que possamos evitar passar props para componentes filhos, isto é, usar [Context](https://reactjs.org/docs/context.html), ainda há o problema de conteúdo dinâmico:
-componentes dentro da página podem ser dinâmicos, e o componente principal pode não saber o que dados serão necessários por seus componentes filhos.
+Apesar que possamos evitar passar props para componentes filhos, isto é, usar [Context](https://reactjs.org/docs/context.html), ainda há o problema do conteúdo dinâmico:
+componentes dentro da página podem ser dinâmicos, e o componente principal pode não saber quais dados serão necessários por seus componentes filhos.
 
 SWR resolve o problema perfeitamente. Com o hook `useUser`, o código pode ser refatorado para:
 

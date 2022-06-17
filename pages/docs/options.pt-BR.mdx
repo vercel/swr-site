@@ -23,7 +23,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 - `suspense = false`: habilita o modo Suspense do React [(detalhes)](/docs/suspense)
 - `fetcher(args)`: a função fetcher
-- `revalidateIfStale = true`: revalidar automaticamente mesmo que tenha dados obsoletos [(detalhes)](/docs/revalidation#disable-automatic-revalidations)
+- `revalidateIfStale = true`: revalida automaticamente mesmo que tenha dados obsoletos [(detalhes)](/docs/revalidation#disable-automatic-revalidations)
 - `revalidateOnMount`: habilita ou desabilita a revalidação automática quando o componente é montado
 - `revalidateOnFocus = true`: revalida automaticamente quando a janela é focada [(detalhes)](/docs/revalidation)
 - `revalidateOnReconnect = true`: revalida automaticamente quando a conexão é restaurada (via `navigator.onLine`) [(detalhes)](/docs/revalidation)
@@ -33,7 +33,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
   - Se definido como uma função, a função recebe o último dado e deve retornar o intervalo em milisegundos
 - `refreshWhenHidden = false`: sondagem (polling) quando a janela está invisivel (se `refreshInterval` está ativado)
 - `refreshWhenOffline = false`: sondagem (polling) quando o navegador está offline (determinado por `navigator.onLine`)
-- `shouldRetryOnError = true`: tentar novamente quando o fetcher retorna um erro
+- `shouldRetryOnError = true`: se deve tentar novamente quando o fetcher retorna um erro
 - `dedupingInterval = 2000`: deduplicar pedidos com a mesma chave em este intervalo em milisegundos
 - `focusThrottleInterval = 5000`: somente revalidar uma vez durante um intervalo em milisegundos
 - `loadingTimeout = 3000`: tempo limite para o evento onLoadingSlow
@@ -51,8 +51,8 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 <Callout emoji="💡">
 
-    Quando estiver usando uma conexão lenta (2G, {'<='} 70Kbps), <code>errorRetryInterval</code> será 10s, e{' '}
-    <code>loadingTimeout</code> será 5s por padrão.
+    Quando estiver usando uma conexão lenta (2G, {'<='} 70Kbps), <code>errorRetryInterval</code> será de 10s, e{' '}
+    <code>loadingTimeout</code> será de 5s por padrão.
 
 </Callout>
 

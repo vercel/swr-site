@@ -26,7 +26,7 @@ Ao invés disso, você pode usar um array como o parâmetro `key`, que contém v
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 ```
 
-A função `fetcherWithToken` ainda aceita os mesmos 2 argumentos, mas a chave da cache será associada com `token` agora.
+A função `fetcherWithToken` ainda aceita os mesmos 2 argumentos, mas a cache key será associada com `token` agora.
 
 ## Passando Objetos
 
@@ -52,5 +52,5 @@ const { data: orders } = useSWR({ url: '/api/orders', args: user }, fetcher)
 ```
 
 <Callout emoji="⚠️">
-  Em versões antigas (< 1.1.0), SWR **superficialmente** compara os argumentos em cada renderização e aciona a revalidação se algum deles foi alterado.
+  Em versões antigas (< 1.1.0), SWR compara os argumentos  **superficialmente** em cada renderização e aciona a revalidação se algum deles foi alterado.
 </Callout>

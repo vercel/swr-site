@@ -71,9 +71,9 @@ import useSWRImmutable from 'swr/immutable'
 useSWRImmutable(key, fetcher, options)
 ```
 
-Ele tem exatamente a mesma API que o hook `useSWR`, mas nunca será revalidado no foco da guia ou na recuperação da rede. Há também uma nova opção, `revalidateIfStale`, que você pode usar para controlar o comportamento com precisão. Mais informações podem ser encontradas [aqui](/docs/revalidation#desabilitar-revalidações-automáticas).
+Ele possui exatamente a mesma API que o hook `useSWR`, mas nunca será revalidado no foco da guia ou na recuperação da rede. Há também uma nova opção, `revalidateIfStale`, que você pode usar para controlar o comportamento com precisão. Mais informações podem ser encontradas [aqui](/docs/revalidation#desabilitar-revalidações-automáticas).
 
-### Provedor de Cache Personalizado
+### Cache Provider Personalizado
 
 Por padrão, o SWR usa um único cache global para armazenar todos os dados. Na versão 1.0, você pode personalizá-lo com a nova opção `provider`:
 
@@ -87,13 +87,13 @@ Por padrão, o SWR usa um único cache global para armazenar todos os dados. Na 
 
 Você pode usar esse novo recurso para fazer muitas coisas poderosas. Temos alguns exemplos aqui: [_Mudar Várias Chaves com RegEx_](/docs/advanced/cache#mudar-várias-chaves-do-regex), [Cache Persistente Baseado em LocalStorage](/docs/advanced/cache#cache-persistente-baseado-em-localstorage), [_Redefinir Cache Entre Casos de Teste_](/docs/advanced/cache#redefinir-cache-entre-casos-de-teste).
 
-Esta nova API de provedor de cache também é mais compatível com renderização simultânea do React 18. Se você estiver adicionando um provedor de cache, certifique-se de usar a função global `mutate` retornada de `useSWRConfig()`.
+Esta nova API de cache provider também é mais compatível com a renderização simultânea do React 18. Se você estiver adicionando um cache provider, certifique-se de usar a função global `mutate` retornada de `useSWRConfig()`.
 
-Você pode ler a documentação dos [provedores de cache](/docs/advanced/cache) para obter mais detalhes.
+Você pode ler a documentação dos [cache providers](/docs/advanced/cache) para obter mais detalhes.
 
 ### useSWRConfig()
 
-Há uma nova API Hook para retornar todas as configurações globais, incluindo o provedor de cache atual e a função global `mutate`:
+Há uma nova Hook API para retornar todas as configurações globais, incluindo o cache provider atual e a função global `mutate`:
 
 ```jsx
 import { useSWRConfig } from 'swr'
@@ -209,7 +209,7 @@ Esta **não** é uma mudança importante, mas agora _recomendaremos_ usar sempre
   }
 ```
 
-Se você não estiver usando um provedor de cache, a importação global atual `import { mutate } from 'swr'` ainda funciona.
+Se você não estiver usando um cache provider, a importação global atual `import { mutate } from 'swr'` ainda funciona.
 
 ### Tipos Renomeados
 
@@ -230,7 +230,7 @@ Se você está usando TypeScript, os seguintes nomes de tipo foram alterados par
 Se você estiver usando uma versão beta do SWR ou qualquer API não documentada, esteja ciente das seguintes alterações:
 
 - `import { cache } from 'swr'` foi removido; use o novo [`useSWRConfig` API](#useswrconfig) no lugar.
-- `import { createCache } from 'swr'` is foi removido; use o novo [Cache Provider API](/docs/advanced/cache) no lugar.
+- `import { createCache } from 'swr'` foi removido; use a nova [Cache Provider API](/docs/advanced/cache) no lugar.
 - `revalidateWhenStale` foi renomeado para `revalidateIfStale`.
 - `middlewares` foi renomeado para `use`.
 
@@ -246,6 +246,6 @@ Se você tiver algum feedback sobre esta versão, por favor [nos avise](https://
 
 ## Agradecimentos
 
-Agradecimentos especiais a [Toru Kobayashi](https://twitter.com/koba04) e [Yixuan Xu](https://twitter.com/yixuanxu94) por suas contribuições para a biblioteca, e [Paco Coursey](https:/ /twitter.com/pacocoursey), [uttk](https://github.com/uttk), [Tomohiro SHIOYA](https://github.com/shioyang), [Markoz Peña](https://github.com/markozxuu), [SeulGi Choi](https://github.com/cs09g), [Fang Lu](https://github.com/huzhengen), [Valentin Politov](https://github.com/valentinpolitov) por seu trabalho nas traduções e documentos. Este lançamento não pode acontecer sem eles.
+Agradecimentos especiais a [Toru Kobayashi](https://twitter.com/koba04) e [Yixuan Xu](https://twitter.com/yixuanxu94) por suas contribuições para a biblioteca, e [Paco Coursey](https://twitter.com/pacocoursey), [uttk](https://github.com/uttk), [Tomohiro SHIOYA](https://github.com/shioyang), [Markoz Peña](https://github.com/markozxuu), [SeulGi Choi](https://github.com/cs09g), [Fang Lu](https://github.com/huzhengen), [Valentin Politov](https://github.com/valentinpolitov) por seu trabalho nas traduções e documentos. Este lançamento não pode acontecer sem eles.
 
-Também queremos agradecer a toda a comunidade, nossos [110 colaboradores](https://github.com/vercel/swr/graphs/contributors) (+ [45 docs colaboradores](https://github.com/vercel/swr -site/graphs/contributors)) e todos que nos ajudaram e nos deram feedback!
+Também queremos agradecer a toda a comunidade, nossos [110 colaboradores](https://github.com/vercel/swr/graphs/contributors) (+ [45 colaboradores de documentações](https://github.com/vercel/swr-site/graphs/contributors)) e todos que nos ajudaram e nos deram feedback!

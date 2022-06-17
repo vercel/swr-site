@@ -10,11 +10,11 @@ A funcionalidade de middleware é uma nova adição em SWR 1.0 que permite execu
 
 ## Uso
 
-Middleware recebe o hook SWR e pode executar lógica antes e depois de rodá-lo. Se houver vários middleware, cada middleware embrulha o próximo middleware. O último middleware na lista receberá o hook SWR original `useSWR`.
+Middleware recebe o hook SWR e pode executar lógica antes e depois de rodá-lo. Se houver vários middleware, cada middleware embrulha o próximo middleware. O último middleware na lista receberá o hook SWR `useSWR` original.
 
 ### API
 
-_Notas: O nome da função não pode ser capitalizado (exemplo: `myMiddleware` em vez de `MyMiddleware`) ou React lint irá lançar erro `Rules of Hook`_
+_Notas: O nome da função não pode ser capitalizado (exemplo: `myMiddleware` em vez de `MyMiddleware`) ou React lint irá lançar erro de `Rules of Hook`_
 
 [TypeScript](https://swr.vercel.app/docs/typescript#middleware-types)
 
@@ -42,9 +42,9 @@ Você pode passar um array de middleware como uma opção para `SWRConfig` ou `u
 useSWR(key, fetcher, { use: [myMiddleware] })
 ```
 
-### Extender
+### Estendendo
 
-Middleware será extendido como opções regulares. Por exemplo:
+Middleware será estendido como opções regulares. Por exemplo:
 
 ```jsx
 function Bar () {
@@ -126,7 +126,7 @@ As vezes você quer que os dados retornados por `useSWR` sejam "lentos". Mesmo s
 você ainda quer que ele retorne o resultado anterior até que os novos dados tenham carregado.
 
 Isso pode ser construído como um middleware "lento" junto com `useRef`. Nesse exemplo, também vamos
-extender o objeto de retorno do hook `useSWR`:
+estender o objeto de retorno do hook `useSWR`:
 
 ```jsx
 import { useRef, useEffect, useCallback } from 'react'
@@ -181,7 +181,7 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 </Callout>
 
 <Callout emoji="⚠️">
-    Em versões antigas (< 1.1.0), SWR **superficialmente** compara os argumentos em cada renderização e aciona a revalidação se algum deles foi alterado.
+    Em versões antigas (< 1.1.0), SWR compara os argumentos **superficialmente** em cada renderização e aciona a revalidação se algum deles foi alterado.
 
     Se você está passando objetos serializados como chave, você pode serializar as chaves de objetos para garantir sua estabilidade, um simples middleware pode ajudar:
 
@@ -205,8 +205,8 @@ useSWR(['/api/user', { id: '73' }], fetcher, { use: [serialize] })
 <SWRConfig value={{ use: [serialize] }}>
 ```
 
-Você não precisa de preocupar com objetos que podem mudar entre renders. Ele será serializado para uma mesma string, e o fetcher irá receber os argumentos de objetos.
+Você não precisa de preocupar com objetos que podem mudar entre renderizações. Ele será serializado para uma mesma string, e o fetcher irá receber os argumentos de objetos.
 
 <Callout>
-  Além disso, você pode usar libs como [fast-json-stable-stringify](https://github.com/epoberezkin/fast-json-stable-stringify) em vez de `JSON.stringify` — mais rápido e estável.
+  Além disso, você pode usar bibliotecas como [fast-json-stable-stringify](https://github.com/epoberezkin/fast-json-stable-stringify) em vez de `JSON.stringify` — mais rápido e estável.
 </Callout>

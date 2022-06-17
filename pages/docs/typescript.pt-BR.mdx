@@ -36,7 +36,7 @@ const { data } = useSWR(uid, fetcher)
 
 ### useSWRInfinite
 
-O mesmo para `swr/infinite`, você pode confiar na inferência automática de tipos ou especificar explicitamente os tipos por conta própria
+O mesmo para `swr/infinite`, você pode confiar na inferência automática de tipos ou especificar explicitamente os tipos por conta própria:
 
 ```typescript
 import { SWRInfiniteKeyLoader } from 'swr/infinite'
@@ -50,7 +50,7 @@ const { data } = useSWRInfinite(getKey, fetcher)
 
 ## Genéricos
 
-Especificando o tipo de `data` é fácil. Por padrão, usará o tipo de retorno de `fetcher` (com `undefined` para o estado não pronto) como o tipo de `data`, mas você pode passá-lo como um parâmetro:
+Especificar o tipo de `data` é fácil. Por padrão, usará o tipo de retorno de `fetcher` (com `undefined` para o estado não pronto) como o tipo de `data`, mas você pode passá-lo como um parâmetro:
 
 ```typescript
 // 🔹 A. Use um fetcher tipado:
