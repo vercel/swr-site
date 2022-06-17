@@ -4,7 +4,7 @@
   "global-configuration": "Configuração Global",
   "data-fetching": "Data Fetching",
   "error-handling": "Manipulação de Erros",
-  "revalidation": "Auto-revalidação",
+  "revalidation": "Revalidação",
   "conditional-fetching": "Data Fetching Condicional",
   "arguments": "Argumentos",
   "mutation": "Mutação",

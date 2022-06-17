@@ -8,7 +8,7 @@ Atualize para a última versão (≥ 1.0.0) para experimentar esta personalizaç
 </Callout>
 
 Diferentemente do React rodando no navegador, React Native tem uma experiência de usuário diferente. Por exemplo, não há tabulação de foco, a troca de foco do background para o app é considerada como um foco em vez de uma troca de foco de app para o background.
-Para customizar estes comportamentos, você pode substituir os listeners de `foco` e `online` do navegador padrão por listeners de foco e online do React Native e configurar SWR para usá-los.
+Para customizar estes comportamentos, você pode substituir os listeners de `focus` e `online` do navegador padrão por listeners de foco e online do React Native e configurar o SWR para usá-los.
 
 ## Exemplo
 
@@ -32,7 +32,7 @@ Existem algumas configurações que você precisa cuidar, como `isOnline`, `isVi
 
 `isOnline` e `isVisible` são funções que retornam um boolean, para determinar se o aplicativo está "ativo". Por padrão, o SWR resgatará uma revalidação se essas condições não forem atendidas.
 
-Ao usar `initFocus` e `initReconnect`, também é necessário configurar um [provedor de cache personalizado](/docs/advanced/cache). Você pode usar um `Map()` vazio ou qualquer armazenamento que preferir.
+Ao usar `initFocus` e `initReconnect`, também é necessário configurar um [cache provider personalizado](/docs/advanced/cache). Você pode usar um `Map()` vazio ou qualquer armazenamento que preferir.
 
 ```jsx
 <SWRConfig
@@ -47,10 +47,10 @@ Ao usar `initFocus` e `initReconnect`, também é necessário configurar um [pro
       return true
     },
     initFocus(callback) {
-      /* Registre o listener com seu provedor de estado */
+      /* Registre o listener com seu provider de estado */
     },
     initReconnect(callback) {
-      /* Registre o listener com seu provedor de estado */
+      /* Registre o listener com seu provider de estado */
     }
   }}
 >
@@ -93,4 +93,4 @@ import { AppState } from 'react-native'
 </SWRConfig>
 ```
 
-Para `initReconnect`, requer algumas bibliotecas de terceiros, como [NetInfo](https://github.com/react-native-netinfo/react-native-netinfo) para assinar o status da rede. A implementação será semelhante ao exemplo acima: recebendo uma função `callback` e acionando-a quando a rede se recuperar do offline, o SWR pode iniciar uma revalidação para manter seus dados atualizados.
+Para `initReconnect`, é necessário algumas bibliotecas de terceiros, como [NetInfo](https://github.com/react-native-netinfo/react-native-netinfo) para assinar o status da rede. A implementação será semelhante ao exemplo acima: recebendo uma função `callback` e acionando-a quando a rede se recuperar do offline, o SWR pode iniciar uma revalidação para manter seus dados atualizados.

@@ -7,7 +7,7 @@ import Link from 'next/link'
 const { data, error } = useSWR(key, fetcher)
 ```
 
-Essa é a API mais fundamental dSWR. A função `fetcher` aqui é uma função assíncrona que **aceita a chave dSWR**, e retorna os dados.
+Essa é a API mais fundamental do SWR. A função `fetcher` aqui é uma função assíncrona que **aceita a chave do SWR**, e retorna os dados.
 
 O valor retornado será passado como `data`, e se ele der erro, será capturado como `error`.
 
