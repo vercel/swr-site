@@ -19,7 +19,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `isValidating`: si hay una solicitud o carga de revalidación
 - `mutate(data?, shouldRevalidate?`: función para mutar los datos en caché [(detalles)](/docs/mutation)
 
-## Opciónes
+## Opciones
 
 - `suspense = false`: activar el modo React Suspense [(detalles)](/docs/suspense)
 - `fetcher(args)`: la fetcher función
