@@ -3,14 +3,14 @@ import Callout from 'nextra-theme-docs/callout'
 # API Options
 
 ```js
-const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
+const { data, error, isValidating, mutate } = useSWR(key, fetcher, config)
 ```
 
 ## Parameters
 
 - `key`: a unique key string for the request (or a function / array / null) [(advanced usage)](/docs/conditional-fetching)
 - `fetcher`: (_optional_) a Promise returning function to fetch your data [(details)](/docs/data-fetching)
-- `options`: (_optional_) an object of options for this SWR hook
+- `config`: (_optional_) an object of options for this SWR hook
 
 ## Return Values
 
@@ -19,7 +19,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `isValidating`: if there's a request or revalidation loading
 - `mutate(data?, shouldRevalidate?)`: function to mutate the cached data [(details)](/docs/mutation)
 
-## Options
+## Config Options
 
 - `suspense = false`: enable React Suspense mode [(details)](/docs/suspense)
 - `fetcher(args)`: the fetcher function
