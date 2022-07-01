@@ -50,7 +50,7 @@ Há também uma [opção `dedupingInterval`](/docs/options) para substituir o in
 
 ## Comparação Profunda
 
-SWR **compara profundamente** as mudanças de dados por padrão. Se o valor `data` não é alterado, uma re-renderização não será acionada.
+SWR **compara profundamente** as mudanças de dados por padrão (with some limitations - for objects where the constructor is not `Object` like Sets and Maps, referential equality is used. See [stable-hash](https://github.com/shuding/stable-hash) for more details). Se o valor `data` não é alterado, uma re-renderização não será acionada.
 
 Você também pode customizar a função de comparação via opção [`compare`](/docs/options) se você quiser mudar o comportamento.
 Por exemplo, alguns respostas de API retornam um timestamp do servidor que você pode querer excluir do diff de dados.

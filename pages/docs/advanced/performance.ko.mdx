@@ -54,6 +54,8 @@ SWR은 기본적으로 데이터 변경을 **깊게 비교**합니다. `data` �
 이 동작을 변경하길 원한다면 [`compare` 옵션](/docs/options)을 통해 비교 함수를 커스터마이징할 수도 있습니다.
 예를 들면, 일부 API의 응답이 데이터 diff에서 제외하길 원하는 서버의 타임 스탬프를 반환합니다.
 
+(with some limitations - for objects where the constructor is not `Object` like Sets and Maps, referential equality is used. See [stable-hash](https://github.com/shuding/stable-hash) for more details)
+
 ## 의존성 수집
 
 `useSWR`은 세 개의 **스테이트풀** 값을 반환합니다: `data`, `error`, `isValidating`, 각각은 독립적으로 업데이트됩니다.

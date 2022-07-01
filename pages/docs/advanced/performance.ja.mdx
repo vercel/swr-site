@@ -55,6 +55,8 @@ SWR は、デフォルトでデータの変更を**詳細に比較**します。
 動作を変更したい場合は、[`compare` オプション](/docs/options)を使用して比較機能をカスタマイズすることもできます。
 たとえば、一部の API レスポンスは、データ差分から除外したいサーバーのタイムスタンプを返します。
 
+(with some limitations - for objects where the constructor is not `Object` like Sets and Maps, referential equality is used. See [stable-hash](https://github.com/shuding/stable-hash) for more details)
+
 ## 依存関係のコレクション
 
 `useSWR` が返す三つの**ステートフルな**値、つまり `data` 、`error` 、そして `isValidating` は、それぞれが独立して更新されます。
