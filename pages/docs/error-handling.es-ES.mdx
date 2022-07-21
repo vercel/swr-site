@@ -6,7 +6,7 @@ import Link from 'next/link'
 Si se lanza un error dentro del [`fetcher`](/docs/data-fetching), será devuelto como `error` por el hook.
 
 ```js
-const fetcher = url => fetch(url).then(r => res.json()) 
+const fetcher = url => fetch(url).then(r => res.json())
 
 // ...
 const { data, error } = useSWR('/api/user', fetcher)
@@ -16,7 +16,7 @@ El objeto `error` será definido si la promise de fetch es rechazada.
 
 ## Código de estado y objeto de error
 
-A veces queremos que una API devuelva un objeto de error junto con el status code. 
+A veces queremos que una API devuelva un objeto de error junto con el status code.
 Ambos son útiles para el cliente.
 
 Podemos personanilizar nuestro `fetcher` para que devuelve más información. Si el status code no es `2xx`, lo consideramos
@@ -49,6 +49,15 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 ```
 
+También puede personalizar nuestro `fetcher` con [Axios](https://axios-http.com/docs/intro)
+
+```js
+const fetcher = async url => {
+  const response = await api.get(url);
+  return response.data;
+}
+```
+
 <Callout emoji="💡">
   Tenga en cuenta que `data` y `error` pueden existir al mismo tiempo. Por lo tanto la UI puede mostrar
   data existente, mientras se sabe que la próxima solicitud ha fallado.
@@ -68,6 +77,8 @@ useSWR('/api/user', fetcher, {
   onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
     // Never retry on 404.
     if (error.status === 404) return
+    // Fetcher with Axios throws an error.
+    // if (error.response.status === 404) return
 
     // Never retry for a specific key.
     if (key === '/api/user') return
@@ -87,8 +98,8 @@ También es posible propocionar a través del [Global Configuration](/docs/globa
 
 ## Informe global de errores
 
-Siempre puedes obtener el objeto de `error` dentro del componente de forma reactiva. Pero en caso de que quieras manejar el error de forma global, 
-para notificar a la UI que muestre un [toast](https://vercel.com/design/toast) o un [snackbar](https://material.io/components/snackbars), o reportarlo 
+Siempre puedes obtener el objeto de `error` dentro del componente de forma reactiva. Pero en caso de que quieras manejar el error de forma global,
+para notificar a la UI que muestre un [toast](https://vercel.com/design/toast) o un [snackbar](https://material.io/components/snackbars), o reportarlo
 en algún lugar como [Sentry](https://sentry.io), hay un evento [`onError`](/docs/options#options):
 
 ```jsx

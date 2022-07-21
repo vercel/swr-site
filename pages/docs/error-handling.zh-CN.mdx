@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 # 错误处理
 
-如果在 [`fetcher`](/docs/data-fetching) 中抛出错误，hook 会将其作为 `error` 返回。 
+如果在 [`fetcher`](/docs/data-fetching) 中抛出错误，hook 会将其作为 `error` 返回。
 
 ```js
 const fetcher = url => fetch(url).then(r => r.json())
@@ -46,6 +46,15 @@ const { data, error } = useSWR('/api/user', fetcher)
 // error.status === 403
 ```
 
+您还可以使用 [Axios](https://axios-http.com/docs/intro) 自定义我们的 `fetcher`
+
+```js
+const fetcher = async url => {
+  const response = await api.get(url);
+  return response.data;
+}
+```
+
 <Callout emoji="💡">
   注意：<code>data</code> 和 <code>error</code> 可以同时存在。所以 UI 可以在知道即将到来的请求失败时显示现有数据。 
 </Callout>
@@ -63,6 +72,8 @@ useSWR('/api/user', fetcher, {
   onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
     // 404 时不重试。
     if (error.status === 404) return
+    // 使用 Axios 的 Fetcher 会引发错误。
+    // if (error.response.status === 404) return
 
     // 特定的 key 时不重试。
     if (key === '/api/user') return

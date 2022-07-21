@@ -47,6 +47,15 @@ const { data, error } = useSWR('/api/user', fetcher)
 // error.status === 403
 ```
 
+Вы также можете настроить наш `fetcher` с помощью [Axios](https://axios-http.com/docs/intro)
+
+```js
+const fetcher = async url => {
+  const response = await api.get(url);
+  return response.data;
+}
+```
+
 <Callout emoji="💡">
   Обратите внимание, что <code>data</code> и <code>error</code> могут существовать одновременно. 
   Таким образом, пользовательский интерфейс может отображать существующие данные, зная, 
@@ -67,6 +76,8 @@ useSWR('/api/user', fetcher, {
   onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
     // Никогда не повторяйте попытку при 404.
     if (error.status === 404) return
+    // Fetcher с Axios выдает ошибку.
+    // if (error.response.status === 404) return
 
     // Никогда не повторяйте попытку при конкретном ключе.
     if (key === '/api/user') return
