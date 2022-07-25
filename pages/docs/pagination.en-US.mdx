@@ -303,7 +303,7 @@ We can change our `getKey` function to:
 ```jsx
 const getKey = (pageIndex, previousPageData) => {
   // reached the end
-  if (previousPageData && !previousPageData.data) return null
+  if (previousPageData && !previousPageData.length) return null
 
   // first page, we don't have `previousPageData`
   if (pageIndex === 0) return `/users?limit=10`
