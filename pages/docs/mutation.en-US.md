@@ -72,7 +72,7 @@ function Profile () {
 
 **`optimisticData`**: data to immediately update the client cache, usually used in optimistic UI.
 
-**`revalidate`**: should the cache revalidate once the asynchronus update resolves.
+**`revalidate`**: should the cache revalidate once the asynchronous update resolves.
 
 **`populateCache`**: should the result of the remote mutation be written to the cache.
 
