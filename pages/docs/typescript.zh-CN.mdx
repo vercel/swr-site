@@ -28,7 +28,7 @@ useSWR(() => ['user', 8], (arg0, arg1) => {})
 import useSWR, { Key, Fetcher } from 'swr'
 
 const uid: Key = '<user_id>'
-const fetcher: Fetcher<string, User> = (id) => getUserById(id)
+const fetcher: Fetcher<User, string> = (id) => getUserById(id)
 
 const { data } = useSWR(uid, fetcher)
 // `data` 将会是 `User | undefined`.
