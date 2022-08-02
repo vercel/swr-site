@@ -49,7 +49,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 ```
 
-También puede personalizar nuestro `fetcher` con [Axios](https://axios-http.com/docs/intro)
+También puede personalizar la función `fetcher` con [Axios](https://axios-http.com/docs/intro)
 
 ```js
 const fetcher = async url => {

@@ -46,7 +46,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 // error.status === 403
 ```
 
-您还可以使用 [Axios](https://axios-http.com/docs/intro) 自定义我们的 `fetcher`
+您还可以使用 [Axios](https://axios-http.com/docs/intro) 自定义 `fetcher` 功能
 
 ```js
 const fetcher = async url => {

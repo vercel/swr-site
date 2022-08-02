@@ -47,7 +47,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 // error.status === 403
 ```
 
-Вы также можете настроить наш `fetcher` с помощью [Axios](https://axios-http.com/docs/intro)
+Вы также можете настроить функцию `fetcher` с помощью [Axios](https://axios-http.com/docs/intro)
 
 ```js
 const fetcher = async url => {

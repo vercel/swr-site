@@ -48,7 +48,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 // error.status === 403
 ```
 
-[Axios](https://axios-http.com/docs/intro)로 '가져오기'를 맞춤설정할 수도 있습니다.
+[Axios](https://axios-http.com/docs/intro)를 사용하여 `fetcher` 기능을 사용자 정의할 수도 있습니다.
 
 ```js
 const fetcher = async url => {
