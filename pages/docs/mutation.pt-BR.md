@@ -41,11 +41,10 @@ Com `mutate`, você pode atualizar seus dados localmente, enquanto revalidar e
 depois substituir por os dados mais recentes.
 
 ```jsx
-import useSWR, { useSWRConfig } from 'swr'
+import useSWR from 'swr'
 
 function Profile () {
-  const { mutate } = useSWRConfig()
-  const { data } = useSWR('/api/user', fetcher)
+  const { data, mutate } = useSWR('/api/user', fetcher)
 
   return (
     <div>

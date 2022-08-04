@@ -40,11 +40,10 @@ Con `mutate`, puedes actualizar tus datos locales mediante programación, mientr
 sustituyes por los datos más recientes.
 
 ```jsx
-import useSWR, { useSWRConfig } from 'swr'
+import useSWR from 'swr'
 
 function Profile () {
-  const { mutate } = useSWRConfig()
-  const { data } = useSWR('/api/user', fetcher)
+  const { data, mutate } = useSWR('/api/user', fetcher)
 
   return (
     <div>

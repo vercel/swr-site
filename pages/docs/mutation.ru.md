@@ -38,11 +38,10 @@ function App () {
 С помощью `mutate` вы можете обновлять локальные данные программно, пока идёт ревалидация и, в итоге, заменить их свежими данными.
 
 ```jsx
-import useSWR, { useSWRConfig } from 'swr'
+import useSWR from 'swr'
 
 function Profile () {
-  const { mutate } = useSWRConfig()
-  const { data } = useSWR('/api/user', fetcher)
+  const { data, mutate } = useSWR('/api/user', fetcher)
 
   return (
     <div>

@@ -38,12 +38,11 @@ function App () {
 使用 `mutate`，你可以以编程方式更新本地数据，同时重新验证并最终将其替换为最新数据。
 
 ```jsx
-import useSWR, { useSWRConfig } from 'swr'
+import useSWR  from 'swr'
 
 function Profile () {
-  const { mutate } = useSWRConfig()
-  const { data } = useSWR('/api/user', fetcher)
-
+  const { data, mutate } = useSWR('/api/user', fetcher)
+  
   return (
     <div>
       <h1>My name is {data.name}.</h1>
