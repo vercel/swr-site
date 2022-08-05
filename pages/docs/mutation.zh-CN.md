@@ -55,7 +55,7 @@ function Profile () {
         // 立即更新本地数据
         // 发送请求更新数据
         // 触发重新验证（重新请求）以确保本地数据是正确的
-        mutate(updateFn(user), options);
+        mutate('/api/user', updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
   )
