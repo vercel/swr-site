@@ -17,7 +17,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `data`: 通过 `fetcher` 用给定的 key 获取的数据（如未完全加载，返回 undefined）
 - `error`: `fetcher` 抛出的错误（或者是 undefined）
 - `isValidating`: 是否有请求或重新验证加载
-- `mutate(data?, shouldRevalidate?)`: 更改缓存数据的函数 [（详情）](/docs/mutation)
+- `mutate(data?, options?)`: 更改缓存数据的函数 [（详情）](/docs/mutation)
 
 ## 选项
 

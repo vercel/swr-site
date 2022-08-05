@@ -17,7 +17,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `data`: `fetcher` によって解決された、指定されたキーのデータ（もしくは、ロードされていない場合は undefined）
 - `error`: `fetcher` によって投げられたエラー （もしくは undefined）
 - `isValidating`: リクエストまたは再検証の読み込みがある場合
-- `mutate(data?, shouldRevalidate?)`: キャッシュされたデータを更新する関数 [（ 詳細 ）](/docs/mutation)
+- `mutate(data?, options?)`: キャッシュされたデータを更新する関数 [（ 詳細 ）](/docs/mutation)
 
 ## オプション
 
