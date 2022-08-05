@@ -23,10 +23,15 @@ even if `token` changes, SWR will still use the same key and return the wrong da
 Instead, you can use an **array** as the `key` parameter, which contains multiple arguments of `fetcher`:
 
 ```js
-const { data: user } = useSWR(['/api/user', token], fetchWithToken)
+const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-The function `fetchWithToken` still accepts the same 2 arguments, but the cache key will also be associated with `token` now.
+The fetcher function accepts the `key` parameter as is, and the cache key will also be associated with `token` now.
+
+<Callout emoji="⚠️">
+  In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
+</Callout>
+
 
 ## Passing Objects
 
