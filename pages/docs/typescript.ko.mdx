@@ -41,8 +41,8 @@ Same for `swr/inifite`, you can either rely on the automatic type inference or e
 ```typescript
 import { SWRInfiniteKeyLoader } from 'swr/infinite'
 
-const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
-  // ...
+const getKey: SWRInfiniteKeyLoader<Data> = (index, previousPageData) => {
+  // `previoutsPageData` is `Data | null`.
 }
 
 const { data } = useSWRInfinite(getKey, fetcher)
