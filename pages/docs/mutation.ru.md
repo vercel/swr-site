@@ -1,5 +1,16 @@
 # Мутация
 
+```js
+mutate(key, data, options)
+```
+
+## Опции
+
+- `optimisticData`: данные для немедленного обновления кеша клиента, обычно используемые в оптимистичном UI.
+- `revalidate`: должен ли кеш повторно проверяться после разрешения асинхронного обновления.
+- `populateCache`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
+- `rollbackOnError`: следует ли выполнять откат кеша в случае ошибок удаленной мутации.
+
 ## Ревалидация
 
 Вы можете получить функцию `mutate` из хука `useSWRConfig()`, и передать сообщение о ревалидации глобально другим SWR хукам<sup>\*</sup>, используя тот же ключ, вызвав `mutate(key)`.
@@ -63,16 +74,6 @@ function Profile () {
 ```
 
 > **`updateFn`** должена быть промисом или асинхронной функцией для обработки удаленной мутации, она должна возвращать обновленные данные.
-
-**Доступные опции**
-
-**`optimisticData`**: данные для немедленного обновления кеша клиента, обычно используемые в оптимистичном UI.
-
-**`revalidate`**: должен ли кеш повторно проверяться после разрешения асинхронного обновления.
-
-**`populateCache`**: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
-
-**`rollbackOnError`**: следует ли выполнять откат кеша в случае ошибок удаленной мутации.
 
 ## Мутировать на основе текущих данных
 
