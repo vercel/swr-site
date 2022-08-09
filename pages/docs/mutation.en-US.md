@@ -72,11 +72,16 @@ function Profile () {
 
 **`optimisticData`**: data to immediately update the client cache, usually used in optimistic UI.
 
-**`revalidate`**: should the cache revalidate once the asynchronous update resolves.
+**`revalidate`**: should the cache revalidate once the asynchronous update resolves. The default is `true`.
 
-**`populateCache`**: should the result of the remote mutation be written to the cache.
+**`populateCache`**: should the result of the remote mutation be written to the cache. The default is `true`.
 
-**`rollbackOnError`**: should the cache rollback if the remote mutation errors.
+**`rollbackOnError`**: should the cache rollback if the remote mutation errors. The default is `true`.
+
+Alternatively, `options` can be a boolean, specifying the value of the `revalidate` option, so that the following calls are functionally equivalent.
+```jsx
+mutate("/api/user", updateFn(user), { revalidate: false });
+mutate("/api/user", updateFn(user), false );
 
 ## Mutate Based on Current Data
 
