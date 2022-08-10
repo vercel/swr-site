@@ -73,7 +73,7 @@ function Profile () {
 
 **`revalidate`**: se o cache deve revalidar quando a atualização assíncrona resolve.
 
-**`populateCache`**: se o resultado da mutação remota deve ser escrito no cache.
+**`populateCache`**: se o resultado da mutação remota deve ser escrito no cache. A function can be passed.
 
 **`rollbackOnError`**: se o cache deve reverter se a mutação remota falhar.
 
@@ -95,6 +95,28 @@ mutate('/api/todos', async todos => {
   // filtra a lista, e retorna com o item atualizado
   const filteredTodos = todos.filter(todo => todo.id !== '1')
   return [...filteredTodos, updatedTodo]
+// Since the API already gives us the updated information,
+// we don't need to revalidate here.
+},　{ revalidate: false })
+```
+
+You can also use the `populateCache` option.
+
+```jsx
+const updateTodo = () => fetch('/api/todos/1', {
+  method: 'PATCH',
+  body: JSON.stringify({ completed: true })
+})
+
+mutate('/api/todos', updateTodo, {
+  populateCache: (updatedTodo, todos) => {
+    // filter the list, and return it with the updated item
+    const filteredTodos = todos.filter(todo => todo.id !== '1')
+    return [...filteredTodos, updatedTodo]
+  },
+  // Since the API already gives us the updated information,
+  // we don't need to revalidate here.
+  revalidate: false
 })
 ```
 

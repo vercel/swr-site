@@ -74,7 +74,7 @@ function Profile () {
 
 **`revalidate`**: 非同期更新が解決した後、キャッシュを再検証するかどうか。
 
-**`populateCache`**: リモートミューテーションの結果をキャッシュに書き込むかどうか。
+**`populateCache`**: リモートミューテーションの結果をキャッシュに書き込むかどうか。関数も受け取ります。
 
 **`rollbackOnError`**: リモートミューテーションでエラーが発生した場合、キャッシュをロールバックするかどうか。
 
@@ -96,6 +96,28 @@ mutate('/api/todos', async todos => {
   // リストをフィルタリングし、更新されたアイテムを返します
   const filteredTodos = todos.filter(todo => todo.id !== '1')
   return [...filteredTodos, updatedTodo]
+// API からすでに更新後の情報が取得できるため
+// 再検証する必要はありません
+},　{ revalidate: false })
+```
+
+`populateCache` オプションも使用可能です。
+
+```jsx
+const updateTodo = () => fetch('/api/todos/1', {
+  method: 'PATCH',
+  body: JSON.stringify({ completed: true })
+})
+
+mutate('/api/todos', updateTodo, {
+  populateCache: (updatedTodo, todos) => {
+    // リストをフィルタリングし、更新されたアイテムを返します
+    const filteredTodos = todos.filter(todo => todo.id !== '1')
+    return [...filteredTodos, updatedTodo]
+  },
+  // API からすでに更新後の情報が取得できるため
+  // 再検証する必要はありません
+  revalidate: false
 })
 ```
 

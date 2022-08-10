@@ -74,7 +74,7 @@ function Profile () {
 
 **`revalidate`**: should the cache revalidate once the asynchronous update resolves.
 
-**`populateCache`**: should the result of the remote mutation be written to the cache.
+**`populateCache`**: should the result of the remote mutation be written to the cache. A function can be passed.
 
 **`rollbackOnError`**: should the cache rollback if the remote mutation errors.
 
@@ -96,6 +96,28 @@ mutate('/api/todos', async todos => {
   // filter the list, and return it with the updated item
   const filteredTodos = todos.filter(todo => todo.id !== '1')
   return [...filteredTodos, updatedTodo]
+// Since the API already gives us the updated information,
+// we don't need to revalidate here.
+},　{ revalidate: false })
+```
+
+You can also use the `populateCache` option.
+
+```jsx
+const updateTodo = () => fetch('/api/todos/1', {
+  method: 'PATCH',
+  body: JSON.stringify({ completed: true })
+})
+
+mutate('/api/todos', updateTodo, {
+  populateCache: (updatedTodo, todos) => {
+    // filter the list, and return it with the updated item
+    const filteredTodos = todos.filter(todo => todo.id !== '1')
+    return [...filteredTodos, updatedTodo]
+  },
+  // Since the API already gives us the updated information,
+  // we don't need to revalidate here.
+  revalidate: false
 })
 ```
 
