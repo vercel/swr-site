@@ -69,7 +69,7 @@ function Profile () {
 
 **`revalidate`**：一旦完成异步更新，缓存是否重新请求。
 
-**`populateCache`**：远程更新的结果是否写入缓存。 A function can be passed.
+**`populateCache`**: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
 
 **`rollbackOnError`**：如果远程更新出错，是否进行缓存回滚。
 

@@ -73,7 +73,7 @@ function Profile () {
 
 **`revalidate`**: se o cache deve revalidar quando a atualização assíncrona resolve.
 
-**`populateCache`**: se o resultado da mutação remota deve ser escrito no cache. A function can be passed.
+**`populateCache`**: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
 
 **`rollbackOnError`**: se o cache deve reverter se a mutação remota falhar.
 

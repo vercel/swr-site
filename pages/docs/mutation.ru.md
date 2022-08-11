@@ -70,7 +70,7 @@ function Profile () {
 
 **`revalidate`**: должен ли кеш повторно проверяться после разрешения асинхронного обновления.
 
-**`populateCache`**: следует ли записывать результат удаленной мутации в кеш. A function can be passed.
+**`populateCache`**: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
 
 **`rollbackOnError`**: следует ли выполнять откат кеша в случае ошибок удаленной мутации.
 
