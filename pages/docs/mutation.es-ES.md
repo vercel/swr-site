@@ -3,9 +3,9 @@
 ## Revalidar
 
 You can get the `mutate` function from the `useSWRConfig()` hook, and broadcast a revalidation message
-globally to other SWR hooks<sup>*</sup> using the same key by calling `mutate(key)`.
+globally to other SWR hooks<sup>\*</sup> using the same key by calling `mutate(key)`.
 
-Este ejemplo muestra cómo recuperar automáticamente la información de login (por ejemplo, dentro de `<Profile/>`) 
+Este ejemplo muestra cómo recuperar automáticamente la información de login (por ejemplo, dentro de `<Profile/>`)
 cuando el usuario hace clic en el botón "Logout".
 
 ```jsx
@@ -31,13 +31,13 @@ function App () {
 }
 ```
 
-## Mutación y solicitud POST
+## Optimistic Updates
 
-En muchos casos, la aplicación de mutations locales a los datos es una buena forma de agilizar los cambios, 
-sin necesidad de esperar a la fuente de datos remota.
+In many cases, applying local mutations to data is a good way to make changes
+feel faster — no need to wait for the remote source of data.
 
-Con `mutate`, puedes actualizar tus datos locales mediante programación, mientras los revalidas y finalmente los 
-sustituyes por los datos más recientes.
+With `mutate`, you can update your local data programmatically, while
+revalidating and finally replace it with the latest data.
 
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'
@@ -51,33 +51,30 @@ function Profile () {
       <h1>My name is {data.name}.</h1>
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
-        
-        // actualiza los datos locales inmediatamente, pero desactiva la revalidación
-        mutate('/api/user', { ...data, name: newName }, false)
-        
-        // envía una solicitud a la API para actualizar la fuente
-        await requestUpdateUsername(newName)
-        
-        // activar una revalidación (refetch) para asegurarse de que nuestros datos locales son correctos
-        mutate('/api/user')
+        const user = { ...data, name: newName }
+        const options = { optimisticData: user, rollbackOnError: true }
+
+        // updates the local data immediately
+        // send a request to update the data
+        // triggers a revalidation (refetch) to make sure our local data is correct
+        mutate('/api/user', updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
   )
 }
 ```
 
-Al hacer click en el botón del ejemplo anterior, se actualizarán localmente los datos del cliente, se enviará una solicitud POST 
-para modificar los datos remotos y se intentará obtener la última (revalidar).
+> The **`updateFn`** should be a promise or asynchronous function to handle the remote mutation, it should return updated data.
 
-Pero muchas APIs POST simplemente devolverán los datos actualizados directamente, por lo que no necesitamos revalidar de nuevo. 
-Aquí hay un ejemplo que muestra el uso de "local mutate - request - update":
+**Available Options**
 
+**`optimisticData`**: data to immediately update the client cache, usually used in optimistic UI.
 
-```jsx
-mutate('/api/user', newUser, false)             // utilice `false` para mutate sin revalidar
-mutate('/api/user', updateUser(newUser), false) // `updateUser` es una Promise de la solicitud,
-                                                // que devuelve el update document
-```
+**`revalidate`**: should the cache revalidate once the asynchronous update resolves.
+
+**`populateCache`**: should the result of the remote mutation be written to the cache.
+
+**`rollbackOnError`**: should the cache rollback if the remote mutation errors.
 
 ## Mutar basándose en los datos actuales
 
@@ -102,11 +99,10 @@ mutate('/api/todos', async todos => {
 
 ## Datos devueltos por Mutate
 
-Lo más probable es que necesites algunos datos para actualizar la caché. Los datos se resuelven o se devuelven 
+Lo más probable es que necesites algunos datos para actualizar la caché. Los datos se resuelven o se devuelven
 desde la promise o función asíncrona que pasaste para `mutate`.
 
 La función devolverá update document para que `mutate` actualice el valor de la caché correspondiente. Podría arrojar un error de alguna manera, cada vez que se llame.
-
 
 ```jsx
 try {

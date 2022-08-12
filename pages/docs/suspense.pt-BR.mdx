@@ -1,0 +1,75 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Suspense
+
+<Callout emoji="🚨" type="error">
+    Suspense é atualmente uma funcionalidade <strong>experimental</strong> do React. Estas APIs podem mudar significativamente e sem aviso antes de serem adicionadas ao React.<br/>
+    <a href="https://reactjs.org/docs/concurrent-mode-suspense.html" target="_blank" rel="noopener">Mais informações</a>
+</Callout>
+
+<Callout>
+  Note que o React Suspense não é suportado no modo SSR.
+</Callout>
+
+Você pode habilitar a opção `suspense` para usar SWR com React Suspense:
+
+```jsx
+import { Suspense } from 'react'
+import useSWR from 'swr'
+
+function Profile () {
+  const { data } = useSWR('/api/user', fetcher, { suspense: true })
+  return <div>hello, {data.name}</div>
+}
+
+function App () {
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      <Profile/>
+    </Suspense>
+  )
+}
+```
+
+<Callout>
+  Note que a opção `suspense` não é permitida a mudar no ciclo de vida.
+</Callout>
+
+Em modo Suspense, `data` é sempre a resposta do fetch (então você não precisa checar se é `undefined`).
+Mas se um erro ocorreu, você precisa usar um [limite de erro (Error Boundary)](https://pt-br.reactjs.org/docs/error-boundaries.html) para o capturar:
+
+```jsx
+<ErrorBoundary fallback={<h2>Could not fetch posts.</h2>}>
+  <Suspense fallback={<h1>Loading posts...</h1>}>
+    <Profile />
+  </Suspense>
+</ErrorBoundary>
+```
+
+---
+
+### Nota: Com Fetching Condicional
+
+Normalmente, quando você habilita `suspense`, é garantido que `data` estará sempre pronto na renderização:
+
+```jsx
+function Profile () {
+  const { data } = useSWR('/api/user', fetcher, { suspense: true })
+
+  // `data` nunca será `undefined`
+  // ...
+}
+```
+
+No entanto, ao usá-lo junto com uma busca condicional ou busca dependente, `data` será `undefined` se a solicitação estiver **pausada**:
+
+```jsx
+function Profile () {
+  const { data } = useSWR(isReady ? '/api/user' : null, fetcher, { suspense: true })
+
+  // `data` será `undefined` se `isReady` é false
+  // ...
+}
+```
+
+Se você quiser ler mais detalhes técnicos sobre essa restrição, cheque [a discussão aqui](https://github.com/vercel/swr/pull/357#issuecomment-627089889).

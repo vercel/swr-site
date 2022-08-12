@@ -1,6 +1,7 @@
 ---
 image: https://assets.vercel.com/image/upload/v1630059453/swr/v1.png
-description: '거의 2년 전에 우리는 사람들이 사랑하는 조그만 데이터 가져오기 React 라이브러리인 SWR을 공개했습니다. 오늘 우리는 SWR 버전 1.0이라는 또 다른 마일스톤에 도달하였습니다.'
+description: '약 2년 전에 우리는 사람들이 사랑하는 조그만 데이터 가져오기 React 라이브러리인 SWR을 공개했습니다. 오늘 우리는 SWR 버전 1.0이라는 또 다른 마일스톤에 도달하였습니다.'
+date: 2021년 8월 27일
 ---
 
 import Callout from 'nextra-theme-docs/callout'
@@ -8,14 +9,14 @@ import Bleed from 'nextra-theme-docs/bleed'
 
 import Authors, { Author } from 'components/authors'
 
-# SWR 1.0 알림
+# SWR 1.0 발표
 
-<Authors date="August 27th, 2021">
+<Authors date="2021년 8월 27일">
   <Author name="Shu Ding" link="https://twitter.com/shuding_" />
   <Author name="Jiachi Liu" link="https://twitter.com/huozhi" />
 </Authors>
 
-거의 2년 전에 우리는 사람들이 사랑하는 조그만 데이터 가져오기 React 라이브러리인 SWR을 [오픈 소스로 공개](https://twitter.com/vercel/status/1188911002626097157)했습니다. 오늘 우리는 SWR 버전 1.0이라는 또 다른 마일스톤에 도달하였습니다!
+약 2년 전에 우리는 사람들이 사랑하는 조그만 데이터 가져오기 React 라이브러리인 SWR을 [오픈 소스로 공개](https://twitter.com/vercel/status/1188911002626097157)했습니다. 오늘 우리는 SWR 버전 1.0이라는 또 다른 마일스톤에 도달하였습니다!
 
 ## 새로운 것
 
@@ -117,8 +118,7 @@ SWR 미들웨어는 SWR hook 위에서 추상화를 구축하고 재사용할 �
 useSWR(key, fetcher, { use: [...middleware] })
 ```
 
-A lot of new ideas can be implemented with this feature, and we've built some examples: [_Request Logger_](/docs/middleware#request-logger), [_Keep Previous Data When Changing the Key_](/docs/middleware#keep-previous-result), and [_Serialize Object Keys_](/docs/middleware#serialize-object-keys).
-이 기능으로 많은 새로운 아이디어를 구현할 수 있습니다. 몇 가지 예제를 만들어두었습니다: [_Request Logger_](/docs/middleware#request-logger), [_키가 변경될 때 이전 데이터 유지하기_](/docs/middleware#keep-previous-result), and [_객체 키 직렬화_](/docs/middleware#serialize-object-keys).
+이 기능으로 많은 새로운 아이디어를 구현할 수 있습니다. 몇 가지 예제를 만들어 두었습니다: [_Request Logger_](/docs/middleware#request-logger), [_키가 변경될 때 이전 데이터 유지하기_](/docs/middleware#keep-previous-result), and [_객체 키 직렬화_](/docs/middleware#serialize-object-keys).
 
 더 자세한 내용은 [미들웨어 API](/docs/middleware)를 참고하세요.
 

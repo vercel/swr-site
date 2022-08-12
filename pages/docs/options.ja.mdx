@@ -23,14 +23,14 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 - `suspense = false`: React Suspense モードを有効にする [（ 詳細 ）](/docs/suspense)
 - `fetcher(args)`: フェッチャー関数
-- `revalidateIfStale = true`: 古いデータがある場合でも、マウント時に自動再検証をする [（ 詳細 ）](/docs/revalidation#disable-automatic-revalidations)
+- `revalidateIfStale = true`: 古いデータがある場合でも、自動再検証をする [（ 詳細 ）](/docs/revalidation#disable-automatic-revalidations)
 - `revalidateOnMount`: コンポーネントのマウント時に行われる自動再検証を有効または無効にします
 - `revalidateOnFocus = true`: ウィンドウがフォーカスされたときに自動的に再検証します [（ 詳細 ）](/docs/revalidation)
 - `revalidateOnReconnect = true`: ブラウザがネットワーク接続を回復すると自動的に再検証します（ `navigator.onLine` 経由） [（ 詳細 ）](/docs/revalidation)
-- `refreshInterval` [（ 詳細 ）](/docs/revalidation): 
+- `refreshInterval` [（ 詳細 ）](/docs/revalidation):
   - デフォルトでは無効: `refreshInterval = 0`
-  - If set to a number, ポーリングの間隔
-  - If set to a function, the function will receive the latest data and should return the interval in milliseconds
+  - 数値が設定されている場合、ミリ秒単位のポーリングの間隔
+  - 関数を設定した場合、その関数は最新のデータを受け取り、ミリ秒単位の間隔で返す必要があります
 - `refreshWhenHidden = false`: ウィンドウが非表示の場合にポーリングします（`refreshInterval` が有効になっているときのみ）
 - `refreshWhenOffline = false`: ブラウザがオフラインのときにポーリングします（`navigator.onLine` によって決定される）
 - `shouldRetryOnError = true`: フェッチャーでエラーが発生したときに再試行します
@@ -45,7 +45,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `onSuccess(data, key, config)`: リクエストが正常に終了したときのコールバック関数
 - `onError(err, key, config)`: リクエストがエラーを返したときのコールバック関数
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: エラー再試行のハンドラー
-- `compare(a, b)`: 誤った再レンダリングを回避するために、返されたデータがいつ変更されたかを検出するために使用される比較関数。デフォルトでは、[dequal](https://github.com/lukeed/dequal) が使用されます
+- `compare(a, b)`: 誤った再レンダリングを回避するために、返されたデータがいつ変更されたかを検出するために使用される比較関数。デフォルトでは、[stable-hash](https://github.com/shuding/stable-hash) が使用されます
 - `isPaused()`: 再検証を一時停止するかどうかを検出する関数であり、この関数が `true` を返す場合はフェッチしたデータとエラーを無視します。デフォルトでは `false` を返します
 - `use`: ミドルウェア関数の配列 [（ 詳細 ）](/docs/middleware)
 

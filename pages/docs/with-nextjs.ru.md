@@ -36,7 +36,7 @@ import Callout from 'nextra-theme-docs/callout'
 }
 
 function Article() {
-  // `data` всегда будет дуступна, так как находится в `fallback`.
+  // `data` всегда будет доступна, так как находится в `fallback`.
   const { data } = useSWR('/api/article', fetcher)
   return <h1>{data.title}</h1>
 }
@@ -56,3 +56,37 @@ export default function Page({ fallback }) {
 <Callout emoji="💡">
   Компонент `Article` сначала отрендерит предварительно сгенерированные данные, а после гидратации страницы он снова получит последние данные, чтобы они были актуальными.
 </Callout>
+
+### Сложные ключи
+
+`useSWR` можно использовать с ключами типа `array` и `function`. Использование предварительно загруженных данных с ключами такого типа требует сериализации ключей `fallback` с помощью `unstable_serialize`.
+
+```jsx
+import useSWR, { unstable_serialize } from 'swr'
+
+export async function getStaticProps () {
+  const article = await getArticleFromAPI(1)
+  return {
+    props: {
+      fallback: {
+        // unstable_serialize() ключ массивного типа
+        [unstable_serialize(['api', 'article', 1])]: article,
+      }
+    }
+  }
+}
+
+function Article() {
+  // использование ключа массивного типа.
+  const { data } = useSWR(['api', 'article', 1], fetcher)
+  return <h1>{data.title}</h1>
+}
+
+export default function Page({ fallback }) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
+}
+```

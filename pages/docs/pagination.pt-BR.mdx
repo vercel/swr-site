@@ -1,0 +1,322 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Paginação
+
+<Callout emoji="✅">
+    Por favor atualize para a versão mais recente (≥ 0.3.0) para usar esta API. A API anterior <code>useSWRPages</code> está descontinuada.
+</Callout>
+
+SWR provê uma API `useSWRInfinite` dedicada para lidar com padrões de interface comuns como **paginação** e **carregamento infinito**.
+
+## Quando Usar `useSWR`
+
+### Paginação
+
+Antes de tudo, nós podemos **NÃO** precisar de `useSWRInfinite` mas podemos usar apenas `useSWR` se estamos construindo algo como isso:
+
+import { Pagination } from 'components/diagrams/pagination'
+
+<div className="mt-8">
+  <Pagination/>
+</div>
+
+...que é uma interface típica de paginação. Veja como pode ser facilmente implementado com `useSWR`:
+
+```jsx {5}
+function App () {
+  const [pageIndex, setPageIndex] = useState(0);
+
+  // A URL da API inclui o índice da página, que é um estado do React.
+  const { data } = useSWR(`/api/data?page=${pageIndex}`, fetcher);
+
+  // ... lidando com estados de loading e erro
+
+  return <div>
+    {data.map(item => <div key={item.id}>{item.name}</div>)}
+    <button onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
+    <button onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
+  </div>
+}
+```
+
+Além disso, podemos criar uma abstração para este "componente de página":
+
+```jsx {13}
+function Page ({ index }) {
+  const { data } = useSWR(`/api/data?page=${index}`, fetcher);
+
+  // ... lidando com estados de loading e erro
+
+  return data.map(item => <div key={item.id}>{item.name}</div>)
+}
+
+function App () {
+  const [pageIndex, setPageIndex] = useState(0);
+
+  return <div>
+    <Page index={pageIndex}/>
+    <button onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
+    <button onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
+  </div>
+}
+```
+
+Por causa do cache do SWR, temos o benefício de pré-carregar a próxima página. Renderizamos a próxima página dentro
+um div oculto, SWR acionará a busca de dados da próxima página. Quando o usuário navega para a próxima página, os dados já estão lá:
+
+```jsx {6}
+function App () {
+  const [pageIndex, setPageIndex] = useState(0);
+
+  return <div>
+    <Page index={pageIndex}/>
+    <div style={{ display: 'none' }}><Page index={pageIndex + 1}/></div>
+    <button onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
+    <button onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
+  </div>
+}
+```
+
+Com apenas 1 linha de código, obtemos uma UX muito melhor. O hook `useSWR` é tão poderoso que a maioria dos cenários são cobertos por ele.
+
+### Carregamento Infinito
+
+Às vezes, queremos criar uma UI de **carregamento infinito**, com um botão "Carregar mais" que anexa dados
+para a lista (ou feito automaticamente quando você rola):
+
+import { Infinite } from 'components/diagrams/infinite'
+
+<div className="mt-8">
+  <Infinite/>
+</div>
+
+Para implementar isso, precisamos fazer um **número dinâmico de solicitações** nesta página. Os React Hooks tem [algumas regras](https://pt-br.reactjs.org/docs/hooks-rules.html),
+então nós **NÃO PODEMOS** fazer algo assim:
+
+```jsx {5,6,7,8,9}
+function App () {
+  const [cnt, setCnt] = useState(1)
+
+  const list = []
+  for (let i = 0; i < cnt; i++) {
+    // 🚨 Isso é errado! Comumente, você não pode usar hooks dentro de um loop.
+    const { data } = useSWR(`/api/data?page=${i}`)
+    list.push(data)
+  }
+
+  return <div>
+    {list.map((data, i) =>
+      <div key={i}>{
+        data.map(item => <div key={item.id}>{item.name}</div>)
+      }</div>)}
+    <button onClick={() => setCnt(cnt + 1)}>Load More</button>
+  </div>
+}
+```
+
+Ao invés disso, podemos usar a abstração `<Page />` que criamos para conseguir isso:
+
+```jsx {5,6,7}
+function App () {
+  const [cnt, setCnt] = useState(1)
+
+  const pages = []
+  for (let i = 0; i < cnt; i++) {
+    pages.push(<Page index={i} key={i} />)
+  }
+
+  return <div>
+    {pages}
+    <button onClick={() => setCnt(cnt + 1)}>Load More</button>
+  </div>
+}
+```
+
+### Casos Avançados
+
+Entretanto, em alguns casos avançados, a solução acima não funciona.
+
+Por exemplo, nós ainda estamos implementando o mesmo "Carregar mais", mas também precisamos mostrar um número
+sobre quantos itens existem no total. Nós não podemos usar o `<Page />` novamente porque
+a top level UI (`<App />`) precisa dos dados dentro de cada página:
+
+```jsx {10}
+function App () {
+  const [cnt, setCnt] = useState(1)
+
+  const pages = []
+  for (let i = 0; i < cnt; i++) {
+    pages.push(<Page index={i} key={i} />)
+  }
+
+  return <div>
+    <p>??? items</p>
+    {pages}
+    <button onClick={() => setCnt(cnt + 1)}>Load More</button>
+  </div>
+}
+```
+
+Também, se a API de paginação for **baseada em cursor**, essa solução não funciona também. Porque cada página
+precisa dos dados da página interior, elas não são isoladas.
+
+É assim que esse novo hook `useSWRInfinite` pode ajudar.
+
+## useSWRInfinite
+
+`useSWRInfinite` nos dá a habilidade de disparar uma quantidade de solicitações com um Hook. Isso é como se fosse:
+
+```jsx
+import useSWRInfinite from 'swr/infinite'
+
+// ...
+const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+  getKey, fetcher?, options?
+)
+```
+
+Similar ao `useSWR`, esse novo Hook aceita uma função que retorna a chave de pedido, uma função de busca, e opções.
+Ele retorna todos os valores que `useSWR` retorna, incluindo 2 valores extras: o tamanho da página e um setter do tamanho da página, como um state do React.
+
+In infinite loading, one _page_ is one request, and our goal is to fetch multiple pages and render them.
+
+<Callout emoji="⚠️">
+  Se você está usando versões SWR 0.x, `useSWRInfinite` precisa ser importado de `swr`:<br/>
+  `import { useSWRInfinite } from 'swr'`
+</Callout>
+
+### API
+
+#### Parâmetros
+
+- `getKey`: uma função que aceita o índice e os dados da página anterior, retorna a chave de uma página
+- `fetcher`: mesma função que a [função fetcher](/docs/data-fetching) do `useSWR`.
+- `options`: aceita todas as opções que `useSWR` suporta, com 4 opções adicionais:
+  - `initialSize=1`: número de páginas devem ser carregadas inicialmente
+  - `revalidateAll=false`: sempre tentar revalidar todas as páginas
+  - `revalidateFirstPage=true`: sempre tentar revalidar a primeira página
+  - `persistSize=false`: não reseta o tamanho da página para 1 (ou `initialSize` se setado) quando a chave da primeira página muda
+
+<Callout>
+  Note que a opção `initialSize` não é permitida a mudar no ciclo de vida.
+</Callout>
+
+#### Valores de Retorno
+
+- `data`: um array de respostas de fetch para cada página
+- `error`: mesma que o objeto `error` do `useSWR`.
+- `isValidating`: mesmo que o `isValidating` do `useSWR`.
+- `mutate`: igual à função de mutação vinculada do `useSWR`, mas manipula o array de dados
+- `size`: o número de páginas que _vão_ ser carregadas e retornadas
+- `setSize`: define o número de páginas que precisam ser carregadas
+
+### Exemplo 1: API de Paginação Baseada em Índice
+
+Para APIs baseadas em índice:
+
+```plaintext
+GET /users?page=0&limit=10
+[
+  { name: 'Alice', ... },
+  { name: 'Bob', ... },
+  { name: 'Cathy', ... },
+  ...
+]
+```
+
+```jsx {4,5,6,7,10}
+// A função para obter a chave SWR de cada página,
+// o valor retornado será aceito pela função `fetcher`.
+// Se o valor `null` é retornado, a solicitação da página não iniciará.
+const getKey = (pageIndex, previousPageData) => {
+  if (previousPageData && !previousPageData.length) return null // atingiu o fim
+  return `/users?page=${pageIndex}&limit=10`                    // chave SWR
+}
+
+function App () {
+  const { data, size, setSize } = useSWRInfinite(getKey, fetcher)
+  if (!data) return 'loading'
+
+  // Agora podemos calcular o número total de usuários
+  let totalUsers = 0
+  for (let i = 0; i < data.length; i++) {
+    totalUsers += data[i].length
+  }
+
+  return <div>
+    <p>{totalUsers} users listed</p>
+    {data.map((users, index) => {
+      // `data` é um array de respostas da API de cada página.
+      return users.map(user => <div key={user.id}>{user.name}</div>)
+    })}
+    <button onClick={() => setSize(size + 1)}>Load More</button>
+  </div>
+}
+```
+
+A função `getKey` é a diferença maior entre `useSWRInfinite` e `useSWR`.
+Ela aceita o índice da página atual, bem como os dados da página anterior.
+Então ambas (paginação baseada em índice e páginação baseada em cursor) podem ser suportadas.
+
+Também, `data` não é mais apenas uma resposta da API. É um array de respostas da API:
+
+```js
+// `data` se parecerá com isso
+[
+  [
+    { name: 'Alice', ... },
+    { name: 'Bob', ... },
+    { name: 'Cathy', ... },
+    ...
+  ],
+  [
+    { name: 'John', ... },
+    { name: 'Paul', ... },
+    { name: 'George', ... },
+    ...
+  ],
+  ...
+]
+```
+
+### Exemplo 2: API de Paginação Baseada em Cursor ou Offset
+
+Vamos dizer que a API agora requer um cursor e retorna o próximo cursor junto com os dados:
+
+```plaintext
+GET /users?cursor=123&limit=10
+{
+  data: [
+    { name: 'Alice' },
+    { name: 'Bob' },
+    { name: 'Cathy' },
+    ...
+  ],
+  nextCursor: 456
+}
+```
+
+Nós podemos mudar nossa função `getKey` para:
+
+```jsx
+const getKey = (pageIndex, previousPageData) => {
+  // alcançou o fim
+  if (previousPageData && !previousPageData.data) return null
+
+  // primeira página, nós não temos `previousPageData`
+  if (pageIndex === 0) return `/users?limit=10`
+
+  // adiciona o cursor para o endpoint da API
+  return `/users?cursor=${previousPageData.nextCursor}&limit=10`
+}
+```
+
+### Funcionalidades Avançadas
+
+[Aqui tem um exemplo](/examples/infinite-loading) mostrando como você pode implementar as seguintes funcionalidades com `useSWRInfinite`:
+
+- estados de carregamento
+- mostrar uma interface especial se estiver vazio
+- desativar o botão "Carregar mais" se alcançou o fim
+- fonte de dados alterável
+- atualizar toda a lista

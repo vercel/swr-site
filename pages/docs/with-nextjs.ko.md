@@ -55,5 +55,39 @@ export default function Page({ fallback }) {
 해당 페이지는 여전히 프리렌더링 됩니다. SEO 친화적이고, 응답이 빠르지만, 클라이언트 사이드의 SWR에 의해 완전히 구동됩니다. 데이터는 동적이고 시간이 지나면서 자체 업데이트될 수 있습니다.
 
 <Callout emoji="💡">
-  `Article` 컴포넌트는 미리 생성된 데이터로 먼저 렌더링하고, 해당 페이지가 하이드레이트 된 후에 최신 데이터를 다시 가져와 새로 고칩니다. 
+  `Article` 컴포넌트는 미리 생성된 데이터로 먼저 렌더링하고, 해당 페이지가 하이드레이트 된 후에 최신 데이터를 다시 가져와 새로 고칩니다.
 </Callout>
+
+### Complex Keys
+
+`useSWR`는 `array`나 `function` 타입을 key로 사용할 수 있습니다. 이 타입의 키를 이용해 미리 패치된 데이터를 사용하기 위해선 `fallback` key들을 `unstable_serialize`와 함께 직렬화해야합니다.
+
+```jsx
+import useSWR, { unstable_serialize } from 'swr'
+
+export async function getStaticProps () {
+  const article = await getArticleFromAPI(1)
+  return {
+    props: {
+      fallback: {
+        // unstable_serialize()에 배열 스타일의 키
+        [unstable_serialize(['api', 'article', 1])]: article,
+      }
+    }
+  }
+}
+
+function Article() {
+  // 배열 스타일의 키 사용
+  const { data } = useSWR(['api', 'article', 1], fetcher)
+  return <h1>{data.title}</h1>
+}
+
+export default function Page({ fallback }) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
+}
+```

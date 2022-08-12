@@ -3,7 +3,6 @@ import Callout from 'nextra-theme-docs/callout'
 # API Options
 
 ```js
-
 const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
@@ -20,19 +19,19 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `isValidating`: si hay una solicitud o carga de revalidación
 - `mutate(data?, shouldRevalidate?`: función para mutar los datos en caché [(detalles)](/docs/mutation)
 
-## Opciónes
+## Opciones
 
 - `suspense = false`: activar el modo React Suspense [(detalles)](/docs/suspense)
 - `fetcher(args)`: la fetcher función
-- `revalidateIfStale = true`: automatic revalidation on mount even if there is stale data [(details)](/docs/revalidation#disable-automatic-revalidations)
+- `revalidateIfStale = true`: automatically revalidate even if there is stale data [(details)](/docs/revalidation#disable-automatic-revalidations)
 - `revalidateOnMount`: activar o desactivar la revalidación automática cuando se monta el componente
 - `revalidateOnFocus = true`: revalidación automática cuanto window gets focused [(detalles)](/docs/revalidation)
 - `revalidateOnReconnect = true`: revalidación automática cuando el navegador recupera la conexión a la red
   (a través de `navigator.onLine`) [(detalles)](/docs/revalidation)
-- `refreshInterval` [(detalles)](/docs/revalidation): 
+- `refreshInterval` [(detalles)](/docs/revalidation):
   - desactivado por defecto: `refreshInterval = 0`
-  - If set to a number, polling interval 
-  - If set to a function, the function will receive the latest data and should return the interval in milliseconds  
+  - If set to a number, polling interval
+  - If set to a function, the function will receive the latest data and should return the interval in milliseconds
 - `refreshWhenHidden = false`: polling cuando window es invisible (si `refreshInterval` está activado)
 - `refreshWhenOffline = false`: polling cuando el navegador está desconectado (determinado por `navigator.onLine`)
 - `shouldRetryOnError = true`: reitentar cuando el fetcher tiene un error
@@ -48,12 +47,12 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `onError(err, key, config)`: función callback cuando una petición devuelve un error
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: manejador para el reintento de error
 - `compare(a, b)`: función de comparación utilizada para detectar cuando los datos devueltos han cambiado,
-  para evitar spurious rerenders. Por defecto, se utiliza [dequal](https://github.com/lukeed/dequal).
+  para evitar spurious rerenders. Por defecto, se utiliza [stable-hash](https://github.com/shuding/stable-hash).
 - `isPaused()`: para detectar si pause revalidations, ignorará los datos obtenidos y los errores cuando devuelva `true`. Devuelve `false` por defecto.
 - `use`: array of middleware functions [(details)](/docs/middleware)
 
 <Callout emoji="💡">
-Cuando una red lenta (2G, {'<='} 70Kbps), `errorRetryInterval` serian 10 segundos, y 
+Cuando una red lenta (2G, {'<='} 70Kbps), `errorRetryInterval` serian 10 segundos, y
 `loadingTimeout` serian 5 segundos por defecto.
 </Callout>
 

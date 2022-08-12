@@ -59,3 +59,37 @@ export default function Page({ fallback }) {
 <Callout emoji="💡">
   `Article` コンポーネントは、事前に生成されたデータを最初にレンダリングし、ページがハイドレイトされた後、最新のデータを再取得して更新を維持します。
 </Callout>
+
+### 複雑なキー
+
+`useSWR` は `array` と `function` 型のキーで使用することができます。これらのキーでプリフェッチデータを使用するには、 `fallback` キーを `unstable_serialize` でシリアライズする必要があります。
+
+```jsx
+import useSWR, { unstable_serialize } from 'swr'
+
+export async function getStaticProps () {
+  const article = await getArticleFromAPI(1)
+  return {
+    props: {
+      fallback: {
+        // unstable_serialize() に array 形式のキーを渡す
+        [unstable_serialize(['api', 'article', 1])]: article,
+      }
+    }
+  }
+}
+
+function Article() {
+  // array 形式のキーを使用する。
+  const { data } = useSWR(['api', 'article', 1], fetcher)
+  return <h1>{data.title}</h1>
+}
+
+export default function Page({ fallback }) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
+}
+```

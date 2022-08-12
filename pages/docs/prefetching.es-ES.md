@@ -10,7 +10,7 @@ Hay muchas formas de precargar los datos para SWR. Para las solicitudes de nivel
 
 Sólo tienes que ponerlo dentro de tu HTML `<head>`. Es fácil, rápido y nativo.
 
-Se precargarán los datos cuando se cargue el HTML, incluso antes de que el JavaScript comience a descargarse. Todas las solicitudes de fetch entrantes con la misma URL reutilizarán el resultado (incluyendo SWR, por supuesto).
+Se precargarán los datos cuando se cargue el HTML, incluso antes de que el JavaScript comience a descargarse. Todas las solicitudes de fetch entrantes con la misma URL reutilizarán el resultado (incluyendSWR, por supuesto).
 
 ## Programmatically Prefetch
 
@@ -36,6 +36,6 @@ If you want to pre-fill existing data into the SWR cache, you can use the `fallb
 useSWR('/api/data', fetcher, { fallbackData: prefetchedData })
 ```
 
-If SWR hasn't fetched the data yet, this hook will return `prefetchedData` as a fallback. 
+If SWR hasn't fetched the data yet, this hook will return `prefetchedData` as a fallback.
 
 You can also configure this for all SWR hooks and multiple keys with `<SWRConfig>` and the `fallback` option. Check [Next.js SSG and SSR](/docs/with-nextjs) for more details.

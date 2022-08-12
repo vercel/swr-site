@@ -14,6 +14,10 @@ import Callout from 'nextra-theme-docs/callout'
 
 ### API
 
+_Notes: 函数名开头最好不要大写 (如使用 `myMiddleware` 来代替 `MyMiddleware`)，否则 React lint 规则会抛出 `Rules of Hook` 的错误_
+
+[TypeScript](/docs/typescript#middleware-types)
+
 ```jsx
 function myMiddleware (useSWRNext) {
   return (key, fetcher, config) => {

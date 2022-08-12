@@ -31,15 +31,15 @@ function App () {
 }
 ```
 
-*: _동일한 [캐시 공급자](/docs/cache) 범위 아래의 SWR hook에게 브로드캐스팅합니다. 캐시 공급자가 존재하지 않을 경우, 모든 SWR hook으로 브로드캐스팅합니다._
+*: _동일한 [캐시 공급자](/docs/advanced/cache) 범위 아래의 SWR hook에게 브로드캐스팅합니다. 캐시 공급자가 존재하지 않을 경우, 모든 SWR hook으로 브로드캐스팅합니다._
 
-## 뮤테이션과 POST 요청
+## Optimistic Updates
 
-많은 경우 데이터에 로컬 뮤테이션을 적용하는 것은 변경을 더 빠르게 느낄 수 있는 좋은 방법입니다 
-- 데이터의 리모트 소스를 기다릴 필요가 없습니다.
+In many cases, applying local mutations to data is a good way to make changes
+feel faster — no need to wait for the remote source of data.
 
-`mutate`를 사용하면 갱신하고 최종적으로 최신 데이터로 이를 대체하는 동안에 로컬 데이터를 
-프로그래밍 방식으로 업데이트할 수 있습니다.
+With `mutate`, you can update your local data programmatically, while
+revalidating and finally replace it with the latest data.
 
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'
@@ -53,32 +53,30 @@ function Profile () {
       <h1>My name is {data.name}.</h1>
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
-        
-        // 로컬 데이터를 즉시 업데이트하지만, 갱신은 비활성화
-        mutate('/api/user', { ...data, name: newName }, false)
-        
-        // 소스 업데이트를 위해 API로 요청 전송
-        await requestUpdateUsername(newName)
-        
-        // 로컬 데이터가 올바른지 확인하기 위해 갱신(refetch) 트리거
-        mutate('/api/user')
+        const user = { ...data, name: newName }
+        const options = { optimisticData: user, rollbackOnError: true }
+
+        // updates the local data immediately
+        // send a request to update the data
+        // triggers a revalidation (refetch) to make sure our local data is correct
+        mutate('/api/user', updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
   )
 }
 ```
 
-위 예시에서 버튼을 클릭하면 클라이언트 데이터를 로컬에서 업데이트하고, 리모트 데이터를 수정하기 위한 
-POST 요청을 보내고 최신 데이터를 가져오기 위한 시도를 합니다(갱신).
+> The **`updateFn`** should be a promise or asynchronous function to handle the remote mutation, it should return updated data.
 
-하지만 많은 POST API들은 업데이트된 데이터를 직접 반환하기 때문에 다시 갱신할 필요가 없습니다.
-다음 예시는 “로컬 뮤테이트 - 요청 - 업데이트” 사용법을 보여줍니다.
+**Available Options**
 
-```jsx
-mutate('/api/user', newUser, false)             // 갱신 없이 뮤테이트하기 위해 `false` 사용
-mutate('/api/user', updateUser(newUser), false) // `updateUser`는 요청의 Promise입니다.
-                                                // 업데이트된 문서를 반환합니다.
-```
+**`optimisticData`**: data to immediately update the client cache, usually used in optimistic UI.
+
+**`revalidate`**: should the cache revalidate once the asynchronous update resolves.
+
+**`populateCache`**: should the result of the remote mutation be written to the cache.
+
+**`rollbackOnError`**: should the cache rollback if the remote mutation errors.
 
 ## 현재 데이터를 기반으로 뮤테이트
 

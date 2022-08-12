@@ -7,3 +7,5 @@ yalc.lock
 
 public/*.st
 public/*.toml
+public/.nextra
+.vercel

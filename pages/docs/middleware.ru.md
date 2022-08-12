@@ -14,6 +14,10 @@ import Callout from 'nextra-theme-docs/callout'
 
 ### API
 
+_Notes: The function name shouldn't be capitalized (e.g. `myMiddleware` instead of `MyMiddleware`) or React lint rules will throw `Rules of Hook` error_
+
+[TypeScript](https://swr.vercel.app/docs/typescript#middleware-types)
+
 ```jsx
 function myMiddleware (useSWRNext) {
   return (key, fetcher, config) => {
@@ -118,7 +122,7 @@ SWR запрос: /api/user2
 
 ### Сохранение предыдущего результата
 
-Иногда вы хотите, чтобы данные, возвращаемые `useSWR`, были «‎запаздывающими». Даже если ключ изменится, вы все равно хотите, чтобы он возвращал предыдущий результат, пока не загрузятся новые данные.
+Иногда вы хотите, чтобы данные, возвращаемые `useSWR`, были «запаздывающими». Даже если ключ изменится, вы все равно хотите, чтобы он возвращал предыдущий результат, пока не загрузятся новые данные.
 
 Это может быть построено как замедленное ППО используя `useRef`. В этом примере мы также собираемся расширить возвращаемый объект хука `useSWR`:
 
@@ -175,8 +179,8 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 </Callout>
 
 <Callout emoji="⚠️">
-  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed.
-  If you are passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
+  В более старых версиях (< 1.1.0) SWR **поверхностно** сравнивает аргументы при каждом рендеринге и запускает повторную проверку, если какой-либо из них изменился.
+  Если вы передаете сериализуемые объекты в качестве ключа. Вы можете сериализовать ключи объекта, чтобы обеспечить его стабильность, может помочь простое промежуточное ПО:
 </Callout>
 
 ```jsx

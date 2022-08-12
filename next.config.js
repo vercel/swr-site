@@ -1,13 +1,13 @@
 const withNextra = require("nextra")({
   theme: "nextra-theme-docs",
   themeConfig: "./theme.config.js",
-  unstable_stork: false,
+  unstable_flexsearch: true,
   unstable_staticImage: true,
 });
 
 module.exports = withNextra({
   i18n: {
-    locales: ["en-US", "zh-CN", "es-ES", "ja", "ko", "ru"],
+    locales: ["en-US", "zh-CN", "es-ES", "pt-BR", "ja", "ko", "ru"],
     defaultLocale: "en-US",
   },
   redirects: () => {
@@ -41,11 +41,6 @@ module.exports = withNextra({
         source: "/blog/swr-1",
         destination: "/blog/swr-v1",
         statusCode: 301,
-      },
-      {
-        source: "/blog",
-        destination: "/blog/swr-v1",
-        statusCode: 302,
       },
       {
         source: "/docs",
