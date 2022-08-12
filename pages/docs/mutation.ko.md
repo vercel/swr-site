@@ -33,13 +33,13 @@ function App () {
 
 *: _동일한 [캐시 공급자](/docs/advanced/cache) 범위 아래의 SWR hook에게 브로드캐스팅합니다. 캐시 공급자가 존재하지 않을 경우, 모든 SWR hook으로 브로드캐스팅합니다._
 
-## Optimistic Updates
+## 낙관적인 업데이트
 
-In many cases, applying local mutations to data is a good way to make changes
-feel faster — no need to wait for the remote source of data.
+많은 경우에, 데이터에 로컬 뮤테이션을 적용하는 것은 변경을 더 빠르게 느낄 수 있게 해주는 좋은 방법입니다.
+데이터의 원격 소스를 기다릴 필요가 없습니다.
 
-With `mutate`, you can update your local data programmatically, while
-revalidating and finally replace it with the latest data.
+`mutate`를 사용하면 데이터를 재검증하고 최종적으로 최신 데이터로 대체하는 동안에,
+로컬 데이터를 프로그래밍 방식으로 업데이트할 수 있습니다.
 
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'
@@ -56,9 +56,9 @@ function Profile () {
         const user = { ...data, name: newName }
         const options = { optimisticData: user, rollbackOnError: true }
 
-        // updates the local data immediately
-        // send a request to update the data
-        // triggers a revalidation (refetch) to make sure our local data is correct
+        // 로컬 데이터를 즉시 업데이트하고
+        // 데이터 업데이트 요청을 전송하고
+        // 로컬 데이터가 올바른지 확인하기 위해 갱신(다시 가져오기)을 트리거합니다.
         mutate('/api/user', updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
@@ -66,17 +66,17 @@ function Profile () {
 }
 ```
 
-> The **`updateFn`** should be a promise or asynchronous function to handle the remote mutation, it should return updated data.
+> **`updateFn`**은 원격 뮤테이션을 다루기 위한 promise 또는 비동기 함수여야 합니다. 업데이트한 데이터를 반환해야 합니다.
 
-**Available Options**
+**사용 가능한 옵션**
 
-**`optimisticData`**: data to immediately update the client cache, usually used in optimistic UI.
+**`optimisticData`**: 클라이언트 캐시를 즉시 업데이트하기 위한 데이터. 일반적으로 낙관적인 UI에서 사용됩니다.
 
-**`revalidate`**: should the cache revalidate once the asynchronous update resolves.
+**`revalidate`**: 비동기 업데이트가 해소되면 캐시를 갱신합니다.
 
-**`populateCache`**: should the result of the remote mutation be written to the cache.
+**`populateCache`**: 캐시에 쓰여질 원격 뮤테이션의 결과입니다.
 
-**`rollbackOnError`**: should the cache rollback if the remote mutation errors.
+**`rollbackOnError`**: 원격 뮤테이션 에러 시 캐시를 롤백합니다.
 
 ## 현재 데이터를 기반으로 뮤테이트
 

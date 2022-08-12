@@ -15,7 +15,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 ### API
 
-_Notes: The function name shouldn't be capitalized (e.g. `myMiddleware` instead of `MyMiddleware`) or React lint rules will throw `Rules of Hook` error_
+_노트: 함수 이름을 대문자로 시작하면 안됩니다(예, `MyMiddleware` 대신에 `myMiddleware`). 그렇지 않으면 React lint 규칙이 `Rules of Hook` 에러를 던집니다_
 
 [TypeScript](https://swr.vercel.app/docs/typescript#middleware-types)
 
@@ -179,12 +179,12 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 ### 객체 키 직렬화하기
 
 <Callout>
-  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+  SWR 1.1.0부터, 유사 객체 키들은 내부에서 자동으로 직렬화됩니다.
 </Callout>
 
 <Callout emoji="⚠️">
-  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed.
-  If you are passing serializable objects as the key. You can serialize object keys to ensure its stability, a simple middleware can help:
+  이전 버전(< 1.1.0)에서는, SWR은 렌더링할 때마다 인자들을 **얕게** 비교하며, 변경이 있으면 갱신을 트리거합니다.
+  직렬화 가능한 객체를 키로 전달하는 경우, 객체 키를 직렬화하여 안정성을 보장할 수 있으며, 간단한 미들웨어가 이를 도울 수 있습니다.
 </Callout>
 
 ```jsx
