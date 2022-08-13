@@ -2,7 +2,7 @@
 
 ## Options
 
-- `optimisticData`：立即更新客户端缓存的数据，通常用于 optimistic UI。
+- `optimisticData`：data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
 - `revalidate`：一旦完成异步更新，缓存是否重新请求。
 - `populateCache`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
 - `rollbackOnError`：如果远程更新出错，是否进行缓存回滚。
@@ -69,6 +69,30 @@ function Profile () {
 }
 ```
 > **`updateFn`** 应该是一个 promise 或异步函数来处理远程更新，它应该返回更新后的数据。
+
+You can also pass a function to `optimisticData`.
+
+```jsx
+import useSWR, { useSWRConfig } from 'swr'
+
+function Profile () {
+  const { mutate } = useSWRConfig()
+  const { data } = useSWR('/api/user', fetcher)
+
+  return (
+    <div>
+      <h1>My name is {data.name}.</h1>
+      <button onClick={async () => {
+        const newName = data.name.toUpperCase()
+        mutate('/api/user', updateUserName(newName), {
+            optimisticData: user => ({ ...data, name: newName }),
+            rollbackOnError: true
+        });
+      }}>Uppercase my name!</button>
+    </div>
+  )
+}
+```
 
 ## 根据当前数据更改
 

@@ -6,7 +6,7 @@ mutate(key, data, options)
 
 ## Опции
 
-- `optimisticData`: данные для немедленного обновления кеша клиента, обычно используемые в оптимистичном UI.
+- `optimisticData`: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
 - `revalidate`: должен ли кеш повторно проверяться после разрешения асинхронного обновления.
 - `populateCache`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
 - `rollbackOnError`: следует ли выполнять откат кеша в случае ошибок удаленной мутации.
@@ -74,6 +74,30 @@ function Profile () {
 ```
 
 > **`updateFn`** должена быть промисом или асинхронной функцией для обработки удаленной мутации, она должна возвращать обновленные данные.
+
+You can also pass a function to `optimisticData`.
+
+```jsx
+import useSWR, { useSWRConfig } from 'swr'
+
+function Profile () {
+  const { mutate } = useSWRConfig()
+  const { data } = useSWR('/api/user', fetcher)
+
+  return (
+    <div>
+      <h1>My name is {data.name}.</h1>
+      <button onClick={async () => {
+        const newName = data.name.toUpperCase()
+        mutate('/api/user', updateUserName(newName), {
+            optimisticData: user => ({ ...data, name: newName }),
+            rollbackOnError: true
+        });
+      }}>Uppercase my name!</button>
+    </div>
+  )
+}
+```
 
 ## Мутировать на основе текущих данных
 
