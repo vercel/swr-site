@@ -37,24 +37,24 @@ The fetcher function accepts the `key` parameter as is, and the cache key will a
 import Callout from 'nextra-theme-docs/callout'
 
 <Callout>
-  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+  SWR 1.1.0부터, 유사 객체 키들은 내부에서 자동으로 직렬화됩니다.
 </Callout>
   
-Say you have another function that fetches data with a user scope: `fetchWithUser(api, user)`. You can do the following:
+사용자 범위로 데이터를 가져오는 `fetchWithUser(api, user)` 함수가 있다고 해봅시다. 다음과 같이 사용할 수 있습니다.
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 
-// ...and then pass it as an argument to another useSWR hook
+// ...그 후, 이를 또 다른 useSWR hook의 인자로 전달하세요
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
 
-You can directly pass an object as the key, and `fetcher` will receive that object too:
+객체를 키로써 바로 전달할 수 있으며 `fetcher`가 그 객체를 받습니다.
 
 ```js
 const { data: orders } = useSWR({ url: '/api/orders', args: user }, fetcher)
 ```
 
 <Callout emoji="⚠️">
-  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed. 
+  이전 버전(< 1.1.0)에서는, SWR은 렌더링할 때마다 인자들을 **얕게** 비교하며, 변경이 있으면 갱신을 트리거합니다.
 </Callout>

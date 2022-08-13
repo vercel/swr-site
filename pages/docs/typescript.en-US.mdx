@@ -34,6 +34,14 @@ const { data } = useSWR(uid, fetcher)
 // `data` will be `User | undefined`.
 ```
 
+By default, [the error thrown](/docs/error-handling) inside the `fetcher` function has type `any`. The type can also explicitly specified.
+
+```typescript
+const { data, error } = useSWR<User, Error>(uid, fetcher);
+// `data` will be `User | undefined`.
+// `error` will be `Error | undefined`.
+```
+
 ### useSWRInfinite
 
 Same for `swr/infinite`, you can either rely on the automatic type inference or explicitly specify the types by yourself.
