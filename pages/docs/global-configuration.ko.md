@@ -35,7 +35,7 @@ function App () {
 }
 ```
 
-## 추가 APIs
+## 부가적인 APIs
 
 ### 캐시 공급자
 
