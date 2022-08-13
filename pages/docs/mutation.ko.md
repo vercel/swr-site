@@ -74,7 +74,7 @@ function Profile () {
 
 **`revalidate`**: 비동기 업데이트가 해소되면 캐시를 갱신합니다.
 
-**`populateCache`**: 캐시에 쓰여질 원격 뮤테이션의 결과입니다.
+**`populateCache`**: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
 
 **`rollbackOnError`**: 원격 뮤테이션 에러 시 캐시를 롤백합니다.
 
@@ -96,6 +96,28 @@ mutate('/api/todos', async todos => {
   // 리스트를 필터링하고 업데이트된 항목을 반환합니다
   const filteredTodos = todos.filter(todo => todo.id !== '1')
   return [...filteredTodos, updatedTodo]
+// Since the API already gives us the updated information,
+// we don't need to revalidate here.
+},　{ revalidate: false })
+```
+
+You can also use the `populateCache` option.
+
+```jsx
+const updateTodo = () => fetch('/api/todos/1', {
+  method: 'PATCH',
+  body: JSON.stringify({ completed: true })
+})
+
+mutate('/api/todos', updateTodo, {
+  populateCache: (updatedTodo, todos) => {
+    // filter the list, and return it with the updated item
+    const filteredTodos = todos.filter(todo => todo.id !== '1')
+    return [...filteredTodos, updatedTodo]
+  },
+  // Since the API already gives us the updated information,
+  // we don't need to revalidate here.
+  revalidate: false
 })
 ```
 
