@@ -68,9 +68,33 @@ function Profile () {
 
 > **`updateFn`** は、リモートミューテーションを処理するための promise 関数か非同期関数でなければならず、更新されたデータを返す必要があります。
 
+`optimisticData` に関数を渡すこともできます。
+
+```jsx
+import useSWR, { useSWRConfig } from 'swr'
+
+function Profile () {
+  const { mutate } = useSWRConfig()
+  const { data } = useSWR('/api/user', fetcher)
+
+  return (
+    <div>
+      <h1>My name is {data.name}.</h1>
+      <button onClick={async () => {
+        const newName = data.name.toUpperCase()
+        mutate('/api/user', updateUserName(newName), {
+            optimisticData: user => ({ ...data, name: newName }),
+            rollbackOnError: true
+        });
+      }}>Uppercase my name!</button>
+    </div>
+  )
+}
+```
+
 **利用可能なオプション**
 
-**`optimisticData`**: クライアントキャッシュを直ちに更新するデータで、通常は 楽観的な UI で使用されます。
+**`optimisticData`**: クライアントキャッシュを直ちに更新するデータ、または現在の値を受け取り更新するデータを返す関数で、通常は 楽観的な UI で使用されます。
 
 **`revalidate`**: 非同期更新が解決した後、キャッシュを再検証するかどうか。
 

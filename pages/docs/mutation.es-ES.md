@@ -66,9 +66,33 @@ function Profile () {
 
 > The **`updateFn`** should be a promise or asynchronous function to handle the remote mutation, it should return updated data.
 
+You can also pass a function to `optimisticData`.
+
+```jsx
+import useSWR, { useSWRConfig } from 'swr'
+
+function Profile () {
+  const { mutate } = useSWRConfig()
+  const { data } = useSWR('/api/user', fetcher)
+
+  return (
+    <div>
+      <h1>My name is {data.name}.</h1>
+      <button onClick={async () => {
+        const newName = data.name.toUpperCase()
+        mutate('/api/user', updateUserName(newName), {
+            optimisticData: user => ({ ...data, name: newName }),
+            rollbackOnError: true
+        });
+      }}>Uppercase my name!</button>
+    </div>
+  )
+}
+```
+
 **Available Options**
 
-**`optimisticData`**: data to immediately update the client cache, usually used in optimistic UI.
+**`optimisticData`**: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
 
 **`revalidate`**: should the cache revalidate once the asynchronous update resolves.
 
