@@ -3,12 +3,7 @@ import Callout from 'nextra-theme-docs/callout'
 # 서스펜스
 
 <Callout emoji="🚨" type="error">
-  서스펜스는 현재 React의 <strong>실험적인</strong> 기능입니다. 이러한 API는 React의 일부가 되기 전에 경고 없이 크게 변경될 수 있습니다.<br/>
-  <a href="https://reactjs.org/docs/concurrent-mode-suspense.html" target="_blank" rel="noopener">더 상세한 정보</a>
-</Callout>
-
-<Callout>
-  React 서스펜스는 SSR 모드를 아직 지원하지 않습니다.
+  React still <strong>doesn't recommend</strong> using Suspense in data frameworks like SWR (<a href="https://reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks" target="_blank" rel="noopener">More information</a>). This API may change in the future as the result of our research.
 </Callout>
 
 React 서스펜스를 SWR과 함께 사용하려면 `suspense` 옵션을 활성화하세요.
@@ -77,3 +72,7 @@ function Profile () {
 ```
 
 이 제한에 대한 더 기술적인 상세 내용을 읽으려면 [여기 discussion](https://github.com/vercel/swr/pull/357#issuecomment-627089889)을 확인해 보세요.
+
+### Note: With Server-side Rendering
+
+When using Suspense mode on the server-side (including pre-rendering in Next.js), it's **required** to provide the initial data via [fallbackData or fallback](/docs/with-nextjs#pre-rendering-with-default-data). This means that you can't use Suspense to fetch data on the server side, but either doing fully client-side data fetching, or fetch the data via the framework (such as getStaticProps in Next.js). More discussions can be [here](https://github.com/vercel/swr/issues/1906).

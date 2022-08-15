@@ -3,12 +3,7 @@ import Callout from 'nextra-theme-docs/callout'
 # Suspense
 
 <Callout emoji="🚨" type="error">
-    Suspense é atualmente uma funcionalidade <strong>experimental</strong> do React. Estas APIs podem mudar significativamente e sem aviso antes de serem adicionadas ao React.<br/>
-    <a href="https://reactjs.org/docs/concurrent-mode-suspense.html" target="_blank" rel="noopener">Mais informações</a>
-</Callout>
-
-<Callout>
-  Note que o React Suspense não é suportado no modo SSR.
+  React still <strong>doesn't recommend</strong> using Suspense in data frameworks like SWR (<a href="https://reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks" target="_blank" rel="noopener">More information</a>). This API may change in the future as the result of our research.
 </Callout>
 
 Você pode habilitar a opção `suspense` para usar SWR com React Suspense:
@@ -46,10 +41,13 @@ Mas se um erro ocorreu, você precisa usar um [limite de erro (Error Boundary)](
 </ErrorBoundary>
 ```
 
+<<<<<<< HEAD
 <Callout>
 Suspense mode suspends rendering until the data is ready, which means it causes waterfall problems easily. To avoid that, you should prefetch resources before rendering. [More information](/docs/prefetching)
 </Callout>
 
+=======
+>>>>>>> 468d645 (docs: add notes for Suspense on SSR and React v18)
 ---
 
 ### Nota: Com Fetching Condicional
@@ -77,3 +75,10 @@ function Profile () {
 ```
 
 Se você quiser ler mais detalhes técnicos sobre essa restrição, cheque [a discussão aqui](https://github.com/vercel/swr/pull/357#issuecomment-627089889).
+<<<<<<< HEAD
+=======
+
+### Note: With Server-side Rendering
+
+When using Suspense mode on the server-side (including pre-rendering in Next.js), it's **required** to provide the initial data via [fallbackData or fallback](/docs/with-nextjs#pre-rendering-with-default-data). This means that you can't use Suspense to fetch data on the server side, but either doing fully client-side data fetching, or fetch the data via the framework (such as getStaticProps in Next.js). More discussions can be [here](https://github.com/vercel/swr/issues/1906).
+>>>>>>> 468d645 (docs: add notes for Suspense on SSR and React v18)
