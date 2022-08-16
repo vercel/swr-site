@@ -36,6 +36,79 @@ function App () {
 }
 ```
 
+## Nesting Configurations
+
+`SWRConfig` merges the configuration from the parent context.
+
+```jsx
+import { SWRConfig, useSWRConfig } from 'swr'
+
+function App() {
+  return (
+    <SWRConfig
+      value={{
+        dedupingInterval: 100,
+        refreshInterval: 100,
+        fallback: { a: 1, b: 1 },
+      }}
+    >
+      <SWRConfig
+        value={{
+          dedupingInterval: 200, // override the parent value
+          fallback: { a: 2, c: 2 }, // merge with the parent value
+        }}
+      >
+        <Page />
+      </SWRConfig>
+    </SWRConfig>
+  )
+}
+
+function Page() {
+  const config = useSWRConfig()
+  // {
+  //   dedupingInterval: 200,
+  //   refreshInterval: 100,
+  //   fallback: { a: 2,  b: 1, c: 2 },
+  // }
+}
+```
+
+You can also pass a function as the `value` property when you want to pick some properties from the parent context and decide how to combine them with the current `SWRConfig`. The function receives a parent config and returns a new config.
+
+```jsx
+import { SWRConfig, useSWRConfig } from 'swr'
+
+function App() {
+  return (
+    <SWRConfig
+      value={{
+        dedupingInterval: 100,
+        refreshInterval: 100,
+        fallback: { a: 1, b: 1 },
+      }}
+    >
+      <SWRConfig
+        value={parent => ({
+          dedupingInterval: parent.dedupingInterval * 5,
+          fallback: { a: 2, c: 2 },
+        })}
+      >
+        <Page />
+      </SWRConfig>
+    </SWRConfig>
+  )
+}
+
+function Page() {
+  const config = useSWRConfig()
+  // {
+  //   dedupingInterval: 500,
+  //   fallback: { a: 2, c: 2 },
+  // }
+}
+```
+
 ## Extra APIs
 
 ### Cache Provider
