@@ -45,6 +45,10 @@ function App () {
 </ErrorBoundary>
 ```
 
+<Callout>
+Suspense mode suspends rendering until the data is ready, which means it causes waterfall problems easily. To avoid that, you should prefetch resources before rendering. [More information](/docs/prefetching)
+</Callout>
+
 ---
 
 ### 注意：使用条件请求
