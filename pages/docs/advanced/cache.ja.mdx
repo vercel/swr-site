@@ -197,3 +197,5 @@ const { cache } = useSWRConfig()
 cache.get(key) // キーの現在のデータを取得します。
 cache.clear()  // ⚠️ すべてのキャッシュをクリアします。 SWRは、再レンダリング時に再検証します。
 ```
+
+[`mutate`](/docs/mutation) をキャッシュを更新するために利用できます。

@@ -197,3 +197,5 @@ const { cache } = useSWRConfig()
 cache.get(key) // 키에 대한 현재 데이터 가져오기.
 cache.clear()  // ⚠️ 모든 캐시를 삭제하기. SWR은 다시 렌더링할 때 재검증합니다.
 ```
+
+You can use [`mutate`](/docs/mutation) to modify the cache.
