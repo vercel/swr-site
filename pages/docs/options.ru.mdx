@@ -17,7 +17,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `data`: данные для данного ключа, разрешенные `fetcher` (или undefined, если не загружено)
 - `error`: ошибка, выброшенная `fetcher`-ом (или undefined)
 - `isValidating`: если запрос или ревалидация загружается
-- `mutate(data?, shouldRevalidate?)`: функция для мутации закешированных данных [(подробнее)](/docs/mutation)
+- `mutate(data?, options?)`: функция для мутации закешированных данных [(подробнее)](/docs/mutation)
 
 ## Опции
 

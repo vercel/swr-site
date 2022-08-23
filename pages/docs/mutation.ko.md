@@ -1,5 +1,16 @@
 # 뮤테이션
 
+```js
+mutate(key, data, options)
+```
+
+## Options
+
+- `optimisticData`: 클라이언트 캐시를 즉시 업데이트하기 위한 데이터. 일반적으로 낙관적인 UI에서 사용됩니다.
+- `revalidate`: 비동기 업데이트가 해소되면 캐시를 갱신합니다.
+- `populateCache`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
+- `rollbackOnError`: 원격 뮤테이션 에러 시 캐시를 롤백합니다.
+
 ## 갱신하기
 
 `useSWRConfig()` hook으로부터 `mutate` 함수를 얻을 수 있으며, `mutate(key)`를 호출하여
@@ -67,16 +78,6 @@ function Profile () {
 ```
 
 > **`updateFn`**은 원격 뮤테이션을 다루기 위한 promise 또는 비동기 함수여야 합니다. 업데이트한 데이터를 반환해야 합니다.
-
-**사용 가능한 옵션**
-
-**`optimisticData`**: 클라이언트 캐시를 즉시 업데이트하기 위한 데이터. 일반적으로 낙관적인 UI에서 사용됩니다.
-
-**`revalidate`**: 비동기 업데이트가 해소되면 캐시를 갱신합니다.
-
-**`populateCache`**: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
-
-**`rollbackOnError`**: 원격 뮤테이션 에러 시 캐시를 롤백합니다.
 
 ## 현재 데이터를 기반으로 뮤테이트
 
