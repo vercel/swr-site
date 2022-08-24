@@ -204,15 +204,28 @@ describe('тестирование', async () => {
 })
 ```
 
-### Доступ к кешу
-
-Предупреждение: вы не должны писать в кеш напрямую, это может привести к неопределенному поведению.
+### Modify the Cache Data
 
 ```jsx
 const { cache } = useSWRConfig()
 
 cache.get(key) // Получить текущие данные для ключа.
-cache.clear()  // ⚠️ Очистить весь кеш. SWR проведёт ревалидацию при повторном рендеринге.
 ```
 
-You can use [`mutate`](/docs/mutation) to modify the cache.
+<Callout emoji="🚨" type="error">
+  вы не должны писать в кеш напрямую, это может привести к неопределенному поведению.
+</Callout>
+
+You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
+
+```jsx
+const { cache } = useSWRConfig()
+
+mutate(
+  key => true, // which cache keys are updated
+  undefined, // update cache data to `undefined`
+  { revalidate: false } // do not revalidate
+)
+```
+
+More information can be found [here](/docs/arguments#multiple-arguments).

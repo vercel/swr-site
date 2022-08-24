@@ -187,15 +187,28 @@ describe('test suite', async () => {
 })
 ```
 
-### キャッシュへアクセスする
-
-警告：キャッシュに直接書き込むことはするべきではありません。予期しない動作が発生する可能性があります。
+### キャッシュを更新する
 
 ```jsx
 const { cache } = useSWRConfig()
 
 cache.get(key) // キーの現在のデータを取得します。
-cache.clear()  // ⚠️ すべてのキャッシュをクリアします。 SWRは、再レンダリング時に再検証します。
 ```
 
-[`mutate`](/docs/mutation) をキャッシュを更新するために利用できます。
+<Callout emoji="🚨" type="error">
+  キャッシュに直接書き込むことはするべきではありません。予期しない動作が発生する可能性があります。
+</Callout>
+
+[`mutate`](/docs/mutation) をキャッシュを更新するために利用できます。例えば、下記のようにすることで全てのキャッシュデータをクリアできます。
+
+```jsx
+const { cache } = useSWRConfig()
+
+mutate(
+  key => true, // どのキャッシュキーを更新するか
+  undefined, // キャッシュデータを `undefined` に更新する
+  { revalidate: false } // 再検証しない
+)
+```
+
+更なる情報は [こちら](/docs/arguments#multiple-arguments) から確認できます。
