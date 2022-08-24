@@ -60,7 +60,7 @@ import { Cache } from 'components/diagrams/cache'
 When nested, SWR hooks will use the upper-level cache provider. If there is no upper-level cache provider, it fallbacks to the default cache provider, which is an empty `Map`.
 
 <Callout emoji="⚠️">
-   If a cache provider is used, the global `mutate` will **not** work for SWR hooks under that `<SWRConfig>` boundary. Please use [this](#access-current-cache-provider) instead. 
+   If a cache provider is used, the global `mutate` will **not** work for SWR hooks under that `<SWRConfig>` boundary. Please use [this](#access-current-cache-provider) instead.
 </Callout>
 
 ## Access Current Cache Provider
@@ -187,13 +187,22 @@ describe('test suite', async () => {
 })
 ```
 
-### Access to the Cache
+### Modify the Cache Data
 
-Alert: you should not write to the cache directly, it might cause undefined behavior.
+<Callout emoji="🚨" type="error">
+  You should not write to the cache directly, it might cause undefined behavior.
+</Callout>
+
+You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
 
 ```jsx
 const { cache } = useSWRConfig()
 
-cache.get(key) // Get the current data for a key.
-cache.clear()  // ⚠️ Clear all the cache. SWR will revalidate upon re-render.
+mutate(
+  key => true, // which cache keys are updated
+  undefined, // update cache data to `undefined`
+  { revalidate: false } // do not revalidate
+)
 ```
+
+More information can be found [here](/docs/arguments#multiple-arguments).

@@ -160,6 +160,57 @@ try {
 }
 ```
 
+## 複数のアイテムをミューテートする
+
+`mutate` は `key` を引数として受け取りどのキーを再検証するかどうかを返すフィルタリング関数を受け取ります。フィルタリング関数は全てのキャッシュキーに対して適用されます。
+
+```jsx
+import { mutate } from 'swr'
+// Or from the hook if you customized the cache provider:
+// { mutate } = useSWRConfig()
+
+mutate(
+  key => typeof key === 'string' && key.startsWith('/api/item?id='),
+  undefined,
+  { revalidate: true }
+)
+```
+
+This also works with any key type like an array. The mutation matches all keys, of which the first element is `'item'`.
+
+```jsx
+useSWR(['item', 123], ...)
+useSWR(['item', 124], ...)
+useSWR(['item', 125], ...)
+
+mutate(
+  key => Array.isArray(key) && key[0] === 'item',
+  undefined,
+  { revalidate: false }
+)
+```
+
+You can use the filter function to clear all cache data, which is useful when logging out.
+
+
+```js
+mutate(
+  () => true,
+  undefined,
+  { revalidate: false }
+)
+```
+
+But it is unclear what it does, so you can name it `clearCache`.
+
+```js
+const clearCache = () => mutate(
+  () => true,
+  undefined,
+  { revalidate: false }
+)
+```
+
 ## バウンドミューテート
 
 `useSWR` によって返される SWR オブジェクトには、SWR のキーに事前にバインドされている `mutate()` 関数も含まれています。

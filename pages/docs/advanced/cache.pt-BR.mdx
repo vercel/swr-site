@@ -190,13 +190,28 @@ describe('test suite', async () => {
 })
 ```
 
-### Acesso ao Cache
-
-Alerta: você não deve gravar diretamente no cache, isso pode causar um comportamento indefinido.
+### Modify the Cache Data
 
 ```jsx
 const { cache } = useSWRConfig()
 
 cache.get(key) // Obtém os dados atuais para uma chave.
-cache.clear() // ⚠️ Limpa todo o cache. O SWR será revalidado após a re-renderização.
 ```
+
+<Callout emoji="🚨" type="error">
+  você não deve gravar diretamente no cache, isso pode causar um comportamento indefinido.
+</Callout>
+
+You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
+
+```jsx
+const { cache } = useSWRConfig()
+
+mutate(
+  key => true, // which cache keys are updated
+  undefined, // update cache data to `undefined`
+  { revalidate: false } // do not revalidate
+)
+```
+
+More information can be found [here](/docs/arguments#multiple-arguments).
