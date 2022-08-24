@@ -1,5 +1,12 @@
 # 数据更改
 
+## 选项
+
+- `optimisticData`：立即更新客户端缓存的数据，通常用于 optimistic UI。
+- `revalidate`：一旦完成异步更新，缓存是否重新请求。
+- `populateCache`：远程更新的结果是否写入缓存，或者是一个以新结果和当前结果作为参数并返回更新结果的函数。
+- `rollbackOnError`：如果远程更新出错，是否进行缓存回滚。
+
 ## 重新验证
 
 你可以使用 `useSWRConfig()` 所返回的 `mutate` 函数，来广播重新验证的消息给其他的 SWR hook<sup>*</sup>。使用同一个 key 调用 `mutate(key)` 即可。
@@ -62,16 +69,6 @@ function Profile () {
 }
 ```
 > **`updateFn`** 应该是一个 promise 或异步函数来处理远程更新，它应该返回更新后的数据。
-
-**可用选项**
-
-**`optimisticData`**：立即更新客户端缓存的数据，通常用于 optimistic UI。
-
-**`revalidate`**：一旦完成异步更新，缓存是否重新请求。
-
-**`populateCache`**：远程更新的结果是否写入缓存，或者是一个以新结果和当前结果作为参数并返回更新结果的函数。
-
-**`rollbackOnError`**：如果远程更新出错，是否进行缓存回滚。
 
 ## 根据当前数据更改
 

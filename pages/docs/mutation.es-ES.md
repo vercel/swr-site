@@ -1,5 +1,16 @@
 # Mutación
 
+```js
+mutate(key, data, options)
+```
+
+## Options
+
+- `optimisticData`: data to immediately update the client cache, usually used in optimistic UI.
+- `revalidate`: should the cache revalidate once the asynchronous update resolves.
+- `populateCache`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
+- `rollbackOnError`: should the cache rollback if the remote mutation errors.
+
 ## Revalidar
 
 You can get the `mutate` function from the `useSWRConfig()` hook, and broadcast a revalidation message
@@ -65,16 +76,6 @@ function Profile () {
 ```
 
 > The **`updateFn`** should be a promise or asynchronous function to handle the remote mutation, it should return updated data.
-
-**Available Options**
-
-**`optimisticData`**: data to immediately update the client cache, usually used in optimistic UI.
-
-**`revalidate`**: should the cache revalidate once the asynchronous update resolves.
-
-**`populateCache`**: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
-
-**`rollbackOnError`**: should the cache rollback if the remote mutation errors.
 
 ## Mutar basándose en los datos actuales
 
