@@ -1,6 +1,7 @@
 {
   "getting-started": "Начало работы",
   "options": "Опции",
+  "return-values": "Возвращаемые значения",
   "global-configuration": "Глобальная конфигурация",
   "data-fetching": "Выборка данных",
   "error-handling": "Обработка ошибок",

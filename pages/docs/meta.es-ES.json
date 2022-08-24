@@ -1,6 +1,7 @@
 {
   "getting-started": "Comienza",
   "options": "Opciones",
+  "return-values": "Valores devueltos",
   "global-configuration": "Configuración Global",
   "data-fetching": "Obtención De Datos",
   "error-handling": "Gestión De Errores",

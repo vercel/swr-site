@@ -1,6 +1,7 @@
 {
   "getting-started": "入门",
   "options": "选项",
+  "return-values": "返回值",
   "global-configuration": "全局配置",
   "data-fetching": "数据请求",
   "error-handling": "错误处理",
