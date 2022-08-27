@@ -49,3 +49,40 @@ This pattern is to fetch data and change the key and revalidate it later with fa
 This pattern is to fetch data and change the key and revalidate it later with the `keepPreviousData` option and fallback data.
 
 ![A pattern for key change + previous data + fallback](/img/return-values/key-change-previous-data-fallback.svg)
+
+## Return previous data for better UX
+
+When doing data fetching based on continuous user actions, e.g. real-time search when typing, keeping the previous fetched data can improve the UX a lot. `keepPreviousData` is an option to enable that behavior. Here's a simple search UI:
+
+```jsx
+function Search() {
+  const [search, setSearch] = React.useState('');
+
+  const { data, isLoading } = useSWR(`/search?q=${search}`, fetcher, {
+    keepPreviousData: true
+  });
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search..."
+      />
+
+      <div className={isLoading ? "loading" : ""}>
+        {data?.products.map(item => <Product key={item.id} name={item.name} />)
+      </div>
+    </div>
+  );
+}
+```
+
+With `keepPreviousData` enabled, you will still get the previous data even if you change the SWR key and the data for the new key starts loading again.
+
+TODO: Video in https://github.com/vercel/swr/releases/tag/2.0.0-beta.1
+
+## Dependency Collection for performance
+
+SWR only updates the states that are used by a component. If you only use `data` in the component, SWR ignores the updates of other properties like `isValidating`, and `isLoading`. This reduces rendering counts a lot. More information can be found [here](/docs/advanced/performance#dependency-collection).
