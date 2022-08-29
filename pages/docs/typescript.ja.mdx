@@ -34,7 +34,7 @@ const { data } = useSWR(uid, fetcher)
 // `data` は `User | undefined` となります。
 ```
 
-By default, [the error thrown](/docs/error-handling) inside the `fetcher` function has type `any`. The type can also explicitly specified.
+同様に、デフォルトでは、`fetcher`関数内で投げられる[エラー](/docs/error-handling)の型は`any`ですが、型を明示的に指定することができます。
 
 ```typescript
 const { data, error } = useSWR<User, Error>(uid, fetcher);
