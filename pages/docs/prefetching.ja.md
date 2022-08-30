@@ -14,7 +14,7 @@ JavaScriptのダウンロードが開始される前であっても、HTMLの読
 
 ## プログラムによるプリフェッチ
 
-SWR は `preload` というデータをプログラマブルにプリフェッチして結果をキャッシュに保存する関数を提供しています。`preload` は `key` と `fetcher` を引数として受け取ります。`preload` は React の外からも呼ぶことが可能です。
+SWR は `preload` というデータをプログラマブルにプリフェッチして結果をキャッシュに保存する API を提供しています。`preload` は `key` と `fetcher` を引数として受け取ります。`preload` は React の外からも呼ぶことが可能です。
 
 ```jsx
 import { useState } from 'react'
@@ -74,7 +74,7 @@ preload('/api/user', fetcher);
 preload('/api/movies', fetcher);
 
 const Page = () => {
-  // ここでレンダリングが中断されますが、`/api/user` と`/api/movies` に対するリクエストは `preload` によって開始されています
+  // 下記の useSWR はレンダリングを中断しますが、`/api/user` と`/api/movies` に対するリクエストは `preload` によって開始されています
   // そのため、ウォーターフォール問題は起きません
   const { data: user } = useSWR('/api/user', fetcher, { suspense: true });
   const { data: movies } = useSWR('/api/movies', fetcher, { suspense: true });

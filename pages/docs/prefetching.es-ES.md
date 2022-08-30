@@ -14,7 +14,7 @@ Se precargarán los datos cuando se cargue el HTML, incluso antes de que el Java
 
 ## Programmatically Prefetch
 
-SWR provides the `preload` function to prefetch resources programmatically and store the result in the cache. `preload` accepts `key` and `fetcher` as the arguments. You can call `preload` even outside of React.
+SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments. You can call `preload` even outside of React.
 
 ```jsx
 import { useState } from 'react'
@@ -74,7 +74,7 @@ preload('/api/user', fetcher);
 preload('/api/movies', fetcher);
 
 const Page = () => {
-  // This suspends rendering, but the requests to `/api/user` and `/api/movies` have started by `preload`,
+  // The below useSWR hooks will suspend the rendering, but the requests to `/api/user` and `/api/movies` have started by `preload` already,
   // so the waterfall problem doesn't happen.
   const { data: user } = useSWR('/api/user', fetcher, { suspense: true });
   const { data: movies } = useSWR('/api/movies', fetcher, { suspense: true });
