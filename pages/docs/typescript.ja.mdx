@@ -1,10 +1,10 @@
 # TypeScript
 
-SWR は TypeScript で書かされたアプリにも対応、型の安全性をすぐに使えます。
+SWR は TypeScript で書かれたアプリにも対応していて、型の安全性をすぐに使えます。
 
 ## 基本的な使い方
 
-デフォルトでは、SWR は `key` から `fetcher` の引数の型を推測します。そのため、優先される型を自動的に設定できます。
+デフォルトでは、SWR は `key` から `fetcher` の引数の型を推測します。そのため、適切な型を自動的に設定できます。
 
 ### useSWR
 
@@ -34,12 +34,12 @@ const { data } = useSWR(uid, fetcher)
 // `data` は `User | undefined` となります。
 ```
 
-By default, [the error thrown](/docs/error-handling) inside the `fetcher` function has type `any`. The type can also explicitly specified.
+同様に、デフォルトでは、`fetcher` 関数内で投げられる [エラー](/docs/error-handling) の型は `any` ですが、型を明示的に指定することができます。
 
 ```typescript
 const { data, error } = useSWR<User, Error>(uid, fetcher);
-// `data` will be `User | undefined`.
-// `error` will be `Error | undefined`.
+// `data` は `User | undefined` となります.
+// `error` は `Error | undefined` となります.
 ```
 
 ### useSWRInfinite
