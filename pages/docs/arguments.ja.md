@@ -26,7 +26,7 @@ useSWR('/api/user', url => fetchWithToken(url, token))
 const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-The fetcher function accepts the `key` parameter as is, and the cache key will also be associated with `token` now.
+`fetcher` 関数は `key` パラメータをそのまま受け取り、キャッシュキーもまた `key` の引数全てと関連づけられます。上記の例では `url` と `token` の組み合わせがキャッシュキーとなります。
 
 <Callout emoji="⚠️">
   In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
