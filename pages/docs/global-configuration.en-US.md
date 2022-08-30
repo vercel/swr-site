@@ -55,7 +55,7 @@ function App() {
     >
       <SWRConfig
         value={{
-          dedupingInterval: 200, // override the parent value
+          dedupingInterval: 200, // will override the parent value since the value is primitive
           fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
         }}
       >
