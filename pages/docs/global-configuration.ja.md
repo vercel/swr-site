@@ -37,7 +37,7 @@ function App () {
 
 ## ネストした設定
 
-`SWRConfig` は親で指定された設定をマージします。
+`SWRConfig` は親で指定された設定をマージします。設定はオブジェクトまたは関数として受け取ることができます。関数の場合、親の設定を引数として受け取り新しくカスタマイズした設定を返します。
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -53,8 +53,8 @@ function App() {
     >
       <SWRConfig
         value={{
-          dedupingInterval: 200, // 親から渡された値を上書き
-          fallback: { a: 2, c: 2 }, // 親から受け取った値とマージ
+          dedupingInterval: 200, // これはプリミティブ値であるため親の値を上書きします
+          fallback: { a: 2, c: 2 }, // これはマージ可能なオブジェクトであるため親から受け取った値とマージします
         }}
       >
         <Page />
@@ -73,7 +73,6 @@ function Page() {
 }
 ```
 
-親から受け取ったプロパティをそのままマージするのではなく、それを組み合わせて新しい設定を作りたい場合には、`SWRConfig` の `value` プロパティに関数を渡すことで実現できます。関数は親で指定された設定を受け取り新しい設定を返します。
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
