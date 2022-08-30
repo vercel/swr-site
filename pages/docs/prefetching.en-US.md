@@ -14,7 +14,7 @@ It will prefetch the data when the HTML loads, even before JavaScript starts to 
 
 ## Programmatically Prefetch
 
-SWR provides the `preload` function to prefetch resources programmatically and store the result in the cache. `preload` accepts `key` and `fetcher` as the arguments. You can call `preload` even outside of React.
+SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments. You can call `preload` even outside of React.
 
 ```jsx
 import { useState } from 'react'
