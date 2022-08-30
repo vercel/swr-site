@@ -14,13 +14,13 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 
 ## The Patterns of the Return Values
 
-The following is diagrams how SWR returns values.
+This diagrams describe how SWR returns values in some scenarios.
 
-### Normal
+### Fetch and Revalidate
 
-This pattern is to fetch data and revalidate it later.
+These pattern is to fetch data and revalidate it later.
 
-![A pattern for normal](/img/return-values/normal.svg)
+![A pattern for fetch and revalidate](/img/return-values/fetch-and-revalidate.svg)
 
 ### Key Change
 
