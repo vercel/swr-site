@@ -35,6 +35,78 @@ function App () {
 }
 ```
 
+## ネストした設定
+
+`SWRConfig` は親で指定された設定をマージします。設定はオブジェクトまたは関数として受け取ることができます。関数の場合、親の設定を引数として受け取り新しくカスタマイズした設定を返します。
+
+```jsx
+import { SWRConfig, useSWRConfig } from 'swr'
+
+function App() {
+  return (
+    <SWRConfig
+      value={{
+        dedupingInterval: 100,
+        refreshInterval: 100,
+        fallback: { a: 1, b: 1 },
+      }}
+    >
+      <SWRConfig
+        value={{
+          dedupingInterval: 200, // これはプリミティブ値であるため親の値を上書きします
+          fallback: { a: 2, c: 2 }, // これはマージ可能なオブジェクトであるため親から受け取った値とマージします
+        }}
+      >
+        <Page />
+      </SWRConfig>
+    </SWRConfig>
+  )
+}
+
+function Page() {
+  const config = useSWRConfig()
+  // {
+  //   dedupingInterval: 200,
+  //   refreshInterval: 100,
+  //   fallback: { a: 2,  b: 1, c: 2 },
+  // }
+}
+```
+
+
+```jsx
+import { SWRConfig, useSWRConfig } from 'swr'
+
+function App() {
+  return (
+    <SWRConfig
+      value={{
+        dedupingInterval: 100,
+        refreshInterval: 100,
+        fallback: { a: 1, b: 1 },
+      }}
+    >
+      <SWRConfig
+        value={parent => ({
+          dedupingInterval: parent.dedupingInterval * 5,
+          fallback: { a: 2, c: 2 },
+        })}
+      >
+        <Page />
+      </SWRConfig>
+    </SWRConfig>
+  )
+}
+
+function Page() {
+  const config = useSWRConfig()
+  // {
+  //   dedupingInterval: 500,
+  //   fallback: { a: 2, c: 2 },
+  // }
+}
+```
+
 ## Extra APIs
 
 ### キャッシュプロバイダー
