@@ -1,5 +1,6 @@
 {
   "cache": "Cache",
   "performance": "Desempenho",
-  "react-native": "React Native"
+  "react-native": "React Native",
+  "devtools": "Developer Tools"
 }
