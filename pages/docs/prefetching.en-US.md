@@ -14,7 +14,9 @@ It will prefetch the data when the HTML loads, even before JavaScript starts to 
 
 ## Programmatically Prefetch
 
-SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments. You can call `preload` even outside of React.
+SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments.
+
+You can call `preload` even outside of React.
 
 ```jsx
 import { useState } from 'react'
@@ -43,38 +45,26 @@ export default function App() {
 }
 ```
 
-You can also preload it when hovering the button:
-
-```jsx
-function App({ userId }) {
-  const [show, setShow] = useState(false)
-  return (
-    <div>
-      <button
-        onClick={() => setShow(true)}
-        onHover={() => preload('/api/user?id=' + userId, fetcher)}
-      >
-        Show User
-      </button>
-      {show ? <User /> : null}
-    </div>
-  )
-}
-```
-
-Within React rendering tree, you can call `preload` in effects.
+Within React rendering tree, event callbacks and effects are also valid places to preload.
 
 ```jsx
 function App({ userId }) {
   const [show, setShow] = useState(false)
 
+  // preload in effects
   useEffect(() => {
     preload('/api/user?id=' + userId, fetcher)
   }, [useId])
 
   return (
     <div>
-      <button onClick={() => setShow(true)}>Show User</button>
+      <button
+        onClick={() => setShow(true)}
+        {/* preload in event callbacks */}
+        onHover={() => preload('/api/user?id=' + userId, fetcher)}
+      >
+        Show User
+      </button>
       {show ? <User /> : null}
     </div>
   )

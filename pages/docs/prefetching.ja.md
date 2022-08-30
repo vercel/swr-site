@@ -14,7 +14,9 @@ JavaScriptのダウンロードが開始される前であっても、HTMLの読
 
 ## プログラムによるプリフェッチ
 
-SWR は `preload` というデータをプログラマブルにプリフェッチして結果をキャッシュに保存する API を提供しています。`preload` は `key` と `fetcher` を引数として受け取ります。`preload` は React の外からも呼ぶことが可能です。
+SWR は `preload` というデータをプログラマブルにプリフェッチして結果をキャッシュに保存する API を提供しています。`preload` は `key` と `fetcher` を引数として受け取ります。
+
+`preload` は React の外からも呼ぶことが可能です。
 
 ```jsx
 import { useState } from 'react'
@@ -43,38 +45,26 @@ export default function App() {
 }
 ```
 
-またボタンをホバーしたタイミングでプリロードすることもできます
-
-```jsx
-function App({ userId }) {
-  const [show, setShow] = useState(false)
-  return (
-    <div>
-      <button
-        onClick={() => setShow(true)}
-        onHover={() => preload('/api/user?id=' + userId, fetcher)}
-      >
-        Show User
-      </button>
-      {show ? <User /> : null}
-    </div>
-  )
-}
-```
-
-React の内部においては, `preload` をエフェクトの中から呼ぶことができます。
+React のレンダリングツリー内においては, イベントコールバックやエフェクトはプリロードするために適した場所です。
 
 ```jsx
 function App({ userId }) {
   const [show, setShow] = useState(false)
 
+  // エフェクトの中でプリロードする
   useEffect(() => {
     preload('/api/user?id=' + userId, fetcher)
   }, [useId])
 
   return (
     <div>
-      <button onClick={() => setShow(true)}>Show User</button>
+      <button
+        onClick={() => setShow(true)}
+        {/* イベントコールバックの中でプリロードする */}
+        onHover={() => preload('/api/user?id=' + userId, fetcher)}
+      >
+        Show User
+      </button>
       {show ? <User /> : null}
     </div>
   )
