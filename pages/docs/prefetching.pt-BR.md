@@ -62,6 +62,25 @@ function App({ userId }) {
 }
 ```
 
+Inside React, you can call `preload` in effects.
+
+```jsx
+function App({ userId }) {
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    preload('/api/user?id=' + userId, fetcher)
+  }, [useId])
+
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Show User</button>
+      {show ? <User /> : null}
+    </div>
+  )
+}
+```
+
 Junto com técnicas como [page prefetching](https://nextjs.org/docs/api-reference/next/router#routerprefetch) no Next.js, você vai ser capaz de carregar ambos a próxima página e os dados instantaneamente.
 
 In Suspense mode, you should utilize `preload` to avoid waterfall problems.

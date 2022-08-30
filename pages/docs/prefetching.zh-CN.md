@@ -62,6 +62,25 @@ function App({ userId }) {
 }
 ```
 
+Inside React, you can call `preload` in effects.
+
+```jsx
+function App({ userId }) {
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    preload('/api/user?id=' + userId, fetcher)
+  }, [useId])
+
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Show User</button>
+      {show ? <User /> : null}
+    </div>
+  )
+}
+```
+
 配合 Next.js 的 [页面预加载](https://nextjs.org/docs/api-reference/next/router#routerprefetch)，你将能立即加载下一页和数据。
 
 In Suspense mode, you should utilize `preload` to avoid waterfall problems.

@@ -62,6 +62,25 @@ function App({ userId }) {
 }
 ```
 
+React の内部においては, `preload` をエフェクトの中から呼ぶことができます。
+
+```jsx
+function App({ userId }) {
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    preload('/api/user?id=' + userId, fetcher)
+  }, [useId])
+
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Show User</button>
+      {show ? <User /> : null}
+    </div>
+  )
+}
+```
+
 Next.js の [ページプリフェッチ](https://nextjs.org/docs/api-reference/next/router#routerprefetch) などの技術と合わせて、次のページとデータの両方を瞬時に読み込むことができるようになります。
 
 サスペンスモードでは特に `preload` を利用してウォーターフォール問題を避けた方がいいでしょう。
