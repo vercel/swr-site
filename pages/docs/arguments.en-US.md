@@ -26,7 +26,7 @@ Instead, you can use an **array** as the `key` parameter, which contains multipl
 const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-The fetcher function accepts the `key` parameter as is, and the cache key will also be associated with `token` now.
+The `fetcher` function accepts the `key` parameter as is, and the cache key will also be associated with the entire `key` argument. In the above example, `url` and `token` are both tight to the cache key.
 
 <Callout emoji="⚠️">
   In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
