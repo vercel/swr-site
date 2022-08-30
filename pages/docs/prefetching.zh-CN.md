@@ -45,7 +45,7 @@ export default function App() {
 }
 ```
 
-Within React rendering tree, event callbacks and effects are also valid places to preload.
+Within React rendering tree, `preload` is also avaiable to use in event handlers or effects.
 
 ```jsx
 function App({ userId }) {

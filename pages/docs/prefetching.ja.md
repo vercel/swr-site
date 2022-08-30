@@ -45,7 +45,7 @@ export default function App() {
 }
 ```
 
-React のレンダリングツリー内においては, イベントコールバックやエフェクトはプリロードするために適した場所です。
+React のレンダリングツリー内においては, `preload` はイベントコールバックやエフェクトの中で利用可能です。
 
 ```jsx
 function App({ userId }) {
