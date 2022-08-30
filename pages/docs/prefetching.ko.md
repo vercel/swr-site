@@ -14,19 +14,78 @@ HTML `<head>` 안에 넣기만 하면 됩니다. 쉽고 빠르며 네이티브�
 
 ## 프로그래밍 방식으로 프리패치
 
-조건부로 리소스를 프리로드 하길 원할 수도 있습니다. 예를 들면, 사용자가 [어떤](https://github.com/guess-js/guess) [링크](https://instant.page)를 [호버링](https://github.com/GoogleChromeLabs/quicklink)할 때 데이터 프리로딩. 가장 직관적인 방법은 전역 [mutate](/docs/mutation)를 통해 캐시를 다시 가져오고 설정하는 함수를 두는 것입니다.
+SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments. You can call `preload` even outside of React.
 
-```js
-import { mutate } from 'swr'
+```jsx
+import { useState } from 'react'
+import useSWR, { preload } from 'swr'
 
-function prefetch () {
-  mutate('/api/data', fetch('/api/data').then(res => res.json()))
-  // 두 번째 파라미터는 Promise입니다
-  // 프로미스가 이행될 때 SWR은 그 결과를 사용합니다
+const fetcher = (url) => fetch(url).then((res) => res.json())
+
+// Preload the resource before rendering the User component below,
+// this prevents potential waterfalls in your application.
+// You can also start preloading when hovering the button or link, too.
+preload('/api/user', fetcher)
+
+function User() {
+  const { data } = useSWR('/api/user', fetcher)
+  ...
+}
+
+export default function App() {
+  const [show, setShow] = useState(false)
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Show User</button>
+      {show ? <User /> : null}
+    </div>
+  )
+}
+```
+
+You can also preload it when hovering the button:
+
+```jsx
+function App({ userId }) {
+  const [show, setShow] = useState(false)
+  return (
+    <div>
+      <button
+        onClick={() => setShow(true)}
+        onHover={() => preload('/api/user?id=' + userId, fetcher)}
+      >
+        Show User
+      </button>
+      {show ? <User /> : null}
+    </div>
+  )
 }
 ```
 
 Next.js내의 [페이지 프리패칭](https://nextjs.org/docs/api-reference/next/router#routerprefetch)같은 기술과 함께 다음 페이지와 데이터 모두를 즉시 로드할 수 있습니다.
+
+In Suspense mode, you should utilize `preload` to avoid waterfall problems.
+
+```jsx
+import useSWR, { preload } from 'swr'
+
+// should call before rendering
+preload('/api/user', fetcher);
+preload('/api/movies', fetcher);
+
+const Page = () => {
+  // The below useSWR hooks will suspend the rendering, but the requests to `/api/user` and `/api/movies` have started by `preload` already,
+  // so the waterfall problem doesn't happen.
+  const { data: user } = useSWR('/api/user', fetcher, { suspense: true });
+  const { data: movies } = useSWR('/api/movies', fetcher, { suspense: true });
+  return (
+    <div>
+      <User user={user} />
+      <Movies movies={movies} />
+    </div>
+  );
+}
+```
 
 ## 데이터 프리필
 

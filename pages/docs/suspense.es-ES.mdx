@@ -46,6 +46,10 @@ Pero si se produce un error, es necesario utilizar un [error boundary](https://r
 </ErrorBoundary>
 ```
 
+<Callout>
+Suspense mode suspends rendering until the data is ready, which means it causes waterfall problems easily. To avoid that, you should prefetch resources before rendering. [More information](/docs/prefetching)
+</Callout>
+
 ---
 
 ### Note: With Conditional Fetching
