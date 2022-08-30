@@ -74,7 +74,7 @@ preload('/api/user', fetcher);
 preload('/api/movies', fetcher);
 
 const Page = () => {
-  // This suspends rendering, but the requests to `/api/user` and `/api/movies` have started by `preload`,
+  // The below useSWR hooks will suspend the rendering, but the requests to `/api/user` and `/api/movies` have started by `preload` already,
   // so the waterfall problem doesn't happen.
   const { data: user } = useSWR('/api/user', fetcher, { suspense: true });
   const { data: movies } = useSWR('/api/movies', fetcher, { suspense: true });
