@@ -14,7 +14,9 @@ JavaScriptのダウンロードが開始される前であっても、HTMLの読
 
 ## プログラムによるプリフェッチ
 
-SWR は `preload` というデータをプログラマブルにプリフェッチして結果をキャッシュに保存する API を提供しています。`preload` は `key` と `fetcher` を引数として受け取ります。`preload` は React の外からも呼ぶことが可能です。
+SWR は `preload` というデータをプログラマブルにプリフェッチして結果をキャッシュに保存する API を提供しています。`preload` は `key` と `fetcher` を引数として受け取ります。
+
+`preload` は React の外からも呼ぶことが可能です。
 
 ```jsx
 import { useState } from 'react'
@@ -43,15 +45,22 @@ export default function App() {
 }
 ```
 
-またボタンをホバーしたタイミングでプリロードすることもできます
+React のレンダリングツリー内においては, `preload` はイベントコールバックやエフェクトの中で利用可能です。
 
 ```jsx
 function App({ userId }) {
   const [show, setShow] = useState(false)
+
+  // エフェクトの中でプリロードする
+  useEffect(() => {
+    preload('/api/user?id=' + userId, fetcher)
+  }, [useId])
+
   return (
     <div>
       <button
         onClick={() => setShow(true)}
+        {/* イベントコールバックの中でプリロードする */}
         onHover={() => preload('/api/user?id=' + userId, fetcher)}
       >
         Show User

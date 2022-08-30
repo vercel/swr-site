@@ -14,7 +14,9 @@ Se precargarán los datos cuando se cargue el HTML, incluso antes de que el Java
 
 ## Programmatically Prefetch
 
-SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments. You can call `preload` even outside of React.
+SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments.
+
+You can call `preload` even outside of React.
 
 ```jsx
 import { useState } from 'react'
@@ -43,15 +45,22 @@ export default function App() {
 }
 ```
 
-You can also preload it when hovering the button:
+Within React rendering tree, `preload` is also avaiable to use in event handlers or effects.
 
 ```jsx
 function App({ userId }) {
   const [show, setShow] = useState(false)
+
+  // preload in effects
+  useEffect(() => {
+    preload('/api/user?id=' + userId, fetcher)
+  }, [useId])
+
   return (
     <div>
       <button
         onClick={() => setShow(true)}
+        {/* preload in event callbacks */}
         onHover={() => preload('/api/user?id=' + userId, fetcher)}
       >
         Show User
