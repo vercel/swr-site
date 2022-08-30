@@ -62,7 +62,7 @@ function App({ userId }) {
 }
 ```
 
-Inside React, you can call `preload` in effects.
+Within React rendering tree, you can call `preload` in effects.
 
 ```jsx
 function App({ userId }) {
