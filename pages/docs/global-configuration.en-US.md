@@ -37,7 +37,9 @@ function App () {
 
 ## Nesting Configurations
 
-`SWRConfig` merges the configuration from the parent context.
+`SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
+
+### Object Configuration Example
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -54,7 +56,7 @@ function App() {
       <SWRConfig
         value={{
           dedupingInterval: 200, // override the parent value
-          fallback: { a: 2, c: 2 }, // merge with the parent value
+          fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
         }}
       >
         <Page />
@@ -73,7 +75,7 @@ function Page() {
 }
 ```
 
-You can also pass a function as the `value` property when you want to pick some properties from the parent context and decide how to combine them with the current `SWRConfig`. The function receives a parent config and returns a new config.
+### Functional Configuration Example
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
