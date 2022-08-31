@@ -32,10 +32,10 @@ import Bleed from 'nextra-theme-docs/bleed'
 import useSWR from 'swr'
 
 function Profile() {
-  const { data, error } = useSWR('/api/user', fetcher)
+  const { data, error, isLoading } = useSWR('/api/user', fetcher)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (isLoading) return <div>loading...</div>
   return <div>hello {data.name}!</div>
 }
 ```
@@ -90,7 +90,7 @@ SWR 涵盖了性能，正确性和稳定性的各个方面，以帮你建立更�
   />
 </p>
 
-SWR 由 [Next.js](https://nextjs.org)（React 框架）背后的同一团队创建。  
+SWR 由 [Next.js](https://nextjs.org)（React 框架）背后的同一团队创建。
 在 Twitter 上关注 [@vercel](https://twitter.com/vercel) 未来项目更新
 
 欢迎加入 [GitHub 上的讨论](https://github.com/vercel/swr/discussions)！
