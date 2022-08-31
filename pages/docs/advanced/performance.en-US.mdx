@@ -57,13 +57,13 @@ For example, some API responses return a server timestamp that you might want to
 
 ## Dependency Collection
 
-`useSWR` returns 3 **stateful** values: `data`, `error` and `isValidating`, each one can be updated independently.
+`useSWR` returns 4 **stateful** values: `data`, `error`, `isLoading` and `isValidating`, each one can be updated independently.
 For example, if we print those values within a full data-fetching lifecycle, it will be something like this:
 
 ```jsx
 function App () {
-  const { data, error, isValidating } = useSWR('/api', fetcher)
-  console.log(data, error, isValidating)
+  const { data, error, isLoading, isValidating } = useSWR('/api', fetcher)
+  console.log(data, error, isLoading, isValidating)
   return null
 }
 ```
@@ -71,11 +71,11 @@ function App () {
 In the worst case (the first request failed, then the retry was successful), you will see 4 lines of logs:
 
 ```js
-// console.log(data, error, isValidating)
-undefined undefined true  // => start fetching
-undefined Error false     // => end fetching, got an error
-undefined Error true      // => start retrying
-Data undefined false      // => end retrying, get the data
+// console.log(data, error, isLoading, isValidating)
+undefined undefined true true  // => start fetching
+undefined Error false false    // => end fetching, got an error
+undefined Error true true      // => start retrying
+Data undefined false false     // => end retrying, get the data
 ```
 
 The state changes make sense. But that also means our component **rendered 4 times**.

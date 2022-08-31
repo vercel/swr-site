@@ -65,14 +65,14 @@ SWR **глубоко сравнивает** изменения данных по
 
 ## Коллекция зависимостей
 
-`useSWR` возвращает 3 значения **с сохранением состояния**: `data`, `error` и `isValidating`,
+`useSWR` возвращает 4 значения **с сохранением состояния**: `data`, `error`, `isLoading` и `isValidating`,
 каждое из которых может обновляться независимо. Например, если мы выведим эти значения внутри
 полного жизненного цикла выборки данных, это будет примерно так:
 
 ```jsx
 function App () {
-  const { data, error, isValidating } = useSWR('/api', fetcher)
-  console.log(data, error, isValidating)
+  const { data, error, isLoading, isValidating } = useSWR('/api', fetcher)
+  console.log(data, error, isLoading, isValidating)
   return null
 }
 ```
@@ -80,11 +80,11 @@ function App () {
 В худшем случае (первый запрос не удался, затем повторная попытка была успешной) вы увидите 4 строки журнала:
 
 ```js
-// console.log(data, error, isValidating)
-undefined undefined true  // => начало выборки
-undefined Error false     // => конец выборки, получили ошибку
-undefined Error true      // => начало повторной попытки
-Data undefined false      // => конец повторной попытки, получение данных
+// console.log(data, error, isLoading, isValidating)
+undefined undefined true true  // => начало выборки
+undefined Error false false    // => конец выборки, получили ошибку
+undefined Error true true      // => начало повторной попытки
+Data undefined false false     // => конец повторной попытки, получение данных
 ```
 
 Изменения состояния имеют смысл. Но это также означает, что наш компонент **рендерился 4 раза**.

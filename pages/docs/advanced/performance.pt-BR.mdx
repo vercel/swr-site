@@ -57,13 +57,13 @@ Por exemplo, alguns respostas de API retornam um timestamp do servidor que você
 
 ## Coleção de Dependências
 
-`useSWR` retorna 3 valores **stateful**: `data`, `error` e `isValidating`, cada um pode ser atualizado independentemente.
+`useSWR` retorna 4 valores **stateful**: `data`, `error`, `isLoading` e `isValidating`, cada um pode ser atualizado independentemente.
 Por exemplo, se imprimirmos esses valores em um ciclo de vida completo de busca de dados, será algo assim:
 
 ```jsx
 function App () {
-  const { data, error, isValidating } = useSWR('/api', fetcher)
-  console.log(data, error, isValidating)
+  const { data, error, isLoading, isValidating } = useSWR('/api', fetcher)
+  console.log(data, error, isLoading, isValidating)
   return null
 }
 ```
@@ -71,11 +71,11 @@ function App () {
 Na pior das hipóteses (a primeira solicitação falhou e a tentativa foi bem-sucedida), você verá 4 linhas de logs:
 
 ```js
-// console.log(data, error, isValidating)
-undefined undefined true  // => começar fetching
-undefined Error false     // => terminar fetching, recebeu um erro
-undefined Error true      // => começar retrying
-Data undefined false      // => terminar retrying, recebeu um erro
+// console.log(data, error, isLoading, isValidating)
+undefined undefined true true  // => começar fetching
+undefined Error false false    // => terminar fetching, recebeu um erro
+undefined Error true true      // => começar retrying
+Data undefined false false     // => terminar retrying, recebeu um erro
 ```
 
 As mudanças de estado fazem sentido. Mas isso também significa que nosso componente **renderizou 4 vezes**.
