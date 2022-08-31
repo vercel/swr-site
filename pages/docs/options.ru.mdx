@@ -3,12 +3,12 @@ import Callout from 'nextra-theme-docs/callout'
 # Опции API
 
 ```js
-const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
+const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
 ## Параметры
 
-- `key`: уникальный строчный ключ для запроса (или функция / массив / null) [(продвинутое использование)](/docs/conditional-fetching)
+- `key`: уникальный строчный ключ для запроса (или функция / массив / null) [(подробнее)](/docs/arguments), [(продвинутое использование)](/docs/conditional-fetching)
 - `fetcher`: (_опционально_) Promise возвращающий функцию для выборки данных [(подробнее)](/docs/data-fetching)
 - `options`: (_опционально_) объект опций для этого SWR хука
 
@@ -16,8 +16,11 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 - `data`: данные для данного ключа, разрешенные `fetcher` (или undefined, если не загружено)
 - `error`: ошибка, выброшенная `fetcher`-ом (или undefined)
+- `isLoading`: if there's no data returned by the fetcher, not fallback or previous data
 - `isValidating`: если запрос или ревалидация загружается
 - `mutate(data?, options?)`: функция для мутации закешированных данных [(подробнее)](/docs/mutation)
+
+More information can be found [here](/docs/return-values).
 
 ## Опции
 
@@ -41,6 +44,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `errorRetryCount`: максимальное количество повторных попыток при ошибке
 - `fallback`: объект типа "ключ-значение" из нескольких резервных данных [(example)](/docs/with-nextjs)
 - `fallbackData`: исходные данные, которые должны быть возвращены (примечание: это для каждого хука)
+- `keepPreviousData = false`: return the previous key's data until the new data has been loaded
 - `onLoadingSlow(key, config)`: колбэк-функция, когда запрос загружается слишком долго (см. `loadingTimeout`)
 - `onSuccess(data, key, config)`: колбэк-функция при успешном завершении запроса
 - `onError(err, key, config)`: колбэк-функция, когда запрос возвращает ошибку

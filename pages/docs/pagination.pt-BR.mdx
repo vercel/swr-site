@@ -170,7 +170,7 @@ precisa dos dados da página interior, elas não são isoladas.
 import useSWRInfinite from 'swr/infinite'
 
 // ...
-const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
 ```
@@ -205,6 +205,7 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
 
 - `data`: um array de respostas de fetch para cada página
 - `error`: mesma que o objeto `error` do `useSWR`.
+- `isLoading`: mesmo que o `isLoading` do `useSWR`.
 - `isValidating`: mesmo que o `isValidating` do `useSWR`.
 - `mutate`: igual à função de mutação vinculada do `useSWR`, mas manipula o array de dados
 - `size`: o número de páginas que _vão_ ser carregadas e retornadas

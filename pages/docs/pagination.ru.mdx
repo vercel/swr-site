@@ -172,7 +172,7 @@ function App () {
 import useSWRInfinite from 'swr/infinite'
 
 // ...
-const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
 ```
@@ -207,6 +207,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 - `data`: массив значений ответа выборки каждой страницы
 - `error`: то же , что и `error` в `useSWR`
+- `isLoading`: то же, что и `isLoading` в `useSWR`
 - `isValidating`: то же, что и `isValidating` в `useSWR`
 - `mutate`: то же, что и связанная функция мутации в `useSWR`, но манипулирует массивом данных
 - `size`: количество страниц, которые _будут_ извлекаться и возвращаться
