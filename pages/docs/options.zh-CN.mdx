@@ -16,7 +16,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 
 - `data`: 通过 `fetcher` 用给定的 key 获取的数据（如未完全加载，返回 undefined）
 - `error`: `fetcher` 抛出的错误（或者是 undefined）
-- `isLoading`: if there's no data returned by the fetcher, not fallback or previous data
+- `isLoading`: if there's an ongoing request and no "loaded data". Fallback data and previous data are not considered "loaded data"
 - `isValidating`: 是否有请求或重新验证加载
 - `mutate(data?, options?)`: 更改缓存数据的函数 [（详情）](/docs/mutation)
 

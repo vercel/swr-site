@@ -16,7 +16,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 
 - `data`: data de la key dada resueltos por el `fetcher` (o undefined si no está cargado)
 - `error`: error lanzado por el `fetcher` (o undefined)
-- `isLoading`: if there's no data returned by the fetcher, not fallback or previous data
+- `isLoading`: if there's an ongoing request and no "loaded data". Fallback data and previous data are not considered "loaded data"
 - `isValidating`: si hay una solicitud o carga de revalidación
 - `mutate(data?, options?`: función para mutar los datos en caché [(detalles)](/docs/mutation)
 

@@ -16,7 +16,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 
 - `data`: `fetcher` によって解決された、指定されたキーのデータ（もしくは、ロードされていない場合は undefined）
 - `error`: `fetcher` によって投げられたエラー （もしくは undefined）
-- `isLoading`: フォールバックのためのデータや `keepPreviousData` による以前のデータがなく、`fetcher` から返されるデータがない場合
+- `isLoading`: 実行中のリクエストがあり "ロードされたデータ" がない状態。フォールバックのためのデータや `keepPreviousData` による以前のデータは "ロードされたデータ" ではありません
 - `isValidating`: リクエストまたは再検証の読み込みがある場合
 - `mutate(data?, options?)`: キャッシュされたデータを更新する関数 [（ 詳細 ）](/docs/mutation)
 

@@ -16,7 +16,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 
 - `data`: `fetcher`가 이행한 주어진 키에 대한 데이터(로드되지 않았다면 undefined)
 - `error`: `fetcher`가 던진 에러(또는 undefined)
-- `isLoading`: if there's no data returned by the fetcher, not fallback or previous data
+- `isLoading`: if there's an ongoing request and no "loaded data". Fallback data and previous data are not considered "loaded data"
 - `isValidating`: 요청이나 갱신 로딩의 여부
 - `mutate(data?, options?)`: 캐시 된 데이터를 뮤테이트하기 위한 함수 [（상세내용）](/docs/mutation)
 
