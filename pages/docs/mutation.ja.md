@@ -99,7 +99,7 @@ mutate('/api/todos', async todos => {
   return [...filteredTodos, updatedTodo]
 // API からすでに更新後の情報が取得できるため
 // 再検証する必要はありません
-},　{ revalidate: false })
+}, { revalidate: false })
 ```
 
 `populateCache` オプションも使用可能です。
