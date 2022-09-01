@@ -44,7 +44,7 @@ More information can be found [here](/docs/return-values).
 - `errorRetryCount`: 최대 에러 재시도 수
 - `fallback`: 다중 폴백 데이터의 키-값 객체 [(예시)](/docs/with-nextjs)
 - `fallbackData`: 반환될 초기 데이터(노트: hook 별로 존재)
-- `keepPreviousData = false`: return the previous key's data until the new data has been loaded
+- `keepPreviousData = false`: return the previous key's data until the new data has been loaded [(details)](/docs/return-values)
 - `onLoadingSlow(key, config)`: 요청을 로드하는 데 너무 오래 걸리는 경우의 콜백 함수(`loadingTimeout`을 보세요)
 - `onSuccess(data, key, config)`: 요청이 성공적으로 종료되었을 경우의 콜백 함수
 - `onError(err, key, config)`: 요청이 에러를 반환했을 경우의 콜백 함수

@@ -44,7 +44,7 @@ More information can be found [here](/docs/return-values).
 - `errorRetryCount`: максимальное количество повторных попыток при ошибке
 - `fallback`: объект типа "ключ-значение" из нескольких резервных данных [(example)](/docs/with-nextjs)
 - `fallbackData`: исходные данные, которые должны быть возвращены (примечание: это для каждого хука)
-- `keepPreviousData = false`: return the previous key's data until the new data has been loaded
+- `keepPreviousData = false`: return the previous key's data until the new data has been loaded [(details)](/docs/return-values)
 - `onLoadingSlow(key, config)`: колбэк-функция, когда запрос загружается слишком долго (см. `loadingTimeout`)
 - `onSuccess(data, key, config)`: колбэк-функция при успешном завершении запроса
 - `onError(err, key, config)`: колбэк-функция, когда запрос возвращает ошибку
