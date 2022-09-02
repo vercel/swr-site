@@ -20,7 +20,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `isValidating`: リクエストまたは再検証の読み込みがある場合
 - `mutate(data?, options?)`: キャッシュされたデータを更新する関数 [（ 詳細 ）](/docs/mutation)
 
-More information can be found [here](/docs/return-values).
+More information can be found [here](/docs/advanced/return-values).
 
 ## オプション
 
@@ -44,7 +44,7 @@ More information can be found [here](/docs/return-values).
 - `errorRetryCount`: 最大エラー再試行回数
 - `fallback`: 初期データの key-value オブジェクト [（ 例 ）](/docs/with-nextjs)
 - `fallbackData`: 返される初期データ（注：フックごとに）
-- `keepPreviousData = false`: 新しいキーに対するデータがロードされるまで以前のキーのデータを返すかどうか  [（詳細）](/docs/return-values)
+- `keepPreviousData = false`: 新しいキーに対するデータがロードされるまで以前のキーのデータを返すかどうか [（詳細）](/docs/advanced/return-values#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: リクエストの読み込みに時間がかかりすぎる場合のコールバック関数（`loadingTimeout` を参照してください）
 - `onSuccess(data, key, config)`: リクエストが正常に終了したときのコールバック関数
 - `onError(err, key, config)`: リクエストがエラーを返したときのコールバック関数

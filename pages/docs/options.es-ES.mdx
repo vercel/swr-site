@@ -20,7 +20,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `isValidating`: si hay una solicitud o carga de revalidación
 - `mutate(data?, options?`: función para mutar los datos en caché [(detalles)](/docs/mutation)
 
-More information can be found [here](/docs/return-values).
+More information can be found [here](/docs/advanced/return-values).
 
 ## Opciones
 
@@ -45,7 +45,7 @@ More information can be found [here](/docs/return-values).
 - `errorRetryCount`: número máximo de reintentos de error
 - `fallback`: a key-value object of multiple fallback data [(example)](/docs/with-nextjs)
 - `fallbackData`: datos iniciales a devolver (nota: Esto es por un hook)
-- `keepPreviousData = false`: return the previous key's data until the new data has been loaded [(details)](/docs/return-values)
+- `keepPreviousData = false`: return the previous key's data until the new data has been loaded [(detalles)](/docs/advanced/return-values#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: función callback cuando una petición tarda demasiado en cargase (véase: `loadingTimeout`)
 - `onSuccess(data, key, config)`: función callback cuando una petición termina con éxito
 - `onError(err, key, config)`: función callback cuando una petición devuelve un error
