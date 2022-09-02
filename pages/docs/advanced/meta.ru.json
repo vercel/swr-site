@@ -1,4 +1,5 @@
 {
+  "return-values": "Возвращаемые значения",
   "cache": "Кеш",
   "performance": "Производительность",
   "react-native": "React Native",

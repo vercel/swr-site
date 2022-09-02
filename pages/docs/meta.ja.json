@@ -1,7 +1,6 @@
 {
   "getting-started": "はじめに",
   "options": "オプション",
-  "return-values": "返り値",
   "global-configuration": "グローバルな設定",
   "data-fetching": "データの取得",
   "error-handling": "エラーハンドリング",
