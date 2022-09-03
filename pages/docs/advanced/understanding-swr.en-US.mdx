@@ -81,4 +81,4 @@ With `keepPreviousData` enabled, you will still get the previous data even if yo
 
 ## Dependency Collection for performance
 
-SWR only updates the states that are used by a component. If you only use `data` in the component, SWR ignores the updates of other properties like `isValidating`, and `isLoading`. This reduces rendering counts a lot. More information can be found [here](/docs/advanced/performance#dependency-collection).
+SWR only triggers re-rendering when the states used in the component have been updated. If you only use `data` in the component, SWR ignores the updates of other properties like `isValidating`, and `isLoading`. This reduces rendering counts a lot. More information can be found [here](/docs/advanced/performance#dependency-collection).
