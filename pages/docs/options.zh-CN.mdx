@@ -20,7 +20,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `isValidating`: 是否有请求或重新验证加载
 - `mutate(data?, options?)`: 更改缓存数据的函数 [（详情）](/docs/mutation)
 
-More information can be found [here](/docs/advanced/return-values).
+More information can be found [here](/docs/advanced/understanding-swr).
 
 ## 选项
 
@@ -44,7 +44,7 @@ More information can be found [here](/docs/advanced/return-values).
 - `errorRetryCount`: 错误重试的最大次数
 - `fallback`: 多个回退数据的 key-value 对象[（示例）](/docs/with-nextjs)
 - `fallbackData`: 此 hook 需要返回的初始数据
-- `keepPreviousData = false`: return the previous key's data until the new data has been loaded [（详情）](/docs/advanced/return-values#return-previous-data-for-better-ux)
+- `keepPreviousData = false`: return the previous key's data until the new data has been loaded [（详情）](/docs/advanced/understanding-swr#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: 请求加载时间过长时的回调函数（参考 `loadingTimeout`）
 - `onSuccess(data, key, config)`: 请求成功完成时的回调函数
 - `onError(err, key, config)`: 请求返回错误时的回调函数
