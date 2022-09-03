@@ -1,50 +1,50 @@
 import Video from 'components/video'
 
-# Understanding SWR
+# SWR を理解する
 
-## State Machine
+## 状態機械
 
-`useSWR` returns `data`, `error`, `isLoading`, and `isValidating` depending on the state of the `fetcher` function. This diagrams describe how SWR returns values in some scenarios.
+`useSWR` は `data`、`error`、`isLoading` と `isValidating` を `fetcher` 関数の状態に応じて返します。これらの図は SWR がそれぞれでどのように値を返すのかを示しています。
 
-### Fetch and Revalidate
+### フェッチして再検証する
 
-This pattern is to fetch data and revalidate it later.
+これはフェッチして再検証するパターンです。
 
-![A pattern for fetch and revalidate](/img/understanding-swr/fetch-and-revalidate.svg)
+![フェッチと再検証のパターン](/img/understanding-swr/fetch-and-revalidate.svg)
 
-### Key Change
+### キーの変更
 
-This pattern is to fetch data and change the key and revalidate it later.
+これはフェッチした後にキーを変更し、さらにその後再検証するパターンです。
 
-![A pattern for key change](/img/understanding-swr/key-change.svg)
+![キーが変更されたパターン](/img/understanding-swr/key-change.svg)
 
-### Key Change + Previous Data
+### キーの変更と以前のデータ
 
-This pattern is to fetch data and change the key and revalidate it later with the `keepPreviousData` option.
+これはフェッチした後にキーを変更し再検証するのを `keepPreviousData` オプション付きで行うパターンです。
 
-![A pattern for key change + previous data](/img/understanding-swr/key-change-previous-data.svg)
+![キーの変更を keepPreviousData オプションありで行うパターン](/img/understanding-swr/key-change-previous-data.svg)
 
-### Fallback
+### フォールバック
 
-This pattern is to fetch data and revalidate it later with fallback data.
+これはフェッチした後に再検証するのをフォールバックデータと一緒に行うパターンです。
 
-![A pattern for fallback](/img/understanding-swr/fallback.svg)
+![フォールバックのパターン](/img/understanding-swr/fallback.svg)
 
-### Key Change + Fallback
+### キーの変更とフォールバック
 
-This pattern is to fetch data and change the key and revalidate it later with fallback data.
+これはフェッチした後にキーを変更し再検証するのをフォールバックデータと一緒に行うパターンです。
 
-![A pattern for key change + fallback](/img/understanding-swr/key-change-fallback.svg)
+![キーの変更をフォールバックありで行うパターン](/img/understanding-swr/key-change-fallback.svg)
 
-### Key Change + Previous Data + Fallback
+### キーの変更と以前のデータとフォールバック
 
-This pattern is to fetch data and change the key and revalidate it later with the `keepPreviousData` option and fallback data.
+これはフェッチした後にキーを変更し再検証するのを `keepPreviousData` オプションとフォールバックデータと一緒に行うパターンです。
 
-![A pattern for key change + previous data + fallback](/img/understanding-swr/key-change-previous-data-fallback.svg)
+![キーの変更を keepPreviousData オプションとフォールバックありで行うパターン](/img/understanding-swr/key-change-previous-data-fallback.svg)
 
-## Return previous data for better UX
+## よりよいユーザー体験のために以前のデータを返す
 
-When doing data fetching based on continuous user actions, e.g. real-time search when typing, keeping the previous fetched data can improve the UX a lot. `keepPreviousData` is an option to enable that behavior. Here's a simple search UI:
+キー入力に応じたリアルタイム検索など継続的なユーザーアクションをベースにしたデータ取得を行う時、以前のデータを維持することによりユーザー体験を改善できます。`keepPreviousData` はこれを可能にするオプションです。これはシンプルな検索の例です。
 
 ```jsx
 function Search() {
@@ -71,14 +71,14 @@ function Search() {
 }
 ```
 
-With `keepPreviousData` enabled, you will still get the previous data even if you change the SWR key and the data for the new key starts loading again.
+`keepPreviousData` が有効にされている場合、SWR のキーが変わり新しいデータの取得が開始された場合にも以前のキーに対応するデータが返されます。
 
 <Video
   src="https://user-images.githubusercontent.com/3676859/163695903-a3eb1259-180e-41e0-821e-21c320201194.mp4"
-  caption="Video: keep previous search results when keepPreviousData has been enabled"
+  caption="ビデオ: keepPreviousData が有効な場合には以前の検索結果が維持されます"
   ratio={640/730}
 />
 
-## Dependency Collection for performance
+## パフォーマンのための依存収集
 
-SWR only updates the states that are used by a component. If you only use `data` in the component, SWR ignores the updates of other properties like `isValidating`, and `isLoading`. This reduces rendering counts a lot. More information can be found [here](/docs/advanced/performance#dependency-collection).
+SWR はコンポーネントで使われているデータが更新された場合のみ再レンダリングします。コンポーネントの中で `data` しか使っていない場合、SWR は `isValidating` や `isLoading` のプロパティの更新を無視します。これはレンダリングの回数を減らします。詳細については [こちら](/docs/advanced/performance#dependency-collection)。
