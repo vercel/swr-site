@@ -52,14 +52,14 @@ que se renderizan casi al mismo tiempo, **sólo se hará 1 solicitud de red**.
 Se pueden reutilizar los hooks de datos (como `useUser` en el ejemplo anterior) en todas partes, sin preocuparse por el rendimiento
 o las peticiones duplicadas.
 
-También existe la [opción `dedupingInterval`](/docs/options) para anular el intervalo de deduplicación por defecto.
+También existe la [opción `dedupingInterval`](/docs/api) para anular el intervalo de deduplicación por defecto.
 
 ## Comparación profunda
 
 SWR por defecto tiene  **deep compares** al cambio de datos. Si el valor de `data` no ha cambiado, no se
 activará una nueva renderización.
 
-También puede personalizar la función de comparación mediante la [opción `compare`](/docs/options) si quieres cambiar el comportamiento.
+También puede personalizar la función de comparación mediante la [opción `compare`](/docs/api) si quieres cambiar el comportamiento.
 Por ejemplo, algunas respuestas de la API devuelven una marca de tiempo del servidor que tal vez quiera excluir de la difusión de datos.
 
 ## Colección de dependencias

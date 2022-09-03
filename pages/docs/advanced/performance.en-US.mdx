@@ -46,13 +46,13 @@ Each `<Avatar>` component has a `useSWR` hook inside. Since they have the same S
 
 You can reuse your data hooks (like `useUser` in the example above) everywhere, without worrying about performance or duplicated requests.
 
-There is also a [`dedupingInterval` option](/docs/options) for overriding the default deduplication interval.
+There is also a [`dedupingInterval` option](/docs/api) for overriding the default deduplication interval.
 
 ## Deep Comparison
 
 SWR **deep compares** data changes by default. If the `data` value isn’t changed, a re-render will not be triggered.
 
-You can also customize the comparison function via the [`compare` option](/docs/options) if you want to change the behavior.
+You can also customize the comparison function via the [`compare` option](/docs/api) if you want to change the behavior.
 For example, some API responses return a server timestamp that you might want to exclude from the data diff.
 
 ## Dependency Collection

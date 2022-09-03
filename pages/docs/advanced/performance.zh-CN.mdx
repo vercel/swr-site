@@ -44,13 +44,13 @@ function App () {
 
 你可以在任何地方重用数据 hooks（比如上面示例中的 `useUser`），而不用担心性能或重复请求。
 
-还有一个 [`dedupingInterval` 选项](/docs/options) 用于覆盖默认的重复数据删除间隔。
+还有一个 [`dedupingInterval` 选项](/docs/api) 用于覆盖默认的重复数据删除间隔。
 
 ## 深度比较
 
 SWR 默认 **深度比较** 数据更改。如果 `data` 值没有改变，则不会触发重新渲染。
 
-如果你还想更改的话，可以通过 [`compare` 选项](/docs/options) 自定义比较函数。比如，某些 API 响应返回一个服务器时间戳，你可能想从数据 diff 中排除它。
+如果你还想更改的话，可以通过 [`compare` 选项](/docs/api) 自定义比较函数。比如，某些 API 响应返回一个服务器时间戳，你可能想从数据 diff 中排除它。
 
 ## 依赖收集
 

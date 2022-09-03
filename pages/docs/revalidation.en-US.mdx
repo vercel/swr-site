@@ -23,7 +23,7 @@ This can be useful to immediately synchronize to the latest state. This is helpf
   />
 </Bleed>
 
-This feature is enabled by default. You can disable it via the [`revalidateOnFocus`](/docs/options) option.
+This feature is enabled by default. You can disable it via the [`revalidateOnFocus`](/docs/api) option.
 
 ## Revalidate on Interval
 
@@ -39,7 +39,7 @@ SWR will give you the option to automatically refetch data. It’s **smart** whi
   />
 </Bleed>
 
-You can enable it by setting a [`refreshInterval`](/docs/options) value:
+You can enable it by setting a [`refreshInterval`](/docs/api) value:
 
 ```js
 useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
@@ -53,7 +53,7 @@ It's useful to also revalidate when the user is back online. This scenario happe
 
 To make sure the data is always up-to-date, SWR automatically revalidates when network recovers.
 
-This feature is enabled by default. You can disable it via the [`revalidateOnReconnect`](/docs/options) option.
+This feature is enabled by default. You can disable it via the [`revalidateOnReconnect`](/docs/api) option.
 
 ## Disable Automatic Revalidations
 

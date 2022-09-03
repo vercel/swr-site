@@ -46,13 +46,13 @@ Cada componente `<Avatar>` tem um hook `useSWR` dentro. Como eles têm a mesma c
 
 Você pode reutilizar seus hooks de dados (como `useUser` no exemplo acima) em qualquer lugar, sem se preocupar com desempenho ou solicitações duplicadas.
 
-Há também uma [opção `dedupingInterval`](/docs/options) para substituir o intervalo de desduplicação padrão.
+Há também uma [opção `dedupingInterval`](/docs/api) para substituir o intervalo de desduplicação padrão.
 
 ## Comparação Profunda
 
 SWR **compara profundamente** as mudanças de dados por padrão. Se o valor `data` não é alterado, uma re-renderização não será acionada.
 
-Você também pode customizar a função de comparação via opção [`compare`](/docs/options) se você quiser mudar o comportamento.
+Você também pode customizar a função de comparação via opção [`compare`](/docs/api) se você quiser mudar o comportamento.
 Por exemplo, alguns respostas de API retornam um timestamp do servidor que você pode querer excluir do diff de dados.
 
 ## Coleção de Dependências

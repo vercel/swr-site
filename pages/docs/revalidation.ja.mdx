@@ -23,7 +23,7 @@ import Link from 'next/link'
   />
 </Bleed>
 
-この機能はデフォルトで有効になっています。[`revalidateOnFocus`](/docs/options) オプションで無効にできます。
+この機能はデフォルトで有効になっています。[`revalidateOnFocus`](/docs/api) オプションで無効にできます。
 
 ## 定期的な再検証
 
@@ -39,7 +39,7 @@ SWR には、データを自動的に再フェッチするオプションがあ�
   />
 </Bleed>
 
-[`refreshInterval`](/docs/options) 値を設定することで有効にできます：
+[`refreshInterval`](/docs/api) 値を設定することで有効にできます：
 
 ```js
 useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
@@ -53,7 +53,7 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 データが常に最新であることを確認するために、SWR はネットワークが回復したときに自動的に再検証します。
 
-この機能はデフォルトで有効になっています。[`revalidateOnReconnect`](/docs/options) オプションで無効にできます。
+この機能はデフォルトで有効になっています。[`revalidateOnReconnect`](/docs/api) オプションで無効にできます。
 
 ## 自動再検証の無効化
 
