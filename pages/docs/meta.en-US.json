@@ -1,6 +1,6 @@
 {
   "getting-started": "Getting Started",
-  "options": "API Options",
+  "api": "API",
   "global-configuration": "Global Configuration",
   "data-fetching": "Data Fetching",
   "error-handling": "Error Handling",

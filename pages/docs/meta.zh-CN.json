@@ -1,6 +1,6 @@
 {
   "getting-started": "入门",
-  "options": "API 选项",
+  "api": "API",
   "global-configuration": "全局配置",
   "data-fetching": "数据请求",
   "error-handling": "错误处理",

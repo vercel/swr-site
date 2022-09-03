@@ -1,6 +1,6 @@
 {
   "getting-started": "はじめに",
-  "options": "API オプション",
+  "api": "API",
   "global-configuration": "グローバルな設定",
   "data-fetching": "データの取得",
   "error-handling": "エラーハンドリング",
