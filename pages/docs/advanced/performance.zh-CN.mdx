@@ -44,22 +44,22 @@ function App () {
 
 你可以在任何地方重用数据 hooks（比如上面示例中的 `useUser`），而不用担心性能或重复请求。
 
-还有一个 [`dedupingInterval` 选项](/docs/options) 用于覆盖默认的重复数据删除间隔。
+还有一个 [`dedupingInterval` 选项](/docs/api) 用于覆盖默认的重复数据删除间隔。
 
 ## 深度比较
 
 SWR 默认 **深度比较** 数据更改。如果 `data` 值没有改变，则不会触发重新渲染。
 
-如果你还想更改的话，可以通过 [`compare` 选项](/docs/options) 自定义比较函数。比如，某些 API 响应返回一个服务器时间戳，你可能想从数据 diff 中排除它。
+如果你还想更改的话，可以通过 [`compare` 选项](/docs/api) 自定义比较函数。比如，某些 API 响应返回一个服务器时间戳，你可能想从数据 diff 中排除它。
 
 ## 依赖收集
 
-`useSWR` 返回 3 个 **有状态的** 值：`data`、`error` 和 `isValidating`，每个都可以独立更新。例如，如果我们在一个完整的数据请求生命周期中打印这些值，则将如下所示：
+`useSWR` 返回 4 个 **有状态的** 值：`data`、`error`、`isLoading`和 `isValidating`，每个都可以独立更新。例如，如果我们在一个完整的数据请求生命周期中打印这些值，则将如下所示：
 
 ```jsx
 function App () {
-  const { data, error, isValidating } = useSWR('/api', fetcher)
-  console.log(data, error, isValidating)
+  const { data, error, isLoading, isValidating } = useSWR('/api', fetcher)
+  console.log(data, error, isLoading, isValidating)
   return null
 }
 ```
@@ -67,11 +67,11 @@ function App () {
 在最坏的情况下（第一个请求失败，然后重试成功），你将看到 4 行日志：
 
 ```js
-// console.log(data, error, isValidating)
-undefined undefined true  // => 开始 fetching
-undefined Error false     // => 结束 fetching，出现错误
-undefined Error true      // => 开始重试
-Data undefined false      // => 重试结束，得到数据
+// console.log(data, error, isLoading, isValidating)
+undefined undefined true true  // => 开始 fetching
+undefined Error false false     // => 结束 fetching，出现错误
+undefined Error true true      // => 开始重试
+Data undefined false false      // => 重试结束，得到数据
 ```
 
 状态的改变是有道理的。但这也意味着组件 **渲染了 4 次**。
@@ -94,7 +94,7 @@ undefined // => hydration / 初始渲染
 Data      // => 重试结束，得到数据
 ```
 
-内部发生了完全相同的过程，第一个请求出现了错误，然后我们重试得到了数据。但是，**SWR 只更新了组件使用的状态**，即：`data`。 
+内部发生了完全相同的过程，第一个请求出现了错误，然后我们重试得到了数据。但是，**SWR 只更新了组件使用的状态**，即：`data`。
 
 如果你不是总使用这3种状态，那么你已经从这个特性中获益了。在 [Vercel](https://vercel.com) 的实际应用中，这个优化减少了约 60% 的重新渲染。
 

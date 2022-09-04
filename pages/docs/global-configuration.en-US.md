@@ -1,6 +1,6 @@
 # Global Configuration
 
-The context `SWRConfig` can provide global configurations ([options](/docs/options)) for all SWR hooks.
+The context `SWRConfig` can provide global configurations ([options](/docs/api)) for all SWR hooks.
 
 ```jsx
 <SWRConfig value={options}>
@@ -114,7 +114,7 @@ function Page() {
 
 ### Cache Provider
 
-Besides all the [options](/docs/options) listed, `SWRConfig` also accepts an optional `provider` function. Please refer to the [Cache](/docs/advanced/cache) section for more details.
+Besides all the [options](/docs/api) listed, `SWRConfig` also accepts an optional `provider` function. Please refer to the [Cache](/docs/advanced/cache) section for more details.
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>

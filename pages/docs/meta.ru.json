@@ -1,6 +1,6 @@
 {
   "getting-started": "Начало работы",
-  "options": "Опции",
+  "api": "API",
   "global-configuration": "Глобальная конфигурация",
   "data-fetching": "Выборка данных",
   "error-handling": "Обработка ошибок",

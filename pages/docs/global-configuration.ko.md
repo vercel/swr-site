@@ -1,6 +1,6 @@
 # 전역 설정
 
-`SWRconfig` 컨텍스트는 모든 SWR hook에 대한 전역 설정([options](/docs/options))을 제공합니다.
+`SWRconfig` 컨텍스트는 모든 SWR hook에 대한 전역 설정([options](/docs/api))을 제공합니다.
 
 ```jsx
 <SWRConfig value={options}>
@@ -114,7 +114,7 @@ function Page() {
 
 ### 캐시 공급자
 
-나열된 모든 [옵션](/docs/options) 외에도, `SWRConfig`는 선택적으로 `provider` 함수도 받습니다. 더 자세한 내용은 [캐시](/docs/advanced/cache) 섹션을 참고해 주세요.
+나열된 모든 [옵션](/docs/api) 외에도, `SWRConfig`는 선택적으로 `provider` 함수도 받습니다. 더 자세한 내용은 [캐시](/docs/advanced/cache) 섹션을 참고해 주세요.
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>

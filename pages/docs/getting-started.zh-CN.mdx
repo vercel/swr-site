@@ -35,17 +35,17 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json())
 import useSWR from "swr";
 
 function Profile() {
-  const { data, error } = useSWR("/api/user/123", fetcher)
+  const { data, error, isLoading } = useSWR("/api/user/123", fetcher)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (isLoading) return <div>loading...</div>
 
   // 渲染数据
   return <div>hello {data.name}!</div>
 }
 ```
 
-通常，一个请求有 3 种可能的状态：“loading”、“ready”或“error”。你可以使用 `data` 和 `error` 的值来确定当前的请求状态，并返回相应的 UI。
+通常，一个请求有 3 种可能的状态：“loading”、“ready”或“error”。你可以使用 `data`、`error` 和 `isLoading` 的值来确定当前的请求状态，并返回相应的 UI。
 
 ## 可复用组件
 
@@ -53,11 +53,11 @@ function Profile() {
 
 ```jsx
 function useUser(id) {
-  const { data, error } = useSWR(`/api/user/${id}`, fetcher)
+  const { data, error, isLoading } = useSWR(`/api/user/${id}`, fetcher)
 
   return {
     user: data,
-    isLoading: !error && !data,
+    isLoading,
     isError: error,
   }
 }

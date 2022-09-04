@@ -31,10 +31,10 @@ SWR is a strategy to first return the data from cache (stale), then send the fet
 import useSWR from 'swr'
 
 function Profile() {
-  const { data, error } = useSWR('/api/user', fetcher)
+  const { data, error, isLoading } = useSWR('/api/user', fetcher)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (isLoading) return <div>loading...</div>
   return <div>hello {data.name}!</div>
 }
 ```
@@ -78,7 +78,7 @@ And a lot [more](/docs/getting-started).
   <img alt="license" src="https://badgen.net/npm/license/swr" className="inline-block mr-2"/>
 </p>
 
-SWR is created by the same team behind [Next.js](https://nextjs.org), the React framework.  
+SWR is created by the same team behind [Next.js](https://nextjs.org), the React framework.
 Follow [@vercel](https://twitter.com/vercel) on Twitter for future project updates.
 
 Feel free to join the [discussions on GitHub](https://github.com/vercel/swr/discussions)!

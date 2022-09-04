@@ -1,14 +1,14 @@
 import Callout from 'nextra-theme-docs/callout'
 
-# API オプション
+# API
 
 ```js
-const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
+const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
 ## パラメーター
 
-- `key`: このリクエストのためのユニークなキー文字列（または関数、配列、null） [（高度な使用法）](/docs/conditional-fetching)
+- `key`: このリクエストのためのユニークなキー文字列（または関数、配列、null） [(詳細)](/docs/arguments), [（高度な使用法）](/docs/conditional-fetching)
 - `fetcher`: （_任意_） データをフェッチするための Promise を返す関数 [（ 詳細 ）](/docs/data-fetching)
 - `options`: （_任意_） この SWR フックのオプションオブジェクト
 
@@ -16,8 +16,11 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 - `data`: `fetcher` によって解決された、指定されたキーのデータ（もしくは、ロードされていない場合は undefined）
 - `error`: `fetcher` によって投げられたエラー （もしくは undefined）
+- `isLoading`: 実行中のリクエストがあり "ロードされたデータ" がない状態。フォールバックのためのデータや `keepPreviousData` による以前のデータは "ロードされたデータ" ではありません
 - `isValidating`: リクエストまたは再検証の読み込みがある場合
 - `mutate(data?, options?)`: キャッシュされたデータを更新する関数 [（ 詳細 ）](/docs/mutation)
+
+More information can be found [here](/docs/advanced/understanding).
 
 ## オプション
 
@@ -41,6 +44,7 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `errorRetryCount`: 最大エラー再試行回数
 - `fallback`: 初期データの key-value オブジェクト [（ 例 ）](/docs/with-nextjs)
 - `fallbackData`: 返される初期データ（注：フックごとに）
+- `keepPreviousData = false`: 新しいキーに対するデータがロードされるまで以前のキーのデータを返すかどうか [（詳細）](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: リクエストの読み込みに時間がかかりすぎる場合のコールバック関数（`loadingTimeout` を参照してください）
 - `onSuccess(data, key, config)`: リクエストが正常に終了したときのコールバック関数
 - `onError(err, key, config)`: リクエストがエラーを返したときのコールバック関数

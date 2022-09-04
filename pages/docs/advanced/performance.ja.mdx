@@ -46,24 +46,24 @@ function App () {
 
 パフォーマンスや重複したリクエストを心配することなく、どこでも（上記の例にあった `useUser` のように）データフックを再利用できます。
 
-デフォルトの重複排除間隔を上書きする [`dedupingInterval`](/docs/options) オプションもあります。
+デフォルトの重複排除間隔を上書きする [`dedupingInterval`](/docs/api) オプションもあります。
 
 ## 詳細な比較
 
 SWR は、デフォルトでデータの変更を**詳細に比較**します。`data` という値が変更されていない場合、再レンダリングは開始されません。
 
-動作を変更したい場合は、[`compare` オプション](/docs/options)を使用して比較機能をカスタマイズすることもできます。
+動作を変更したい場合は、[`compare` オプション](/docs/api)を使用して比較機能をカスタマイズすることもできます。
 たとえば、一部の API レスポンスは、データ差分から除外したいサーバーのタイムスタンプを返します。
 
 ## 依存関係のコレクション
 
-`useSWR` が返す三つの**ステートフルな**値、つまり `data` 、`error` 、そして `isValidating` は、それぞれが独立して更新されます。
+`useSWR` が返す四つの**ステートフルな**値、つまり `data` 、`error` `isLoading`、そして `isValidating` は、それぞれが独立して更新されます。
 たとえば、完全なデータフェッチのライフサイクル内でこれらの値を出力すると次のようになります：
 
 ```jsx
 function App () {
-  const { data, error, isValidating } = useSWR('/api', fetcher)
-  console.log(data, error, isValidating)
+  const { data, error, isLoading, isValidating } = useSWR('/api', fetcher)
+  console.log(data, error, isLoading, isValidating)
   return null
 }
 ```
@@ -71,11 +71,11 @@ function App () {
 最悪の場合（最初のリクエストが失敗し、次に再試行が成功した場合）には、4 行のログが表示されます：
 
 ```js
-// console.log(data, error, isValidating)
-undefined undefined true  // => フェッチの開始
-undefined Error false     // => フェッチの完了、エラーを取得
-undefined Error true      // => 再試行の開始
-Data undefined false      // => 再試行の完了、データを取得
+// console.log(data, error, isLoading, isValidating)
+undefined undefined true true  // => フェッチの開始
+undefined Error false false    // => フェッチの完了、エラーを取得
+undefined Error false true     // => 再試行の開始
+Data undefined false false     // => 再試行の完了、データを取得
 ```
 
 この状態変化は理にかなっています。しかし、それはまた、コンポーネントが **4 回レンダリングされる**ことを意味します。

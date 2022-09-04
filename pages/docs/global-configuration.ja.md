@@ -1,6 +1,6 @@
 # グローバルな設定
 
-`SWRConfig` コンテキストによって、すべての SWR フックに対するグローバルな設定（ [オプション](/docs/options) ）を提供できます。
+`SWRConfig` コンテキストによって、すべての SWR フックに対するグローバルな設定（ [オプション](/docs/api) ）を提供できます。
 
 ```jsx
 <SWRConfig value={options}>

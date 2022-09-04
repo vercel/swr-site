@@ -174,7 +174,7 @@ Así es como este nuevo hook `useSWRInfinite` puede ayudar.
 import useSWRInfinite from 'swr/infinite'
 
 // ...
-const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
 ```
@@ -209,6 +209,7 @@ En la carga infinita, una _page_ es una petición, y nuestro objetivo es obtener
 
 - `data`: una array de valores de respuesta fetch de cada página
 - `error`: El mismo valor devuelto de `error` que `useSWR`
+- `isLoading`: El mismo valor devuelto de `isLoading` que `useSWR`
 - `isValidating`: El mismo valor devuelto de `isValidating` que `useSWR`
 - `mutate`: same as `useSWR`'s bound mutate function but manipulates the data array
 - `size`: el número de páginas que _se obtendrán_ y devolverán
