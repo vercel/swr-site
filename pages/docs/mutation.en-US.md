@@ -1,16 +1,25 @@
 # Mutation
 
+SWR provides the `mutate` and `useSWRMutation` APIs to mutate remote data and its cache.
+
+## mutate
+
 ```js
 mutate(key, data, options)
 ```
 
-## Options
+### API
 
-- `optimisticData`: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
-- `revalidate`: should the cache revalidate once the asynchronous update resolves.
-- `populateCache`: should the result of the remote mutation be written to the cache.
-- `populateCache`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
-- `rollbackOnError`: should the cache rollback if the remote mutation errors.
+#### Parameters
+
+- `key`: ***
+- `data`: ***
+- `options`: ***
+  - `optimisticData`: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
+  - `revalidate`: should the cache revalidate once the asynchronous update resolves.
+  - `populateCache`: should the result of the remote mutation be written to the cache.
+  - `populateCache`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
+  - `rollbackOnError`: should the cache rollback if the remote mutation errors.
 
 ## Revalidate
 
@@ -239,3 +248,42 @@ function Profile () {
   )
 }
 ```
+
+## useSWRMutation
+
+SWR also provides the `useSWRMutation` as a hook for remote mutations.
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+async function getData(url, { arg: token }) {
+  // Fetcher implementation.
+  // The extra argument will be passed via the `arg` property of the 2nd parameter.
+}
+
+// A useSWR + mutate like API, but it will never start the request.
+const { data, error, trigger, reset, isMutating } = useSWRMutation('/api/user', getData, options?)
+trigger("my_token);
+```
+
+### API
+
+#### Parameters
+
+- `key`
+- `fetcher`
+- `options`
+  - `onError`
+  - `onSuccess`
+  - `revalidate = true`: auto revalidate after mutation
+  - `populateCache = false`: write back the response to the cache after mutation
+  - `optimisticData`
+  - `rollbackOnError`
+
+#### Return Values
+
+- `data`: ***
+- `error`: ***
+- `trigger`: ***
+- `reset`: ***
+- `isMutating`: ***
