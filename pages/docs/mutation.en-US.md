@@ -12,14 +12,13 @@ mutate(key, data, options)
 
 #### Parameters
 
-- `key`: ***
-- `data`: ***
-- `options`: ***
-  - `optimisticData`: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
-  - `revalidate`: should the cache revalidate once the asynchronous update resolves.
-  - `populateCache`: should the result of the remote mutation be written to the cache.
-  - `populateCache`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
-  - `rollbackOnError`: should the cache rollback if the remote mutation errors.
+- `key`: same as `useSWR`'s `key`
+- `data`: data to update the client cache, or an async function for the remote mutation
+- `options`: accepts the following options
+  - `optimisticData(currentData)`: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
+  - `revalidate = true`: should the cache revalidate once the asynchronous update resolves.
+  - `populateCache = true`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
+  - `rollbackOnError = true`: should the cache rollback if the remote mutation errors.
 
 ## Revalidate
 
@@ -270,20 +269,20 @@ trigger("my_token);
 
 #### Parameters
 
-- `key`
-- `fetcher`
-- `options`
-  - `onError`
-  - `onSuccess`
-  - `revalidate = true`: auto revalidate after mutation
-  - `populateCache = false`: write back the response to the cache after mutation
-  - `optimisticData`
-  - `rollbackOnError`
+- `key`:  same as `useSWR`'s `key`
+- `fetcher`: an async function for remote mutation
+- `options`: accepts the following options
+  - `optimisticData(currentData)`: same as `mutate`'s `optimisticData`
+  - `revalidate = true`: same as `mutate`'s `revalidate`
+  - `populateCache = false`: same as `mutate`'s `populateCache`, but the default is `false`
+  - `rollbackOnError = true`: same as `mutate`'s `rollbackOnError`
+  - `onSuccess(data, key, config)`:　callback function when a remote mutation has been finished successfully
+  - `onError(err, key, config)`: callback function when a remote mutation has returned an error
 
 #### Return Values
 
-- `data`: ***
-- `error`: ***
-- `trigger`: ***
-- `reset`: ***
-- `isMutating`: ***
+- `data`: data for the given key returned from `fetcher`
+- `error`: error thrown by `fetcher` (or undefined)
+- `trigger`: a function to trigger a remote mutation
+- `reset`: a function to reset the state (`data`, `error`, `isMutating`)
+- `isMutating`: if there's an ongoing remote mutation
