@@ -8,7 +8,6 @@ mutate(key, data, options)
 
 - `optimisticData`: data to immediately update the client cache, usually used in optimistic UI.
 - `revalidate`: should the cache revalidate once the asynchronous update resolves.
-- `populateCache`: should the result of the remote mutation be written to the cache.
 - `populateCache`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
 - `rollbackOnError`: should the cache rollback if the remote mutation errors.
 
