@@ -250,7 +250,7 @@ function Profile () {
 
 ## useSWRMutation
 
-SWR also provides the `useSWRMutation` as a hook for remote mutations.
+SWR also provides the `useSWRMutation` as a hook for remote mutations. The remote mutations are only triggered manually, instead of automatically by SWR like `useSWR`.
 
 ```jsx
 import useSWRMutation from 'swr/mutation'
@@ -270,7 +270,7 @@ trigger("my_token);
 #### Parameters
 
 - `key`:  same as `useSWR`'s `key`
-- `fetcher`: an async function for remote mutation
+- `fetcher(key, { arg })`: an async function for remote mutation
 - `options`: accepts the following options
   - `optimisticData(currentData)`: same as `mutate`'s `optimisticData`
   - `revalidate = true`: same as `mutate`'s `revalidate`
@@ -283,6 +283,51 @@ trigger("my_token);
 
 - `data`: data for the given key returned from `fetcher`
 - `error`: error thrown by `fetcher` (or undefined)
-- `trigger`: a function to trigger a remote mutation
+- `trigger(arg, options)`: a function to trigger a remote mutation
 - `reset`: a function to reset the state (`data`, `error`, `isMutating`)
 - `isMutating`: if there's an ongoing remote mutation
+
+### Examples
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+async function sendRequest(url, { arg }) {
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(arg)
+  })
+}
+
+function App() {
+  const { trigger } = useSWRMutation('/api/user', sendRequest, /* options */)
+
+  return <button　onClick={async () => {
+    try {
+      const result = await trigger({ username: 'johndoe' }, /* options */)
+    } catch (e) {
+      // error handling
+    }
+  }}>Create User</button>
+}
+```
+
+If you want to use the mutation results in rendering, you can get them as the return values of `useSWRMutation`.
+
+```jsx
+const { trigger, data, error } = useSWRMutation('/api/user', sendRequest)
+```
+
+`useSWRMutation` shares a cache store with `useSWR`, so it can detect and avoid race conditions between `useSWR`. It also supports `mutate`'s functionalities like optimistic updates and rollback on errors. You can pass these options `useSWRMutation` and its `trigger` function.
+
+```jsx
+const { trigger } = useSWRMutation('/api/user', updateUser, {
+  optimisticData: current => ({ ...current, name: newName })
+})
+
+// or
+
+trigger(newName, {
+  optimisticData: current => ({ ...current, name: newName })
+})
+```
