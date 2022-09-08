@@ -250,7 +250,7 @@ function Profile () {
 
 ## useSWRMutation
 
-SWR also provides the `useSWRMutation` as a hook for remote mutations. The remote mutations are only triggered manually, instead of automatically by SWR like `useSWR`.
+SWR also provides `useSWRMutation` as a hook for remote mutations. The remote mutations are only triggered manually, instead of automatically like `useSWR`.
 
 ```jsx
 import useSWRMutation from 'swr/mutation'
@@ -287,7 +287,7 @@ trigger("my_token);
 - `reset`: a function to reset the state (`data`, `error`, `isMutating`)
 - `isMutating`: if there's an ongoing remote mutation
 
-### Examples
+### Basic Examples
 
 ```jsx
 import useSWRMutation from 'swr/mutation'
@@ -302,17 +302,23 @@ async function sendRequest(url, { arg }) {
 function App() {
   const { trigger } = useSWRMutation('/api/user', sendRequest, /* options */)
 
-  return <button　onClick={async () => {
-    try {
-      const result = await trigger({ username: 'johndoe' }, /* options */)
-    } catch (e) {
-      // error handling
-    }
-  }}>Create User</button>
+  return (
+    <button
+      onClick={async () => {
+        try {
+          const result = await trigger({ username: 'johndoe' }, /* options */)
+        } catch (e) {
+          // error handling
+        }
+      }}
+    >
+      Create User
+    </button>
+  )
 }
 ```
 
-If you want to use the mutation results in rendering, you can get them as the return values of `useSWRMutation`.
+If you want to use the mutation results in rendering, you can get them from the return values of `useSWRMutation`.
 
 ```jsx
 const { trigger, data, error } = useSWRMutation('/api/user', sendRequest)
@@ -330,4 +336,31 @@ const { trigger } = useSWRMutation('/api/user', updateUser, {
 trigger(newName, {
   optimisticData: current => ({ ...current, name: newName })
 })
+```
+
+### Defer loading data until needed
+
+You can also use `useSWRMutation` for loading data. `useSWRMutation` never start requesting until `trigger` is called, so you can defer loading data when you actually need it.
+
+```jsx
+import { useState } from 'react'
+import useSWRMutation from 'swr/mutation'
+
+const fetcher = url => fetch(url).then(res => res.json())
+
+const Page = () => {
+  const [show, setShow] = useState(false)
+  // data is undefined until trigger is called
+  const { data: user, trigger } = useSWR('/api/user', fetcher);
+
+  return (
+    <div>
+      <button onClick={() => {
+        trigger();
+        setShow(true);
+      }}>Show User</button>
+      {show && user ? <div>{usre.name}</div> : null}
+    </div>
+  );
+}
 ```
