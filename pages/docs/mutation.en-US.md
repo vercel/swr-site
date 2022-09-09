@@ -1,6 +1,6 @@
 # Mutation
 
-SWR provides the `mutate` and `useSWRMutation` APIs to mutate remote data and its cache.
+SWR provides the `mutate` and `useSWRMutation` APIs for mutating remote data and related cache.
 
 ## mutate
 
@@ -255,14 +255,15 @@ SWR also provides `useSWRMutation` as a hook for remote mutations. The remote mu
 ```jsx
 import useSWRMutation from 'swr/mutation'
 
-async function getData(url, { arg: token }) {
+async function getData(url, { arg }) {
   // Fetcher implementation.
   // The extra argument will be passed via the `arg` property of the 2nd parameter.
+  // For the example below, `arg` will be `'my_token'`
 }
 
 // A useSWR + mutate like API, but it will never start the request.
 const { data, error, trigger, reset, isMutating } = useSWRMutation('/api/user', getData, options?)
-trigger("my_token);
+trigger('my_token');
 ```
 
 ### API
