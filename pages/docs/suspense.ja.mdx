@@ -3,7 +3,7 @@ import Callout from 'nextra-theme-docs/callout'
 # サスペンス
 
 <Callout emoji="🚨" type="error">
-  React はまだサスペンスをデータ取得フレームワークである SWR などで使うことを <strong>推奨していません</strong> (<a href="https://reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks" target="_blank" rel="noopener">詳細</a>)。 この API は将来的に私たちの調査により変更される可能性があります。
+  React はまだサスペンスをデータ取得フレームワークである SWR などで使うことを <strong>推奨していません</strong> (<a href="https://reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks" target="_blank" rel="noopener">詳細</a>)。 これらの API は将来的に私たちの調査により変更される可能性があります。
 </Callout>
 
 React サスペンスで SWR を使用するには、 `suspense` オプションを有効にします。
@@ -73,6 +73,6 @@ function Profile () {
 
 この制限に関する技術的な詳細を読みたい場合は、[こちらの議論](https://github.com/vercel/swr/pull/357#issuecomment-627089889)を確認してください。
 
-### 注： サーバサイドレンダリングを使用する場合
+### サーバサイドレンダリング
 
 サスペンスモードをサーバサイド（Next.js によるプリレンダリングを含む）で使う場合、[fallbackData や fallback](/docs/with-nextjs#pre-rendering-with-default-data) により初期データが提供されている**必要があります**。これはサスペンスをサーバサイドでのデータ取得に使うことができないことを意味しており、クライアントサイドでのデータ取得を行うか、フレームワークを通じたデータ取得（Next.js の getStaticProps のような）のどちらかを行う必要があります。これについての議論は[こちら](https://github.com/vercel/swr/issues/1906)です。
