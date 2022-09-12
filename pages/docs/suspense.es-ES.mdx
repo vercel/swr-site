@@ -75,4 +75,4 @@ Si quiere leer más detalles técnicos sobre esta restricción, consulte [la dis
 
 ### Server-Side Rendering
 
-When using Suspense mode on the server-side (including pre-rendering in Next.js), it's **required** to provide the initial data via [fallbackData or fallback](/docs/with-nextjs#pre-rendering-with-default-data). This means that you can't use Suspense to fetch data on the server side, but either doing fully client-side data fetching, or fetch the data via the framework (such as getStaticProps in Next.js). More discussions can be [here](https://github.com/vercel/swr/issues/1906).
+When using suspense mode on the server-side (including pre-rendering in Next.js), it's **required** to provide the initial data via [fallbackData or fallback](/docs/with-nextjs#pre-rendering-with-default-data). This means that you can't use `Suspense` to fetch data on the server side, but either doing fully client-side data fetching, or fetch the data via the framework level data fetching method(such as getStaticProps in Next.js). More discussions can be found [here](https://github.com/vercel/swr/issues/1906).
