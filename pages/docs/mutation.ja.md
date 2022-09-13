@@ -1,15 +1,24 @@
 # ミューテーション
 
+SWR はリモートデータ及びキャッシュデータの更新のために `mutate` と `useSWRMutation` を提供しています。
+
+## mutate
+
 ```js
 mutate(key, data, options)
 ```
 
-## オプション
+### API
 
-- `optimisticData`: クライアントキャッシュを直ちに更新するデータ、または現在の値を受け取り更新するデータを返す関数で、通常は 楽観的な UI で使用されます。
-- `revalidate`: 非同期更新が解決した後、キャッシュを再検証するかどうか。
-- `populateCache`: リモートミューテーションの結果をキャッシュに書き込むかどうか。関数も受け取ります。関数はミューテーションの結果と現在の値を引数として受けとり、ミューテーションの結果を返します。
-- `rollbackOnError`: リモートミューテーションでエラーが発生した場合、キャッシュをロールバックするかどうか。
+#### パラメーター
+
+- `key`: `useSWR` の `key` と同じです
+- `data`: クライアントキャッシュを更新するためのデータ、またはリモートミューテーションのための Async Functions
+- `options`: 下記のオプションを受け取ります
+  - `optimisticData(currentData)`: 即座にクライアントキャッシュを更新するためのデータ、または現在のデータを受け取り新しいキャッシュデータを返す関数。楽観的な UI 更新を実現するために使われます
+  - `revalidate = true`: リモートミューテーションが完了した際にキャッシュを再検証するかどうか
+  - `populateCache = true`: リモートミューテーションの結果をキャッシュに書き込むかどうか、または更新後のデータと現在のデータを受け取りミューテーションの結果としてキャッシュに保存するデータを返す関数
+  - `rollbackOnError = true`: リモートミューテーションでエラーが発生した才にキャッシュをロールバックするかどうか
 
 ## 再検証
 
@@ -236,5 +245,124 @@ function Profile () {
       }}>Uppercase my name!</button>
     </div>
   )
+}
+```
+
+## useSWRMutation
+
+SWR はリモートミューテーションのためのフックとして `useSWRMutation` を提供します。このリモートミューテーションは `useSWR` のように自動的に実行されるのとは異なり手動でのみ実行されます。
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+async function getData(url, { arg }) {
+  // fetcher の実装
+  // 追加の引数は二番目の `arg` プロパティとして渡されます
+  // 例えば下記ケースでは `arg` は `my_token` になります
+}
+
+// useSWR と mutate を組み合わせたような API ですが、下記ではリクエストは実行されません
+const { data, error, trigger, reset, isMutating } = useSWRMutation('/api/user', getData, options?)
+trigger('my_token');
+```
+
+### API
+
+#### パラメーター
+
+- `key`: `useSWR` の `key` と同様
+- `fetcher(key, { arg })`: リモートミューテーションのための Async Functions
+- `options`: 下記のオプションを受けとります
+  - `optimisticData(currentData)`: `mutate` の `optimisticData` と同様
+  - `revalidate = true`:  `mutate` の `revalidate` と同様
+  - `populateCache = false`: `mutate` の `populateCache` と同様。デフォルトは `false`
+  - `rollbackOnError = true`: `mutate` の `rollbackOnError` と同様
+  - `onSuccess(data, key, config)`: リモートミューテーションが成功した時に呼ばれるコールバック関数
+  - `onError(err, key, config)`: リモートミューテーションが失敗した時に呼ばれるコールバック関数
+
+#### 返り値
+
+- `data`: `fetcher` から返された `key` に対応するデータ
+- `error`: `fetcher` から返されたエラー (または undefined)
+- `trigger(arg, options)`: リモートミューテーションを実行するための関数
+- `reset`: 状態  (`data`, `error`, `isMutating`) をリセットするための関数
+- `isMutating`: 実行中のリモートミューテーションがあるかどうか
+
+### 基本的な例
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+async function sendRequest(url, { arg }) {
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(arg)
+  })
+}
+
+function App() {
+  const { trigger } = useSWRMutation('/api/user', sendRequest, /* options */)
+
+  return (
+    <button
+      onClick={async () => {
+        try {
+          const result = await trigger({ username: 'johndoe' }, /* options */)
+        } catch (e) {
+          // エラーハンドリング
+        }
+      }}
+    >
+      Create User
+    </button>
+  )
+}
+```
+
+リモートミューテーションの結果をレンダリング中に使いたい場合には、`useSWRMutation` の返り値から取得できます。
+
+```jsx
+const { trigger, data, error } = useSWRMutation('/api/user', sendRequest)
+```
+
+`useSWRMutation` はキャッシュを `useSWR` と共有します。そのため `useSWR` とのレースコンディションを検出して避けることができます。また楽観的な更新やエラー時のロールバックなど `mutation` と同様の機能をサポートしています。これらのオプションは `useSWRMutation` と `trigger` に渡すことができます。
+
+
+```jsx
+const { trigger } = useSWRMutation('/api/user', updateUser, {
+  optimisticData: current => ({ ...current, name: newName })
+})
+
+// or
+
+trigger(newName, {
+  optimisticData: current => ({ ...current, name: newName })
+})
+```
+
+### 必要になるまでデータのロードを遅延する
+
+`useSWRMutation` はデータをロードするためにも利用できます。`useSWRMutation` は `trigger` が呼ばれるまでリクエストを開始しないため、データが本当に必要になるまで読み込みを遅らせることができます。
+
+```jsx
+import { useState } from 'react'
+import useSWRMutation from 'swr/mutation'
+
+const fetcher = url => fetch(url).then(res => res.json())
+
+const Page = () => {
+  const [show, setShow] = useState(false)
+  // trigger が呼ばれるまで data は undefined です
+  const { data: user, trigger } = useSWR('/api/user', fetcher);
+
+  return (
+    <div>
+      <button onClick={() => {
+        trigger();
+        setShow(true);
+      }}>Show User</button>
+      {show && user ? <div>{usre.name}</div> : null}
+    </div>
+  );
 }
 ```
