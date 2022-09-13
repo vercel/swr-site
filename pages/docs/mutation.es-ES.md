@@ -5,7 +5,7 @@ SWR provides the `mutate` and `useSWRMutation` APIs for mutating remote data and
 ## mutate
 
 ```js
-mutate(key, data, options)
+const data = await mutate(key, data, options)
 ```
 
 ### API
@@ -19,6 +19,18 @@ mutate(key, data, options)
   - `revalidate = true`: should the cache revalidate once the asynchronous update resolves.
   - `populateCache = true`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
   - `rollbackOnError = true`: should the cache rollback if the remote mutation errors.
+
+#### Return Values
+
+`mutate` returns the results the `data` parameter has been resolved. The function passed to `mutate` will return an updated data which is used to update the corresponding cache value. If there is an error thrown while executing the function, the error will be thrown so it can be handled appropriately.
+
+```jsx
+try {
+  const user = await mutate('/api/user', updateUser(newUser))
+} catch (error) {
+  // Manejar un error al actualizar el user aquí
+}
+```
 
 ## Revalidar
 
@@ -151,21 +163,6 @@ mutate('/api/todos', updateTodo, {
   // we don't need to revalidate here.
   revalidate: false
 })
-```
-
-## Datos devueltos por Mutate
-
-Lo más probable es que necesites algunos datos para actualizar la caché. Los datos se resuelven o se devuelven
-desde la promise o función asíncrona que pasaste para `mutate`.
-
-La función devolverá update document para que `mutate` actualice el valor de la caché correspondiente. Podría arrojar un error de alguna manera, cada vez que se llame.
-
-```jsx
-try {
-  const user = await mutate('/api/user', updateUser(newUser))
-} catch (error) {
-  // Manejar un error al actualizar el user aquí
-}
 ```
 
 ## Mutate Multiple Items

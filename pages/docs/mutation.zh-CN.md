@@ -5,7 +5,7 @@ SWR provides the `mutate` and `useSWRMutation` APIs for mutating remote data and
 ## mutate
 
 ```js
-mutate(key, data, options)
+const data = await mutate(key, data, options)
 ```
 
 ### API
@@ -19,6 +19,18 @@ mutate(key, data, options)
   - `revalidate = true`: should the cache revalidate once the asynchronous update resolves.
   - `populateCache = true`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
   - `rollbackOnError = true`: should the cache rollback if the remote mutation errors.
+
+#### Return Values
+
+`mutate` returns the results the `data` parameter has been resolved. The function passed to `mutate` will return an updated data which is used to update the corresponding cache value. If there is an error thrown while executing the function, the error will be thrown so it can be handled appropriately.
+
+```jsx
+try {
+  const user = await mutate('/api/user', updateUser(newUser))
+} catch (error) {
+  // 在这里处理更新 user 时的错误
+}
+```
 
 ## 重新验证
 
@@ -148,20 +160,6 @@ mutate('/api/todos', updateTodo, {
   // we don't need to revalidate here.
   revalidate: false
 })
-```
-
-## Mutate 的返回值
-
-最有可能的是，你需要一些数据来更新缓存。这些数据是从你传递给 `mutate` 的 promise 或 异步函数解析或返回的。
-
-该函数将返回一个 updated document，让 `mutate` 更新相应的缓存值。每次调用它时，都可能以某种方式抛出错误。
-
-```jsx
-try {
-  const user = await mutate('/api/user', updateUser(newUser))
-} catch (error) {
-  // 在这里处理更新 user 时的错误
-}
 ```
 
 ## Mutate Multiple Items

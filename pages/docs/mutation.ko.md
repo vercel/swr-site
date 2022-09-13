@@ -5,7 +5,7 @@ SWR provides the `mutate` and `useSWRMutation` APIs for mutating remote data and
 ## mutate
 
 ```js
-mutate(key, data, options)
+const data = await mutate(key, data, options)
 ```
 
 ### API
@@ -19,6 +19,18 @@ mutate(key, data, options)
   - `revalidate = true`: should the cache revalidate once the asynchronous update resolves.
   - `populateCache = true`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
   - `rollbackOnError = true`: should the cache rollback if the remote mutation errors.
+
+#### Return Values
+
+`mutate` returns the results the `data` parameter has been resolved. The function passed to `mutate` will return an updated data which is used to update the corresponding cache value. If there is an error thrown while executing the function, the error will be thrown so it can be handled appropriately.
+
+```jsx
+try {
+  const user = await mutate('/api/user', updateUser(newUser))
+} catch (error) {
+  // 여기에서 user를 업데이트하는 동안 발생하는 에러를 처리
+}
+```
 
 ## 갱신하기
 
@@ -153,21 +165,6 @@ mutate('/api/todos', updateTodo, {
   // we don't need to revalidate here.
   revalidate: false
 })
-```
-
-## 뮤테이트로부터 반환된 데이터
-
-여러분 대부분은 아마도 캐시를 업데이트하기 위한 어떤 데이터가 필요할 것입니다. 데이터는 `mutate`로 전달했던 프로미스나 비동기 함수로부터 이행되었거나 반환되었습니다.
-
-`mutate`로 전달된 함수는 적합한 캐시 값을 업데이트하기 위해 사용되는 업데이트된 문서를 반환합니다. 해당 함수를 실행하는 동안 에러가 발생한다면,
-적절하게 처리할 수 있도록 에러가 던져집니다.
-
-```jsx
-try {
-  const user = await mutate('/api/user', updateUser(newUser))
-} catch (error) {
-  // 여기에서 user를 업데이트하는 동안 발생하는 에러를 처리
-}
 ```
 
 ## Mutate Multiple Items

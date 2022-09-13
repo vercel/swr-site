@@ -5,7 +5,7 @@ SWR はリモートデータ及びキャッシュデータの更新のために 
 ## mutate
 
 ```js
-mutate(key, data, options)
+const data = await mutate(key, data, options)
 ```
 
 ### API
@@ -19,6 +19,19 @@ mutate(key, data, options)
   - `revalidate = true`: リモートミューテーションが完了した際にキャッシュを再検証するかどうか
   - `populateCache = true`: リモートミューテーションの結果をキャッシュに書き込むかどうか、または更新後のデータと現在のデータを受け取りミューテーションの結果としてキャッシュに保存するデータを返す関数
   - `rollbackOnError = true`: リモートミューテーションでエラーが発生した才にキャッシュをロールバックするかどうか
+
+#### 返り値
+
+`mutate` は `data` パラメーターが解決された結果を返します。`mutate` に渡されるこの関数は、対応するキャッシュ値を更新できるように、更新されたデータを返します。この関数を実行している際にエラーが発生したときには、適切な対処ができるようにそのエラーを投げます。
+
+
+```jsx
+try {
+  const user = await mutate('/api/user', updateUser(newUser))
+} catch (error) {
+  // ここでユーザーの更新中にエラーを処理します
+}
+```
 
 ## 再検証
 
@@ -153,20 +166,6 @@ mutate('/api/todos', updateTodo, {
   // 再検証する必要はありません
   revalidate: false
 })
-```
-
-## ミューテートから返されたデータ
-
-ほとんどの場合、キャッシュを更新するためにいくつかのデータが必要です。データは、`mutate` に渡された promise や非同期関数から解決または返されます。
-
-`mutate` に渡されるこの関数は、対応するキャッシュ値を更新できるように、更新されたドキュメントを返します。この関数を実行している際にエラーが発生したときには、適切な対処ができるようにそのエラーを投げます。
-
-```jsx
-try {
-  const user = await mutate('/api/user', updateUser(newUser))
-} catch (error) {
-  // ここでユーザーの更新中にエラーを処理します
-}
 ```
 
 ## 複数のアイテムをミューテートする
