@@ -1,11 +1,36 @@
 # 数据更改
 
-## Options
+SWR provides the `mutate` and `useSWRMutation` APIs for mutating remote data and related cache.
 
-- `optimisticData`：data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
-- `revalidate`：一旦完成异步更新，缓存是否重新请求。
-- `populateCache`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
-- `rollbackOnError`：如果远程更新出错，是否进行缓存回滚。
+## mutate
+
+```js
+const data = await mutate(key, data, options)
+```
+
+### API
+
+#### Parameters
+
+- `key`: same as `useSWR`'s `key`
+- `data`: data to update the client cache, or an async function for the remote mutation
+- `options`: accepts the following options
+  - `optimisticData(currentData)`: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
+  - `revalidate = true`: should the cache revalidate once the asynchronous update resolves.
+  - `populateCache = true`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
+  - `rollbackOnError = true`: should the cache rollback if the remote mutation errors.
+
+#### Return Values
+
+`mutate` returns the results the `data` parameter has been resolved. The function passed to `mutate` will return an updated data which is used to update the corresponding cache value. If there is an error thrown while executing the function, the error will be thrown so it can be handled appropriately.
+
+```jsx
+try {
+  const user = await mutate('/api/user', updateUser(newUser))
+} catch (error) {
+  // 在这里处理更新 user 时的错误
+}
+```
 
 ## 重新验证
 
@@ -137,20 +162,6 @@ mutate('/api/todos', updateTodo, {
 })
 ```
 
-## Mutate 的返回值
-
-最有可能的是，你需要一些数据来更新缓存。这些数据是从你传递给 `mutate` 的 promise 或 异步函数解析或返回的。
-
-该函数将返回一个 updated document，让 `mutate` 更新相应的缓存值。每次调用它时，都可能以某种方式抛出错误。
-
-```jsx
-try {
-  const user = await mutate('/api/user', updateUser(newUser))
-} catch (error) {
-  // 在这里处理更新 user 时的错误
-}
-```
-
 ## Mutate Multiple Items
 
 `mutate` accepts a filter function, which accepts `key` as the argument and returns which keys to revalidate. The filter function is applied to all the existing cache keys.
@@ -227,5 +238,123 @@ function Profile () {
       }}>Uppercase my name!</button>
     </div>
   )
+}
+```
+
+## useSWRMutation
+
+SWR also provides `useSWRMutation` as a hook for remote mutations. The remote mutations are only triggered manually, instead of automatically like `useSWR`.
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+async function getData(url, { arg }) {
+  // Fetcher implementation.
+  // The extra argument will be passed via the `arg` property of the 2nd parameter.
+  // For the example below, `arg` will be `'my_token'`
+}
+
+// A useSWR + mutate like API, but it will never start the request.
+const { data, error, trigger, reset, isMutating } = useSWRMutation('/api/user', getData, options?)
+trigger('my_token');
+```
+
+### API
+
+#### Parameters
+
+- `key`:  same as `useSWR`'s `key`
+- `fetcher(key, { arg })`: an async function for remote mutation
+- `options`: accepts the following options
+  - `optimisticData(currentData)`: same as `mutate`'s `optimisticData`
+  - `revalidate = true`: same as `mutate`'s `revalidate`
+  - `populateCache = false`: same as `mutate`'s `populateCache`, but the default is `false`
+  - `rollbackOnError = true`: same as `mutate`'s `rollbackOnError`
+  - `onSuccess(data, key, config)`:　callback function when a remote mutation has been finished successfully
+  - `onError(err, key, config)`: callback function when a remote mutation has returned an error
+
+#### Return Values
+
+- `data`: data for the given key returned from `fetcher`
+- `error`: error thrown by `fetcher` (or undefined)
+- `trigger(arg, options)`: a function to trigger a remote mutation
+- `reset`: a function to reset the state (`data`, `error`, `isMutating`)
+- `isMutating`: if there's an ongoing remote mutation
+
+### Basic Examples
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+async function sendRequest(url, { arg }) {
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(arg)
+  })
+}
+
+function App() {
+  const { trigger } = useSWRMutation('/api/user', sendRequest, /* options */)
+
+  return (
+    <button
+      onClick={async () => {
+        try {
+          const result = await trigger({ username: 'johndoe' }, /* options */)
+        } catch (e) {
+          // error handling
+        }
+      }}
+    >
+      Create User
+    </button>
+  )
+}
+```
+
+If you want to use the mutation results in rendering, you can get them from the return values of `useSWRMutation`.
+
+```jsx
+const { trigger, data, error } = useSWRMutation('/api/user', sendRequest)
+```
+
+`useSWRMutation` shares a cache store with `useSWR`, so it can detect and avoid race conditions between `useSWR`. It also supports `mutate`'s functionalities like optimistic updates and rollback on errors. You can pass these options `useSWRMutation` and its `trigger` function.
+
+```jsx
+const { trigger } = useSWRMutation('/api/user', updateUser, {
+  optimisticData: current => ({ ...current, name: newName })
+})
+
+// or
+
+trigger(newName, {
+  optimisticData: current => ({ ...current, name: newName })
+})
+```
+
+### Defer loading data until needed
+
+You can also use `useSWRMutation` for loading data. `useSWRMutation` never start requesting until `trigger` is called, so you can defer loading data when you actually need it.
+
+```jsx
+import { useState } from 'react'
+import useSWRMutation from 'swr/mutation'
+
+const fetcher = url => fetch(url).then(res => res.json())
+
+const Page = () => {
+  const [show, setShow] = useState(false)
+  // data is undefined until trigger is called
+  const { data: user, trigger } = useSWR('/api/user', fetcher);
+
+  return (
+    <div>
+      <button onClick={() => {
+        trigger();
+        setShow(true);
+      }}>Show User</button>
+      {show && user ? <div>{usre.name}</div> : null}
+    </div>
+  );
 }
 ```
