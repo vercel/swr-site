@@ -45,7 +45,7 @@ function App () {
 function Page ({ index }) {
   const { data } = useSWR(`/api/data?page=${index}`, fetcher);
 
-  // ... обработка состояния загразки и ошибки
+  // ... обработка состояния загрузки и ошибки
 
   return data.map(item => <div key={item.id}>{item.name}</div>)
 }
