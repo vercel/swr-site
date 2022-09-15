@@ -40,13 +40,57 @@ Almost a year ago we released SWR v1.0, today we are reaching another milestone:
 
 ### Fetcher no longer accepts multiple arguments
 
-### Avoid Using Suspense On The Server-Side
+`key` is now passed as a single argument.
+
+```diff
+- useSWR([1, 2, 3], (a, b, c) => {
++ useSWR([1, 2, 3], ([a, b, c]) => {
+  assert(a === 1)
+  assert(b === 2)
+  assert(c === 3)
+})
+```
 
 ### Internal Structure Of The Cached Data
 
+The internal structure of the cache data will be an object that holds all the current states.
+
+```diff
+- assert(cache.get(key) === data)
++ assert(cache.get(key) === { data, error, isValidating })
+
+// getter
+- cache.get(key)
++ cache.get(key)?.data
+
+// setter
+- cache.set(key, data)
++ cache.set(key, { ...cache.get(key), data })
+```
+
+<Callout emoji="🚨" type="error">
+  You should not write to the cache directly, it might cause undefined behavior.
+</Callout>
+
 ### SWRConfig.default → SWRConfig.defaultValue
 
+`SWRConfig.defaultValue` is the property for accessing the default value.
+
+```diff
+- SWRConfig.default
++ SWRConfig.defaultValue
+```
+
 ### Type InfiniteFetcher is renamed to SWRInfiniteFetcher
+
+```diff
+- import { InfiniteFetcher } from 'swr/infinite'
++ import { SWRInfiniteFetcher } from 'swr/infinite'
+```
+
+### Avoid Using Suspense On The Server-Side
+
+When using `suspense: true` with SWR on the server-side (including pre-rendering in Next.js), it's now required to provide the initial data via [`fallbackData` or `fallback`](/docs/with-nextjs#pre-rendering-with-default-data). This means that you can't use Suspense to fetch data on the server side as of today, but either doing fully client-side data fetching, or fetch the data via the framework (such as getStaticProps in Next.js).
 
 ### Changelog
 
