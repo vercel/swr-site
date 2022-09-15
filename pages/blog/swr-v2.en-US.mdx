@@ -30,11 +30,45 @@ Almost a year ago we released SWR v1.0, today we are reaching another milestone:
 
 ### Preload API
 
+`preload` is a new API for prefetching data programmatically. Prefetching data is important to improve user experiences and avoid waterfall problems. You can call `preload` before rendering. More information can be found [here](/docs/prefetching).
+
+```jsx
+import useSWR, { preload } from 'swr'
+
+const fetcher = (url) => fetch(url).then((res) => res.json())
+// You can call the preload function in anywhere
+preload('/api/user', fetcher)
+```
+
 ### Functional optimisticData
+
+`optimisticData` is an option of mutation, which is useful to implement optimistic UI. In v2, you can pass a function as the `optimisticData` option, which accepts current data and returns the new client cache data. More information can be found [here](/docs/mutation#optimistic-updates).
+
+```jsx
+mutate('/api/user', updateUserName(newName), {
+  optimisticData: user => ({ ...data, name: newName }),
+  rollbackOnError: true
+});
+```
 
 ### Function as SWRConfig value
 
+The value prop of `SWRConfig` accepts a function that receives the parent config and returns a new config. More information can be found [here](/docs/global-configuration).
+
+```jsx
+<SWRConfig
+  value={parent => ({
+    dedupingInterval: parent.dedupingInterval * 5,
+    refreshInterval: 100,
+  })}
+>
+  <Page />
+</SWRConfig>
+```
+
 ### DevTools
+
+SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache and the results of your fetcher. More information can be found [here](/docs/advanced/devtools).
 
 ## Migration Guide
 
