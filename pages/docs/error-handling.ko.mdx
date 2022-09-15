@@ -48,6 +48,15 @@ const { data, error } = useSWR('/api/user', fetcher)
 // error.status === 403
 ```
 
+[Axios](https://axios-http.com/docs/intro)를 사용하여 `fetcher` 기능을 사용자 정의할 수도 있습니다.
+
+```js
+const fetcher = async url => {
+  const response = await api.get(url);
+  return response.data;
+}
+```
+
 <Callout emoji="💡">
   <code>데이터</code>와 <code>에러</code>는 동시에 존재할 수 있습니다. 따라서 UI는 예정된 요청이 실패했음을 알면서도
   기존 데이터를 보여줄 수 있습니다.
@@ -67,6 +76,8 @@ useSWR('/api/user', fetcher, {
   onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
     // 404에서 재시도 안함
     if (error.status === 404) return
+    // Axios가 있는 fetcher에서 오류가 발생합니다.
+    // if (error.response.status === 404) return
 
     // 특정 키에 대해 재시도 안함
     if (key === '/api/user') return
@@ -86,8 +97,8 @@ useSWR('/api/user', fetcher, {
 
 ## 전역 에러 기록
 
-항상 컴포넌트 내에서 반응적으로 `error` 객체를 얻을 수 있습니다. 
-하지만 UI에 [토스트](https://vercel.com/design/toast) 또는 [스낵바](https://material.io/components/snackbars)를 보여주거나 [Sentry](https://sentry.io)와 같은 어딘가에 기록하기 위해 에러를 전역으로 처리하길 원할 경우, 
+항상 컴포넌트 내에서 반응적으로 `error` 객체를 얻을 수 있습니다.
+하지만 UI에 [토스트](https://vercel.com/design/toast) 또는 [스낵바](https://material.io/components/snackbars)를 보여주거나 [Sentry](https://sentry.io)와 같은 어딘가에 기록하기 위해 에러를 전역으로 처리하길 원할 경우,
 [`onError`](/docs/options#options) 이벤트가 있습니다.
 
 ```jsx

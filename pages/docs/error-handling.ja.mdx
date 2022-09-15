@@ -48,6 +48,15 @@ const { data, error } = useSWR('/api/user', fetcher)
 // error.status === 403
 ```
 
+[Axios](https://axios-http.com/docs/intro) で `fetcher` 関数をカスタマイズすることもできます。
+
+```js
+const fetcher = async url => {
+  const response = await api.get(url);
+  return response.data;
+}
+```
+
 <Callout emoji="💡">
   <code>データ</code> と <code>エラー</code> は同時に存在することに注意してください。そのため、 UI は次のリクエストが失敗したことを知りながら、
   既存のデータを表示することができます。
@@ -67,6 +76,8 @@ useSWR('/api/user', fetcher, {
   onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
     // 404では再試行しない。
     if (error.status === 404) return
+    // Axiosを使用するfetcherはエラーをスローします。
+    // if (error.response.status === 404) return
 
     // 特定のキーでは再試行しない。
     if (key === '/api/user') return
