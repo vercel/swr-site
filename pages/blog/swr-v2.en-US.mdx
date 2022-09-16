@@ -20,13 +20,113 @@ Almost a year ago we released SWR v1.0, today we are reaching another milestone:
 
 ### Better React 18 Support
 
+SWR now uses `useSyncExternalStore` and `startTransition` internally to improve React 18 support, which ensures stronger UI consistency in concurrent rendering with React 18. The change is an internal implementation detail, so developers using SWR do not have to care about the change.
+
 ### isLoading State
+
+`isLoading` is a new return value that indicates if there's an ongoing request and no "loaded data". Previously, you have to check `data` and `error` are `undefined`, but now you can use the `isLoading` value.
+
+```jsx
+function Stock() {
+  const { data, isLoading, isValidating } = useSWR(STOCK_API, fetcher, {
+    refreshInterval: 3000
+  });
+
+  // If it's still loading the initial data, there is nothing to display.
+  // We return a skeleton here.
+  if (isLoading) return <div className="skeleton" />;
+
+  // Otherwise, display the data and a spinner that indicates a background
+  // revalidation.
+  return (
+    <>
+      <div>AAPL ${data}</div>
+      {isValidating ? <div className="spinner" /> : null}
+    </>
+  );
+}
+```
+
+We have added the new [Understanding SWR](/docs/advanced/understanding) page to describe how SWR returns values.
+
 
 ### keepPreviousData Option
 
+`keepPreviousData` is a new option for keeping the previous fetched data. This improves the UX a lot when you fetch data based on continuous user actions, e.g. real-time search when typing. More information can be found [here](/docs/advanced/understanding#return-previous-data-for-better-ux).
+
+```jsx
+function Search() {
+  const [search, setSearch] = React.useState('');
+
+  const { data, isLoading } = useSWR(`/search?q=${search}`, fetcher, {
+    keepPreviousData: true
+  });
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search..."
+      />
+
+      <div className={isLoading ? "loading" : ""}>
+        {data?.products.map(item => <Product key={item.id} name={item.name} />)
+      </div>
+    </div>
+  );
+}
+```
+
 ### useSWRMutation
 
+`useSWRMutation` is a new hook for remote mutations. This covers all the use cases of:
+
+- Requests that change data on the remote side: such as POST, PUT, DELETE, etc.
+- Requests that need to be triggered manually, instead of automatically by SWR.
+- Passing extra argument to fetcher, when triggering a request.
+- Knowing the status of a mutation, similar to `isValidating` but for mutations.
+- A lot more...
+
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+async function sendRequest(url, { arg }) {
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(arg)
+  })
+}
+
+function App() {
+  const { trigger } = useSWRMutation('/api/user', sendRequest)
+
+  return <button onClick={() => {
+    trigger({ username: 'johndoe' })
+  }}>Create User</button>
+}
+```
+
+More information can be found [here](/docs/mutation#useswrmutation).
+
 ### Mutate Multiple Keys
+
+`mutate` accepts a filter function, which accepts key as the argument and returns which keys to revalidate. The filter function is applied to all the existing cache keys. You can now clear all cache data with `mutate`. More information can be found [here](/docs/mutation#mutate-multiple-items).
+
+```jsx
+import { mutate } from 'swr'
+// Or from the hook if you customized the cache provider:
+// { mutate } = useSWRConfig()
+
+mutate(
+  key => typeof key === 'string' && key.startsWith('/api/item?id='),
+  undefined,
+  { revalidate: true }
+)
+```
+
 
 ### Preload API
 
