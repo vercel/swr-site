@@ -8,13 +8,14 @@ import Callout from 'nextra-theme-docs/callout'
 import Bleed from 'nextra-theme-docs/bleed'
 
 import Authors, { Author } from 'components/authors'
+import Video from 'components/video'
 
 # Announcing SWR 2.0
 
 <Authors date="">
 </Authors>
 
-Almost a year ago we released SWR v1.0, today we are reaching another milestone: the 2.0 version of SWR!
+We are excited to introduce SWR v2.0, including features to improve the use experience of your application.
 
 ## What’s New
 
@@ -47,7 +48,13 @@ function Stock() {
 }
 ```
 
-We have added the new [Understanding SWR](/docs/advanced/understanding) page to describe how SWR returns values.
+![An example using the isLoading state](https://user-images.githubusercontent.com/3676859/163695538-9ed6232d-808c-4c83-8606-0dd22bce508d.gif)
+
+You can find the full code for this example here: https://codesandbox.io/s/swr-isloading-v8dfpy.
+
+<Callout emoji="📝">
+  We have added the new [Understanding SWR](/docs/advanced/understanding) page to describe how SWR returns values.
+</Callout>
 
 
 ### keepPreviousData Option
@@ -78,6 +85,14 @@ function Search() {
   );
 }
 ```
+
+<Video
+  src="https://user-images.githubusercontent.com/3676859/163695903-a3eb1259-180e-41e0-821e-21c320201194.mp4"
+  caption="Keep previous search results when keepPreviousData has been enabled"
+  ratio={640/730}
+/>
+
+You can find the full code for this example here: https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m.
 
 ### useSWRMutation
 
