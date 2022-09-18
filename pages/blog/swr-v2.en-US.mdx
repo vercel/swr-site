@@ -27,6 +27,8 @@ SWR now uses `useSyncExternalStore` and `startTransition` internally to improve 
 
 `isLoading` is a new return value that indicates if there's an ongoing request and no "loaded data". Previously, you have to check `data` and `error` are `undefined`, but now you can use the `isLoading` value.
 
+You can improve the user experience by combining with `isLoading` and `isValidating` like this.
+
 ```jsx
 function Stock() {
   const { data, isLoading, isValidating } = useSWR(STOCK_API, fetcher, {
@@ -128,7 +130,7 @@ More information can be found [here](/docs/mutation#useswrmutation).
 
 ### Mutate Multiple Keys
 
-`mutate` accepts a filter function, which accepts key as the argument and returns which keys to revalidate. The filter function is applied to all the existing cache keys. You can now clear all cache data with `mutate`. More information can be found [here](/docs/mutation#mutate-multiple-items).
+`mutate` now accepts a filter function, which accepts key as the argument and returns which keys to revalidate. The filter function is applied to all the existing cache keys. You can now clear all cache data with `mutate`. More information can be found [here](/docs/mutation#mutate-multiple-items).
 
 ```jsx
 import { mutate } from 'swr'
