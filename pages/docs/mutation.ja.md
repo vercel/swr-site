@@ -1,6 +1,6 @@
 # ミューテーション
 
-SWR はリモートデータ及びキャッシュデータの更新のために `mutate` と `useSWRMutation` を提供しています。
+SWR はリモートデータ及びキャッシュデータの更新のために [`mutate`](/docs/mutation#mutate) と [`useSWRMutation`](/docs/mutation#useswrmutation) を提供しています。
 
 ## mutate
 
@@ -12,7 +12,7 @@ const data = await mutate(key, data, options)
 
 #### パラメーター
 
-- `key`: `useSWR` の `key` と同じです
+- `key`: `useSWR` の `key` と同じですが関数を渡した場合は[フィルタリング関数](/docs/mutation#mutate-multiple-items)として振る舞います
 - `data`: クライアントキャッシュを更新するためのデータ、またはリモートミューテーションのための Async Functions
 - `options`: 下記のオプションを受け取ります
   - `optimisticData(currentData)`: 即座にクライアントキャッシュを更新するためのデータ、または現在のデータを受け取り新しいキャッシュデータを返す関数。楽観的な UI 更新を実現するために使われます
@@ -269,7 +269,7 @@ trigger('my_token');
 
 #### パラメーター
 
-- `key`: `useSWR` の `key` と同様
+- `key`: [`mutate`](/docs/mutation#mutate) の `key` と同様
 - `fetcher(key, { arg })`: リモートミューテーションのための Async Functions
 - `options`: 下記のオプションを受けとります
   - `optimisticData(currentData)`: `mutate` の `optimisticData` と同様

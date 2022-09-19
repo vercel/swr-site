@@ -202,6 +202,28 @@ SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache 
 })
 ```
 
+### Mutate accepts a filter function
+
+`mutate` now accepts [a filter function](/blog/swr-v2#mutate-multiple-keys). Previously, the function behaved as returing a key.
+
+```diff
+- mutate(() => '/api/item') // a function to return a key
++ mutate(key => typeof key === 'string' && key.startsWith('/api/item?id=')) // a filter function
+```
+
+### The Cache interface requires a `keys()`
+
+When you use your own cache implementation, the Cache interface now requires a `keys()` method that returns all keys in the cache object, similar to the JavaScript Map instances.
+
+```diff
+interface Cache<Data> {
+  get(key: string): Data | undefined
+  set(key: string, value: Data): void
+  delete(key: string): void
++ keys(): IterableIterator<string>
+}
+```
+
 ### Internal Structure Of The Cached Data
 
 The internal structure of the cache data will be an object that holds all the current states.
