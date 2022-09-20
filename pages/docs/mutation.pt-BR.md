@@ -196,6 +196,18 @@ mutate(
 )
 ```
 
+The filter function is applied to all existing cache keys, so you should not assume the shape of keys when using multiple shapes of keys.
+
+```jsx
+// ✅ matching array key
+mutate((key) => key[0].startsWith('/api'), data)
+// ✅ matching string key
+mutate((key) => typeof key === 'string' && key.startsWith('/api'), data)
+
+// ❌ mutate all when key's type is unsure (array or string)
+mutate((key: any) => /\/api/.test(key.toString()))
+```
+
 You can use the filter function to clear all cache data, which is useful when logging out.
 
 
