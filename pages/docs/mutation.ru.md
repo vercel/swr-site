@@ -295,10 +295,11 @@ async function sendRequest(url, { arg }) {
 }
 
 function App() {
-  const { trigger } = useSWRMutation('/api/user', sendRequest, /* options */)
+  const { trigger, isMutating } = useSWRMutation('/api/user', sendRequest, /* options */)
 
   return (
     <button
+      disabled={isMutating}
       onClick={async () => {
         try {
           const result = await trigger({ username: 'johndoe' }, /* options */)

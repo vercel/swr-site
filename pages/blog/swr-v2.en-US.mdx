@@ -118,9 +118,9 @@ async function sendRequest(url, { arg }) {
 }
 
 function App() {
-  const { trigger } = useSWRMutation('/api/user', sendRequest)
+  const { trigger, isMutating } = useSWRMutation('/api/user', sendRequest)
 
-  return <button onClick={() => {
+  return <button disabled={isMutating} onClick={() => {
     trigger({ username: 'johndoe' })
   }}>Create User</button>
 }
