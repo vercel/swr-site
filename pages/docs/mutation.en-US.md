@@ -5,16 +5,22 @@ SWR provides the `mutate` and `useSWRMutation` APIs for mutating remote data and
 ## mutate
 
 ```js
-import { mutate, useSWRConfig } from "swr"
+import { mutate as globalMutate, useSWRConfig } from "swr"
 
 function App() {
   // Or from the useSWRConfig hook
-  // const { mutate } = useSWRConfig()
-  const data = await mutate(key, data, options)
+  const { mutate } = useSWRConfig()
+  const data = mutate(key, data, options)
+  
+  // Or you can use globalMutate directly
+  // await globalMutate(key, data, options)
+  
 }
 ```
 
-You can get [bound mutate](/docs/mutation#bound-mutate) from `useSWR`.
+[Bound Mutate](/docs/mutation#bound-mutate) is the short path to mutate the current key with data
+
+#### Example
 
 ```js
 const { mutate } = useSWR(key, fetcher)
