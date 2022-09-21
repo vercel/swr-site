@@ -4,6 +4,10 @@ SWR provides the `mutate` and `useSWRMutation` APIs for mutating remote data and
 
 ## mutate
 
+There're 2 ways to use the `mutate` API to mutate the data, the global mutate API which can mutate any key and the bound mutate API which only can mutate the data of corresponding SWR hook.
+
+#### Global Mutate
+
 ```js
 import { mutate as globalMutate, useSWRConfig } from "swr"
 
@@ -16,13 +20,15 @@ function App() {
 
 }
 ```
+#### Bound Mutate
 
-[Bound Mutate](/docs/mutation#bound-mutate) is the short path to mutate the current key with data.
+[Bound Mutate](/docs/mutation#bound-mutate) is the short path to mutate the current key with data. Which `key` is bounded to the `key` passing to SWR, and receive the `data` as the first argument.
 
-### Example
 
 ```js
 const { mutate } = useSWR(key, fetcher)
+
+await mutate(data)
 ```
 
 ### API
@@ -145,7 +151,7 @@ function Profile () {
 
 현재 데이터를 기반으로 데이터의 일부를 업데이트하려는 경우가 있습니다.
 
-`mutate`를 사용해 현재 캐시 된 값을 받는(있으면 업데이트된 문서를 반환) 비동기 함수를 전달할 수 있습니다. 
+`mutate`를 사용해 현재 캐시 된 값을 받는(있으면 업데이트된 문서를 반환) 비동기 함수를 전달할 수 있습니다.
 
 ```jsx
 mutate('/api/todos', async todos => {
