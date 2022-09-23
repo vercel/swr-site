@@ -1,6 +1,6 @@
 ---
 image:
-description: 'We are excited to introduce SWR v2.0, including features to improve the use experience of your application.'
+description: 'We are excited to announce SWR v2.0 release, with various improvements of DX and new features like preloading, stale, optimistic update, etc.'
 date:
 ---
 
@@ -21,9 +21,9 @@ We are excited to introduce SWR v2.0, including features to improve the use expe
 
 ### Better React 18 Support
 
-SWR now uses `useSyncExternalStore` and `startTransition` internally to improve React 18 support, which ensures stronger UI consistency in concurrent rendering with React 18. The change is an internal implementation detail, so developers using SWR do not have to care about the change.
+SWR now uses `useSyncExternalStore` and `startTransition` internally to improve the performance and manage states while integrating with React 18, which ensures stronger UI consistency under concurrent rendering mode. This change doesn't require any implicity updates on the interface perspective. Developers will benefit from the updates directly.
 
-### isLoading State
+### New Loading State Indicator
 
 `isLoading` is a new return value that indicates if there's an ongoing request and no "loaded data". Previously, you have to check `data` and `error` are `undefined`, but now you can use the `isLoading` value.
 
@@ -59,7 +59,7 @@ You can find the full code for this example here: https://codesandbox.io/s/swr-i
 </Callout>
 
 
-### keepPreviousData Option
+### Lazy Updating
 
 `keepPreviousData` is a new option for keeping the previous fetched data. This improves the UX a lot when you fetch data based on continuous user actions, e.g. real-time search when typing. More information can be found [here](/docs/advanced/understanding#return-previous-data-for-better-ux).
 
@@ -168,9 +168,9 @@ mutate('/api/user', updateUserName(newName), {
 });
 ```
 
-### Function as SWRConfig value
+### Functional SWR Config
 
-The value prop of `SWRConfig` accepts a function that receives the parent config and returns a new config. More information can be found [here](/docs/global-configuration).
+`SWRConfig` can now accept a function for `value` prop that receives the parent config and returns a new config. This empowers user flexibility to configure the SWR config especially in nested `<SWRConfig>` cases. More information can be found [here](/docs/global-configuration).
 
 ```jsx
 <SWRConfig
@@ -185,7 +185,7 @@ The value prop of `SWRConfig` accepts a function that receives the parent config
 
 ### DevTools
 
-SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache and the results of your fetcher. More information can be found [here](/docs/advanced/devtools).
+SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache and the results of your fetcher. Checkout [devtools](/docs/advanced/devtools) section for how to use devtools in your application.
 
 ## Migration Guide
 
@@ -202,7 +202,7 @@ SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache 
 })
 ```
 
-### Mutate accepts a filter function
+### Multiple Mutations
 
 `mutate` now accepts [a filter function](/blog/swr-v2#mutate-multiple-keys). Previously, the function behaved as returing a key.
 
@@ -211,7 +211,7 @@ SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache 
 + mutate(key => typeof key === 'string' && key.startsWith('/api/item?id=')) // a filter function
 ```
 
-### The Cache interface requires a `keys()`
+### New Required Property `keys()` for Cache Interface
 
 When you use your own cache implementation, the Cache interface now requires a `keys()` method that returns all keys in the cache object, similar to the JavaScript Map instances.
 
@@ -257,8 +257,8 @@ The internal structure of the cache data will be an object that holds all the cu
 ### Type InfiniteFetcher is renamed to SWRInfiniteFetcher
 
 ```diff
-- import { InfiniteFetcher } from 'swr/infinite'
-+ import { SWRInfiniteFetcher } from 'swr/infinite'
+- import type { InfiniteFetcher } from 'swr/infinite'
++ import type { SWRInfiniteFetcher } from 'swr/infinite'
 ```
 
 ### Avoid Using Suspense On The Server-Side
