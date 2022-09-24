@@ -1,6 +1,6 @@
 # Мутация
 
-SWR provides the `mutate` and `useSWRMutation` APIs for mutating remote data and related cache.
+SWR provides the [`mutate`](/docs/mutation#mutate) and [`useSWRMutation`](/docs/mutation#useswrmutation) APIs for mutating remote data and related cache.
 
 ## mutate
 
@@ -34,7 +34,7 @@ await mutate(data)
 
 #### Parameters
 
-- `key`: same as `useSWR`'s `key`
+- `key`: same as `useSWR`'s `key`, but a function behaves as [a filter function](/docs/mutation#mutate-multiple-items)
 - `data`: data to update the client cache, or an async function for the remote mutation
 - `options`: accepts the following options
   - `optimisticData(currentData)`: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
@@ -298,7 +298,7 @@ trigger('my_token');
 
 #### Parameters
 
-- `key`:  same as `useSWR`'s `key`
+- `key`: same as [`mutate`](/docs/mutation#mutate)'s `key`
 - `fetcher(key, { arg })`: an async function for remote mutation
 - `options`: accepts the following options
   - `optimisticData(currentData)`: same as `mutate`'s `optimisticData`
@@ -329,10 +329,11 @@ async function sendRequest(url, { arg }) {
 }
 
 function App() {
-  const { trigger } = useSWRMutation('/api/user', sendRequest, /* options */)
+  const { trigger, isMutating } = useSWRMutation('/api/user', sendRequest, /* options */)
 
   return (
     <button
+      disabled={isMutating}
       onClick={async () => {
         try {
           const result = await trigger({ username: 'johndoe' }, /* options */)
