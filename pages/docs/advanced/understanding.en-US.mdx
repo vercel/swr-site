@@ -1,3 +1,4 @@
+import Callout from 'nextra-theme-docs/callout'
 import Video from 'components/video'
 
 # Understanding SWR
@@ -41,6 +42,42 @@ This pattern is to fetch data and change the key and revalidate it later with fa
 This pattern is to fetch data and change the key and revalidate it later with the `keepPreviousData` option and fallback data.
 
 ![A pattern for key change + previous data + fallback](/img/understanding/key-change-previous-data-fallback.svg)
+
+## Combining with isLoading and isValidating for better UX
+
+`isLoading` and `isValidating` are similar, so you might be confused about which value you should use.
+`isValidating` becomes `true` whenever there is an ongoing request, on the other hand, `isLoading` becomes `true` when there is an ongoing request and no "loaded data".
+
+You can use `isValidating` for indicating there is an ongoing revalidation and `isLoading` for indicating there is nothing to display.
+
+<Callout emoji="📝">
+  Fallback data and previous data are not considered "loaded data," so when you use fallback data or enable the keepPreviousData option, you might have data to display.
+</Callout>
+
+```jsx
+function Stock() {
+  const { data, isLoading, isValidating } = useSWR(STOCK_API, fetcher, {
+    refreshInterval: 3000
+  });
+
+  // If it's still loading the initial data, there is nothing to display.
+  // We return a skeleton here.
+  if (isLoading) return <div className="skeleton" />;
+
+  // Otherwise, display the data and a spinner that indicates a background
+  // revalidation.
+  return (
+    <>
+      <div>${data}</div>
+      {isValidating ? <div className="spinner" /> : null}
+    </>
+  );
+}
+```
+
+![An example using the isLoading state](/img/understanding/isloading.gif)
+
+You can find the full code for this example here: https://codesandbox.io/s/swr-isloading-jtopow
 
 ## Return previous data for better UX
 

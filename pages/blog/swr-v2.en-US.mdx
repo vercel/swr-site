@@ -27,35 +27,19 @@ SWR now uses `useSyncExternalStore` and `startTransition` internally to improve 
 
 `isLoading` is a new return value that indicates if there's an ongoing request and no "loaded data". Previously, you have to check `data` and `error` are `undefined`, but now you can use the `isLoading` value.
 
-You can improve the user experience by combining with `isLoading` and `isValidating` like this.
-
 ```jsx
-function Stock() {
-  const { data, isLoading, isValidating } = useSWR(STOCK_API, fetcher, {
-    refreshInterval: 3000
-  });
+import useSWR from 'swr'
 
-  // If it's still loading the initial data, there is nothing to display.
-  // We return a skeleton here.
-  if (isLoading) return <div className="skeleton" />;
+function Profile() {
+  const { data, isLoading } = useSWR('/api/user', fetcher)
 
-  // Otherwise, display the data and a spinner that indicates a background
-  // revalidation.
-  return (
-    <>
-      <div>AAPL ${data}</div>
-      {isValidating ? <div className="spinner" /> : null}
-    </>
-  );
+  if (isLoading) return <div>loading...</div>
+  return <div>hello {data.name}!</div>
 }
 ```
 
-![An example using the isLoading state](https://user-images.githubusercontent.com/3676859/163695538-9ed6232d-808c-4c83-8606-0dd22bce508d.gif)
-
-You can find the full code for this example here: https://codesandbox.io/s/swr-isloading-v8dfpy.
-
 <Callout emoji="📝">
-  We have added the new [Understanding SWR](/docs/advanced/understanding) page to describe how SWR returns values.
+  We have added the new [Understanding SWR](/docs/advanced/understanding) page to describe how SWR returns values, which includes the difference between `isValidating` and `isLoading`, and how to combine them to improve user exeprience.
 </Callout>
 
 
