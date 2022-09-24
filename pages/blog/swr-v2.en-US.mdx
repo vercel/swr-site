@@ -19,10 +19,6 @@ We are excited to introduce SWR v2.0, including features to improve the use expe
 
 ## What’s New
 
-### Better React 18 Support
-
-SWR now uses `useSyncExternalStore` and `startTransition` internally to improve the performance and manage states while integrating with React 18, which ensures stronger UI consistency under concurrent rendering mode. This change doesn't require any implicity updates on the interface perspective. Developers will benefit from the updates directly.
-
 ### New Loading State Indicator
 
 `isLoading` is a new return value that indicates if there's an ongoing request and no "loaded data". Previously, you have to check `data` and `error` are `undefined`, but now you can use the `isLoading` value.
@@ -71,6 +67,8 @@ function Search() {
   );
 }
 ```
+
+#### Video Example
 
 <Video
   src="https://user-images.githubusercontent.com/3676859/163695903-a3eb1259-180e-41e0-821e-21c320201194.mp4"
@@ -128,7 +126,6 @@ mutate(
 )
 ```
 
-
 ### Preload API
 
 `preload` is a new API for prefetching data programmatically. Prefetching data is important to improve user experiences and avoid waterfall problems. You can call `preload` before rendering. More information can be found [here](/docs/prefetching).
@@ -166,6 +163,10 @@ mutate('/api/user', updateUserName(newName), {
   <Page />
 </SWRConfig>
 ```
+
+### Better React 18 Support
+
+SWR now uses `useSyncExternalStore` and `startTransition` internally to improve the performance and manage states while integrating with React 18, which ensures stronger UI consistency under concurrent rendering mode. This change doesn't require any implicity updates on the interface perspective. Developers will benefit from the updates directly.
 
 ### DevTools
 

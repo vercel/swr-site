@@ -45,10 +45,12 @@ This pattern is to fetch data and change the key and revalidate it later with th
 
 ## Combining with isLoading and isValidating for better UX
 
-`isLoading` and `isValidating` are similar, so you might be confused about which value you should use.
-`isValidating` becomes `true` whenever there is an ongoing request, on the other hand, `isLoading` becomes `true` when there is an ongoing request and no "loaded data".
+Comparing to the existing `isValidating` value, `isLoading` is a new property that can help you for the more general loading cases for UX.
 
-You can use `isValidating` for indicating there is an ongoing revalidation and `isLoading` for indicating there is nothing to display.
+- `isValidating` becomes `true` whenever there is an ongoing request **whatever the the data is loaded or not**
+- `isLoading` becomes `true` when there is an ongoing request and **data is not loaded yet**.
+
+Simply saying you can use `isValidating` for indicating everytime there is an ongoing revalidation, and `isLoading` for indicating that SWR is revalidating but there is no data yet to display.
 
 <Callout emoji="📝">
   Fallback data and previous data are not considered "loaded data," so when you use fallback data or enable the keepPreviousData option, you might have data to display.
@@ -75,9 +77,9 @@ function Stock() {
 }
 ```
 
-![An example using the isLoading state](/img/understanding/isloading.gif)
+![An example of using the isLoading state](/img/understanding/isloading.gif)
 
-You can find the full code for this example here: https://codesandbox.io/s/swr-isloading-jtopow
+You can find the code example [here](https://codesandbox.io/s/swr-isloading-jtopow)
 
 ## Return previous data for better UX
 
