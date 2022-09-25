@@ -1,0 +1,267 @@
+---
+image: https://swr-card.vercel.app/
+description: 'We are excited to announce SWR v2.0 release, with various improvements of DX and new features like preloading, stale, optimistic update, etc.'
+date:
+---
+
+import Callout from 'nextra-theme-docs/callout'
+import Bleed from 'nextra-theme-docs/bleed'
+
+import Authors, { Author } from 'components/authors'
+import Video from 'components/video'
+
+# Announcing SWR 2.0
+
+<Authors date="August 27th, 2021">
+  <Author name="Shu Ding" link="https://twitter.com/shuding_" />
+  <Author name="Jiachi Liu" link="https://twitter.com/huozhi" />
+  <Author name="Toru Kobayashi" link="https://twitter.com/koba04" />
+  <Author name="Yixuan Xu" link="https://twitter.com/promer94" />
+</Authors>
+
+We are excited to introduce SWR v2.0, including features to improve the use experience of your application.
+
+## What’s New
+
+### New Loading State Indicator
+
+`isLoading` is a new return value that indicates if there's an ongoing request and no "loaded data". Previously, you have to check `data` and `error` are `undefined`, but now you can use the `isLoading` value.
+
+```jsx
+import useSWR from 'swr'
+
+function Profile() {
+  const { data, isLoading } = useSWR('/api/user', fetcher)
+
+  if (isLoading) return <div>loading...</div>
+  return <div>hello {data.name}!</div>
+}
+```
+
+<Callout emoji="📝">
+  We have added the new [Understanding SWR](/docs/advanced/understanding) page to describe how SWR returns values, which includes the difference between `isValidating` and `isLoading`, and how to combine them to improve user exeprience.
+</Callout>
+
+
+### Lazy Updating
+
+`keepPreviousData` is a new option for keeping the previous fetched data. This improves the UX a lot when you fetch data based on continuous user actions, e.g. real-time search when typing. More information can be found [here](/docs/advanced/understanding#return-previous-data-for-better-ux).
+
+```jsx
+function Search() {
+  const [search, setSearch] = React.useState('');
+
+  const { data, isLoading } = useSWR(`/search?q=${search}`, fetcher, {
+    keepPreviousData: true
+  });
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search..."
+      />
+
+      <div className={isLoading ? "loading" : ""}>
+        {data?.products.map(item => <Product key={item.id} name={item.name} />)
+      </div>
+    </div>
+  );
+}
+```
+
+#### Video Example
+
+<Video
+  src="https://user-images.githubusercontent.com/3676859/163695903-a3eb1259-180e-41e0-821e-21c320201194.mp4"
+  caption="Keep previous search results when keepPreviousData has been enabled"
+  ratio={640/730}
+/>
+
+The code example can be found [here](https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m).
+
+### useSWRMutation
+
+`useSWRMutation` is a new hook for remote mutations. This covers all the use cases of:
+
+- Requests that change data on the remote side: such as POST, PUT, DELETE, etc.
+- Requests that need to be triggered manually, instead of automatically by SWR.
+- Passing extra argument to fetcher, when triggering a request.
+- Knowing the status of a mutation, similar to `isValidating` but for mutations.
+- A lot more...
+
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+async function sendRequest(url, { arg }) {
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(arg)
+  })
+}
+
+function App() {
+  const { trigger, isMutating } = useSWRMutation('/api/user', sendRequest)
+
+  return <button disabled={isMutating} onClick={() => {
+    trigger({ username: 'johndoe' })
+  }}>Create User</button>
+}
+```
+
+More information can be found [here](/docs/mutation#useswrmutation).
+
+### Mutate Multiple Keys
+
+`mutate` now accepts a filter function, which accepts key as the argument and returns which keys to revalidate. The filter function is applied to all the existing cache keys. You can now clear all cache data with `mutate`. More information can be found [here](/docs/mutation#mutate-multiple-items).
+
+```jsx
+import { mutate } from 'swr'
+// Or from the hook if you customized the cache provider:
+// { mutate } = useSWRConfig()
+
+mutate(
+  key => typeof key === 'string' && key.startsWith('/api/item?id='),
+  undefined,
+  { revalidate: true }
+)
+```
+
+### Preload API
+
+`preload` is a new API for prefetching data programmatically. Prefetching data is important to improve user experiences and avoid waterfall problems. You can call `preload` before rendering. More information can be found [here](/docs/prefetching).
+
+```jsx
+import useSWR, { preload } from 'swr'
+
+const fetcher = (url) => fetch(url).then((res) => res.json())
+// You can call the preload function in anywhere
+preload('/api/user', fetcher)
+```
+
+### Functional optimisticData
+
+`optimisticData` is an option of mutation, which is useful to implement optimistic UI. In v2, you can pass a function as the `optimisticData` option, which accepts current data and returns the new client cache data. More information can be found [here](/docs/mutation#optimistic-updates).
+
+```jsx
+mutate('/api/user', updateUserName(newName), {
+  optimisticData: user => ({ ...data, name: newName }),
+  rollbackOnError: true
+});
+```
+
+### Functional SWR Config
+
+`SWRConfig` can now accept a function for `value` prop that receives the parent config and returns a new config. This empowers user flexibility to configure the SWR config especially in nested `<SWRConfig>` cases. More information can be found [here](/docs/global-configuration).
+
+```jsx
+<SWRConfig
+  value={parent => ({
+    dedupingInterval: parent.dedupingInterval * 5,
+    refreshInterval: 100,
+  })}
+>
+  <Page />
+</SWRConfig>
+```
+
+### Better React 18 Support
+
+SWR now uses `useSyncExternalStore` and `startTransition` internally to improve the performance and manage states while integrating with React 18, which ensures stronger UI consistency under concurrent rendering mode. This change doesn't require any implicity updates on the interface perspective. Developers will benefit from the updates directly.
+
+### DevTools
+
+SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache and the results of your fetcher. Checkout [devtools](/docs/advanced/devtools) section for how to use devtools in your application.
+
+## Migration Guide
+
+### Fetcher no longer accepts multiple arguments
+
+`key` is now passed as a single argument.
+
+```diff
+- useSWR([1, 2, 3], (a, b, c) => {
++ useSWR([1, 2, 3], ([a, b, c]) => {
+  assert(a === 1)
+  assert(b === 2)
+  assert(c === 3)
+})
+```
+
+### Multiple Mutations
+
+`mutate` now accepts [a filter function](/blog/swr-v2#mutate-multiple-keys). Previously, the function behaved as returing a key.
+
+```diff
+- mutate(() => '/api/item') // a function to return a key
++ mutate(key => typeof key === 'string' && key.startsWith('/api/item?id=')) // a filter function
+```
+
+### New Required Property `keys()` for Cache Interface
+
+When you use your own cache implementation, the Cache interface now requires a `keys()` method that returns all keys in the cache object, similar to the JavaScript Map instances.
+
+```diff
+interface Cache<Data> {
+  get(key: string): Data | undefined
+  set(key: string, value: Data): void
+  delete(key: string): void
++ keys(): IterableIterator<string>
+}
+```
+
+### Internal Structure Of The Cached Data
+
+The internal structure of the cache data will be an object that holds all the current states.
+
+```diff
+- assert(cache.get(key) === data)
++ assert(cache.get(key) === { data, error, isValidating })
+
+// getter
+- cache.get(key)
++ cache.get(key)?.data
+
+// setter
+- cache.set(key, data)
++ cache.set(key, { ...cache.get(key), data })
+```
+
+<Callout emoji="🚨" type="error">
+  You should not write to the cache directly, it might cause undefined behavior.
+</Callout>
+
+### SWRConfig.default → SWRConfig.defaultValue
+
+`SWRConfig.defaultValue` is the property for accessing the default SWR config.
+
+```diff
+- SWRConfig.default
++ SWRConfig.defaultValue
+```
+
+### Type InfiniteFetcher is renamed to SWRInfiniteFetcher
+
+```diff
+- import type { InfiniteFetcher } from 'swr/infinite'
++ import type { SWRInfiniteFetcher } from 'swr/infinite'
+```
+
+### Avoid Using Suspense On The Server-Side
+
+When using `suspense: true` with SWR on the server-side (including pre-rendering in Next.js), it's now required to provide the initial data via [`fallbackData` or `fallback`](/docs/with-nextjs#pre-rendering-with-default-data). This means that you can't use Suspense to fetch data on the server side as of today, but either doing fully client-side data fetching, or fetch the data via the framework (such as getStaticProps in Next.js).
+
+### Changelog
+
+Read the full Changelog [on GitHub](https://github.com/vercel/swr/releases).
+
+## What’s Next
+
+If you have any feedback about this release, please [let us know](https://github.com/vercel/swr/discussions).
+
+## Thank You!
+
+We also want to thank the entire community, our [142 contributors](https://github.com/vercel/swr/graphs/contributors) (+ [106 docs contributors](https://github.com/vercel/swr-site/graphs/contributors)), and everyone who helped and gave us feedback!
