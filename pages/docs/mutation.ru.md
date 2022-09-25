@@ -162,7 +162,7 @@ mutate('/api/todos', async todos => {
   return [...filteredTodos, updatedTodo]
 // Since the API already gives us the updated information,
 // we don't need to revalidate here.
-},　{ revalidate: false })
+}, { revalidate: false })
 ```
 
 You can also use the `populateCache` option.

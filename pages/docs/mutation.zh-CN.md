@@ -39,9 +39,9 @@ await mutate(data)
 - `data`: data to update the client cache, or an async function for the remote mutation
 - `options`: accepts the following options
   - `optimisticData(currentData)`: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
-  - `revalidate = true`: should the cache revalidate once the asynchronous update resolves.
-  - `populateCache = true`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
-  - `rollbackOnError = true`: should the cache rollback if the remote mutation errors.
+  - `revalidate = true`: 一旦完成异步更新，缓存是否重新请求。
+  - `populateCache = true`: 远程更新的结果是否写入缓存，或者是一个以新结果和当前结果作为参数并返回更新结果的函数。
+  - `rollbackOnError = true`: 如果远程更新出错，是否进行缓存回滚。
 
 #### Return Values
 
@@ -160,12 +160,12 @@ mutate('/api/todos', async todos => {
   // 筛选列表，返回更新后的 item
   const filteredTodos = todos.filter(todo => todo.id !== '1')
   return [...filteredTodos, updatedTodo]
-// Since the API already gives us the updated information,
-// we don't need to revalidate here.
+  // API 已经给我们提供了更新的信息，
+  // 所以我们不需要在这里重新请求。
 },　{ revalidate: false })
 ```
 
-You can also use the `populateCache` option.
+还可以使用 `populateCache`。
 
 ```jsx
 const updateTodo = () => fetch('/api/todos/1', {
@@ -175,12 +175,12 @@ const updateTodo = () => fetch('/api/todos/1', {
 
 mutate('/api/todos', updateTodo, {
   populateCache: (updatedTodo, todos) => {
-    // filter the list, and return it with the updated item
+    // 筛选列表，返回更新后的 item
     const filteredTodos = todos.filter(todo => todo.id !== '1')
     return [...filteredTodos, updatedTodo]
   },
-  // Since the API already gives us the updated information,
-  // we don't need to revalidate here.
+  // API 已经给我们提供了更新的信息，
+  // 所以我们不需要在这里重新请求。
   revalidate: false
 })
 ```

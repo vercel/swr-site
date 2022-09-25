@@ -34,12 +34,12 @@ const { data } = useSWR(uid, fetcher)
 // `data` 将会是 `User | undefined`.
 ```
 
-By default, [the error thrown](/docs/error-handling) inside the `fetcher` function has type `any`. The type can also explicitly specified.
+默认情况下，在 `fetcher` 函数内部[抛出的错误](/docs/error-handling)具有 `any` 类型。该类型也可以明确指定。
 
 ```typescript
 const { data, error } = useSWR<User, Error>(uid, fetcher);
-// `data` will be `User | undefined`.
-// `error` will be `Error | undefined`.
+// `data` 将会是 `User | undefined`.
+// `error` 将会是 `Error | undefined`.
 ```
 
 ### useSWRInfinite
@@ -56,17 +56,17 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
-## Generics
+## 泛型
 
 指定 `data` 的类型很容易。默认情况下，它将使用 `fetcher` 的返回类型（未就绪状态为 `undefined`）作为 `data` 的类型，但你也可以将其作为参数传递：
 
 ```typescript
-// 🔹 A. Use a typed fetcher:
-// `getUser` is `(endpoint: string) => User`.
+// 🔹 A. 使用一个有类型的 fetcher:
+// `getUser` 是 `(endpoint: string) => User`.
 const { data } = useSWR('/api/user', getUser)
 
-// 🔹 B. Specify the data type:
-// `fetcher` is generally returning `any`.
+// 🔹 B. 指定 data 类型:
+// `fetcher` 一般会返回 `any`.
 const { data } = useSWR<User>('/api/user', fetcher)
 ```
 
@@ -85,7 +85,7 @@ const config: SWRConfiguration = {
 const { data } = useSWR<string[]>('/api/data', fetcher, config)
 ```
 
-## Middleware Types
+## 中间件类型
 
 你可以导入一些额外的类型定义，以帮助你向自定义的中间件添加类型。
 
