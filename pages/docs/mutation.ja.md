@@ -388,7 +388,7 @@ const fetcher = url => fetch(url).then(res => res.json())
 const Page = () => {
   const [show, setShow] = useState(false)
   // trigger が呼ばれるまで data は undefined です
-  const { data: user, trigger } = useSWR('/api/user', fetcher);
+  const { data: user, trigger } = useSWRMutation('/api/user', fetcher);
 
   return (
     <div>
