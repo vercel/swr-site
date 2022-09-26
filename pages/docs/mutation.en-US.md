@@ -138,7 +138,7 @@ function Profile () {
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
         mutate('/api/user', updateUserName(newName), {
-            optimisticData: user => ({ ...data, name: newName }),
+            optimisticData: user => ({ ...user, name: newName }),
             rollbackOnError: true
         });
       }}>Uppercase my name!</button>
