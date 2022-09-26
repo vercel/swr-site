@@ -133,7 +133,7 @@ function Profile () {
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
         mutate('/api/user', updateUserName(newName), {
-            optimisticData: user => ({ ...data, name: newName }),
+            optimisticData: user => ({ ...user, name: newName }),
             rollbackOnError: true
         });
       }}>Uppercase my name!</button>
@@ -381,7 +381,7 @@ const fetcher = url => fetch(url).then(res => res.json())
 const Page = () => {
   const [show, setShow] = useState(false)
   // data is undefined until trigger is called
-  const { data: user, trigger } = useSWR('/api/user', fetcher);
+  const { data: user, trigger } = useSWRMutation('/api/user', fetcher);
 
   return (
     <div>

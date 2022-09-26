@@ -148,7 +148,7 @@ preload('/api/user', fetcher)
 
 ```jsx
 mutate('/api/user', updateUserName(newName), {
-  optimisticData: user => ({ ...data, name: newName }),
+  optimisticData: user => ({ ...user, name: newName }),
   rollbackOnError: true
 });
 ```
