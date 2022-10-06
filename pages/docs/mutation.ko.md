@@ -93,8 +93,8 @@ function App () {
 많은 경우에, 데이터에 로컬 뮤테이션을 적용하는 것은 변경을 더 빠르게 느낄 수 있게 해주는 좋은 방법입니다.
 데이터의 원격 소스를 기다릴 필요가 없습니다.
 
-`mutate`를 사용하면 데이터를 재검증하고 최종적으로 최신 데이터로 대체하는 동안에,
-로컬 데이터를 프로그래밍 방식으로 업데이트할 수 있습니다.
+With the `optimisticData` option, you can update your local data manually, while
+waiting for the remote mutation to finish.
 
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'

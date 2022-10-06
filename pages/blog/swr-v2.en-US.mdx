@@ -1,6 +1,6 @@
 ---
 image: https://swr-card.vercel.app/
-description: 'We are excited to announce SWR v2.0 release, with various improvements of DX and new features like preloading, stale, optimistic update, etc.'
+description: 'We are excited to announce SWR v2.0 release, with various improvements of DX and new features like preloading, stale, optimistic update and more.'
 date:
 ---
 
@@ -19,13 +19,125 @@ import Video from 'components/video'
   <Author name="Yixuan Xu" link="https://twitter.com/yixuanxu94" />
 </Authors>
 
-We are excited to introduce SWR v2.0, including features to improve the use experience of your application.
+We are thrilled to introduce the SWR v2.0 release, with a lot of exciting new features and quality-of-life improvements to help you build better applications.
 
-## What’s New
+## Better Mutations
+
+### useSWRMutation
+
+`useSWRMutation` is a new SWR hook to make remote mutations easier in a declarative API. Here’s an overview:
+
+```jsx {11,16}
+import useSWRMutation from 'swr/mutation'
+
+async function sendRequest(url, { arg }) {
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(arg)
+  })
+}
+
+function App() {
+  const { trigger, isMutating } = useSWRMutation('/api/user', sendRequest)
+
+  return (
+    <button
+      disabled={isMutating}
+      onClick={() => trigger({ username: 'johndoe' })}
+    >{
+      isMutating ? 'Creating...' : 'Create User'
+    }</button>
+  )
+}
+```
+
+In the component, it defines a mutation `sendRequest` that affects the resource `'/api/user'`.
+Unlike `useSWR`, the mutation function will not be called automatically upon rendering. Instead, it returns a `trigger` function that can be called later to start the mutation manually.
+
+When clicking the button, `sendRequest` will be triggered with the extra argument `{ username: 'johndoe' }`, and `isMutating` will be set to `true` until the mutation is finished.
+
+This new hook also covers other pain points you might have for mutations:
+
+- Show optimistic UI while mutating
+- Rollback automatically when mutation fails
+- Detect and avoid race conditions between `useSWR`
+- Populate the cache of `useSWR` after mutation finishes
+- ...
+
+Detailed API references and examples can be found [here](/docs/mutation#useswrmutation) and following sections.
+
+### Optimistic UI for Mutations
+
+`optimisticData` is an option of mutation, which is useful to implement optimistic UI. In v2, you can pass a function as the `optimisticData` option, which accepts current data and returns the new client cache data. More information can be found [here](/docs/mutation#optimistic-updates).
+
+```jsx
+mutate('/api/user', updateUserName(newName), {
+  optimisticData: user => ({ ...user, name: newName }),
+  rollbackOnError: true
+});
+```
+
+(TODO: show optimistic data + error rollback + cache population + revalidation afterwards with an impressive video)
+(maybe https://twitter.com/shuding_/status/1486711438898987015)
+
+### Mutate Multiple Keys
+
+The global `mutate` API now accepts a filter function, where you can mutate or revalidate specific keys. This will be helpful for use cases such as invalidting all the cached data. More information can be found [here](/docs/mutation#mutate-multiple-items).
+
+```jsx
+import { mutate } from 'swr'
+// Or from the hook if you customized the cache provider:
+// { mutate } = useSWRConfig()
+
+mutate(
+  key => typeof key === 'string' && key.startsWith('/api/item?id='),
+  undefined,
+  { revalidate: true }
+)
+```
+
+## Better User Experience
+
+### SWR DevTools
+
+SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache and the results of your fetcher. Checkout [devtools](/docs/advanced/devtools) section for how to use devtools in your application.
+
+(TODO: We need an image here)
+
+### Preload Data
+
+Sometimes, preloading data can improve the user experience tremendously.
+If you know the resource is going to be used later in the application, you can use the new `preload` API to start fetching it early:
+
+```jsx {6}
+import useSWR, { preload } from 'swr'
+
+const fetcher = (url) => fetch(url).then((res) => res.json())
+
+// You can call the preload function in anywhere
+preload('/api/user', fetcher)
+
+function Profile() {
+  // The component that actually uses the data:
+  const { data, error } = useSWR('/api/user', fetcher)
+  // ...
+}
+
+export function Page () {
+  return <Profile/>
+}
+```
+
+In this example, the `preload` API is called in the global scope. Which means that we start to preload the resource before React even starts to render anything.
+And when the `Profile` component is being rendered, the data can probably be available already. If it’s still ongoing, the `useSWR` hook will reuse that onging preloading request instead of starting a new one.
+
+The `preload` API can also be used in cases like preloading data for another page that will likely be rendered. More information about prefetching data with SWR can be found [here](/docs/prefetching).
 
 ### New Loading State Indicator
 
-`isLoading` is a new return value that indicates if there's an ongoing request and no "loaded data". Previously, you have to check `data` and `error` are `undefined`, but now you can use the `isLoading` value.
+`isLoading` is a new state returned by `useSWR`, that indicates **if the request is still ongoing, and there is no data loaded yet**. Previously, the `isValidating` state represents both the initial loading state and revalidating state so we had to check if both `data` and `error` are `undefined` to determine if it’s the initial loading state.
+
+Now, it is so easy that you can directly use the `isLoading` value to render a loading message:
 
 ```jsx
 import useSWR from 'swr'
@@ -38,14 +150,15 @@ function Profile() {
 }
 ```
 
+Note that `isValidating` is still present so you can still use it to show a loading indicator for revalidations.
+
 <Callout emoji="📝">
   We have added the new [Understanding SWR](/docs/advanced/understanding) page to describe how SWR returns values, which includes the difference between `isValidating` and `isLoading`, and how to combine them to improve user exeprience.
 </Callout>
 
+### “Laggy UI”
 
-### Lazy Updating
-
-`keepPreviousData` is a new option for keeping the previous fetched data. This improves the UX a lot when you fetch data based on continuous user actions, e.g. real-time search when typing. More information can be found [here](/docs/advanced/understanding#return-previous-data-for-better-ux).
+`keepPreviousData` is a new option for keeping the previous fetched data. This improves the UX a lot when you fetch data based on continuous user actions, for example a real-time searching experience. More information can be found [here](/docs/advanced/understanding#return-previous-data-for-better-ux).
 
 ```jsx
 function Search() {
@@ -72,8 +185,6 @@ function Search() {
 }
 ```
 
-#### Video Example
-
 <Video
   src="https://user-images.githubusercontent.com/3676859/163695903-a3eb1259-180e-41e0-821e-21c320201194.mp4"
   caption="Keep previous search results when keepPreviousData has been enabled"
@@ -82,85 +193,14 @@ function Search() {
 
 The code example can be found [here](https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m).
 
-### useSWRMutation
-
-`useSWRMutation` is a new hook for remote mutations. This covers all the use cases of:
-
-- Requests that change data on the remote side: such as POST, PUT, DELETE, etc.
-- Requests that need to be triggered manually, instead of automatically by SWR.
-- Passing extra argument to fetcher, when triggering a request.
-- Knowing the status of a mutation, similar to `isValidating` but for mutations.
-- A lot more...
-
-
-```jsx
-import useSWRMutation from 'swr/mutation'
-
-async function sendRequest(url, { arg }) {
-  return fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(arg)
-  })
-}
-
-function App() {
-  const { trigger, isMutating } = useSWRMutation('/api/user', sendRequest)
-
-  return <button disabled={isMutating} onClick={() => {
-    trigger({ username: 'johndoe' })
-  }}>Create User</button>
-}
-```
-
-More information can be found [here](/docs/mutation#useswrmutation).
-
-### Mutate Multiple Keys
-
-`mutate` now accepts a filter function, which accepts key as the argument and returns which keys to revalidate. The filter function is applied to all the existing cache keys. You can now clear all cache data with `mutate`. More information can be found [here](/docs/mutation#mutate-multiple-items).
-
-```jsx
-import { mutate } from 'swr'
-// Or from the hook if you customized the cache provider:
-// { mutate } = useSWRConfig()
-
-mutate(
-  key => typeof key === 'string' && key.startsWith('/api/item?id='),
-  undefined,
-  { revalidate: true }
-)
-```
-
-### Preload API
-
-`preload` is a new API for prefetching data programmatically. Prefetching data is important to improve user experiences and avoid waterfall problems. You can call `preload` before rendering. More information can be found [here](/docs/prefetching).
-
-```jsx
-import useSWR, { preload } from 'swr'
-
-const fetcher = (url) => fetch(url).then((res) => res.json())
-// You can call the preload function in anywhere
-preload('/api/user', fetcher)
-```
-
-### Functional optimisticData
-
-`optimisticData` is an option of mutation, which is useful to implement optimistic UI. In v2, you can pass a function as the `optimisticData` option, which accepts current data and returns the new client cache data. More information can be found [here](/docs/mutation#optimistic-updates).
-
-```jsx
-mutate('/api/user', updateUserName(newName), {
-  optimisticData: user => ({ ...user, name: newName }),
-  rollbackOnError: true
-});
-```
-
-### Functional SWR Config
+### Extending SWR Configurations
 
 `SWRConfig` can now accept a function for `value` prop that receives the parent config and returns a new config. This empowers user flexibility to configure the SWR config especially in nested `<SWRConfig>` cases. More information can be found [here](/docs/global-configuration).
 
 ```jsx
 <SWRConfig
-  value={parent => ({
-    dedupingInterval: parent.dedupingInterval * 5,
+  value={parentConfig => ({
+    dedupingInterval: parentConfig.dedupingInterval * 5,
     refreshInterval: 100,
   })}
 >
@@ -168,13 +208,11 @@ mutate('/api/user', updateUserName(newName), {
 </SWRConfig>
 ```
 
-### Better React 18 Support
+## Improved React 18 Support
 
-SWR now uses `useSyncExternalStore` and `startTransition` internally to improve the performance and manage states while integrating with React 18, which ensures stronger UI consistency under concurrent rendering mode. This change doesn't require any implicity updates on the interface perspective. Developers will benefit from the updates directly.
+SWR now uses `useSyncExternalStore` and `startTransition` internally to improve the performance and manage states while integrating with React 18, which ensures stronger UI consistency when rendering UI concurrently. This change doesn’t require any implicity updates on the interface perspective. Developers will benefit from the updates directly.
 
-### DevTools
-
-SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache and the results of your fetcher. Checkout [devtools](/docs/advanced/devtools) section for how to use devtools in your application.
+SWR 2.0 and all the new features are still compatible with React 16 and 17.
 
 ## Migration Guide
 

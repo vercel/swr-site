@@ -90,7 +90,8 @@ function App () {
 
 在很多情况中，对数据应用本地 mutation 是一种让更改感觉更快的好办法 - 无需等待远程数据源。
 
-使用 `mutate`，你可以以编程方式更新本地数据，同时重新验证并最终将其替换为最新数据。
+With the `optimisticData` option, you can update your local data manually, while
+waiting for the remote mutation to finish.
 
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'

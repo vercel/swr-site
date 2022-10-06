@@ -91,8 +91,8 @@ function App () {
 In many cases, applying local mutations to data is a good way to make changes
 feel faster — no need to wait for the remote source of data.
 
-With `mutate`, you can update your local data programmatically, while
-revalidating and finally replace it with the latest data.
+With the `optimisticData` option, you can update your local data manually, while
+waiting for the remote mutation to finish.
 
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'
