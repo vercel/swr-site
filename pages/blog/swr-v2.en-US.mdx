@@ -19,13 +19,15 @@ import Video from 'components/video'
   <Author name="Yixuan Xu" link="https://twitter.com/yixuanxu94" />
 </Authors>
 
-We are thrilled to introduce the SWR v2.0 release, with a lot of exciting new features and quality-of-life improvements to help you build better applications.
+We are thrilled to introduce the SWR 2.0 release, with a lot of exciting new features and quality-of-life improvements to help you build better applications.
 
 ## Better Mutations
 
+Mutations are a big part of the data fetching story. Previously we have a powerful `mutate` API that allows you to revalidate and update the data manually. In 2.0, we have made a few improvements and powerful additions to mutations in SWR:
+
 ### useSWRMutation
 
-`useSWRMutation` is a new SWR hook to make remote mutations easier in a declarative API. Here’s an overview:
+`useSWRMutation` is a new hook to make remote mutations easier in a declarative API. You can define a mutation using a hook, and trigger it later:
 
 ```jsx {11,16}
 import useSWRMutation from 'swr/mutation'
@@ -51,8 +53,8 @@ function App() {
 }
 ```
 
-In the component, it defines a mutation `sendRequest` that affects the resource `'/api/user'`.
-Unlike `useSWR`, the mutation function will not be called automatically upon rendering. Instead, it returns a `trigger` function that can be called later to start the mutation manually.
+In the example above, a mutation of `sendRequest` is defined and it affects the `'/api/user'` resource.
+Unlike `useSWR`, the request will start immediately upon rendering. Instead, it returns a `trigger` function that can be called later to start the mutation manually.
 
 When clicking the button, `sendRequest` will be triggered with the extra argument `{ username: 'johndoe' }`, and `isMutating` will be set to `true` until the mutation is finished.
 
@@ -60,7 +62,7 @@ This new hook also covers other pain points you might have for mutations:
 
 - Show optimistic UI while mutating
 - Rollback automatically when mutation fails
-- Detect and avoid race conditions between `useSWR`
+- Detect and avoid race conditions between `useSWR` and other mutations of the same resource
 - Populate the cache of `useSWR` after mutation finishes
 - ...
 
@@ -68,27 +70,55 @@ Detailed API references and examples can be found [here](/docs/mutation#useswrmu
 
 ### Optimistic UI for Mutations
 
-`optimisticData` is an option of mutation, which is useful to implement optimistic UI. In v2, you can pass a function as the `optimisticData` option, which accepts current data and returns the new client cache data. More information can be found [here](/docs/mutation#optimistic-updates).
+Optimistic UI is a great model to make your website feel fast and snappy, but at the same time very hard to do correct. 
+SWR has some new powerful options added to make it easier.
+
+For example, we have a normal mutation that adds a new todo to the todo list. The `await addNewTodo(...)` request
+could be slow sometimes, so we want to immediately show the new item everywhere in the UI. The new `optimisticData` option does exactly that:
+it updates the local SWR cache optimistically.
+
+Then, let’s say when the request finishes, `await addNewTodo(...)` request directly returns the updated list. In that case we can
+enable `populateCache` to update our data directly using that response. As it’s already from the source of the truth,
+we don’t need another revalidation afterwards, hence we disabled `revalidate`.
+
+Lastly, if `await addNewTodo(...)` fails with an exception, we can rollback with `rollbackOnError` set to `true` (which is also the default).
+The `optimisticData` we previously displayed will be reverted.
 
 ```jsx
-mutate('/api/user', updateUserName(newName), {
-  optimisticData: user => ({ ...user, name: newName }),
-  rollbackOnError: true
-});
+const { mutate, data } = useSWR('/api/todos')
+
+// ...
+mutate(async () => await addNewTodo('New Item'), {
+  optimisticData: [...data, 'New Item'],
+  populateCache: true,
+  revalidate: false,
+  rollbackOnError: true,
+})
 ```
 
-(TODO: show optimistic data + error rollback + cache population + revalidation afterwards with an impressive video)
-(maybe https://twitter.com/shuding_/status/1486711438898987015)
+And here is a demo showing that behavior:
+
+<Video
+  src="/video/optimistic-ui.mp4"
+  caption="Optimistic UI with automatic error rollback"
+  ratio={2348/896}
+/>
+
+These APIs are supported in the new `useSWRMutation` hook as well. To learn more about them, you can check out our [docs](/docs/mutation#optimistic-updates).
 
 ### Mutate Multiple Keys
 
-The global `mutate` API now accepts a filter function, where you can mutate or revalidate specific keys. This will be helpful for use cases such as invalidting all the cached data. More information can be found [here](/docs/mutation#mutate-multiple-items).
+The global `mutate` API now accepts a filter function, where you can mutate or revalidate specific keys. This will be helpful for use cases such as invalidting all the cached data. To learn more, you can read [Mutate Multiple Keys](/docs/mutation#mutate-multiple-items) in the docs.
 
 ```jsx
 import { mutate } from 'swr'
-// Or from the hook if you customized the cache provider:
+// Or from the hook if you have customized your cache provider:
 // { mutate } = useSWRConfig()
 
+// Mutate single resource
+mutate(key)
+
+// Mutate multiple resources to make them `undefined`
 mutate(
   key => typeof key === 'string' && key.startsWith('/api/item?id='),
   undefined,
@@ -100,9 +130,9 @@ mutate(
 
 ### SWR DevTools
 
-SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache and the results of your fetcher. Checkout [devtools](/docs/advanced/devtools) section for how to use devtools in your application.
+SWRDevTools is a browser extension for SWR, which helps to debug your SWR cache and the results of your fetcher. Check our [devtools](/docs/advanced/devtools) section for how to use devtools in your application.
 
-(TODO: We need an image here)
+![](/img/devtools/cache-view.jpg)
 
 ### Preload Data
 

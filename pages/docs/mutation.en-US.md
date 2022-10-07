@@ -382,6 +382,28 @@ useSWRMutation('/api/todos', updateTodo, {
 
 When combined with `optimisticData` and `rollbackOnError`, you’ll get a perfect optimistic UI experience.
 
+## Avoid Race Conditions
+
+Both `mutate` and `useSWRMutation` can avoid race conditions between `useSWR`. For example,
+
+```tsx
+function Profile() {
+  const { data } = useSWR('/api/user', getUser, { revalidateInterval: 3000 })
+  const { trigger } = useSWRMutation('/api/user', updateUser)
+
+  return <>
+    {data ? data.username : null}
+    <button onClick={() => trigger()}>Update User</button>
+  </>
+}
+```
+
+The normal `useSWR` hook might refresh its data any time due to focus, polling, or other conditions. This way the displayed username 
+can be as fresh as possible. However, since we have a mutation there that can happen at the nearly same time of a refetch of `useSWR`, there
+could be a race condition that `getUser` request starts earlier, but takes longer than `updateUser`.
+
+Luckily, `useSWRMutation` handles this for you automatically. After the mutation, it will tell `useSWR` to ditch the ongoing request and revalidate,
+so the stale data will never be displayed.
 
 ## Mutate Based on Current Data
 
