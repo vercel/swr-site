@@ -34,7 +34,7 @@ const { data } = useSWR(uid, fetcher)
 // `data` будет `User | undefined`.
 ```
 
-По умолчанию [вызванная ошибка](/docs/error-handling) внутри функции `fetcher` имеет тип `any`. Тип также может быть указан явно.
+По умолчанию [ошибка вызванная](/docs/error-handling) внутри функции `fetcher` имеет тип `any`. Тип также может быть указан явно.
 
 ```typescript
 const { data, error } = useSWR<User, Error>(uid, fetcher);
