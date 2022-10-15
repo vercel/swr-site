@@ -37,8 +37,9 @@ The `provider` option of `SWRConfig` receives a function that returns a [cache p
 import useSWR, { SWRConfig } from 'swr'
 
 function App() {
+  const cache = new Map()
   return (
-    <SWRConfig value={{ provider: () => new Map() }}>
+    <SWRConfig value={{ provider: () => cache }}>
       <Page/>
     </SWRConfig>
   )
@@ -162,7 +163,9 @@ function localStorageProvider() {
 Then use it as a provider:
 
 ```jsx
-<SWRConfig value={{ provider: localStorageProvider }}>
+const cache = localStorageProvider()
+...
+<SWRConfig value={{ provider: () => cache }}>
   <App/>
 </SWRConfig>
 ```
