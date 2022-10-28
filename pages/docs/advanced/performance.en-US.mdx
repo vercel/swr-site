@@ -50,7 +50,8 @@ There is also a [`dedupingInterval` option](/docs/options) for overriding the de
 
 ## Deep Comparison
 
-SWR **deep compares** data changes by default. If the `data` value isn’t changed, a re-render will not be triggered.
+SWR **deep compares** data changes by default (with some limitations - for objects where the constructor is not `Object` like Sets and Maps, referential equality is used. See [stable-hash](https://github.com/shuding/stable-hash) for more details).
+If the `data` value isn’t changed, a re-render will not be triggered.
 
 You can also customize the comparison function via the [`compare` option](/docs/options) if you want to change the behavior.
 For example, some API responses return a server timestamp that you might want to exclude from the data diff.

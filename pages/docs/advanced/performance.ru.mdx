@@ -56,7 +56,7 @@ function App () {
 
 ## Глубокое сравнение
 
-SWR **глубоко сравнивает** изменения данных по умолчанию. Если значение `data` не изменилось,
+SWR **глубоко сравнивает** изменения данных по умолчанию (with some limitations - for objects where the constructor is not `Object` like Sets and Maps, referential equality is used. See [stable-hash](https://github.com/shuding/stable-hash) for more details). Если значение `data` не изменилось,
 повторный рендеринг запускаться не будет.
 
 Вы также можете настроить функцию сравнения с помощью [опции `compare`](/docs/options), если хотите

@@ -51,6 +51,7 @@ function App () {
 SWR 默认 **深度比较** 数据更改。如果 `data` 值没有改变，则不会触发重新渲染。
 
 如果你还想更改的话，可以通过 [`compare` 选项](/docs/options) 自定义比较函数。比如，某些 API 响应返回一个服务器时间戳，你可能想从数据 diff 中排除它。
+(with some limitations - for objects where the constructor is not `Object` like Sets and Maps, referential equality is used. See [stable-hash](https://github.com/shuding/stable-hash) for more details)
 
 ## 依赖收集
 
