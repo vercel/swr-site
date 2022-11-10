@@ -49,6 +49,7 @@ More information can be found [here](/docs/advanced/understanding).
 - `onSuccess(data, key, config)`: função callback quando um pedido é bem-sucedido
 - `onError(err, key, config)`: função callback quando um pedido retorna um erro
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: função callback quando um pedido retorna um erro
+- `onDiscarded(key)`: callback function when a request is ignored due to race conditions
 - `compare(a, b)`: função de comparação para detectar quando o dado retornado está diferente, para evitar rerenderizações desnecessárias. Por padrão, [stable-hash](https://github.com/shuding/stable-hash) é usado.
 - `isPaused()`: função para detectar quando o revalidador está pausado, e deve ignorar os dados e erros quando retorna `true`. Por padrão, retorna `false`.
 - `use`: array de middleware functions [(details)](/docs/middleware)
