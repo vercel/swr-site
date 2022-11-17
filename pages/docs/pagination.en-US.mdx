@@ -32,11 +32,13 @@ function App () {
 
   // ... handle loading and error states
 
-  return <div>
-    {data.map(item => <div key={item.id}>{item.name}</div>)}
-    <button onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
-    <button onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
-  </div>
+  return (
+    <div>
+      <button onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
+      {data.map(item => <div key={item.id}>{item.name}</div>)}
+      <button onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
+    </div>
+  );
 }
 ```
 
