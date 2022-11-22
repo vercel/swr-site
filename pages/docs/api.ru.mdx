@@ -49,6 +49,7 @@ More information can be found [here](/docs/advanced/understanding).
 - `onSuccess(data, key, config)`: колбэк-функция при успешном завершении запроса
 - `onError(err, key, config)`: колбэк-функция, когда запрос возвращает ошибку
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: обработчик повторной попытки при ошибке
+- `onDiscarded(key)`: callback function when a request is ignored due to race conditions
 - `compare(a, b)`: функция сравнения, используемая для определения того, когда возвращаемые данные были изменены, чтобы избежать ложных повторных отрисовок. По умолчанию используется [stable-hash](https://github.com/shuding/stable-hash).
 - `isPaused()`: функция, определяющая, приостанавливается ли ревалидация, игнорирует полученные данные и ошибки, когда возвращает `true`. По умолчанию возвращает `false`.
 - `use`: массив middleware-функций [(подробнее)](/docs/middleware)

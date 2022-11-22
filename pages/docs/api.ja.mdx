@@ -49,6 +49,7 @@ More information can be found [here](/docs/advanced/understanding).
 - `onSuccess(data, key, config)`: リクエストが正常に終了したときのコールバック関数
 - `onError(err, key, config)`: リクエストがエラーを返したときのコールバック関数
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: エラー再試行のハンドラー
+- `onDiscarded(key)`: レースコンディションによりリクエストが無視されたときのコールバック関数
 - `compare(a, b)`: 誤った再レンダリングを回避するために、返されたデータがいつ変更されたかを検出するために使用される比較関数。デフォルトでは、[stable-hash](https://github.com/shuding/stable-hash) が使用されます
 - `isPaused()`: 再検証を一時停止するかどうかを検出する関数であり、この関数が `true` を返す場合はフェッチしたデータとエラーを無視します。デフォルトでは `false` を返します
 - `use`: ミドルウェア関数の配列 [（ 詳細 ）](/docs/middleware)
