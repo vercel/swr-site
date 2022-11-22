@@ -173,7 +173,7 @@ function Profile() {
 - `reset`: a function to reset the state (`data`, `error`, `isMutating`)
 - `isMutating`: if there's an ongoing remote mutation
 
-### Basic Examples
+### Basic Usage
 
 ```jsx
 import useSWRMutation from 'swr/mutation'
