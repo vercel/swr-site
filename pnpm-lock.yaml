@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@reach/skip-nav': ^0.16.0
@@ -16,13 +16,13 @@ specifiers:
   tailwindcss: ^3.0.16
 
 dependencies:
-  '@reach/skip-nav': 0.16.0_react-dom@17.0.2+react@17.0.2
+  '@reach/skip-nav': 0.16.0_sfoxds7t5ydpegc3knd667wn6m
   focus-visible: 5.2.0
   intersection-observer: 0.10.0
   markdown-to-jsx: 6.11.4_react@17.0.2
-  next: 12.2.0_react-dom@17.0.2+react@17.0.2
+  next: 12.2.0_sfoxds7t5ydpegc3knd667wn6m
   nextra: 2.0.0-beta.6_react@17.0.2
-  nextra-theme-docs: 2.0.0-beta.6_6ca2e190387bf6c117e83e0a9831f41d
+  nextra-theme-docs: 2.0.0-beta.6_nsrodebypp3mcf7ihyfjqmpudu
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-intersection-observer: 8.33.1_react@17.0.2
@@ -30,7 +30,7 @@ dependencies:
 devDependencies:
   autoprefixer: 10.4.2_postcss@8.4.5
   postcss: 8.4.5
-  tailwindcss: 3.0.16_ef48b3b8837f8a23677bffe8f9cd866d
+  tailwindcss: 3.0.16_55elhoedp6fcgz3377upttmgnu
 
 packages:
 
@@ -62,7 +62,7 @@ packages:
       regenerator-runtime: 0.13.9
     dev: false
 
-  /@headlessui/react/1.6.6_react-dom@17.0.2+react@17.0.2:
+  /@headlessui/react/1.6.6_sfoxds7t5ydpegc3knd667wn6m:
     resolution: {integrity: sha512-MFJtmj9Xh/hhBMhLccGbBoSk+sk61BlP6sJe4uQcVMtXZhCgGqd2GyIQzzmsdPdTEWGSF434CBi8mnhR6um46Q==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -365,19 +365,19 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@reach/skip-nav/0.16.0_react-dom@17.0.2+react@17.0.2:
+  /@reach/skip-nav/0.16.0_sfoxds7t5ydpegc3knd667wn6m:
     resolution: {integrity: sha512-SY4PdNx+hQHbeOr/+qLc+QXdRt9NTVlt0r737bOqY1WURGBIEN9sGgsmIsHluP1/bQuAe0JKdOJ/tXiwQ3Z3ug==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@reach/utils': 0.16.0_sfoxds7t5ydpegc3knd667wn6m
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       tslib: 2.3.1
     dev: false
 
-  /@reach/utils/0.16.0_react-dom@17.0.2+react@17.0.2:
+  /@reach/utils/0.16.0_sfoxds7t5ydpegc3knd667wn6m:
     resolution: {integrity: sha512-PCggBet3qaQmwFNcmQ/GqHSefadAFyNCUekq9RrWoaU9hh/S4iaFgf2MBMdM47eQj5i/Bk0Mm07cP/XPFlkN+Q==}
     peerDependencies:
       react: ^16.8.0 || 17.x
@@ -1709,19 +1709,19 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  /next-themes/0.2.0-beta.2_6ca2e190387bf6c117e83e0a9831f41d:
+  /next-themes/0.2.0-beta.2_nsrodebypp3mcf7ihyfjqmpudu:
     resolution: {integrity: sha512-eioRsDeJCxI+LkyQ+xEP8A6b94wcrdk9CVPxjMO35C0oYUfPAXTfSX28pEEWzf/LXQOWfZcQd2g2ATrTfOuy+g==}
     peerDependencies:
       next: '*'
       react: '*'
       react-dom: '*'
     dependencies:
-      next: 12.2.0_react-dom@17.0.2+react@17.0.2
+      next: 12.2.0_sfoxds7t5ydpegc3knd667wn6m
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /next/12.2.0_react-dom@17.0.2+react@17.0.2:
+  /next/12.2.0_sfoxds7t5ydpegc3knd667wn6m:
     resolution: {integrity: sha512-B4j7D3SHYopLYx6/Ark0fenwIar9tEaZZFAaxmKjgcMMexhVJzB3jt7X+6wcdXPPMeUD6r09weUtnDpjox/vIA==}
     engines: {node: '>=12.22.0'}
     hasBin: true
@@ -1766,24 +1766,24 @@ packages:
       - babel-plugin-macros
     dev: false
 
-  /nextra-theme-docs/2.0.0-beta.6_6ca2e190387bf6c117e83e0a9831f41d:
+  /nextra-theme-docs/2.0.0-beta.6_nsrodebypp3mcf7ihyfjqmpudu:
     resolution: {integrity: sha512-Z+MRZlD1Lo2UbAm7Scuo2AmOkihciJ8eJcu3ynsVNg9MuEu/VALtUyjHh8ECmt1m6T6sTPYVDpX+WDejagZkKw==}
     peerDependencies:
       next: '>=9.5.3'
       react: '>=16.13.1'
       react-dom: '>=16.13.1'
     dependencies:
-      '@headlessui/react': 1.6.6_react-dom@17.0.2+react@17.0.2
+      '@headlessui/react': 1.6.6_sfoxds7t5ydpegc3knd667wn6m
       '@mdx-js/react': 2.1.1_react@17.0.2
-      '@reach/skip-nav': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@reach/skip-nav': 0.16.0_sfoxds7t5ydpegc3knd667wn6m
       classnames: 2.3.1
       flexsearch: 0.7.21
       focus-visible: 5.2.0
       github-slugger: 1.4.0
       intersection-observer: 0.12.0
       match-sorter: 4.2.1
-      next: 12.2.0_react-dom@17.0.2+react@17.0.2
-      next-themes: 0.2.0-beta.2_6ca2e190387bf6c117e83e0a9831f41d
+      next: 12.2.0_sfoxds7t5ydpegc3knd667wn6m
+      next-themes: 0.2.0-beta.2_nsrodebypp3mcf7ihyfjqmpudu
       parse-git-url: 1.0.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -2243,7 +2243,7 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /tailwindcss/3.0.16_ef48b3b8837f8a23677bffe8f9cd866d:
+  /tailwindcss/3.0.16_55elhoedp6fcgz3377upttmgnu:
     resolution: {integrity: sha512-1L8E5Wr+o1c4kxxObNz2owJe94a7BLEMV+2Lz6wzprJdcs3ENSRR9t4OZf2OqtRNS/q/zFPuOKoLtQoy3Lrhhw==}
     engines: {node: '>=12.13.0'}
     hasBin: true
