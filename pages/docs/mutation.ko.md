@@ -103,7 +103,7 @@ It broadcasts to SWR hooks under the same [cache provider](/docs/advanced/cache)
   - `optimisticData`: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
   - `revalidate = true`: should the cache revalidate once the asynchronous update resolves.
   - `populateCache = true`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
-  - `rollbackOnError = true`: should the cache rollback if the remote mutation errors.
+  - `rollbackOnError = true`: should the cache rollback if the remote mutation errors, or a function that receives the error thrown from fetcher as arguments and returns a boolean wether should rollback or not.
   - `throwOnError = true`: should the mutate call throw the error when fails.
 
 #### Return Values
@@ -258,7 +258,8 @@ In many cases, applying local mutations to data is a good way to make changes
 feel faster — no need to wait for the remote source of data.
 
 With the `optimisticData` option, you can update your local data manually, while
-waiting for the remote mutation to finish.
+waiting for the remote mutation to finish. Composing `rollbackOnError` you can also
+control when to rollback the data.
 
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'
@@ -273,7 +274,13 @@ function Profile () {
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
         const user = { ...data, name: newName }
-        const options = { optimisticData: user, rollbackOnError: true }
+        const options = {
+          optimisticData: user,
+          rollbackOnError(error) {
+            // If it's timeout abort error, don't rollback
+            return error.name !== 'AbortError'
+          },
+        }
 
         // updates the local data immediately
         // send a request to update the data
@@ -338,7 +345,7 @@ function Profile () {
 ## Rollback on Errors
 
 When you have `optimisticData` set, it’s possible that the optimistic data gets
-displayed to the user, but the remote mutation fails. In this case, you can enable
+displayed to the user, but the remote mutation fails. In this case, you can leverage
 `rollbackOnError` to revert the local cache to the previous state, to make sure
 the user is seeing the correct data.
 
@@ -398,7 +405,7 @@ function Profile() {
 }
 ```
 
-The normal `useSWR` hook might refresh its data any time due to focus, polling, or other conditions. This way the displayed username 
+The normal `useSWR` hook might refresh its data any time due to focus, polling, or other conditions. This way the displayed username
 can be as fresh as possible. However, since we have a mutation there that can happen at the nearly same time of a refetch of `useSWR`, there
 could be a race condition that `getUser` request starts earlier, but takes longer than `updateUser`.
 
