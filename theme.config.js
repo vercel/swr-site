@@ -1,5 +1,18 @@
 import { useRouter } from "next/router";
 import { useConfig } from "nextra-theme-docs";
+import useLocalesMap from "./components/useLocalesMap";
+import {
+  editTextMap,
+  feedbackLinkMap,
+  footerTextMap,
+  headDescriptionMap,
+  languageMap,
+  searchPlaceholderMap,
+  tableOfContentsTitleMap,
+  titleMap,
+} from "./translations/text";
+
+/** @type {React.FC<{ height: number }>} */
 const Logo = ({ height }) => (
   <svg height={height} viewBox="0 0 291 69" fill="none">
     <path
@@ -9,6 +22,7 @@ const Logo = ({ height }) => (
   </svg>
 );
 
+/** @type {React.FC<{ height?: number }>} */
 const Vercel = ({ height = 20 }) => (
   <svg height={height} viewBox="0 0 283 64" fill="none">
     <path
@@ -17,47 +31,6 @@ const Vercel = ({ height = 20 }) => (
     />
   </svg>
 );
-
-const TITLE_WITH_TRANSLATIONS = {
-  "en-US": "React Hooks for Data Fetching",
-  "zh-CN": "用于数据请求的 React Hooks 库",
-  "es-ES": "Biblioteca React Hooks para la obtención de datos",
-  "pt-BR": " React Hooks para Data Fetching",
-  ja: "データ取得のための React Hooks ライブラリ",
-  ko: "데이터 가져오기를 위한 React Hooks",
-  ru: "React хуки для выборки данных",
-};
-
-const TABLE_OF_CONTENTS_TITLE = {
-  "en-US": "On This Page",
-  "es-ES": "En esta página",
-  "pt-BR": "Nessa página",
-};
-
-const FEEDBACK_LINK_WITH_TRANSLATIONS = {
-  "en-US": "Question? Give us feedback →",
-  "zh-CN": "有疑问？给我们反馈 →",
-  "es-ES": "¿Dudas? Danos tu feedback →",
-  "pt-BR": "Dúvidas? Nos dê feedback →",
-  ko: "질문이 있으신가요? 피드백을 남겨주세요 →",
-};
-
-const SEARCH_PLACEHOLDER_WITH_TRANSLATIONS = {
-  "en-US": "Search documentation...",
-  "es-ES": "Buscar documento...",
-  "pt-BR": "Buscar documentação...",
-  ko: "문서 검색...",
-};
-
-const EDIT_TEXT = {
-  "en-US": "Edit this page on GitHub →",
-  "es-ES": "Edite esta página en GitHub →",
-  ja: "Github で編集する →",
-  ko: "Github에서 이 페이지 편집하기 →",
-  ru: "Редактировать на GitHub →",
-  "zh-CN": "在 GitHub 上编辑本页 →",
-  "pt-BR": "Edite essa página no GitHub →",
-};
 
 /** @type {import('nextra-theme-docs').DocsThemeConfig} */
 export default {
@@ -72,45 +45,25 @@ export default {
   },
   toc: {
     float: true,
-    title: () => {
-      const { locale } = useRouter();
-      return (
-        TABLE_OF_CONTENTS_TITLE[locale] || TABLE_OF_CONTENTS_TITLE["en-US"]
-      );
-    },
+    title: () => useLocalesMap(tableOfContentsTitleMap),
   },
   search: {
-    placeholder: () => {
-      const { locale } = useRouter();
-      return (
-        SEARCH_PLACEHOLDER_WITH_TRANSLATIONS[locale] ||
-        SEARCH_PLACEHOLDER_WITH_TRANSLATIONS["en-US"]
-      );
-    },
+    placeholder: () => useLocalesMap(searchPlaceholderMap),
   },
   editLink: {
-    text: () => {
-      const { locale } = useRouter();
-      return EDIT_TEXT[locale] || EDIT_TEXT["en-US"];
-    },
+    text: () => useLocalesMap(editTextMap),
   },
   feedback: {
-    content: () => {
-      const { locale } = useRouter();
-      return (
-        FEEDBACK_LINK_WITH_TRANSLATIONS[locale] ||
-        FEEDBACK_LINK_WITH_TRANSLATIONS["en-US"]
-      );
-    },
+    content: () => useLocalesMap(feedbackLinkMap),
   },
   logo: () => {
-    const { locale } = useRouter();
+    const title = useLocalesMap(titleMap);
     return (
       <>
         <Logo height={12} />
         <span
           className="mx-2 font-extrabold hidden md:inline select-none"
-          title={"SWR: " + (TITLE_WITH_TRANSLATIONS[locale] || "")}
+          title={`SWR: ${title}`}
         >
           SWR
         </span>
@@ -118,13 +71,23 @@ export default {
     );
   },
   head: () => {
-    const { route } = useRouter();
+    const { route, locales, locale, defaultLocale } = useRouter();
     const { frontMatter, title } = useConfig();
-    const ogImage =
-      frontMatter.image ||
-      `https://swr-card.vercel.app${
-        /\/index\.+/.test(route) ? "" : "?title=" + encodeURIComponent(title)
-      }`;
+    const titleSuffix = useLocalesMap(titleMap);
+    const description = useLocalesMap(headDescriptionMap);
+
+    const imageUrl = new URL("https://swr-card.vercel.app");
+
+    if (!/\/index\.+/.test(route)) {
+      imageUrl.searchParams.set("title", title || titleSuffix);
+    } else if (locale !== defaultLocale) {
+      imageUrl.pathname = `/${locale}${imageUrl.pathname}`;
+    }
+
+    const contentLanguage = locales.join(", ");
+    const ogTitle = title ? `${title} – SWR` : `SWR: ${titleSuffix}`;
+    const ogDescription = frontMatter.description || description;
+    const ogImage = frontMatter.image || imageUrl.toString();
 
     return (
       <>
@@ -153,149 +116,47 @@ export default {
           href="/favicon/safari-pinned-tab.svg"
           color="#000000"
         />
+        <meta httpEquiv="Content-Language" content={contentLanguage} />
         <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta httpEquiv="Content-Language" content="en" />
-        <meta
-          name="description"
-          content={
-            frontMatter.description ||
-            "SWR is a React Hooks library for data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
-          }
-        />
-        <meta
-          property="og:description"
-          content={
-            frontMatter.description ||
-            "SWR is a React Hooks library for data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
-          }
-        />
+        <meta name="apple-mobile-web-app-title" content="SWR" />
+        <meta name="description" content={ogDescription} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@vercel" />
         <meta name="twitter:image" content={ogImage} />
-        <meta
-          property="og:title"
-          content={
-            title ? title + " – SWR" : "SWR: React Hooks for Data Fetching"
-          }
-        />
+        <meta property="og:description" content={ogDescription} />
+        <meta property="og:title" content={ogTitle} />
         <meta property="og:image" content={ogImage} />
-        <meta name="apple-mobile-web-app-title" content="SWR" />
+        <meta property="og:locale" content={locale} />
+        {locales
+          .filter((l) => l !== locale)
+          .map((l) => (
+            <meta property="og:locale:alternate" content={l} key={l} />
+          ))}
       </>
     );
   },
   footer: {
     text: () => {
-      const { locale } = useRouter();
-      switch (locale) {
-        case "zh-CN":
-          return (
-            <a
-              href="https://vercel.com/?utm_source=swr_zh-cn"
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center no-underline text-current font-semibold"
-            >
-              <span className="mr-2">由</span>
-              <span className="mr-2">
-                <Vercel />
-              </span>
-              驱动
-            </a>
-          );
-        case "es-ES":
-          return (
-            <a
-              href="https://vercel.com/?utm_source=swr_es-es"
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center no-underline text-current font-semibold"
-            >
-              <span className="mr-2">Desarrollado por</span>
-              <span className="mr-2">
-                <Vercel />
-              </span>
-            </a>
-          );
-        case "pt-BR":
-          return (
-            <a
-              href="https://vercel.com/?utm_source=swr_es-es"
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center no-underline text-current font-semibold"
-            >
-              <span className="mr-2">Desenvolvido por</span>
-              <span className="mr-2">
-                <Vercel />
-              </span>
-            </a>
-          );
-        case "ja":
-          return (
-            <a
-              href="https://vercel.com/?utm_source=swr_ja"
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center no-underline text-current font-semibold"
-            >
-              <span className="mr-2">提供</span>
-              <span className="mr-2">
-                <Vercel />
-              </span>
-            </a>
-          );
-        case "ko":
-          return (
-            <a
-              href="https://vercel.com/?utm_source=swr_ko"
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center no-underline text-current font-semibold"
-            >
-              <span className="mr-2">Powered by</span>
-              <span className="mr-2">
-                <Vercel />
-              </span>
-            </a>
-          );
-        case "ru":
-          return (
-            <a
-              href="https://vercel.com/?utm_source=swr_ru"
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center no-underline text-current font-semibold"
-            >
-              <span className="mr-2">Работает на</span>
-              <span className="mr-2">
-                <Vercel />
-              </span>
-            </a>
-          );
-        default:
-          return (
-            <a
-              href="https://vercel.com/?utm_source=swr"
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center no-underline text-current font-semibold"
-            >
-              <span className="mr-1">Powered by</span>
-              <span>
-                <Vercel />
-              </span>
-            </a>
-          );
-      }
+      const { utmSource, text, suffix } = useLocalesMap(footerTextMap);
+
+      return (
+        <a
+          href={`https://vercel.com/?utm_source=${utmSource}`}
+          target="_blank"
+          rel="noopener"
+          className="inline-flex items-center no-underline text-current font-semibold"
+        >
+          <span className="mr-2">{text}</span>
+          <span>
+            <Vercel />
+          </span>
+          {suffix ? <span className="ml-2">{suffix}</span> : null}
+        </a>
+      );
     },
   },
-  i18n: [
-    { locale: "en-US", text: "English" },
-    { locale: "es-ES", text: "Español" },
-    { locale: "zh-CN", text: "简体中文" },
-    { locale: "pt-BR", text: "Português Brasileiro" },
-    { locale: "ja", text: "日本語" },
-    { locale: "ko", text: "한국어" },
-    { locale: "ru", text: "Русский" },
-  ],
+  i18n: Object.entries(languageMap).map(([locale, text]) => ({
+    locale,
+    text,
+  })),
 };
