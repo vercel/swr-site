@@ -392,6 +392,10 @@ The internal structure of the cache data will be an object that holds all the cu
 
 If you want to use `suspense: true` with SWR on the server-side, including pre-rendering in Next.js, then you must provide initial data via [`fallbackData` or `fallback`](/docs/with-nextjs#pre-rendering-with-default-data). Today, this means that you can't use Suspense to fetch data on the server side. Your other two options are doing fully client-side data-fetching or getting your framework to fetch the data for you (like getStaticProps does in Next.js).
 
+### ES2018 as the Build Target
+
+If you want to support IE 11, you have to target ES5 in your framework or a bundler. This change has made a performance improvement on SSR, and keeps the bundle size small.
+
 ## Changelog
 
 Read the full Changelog [on GitHub](https://github.com/vercel/swr/releases).
