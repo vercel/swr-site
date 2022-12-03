@@ -1,5 +1,5 @@
 ---
-description: 'Today, we are excited to announce the release of SWR 2.0! This new version comes with a lot of improvements and new features: new mutation APIs and improvements to optimistic UI scenarios, new DevTools, better support for concurrent rendering, etc.'
+description: '本日、SWR 2.0 のリリースを発表できることに興奮しています！この新しいバージョンには、新しいミューテーション API や楽観的更新パターンに対する改善、DevTools、React の並行処理機能のサポートといった多くの改善と新しい機能が含まれています。'
 date:
 ---
 
@@ -9,7 +9,7 @@ import Bleed from 'nextra-theme-docs/bleed'
 import Authors, { Author } from 'components/authors'
 import Video from 'components/video'
 
-# Announcing SWR 2.0
+# SWR 2.0 の発表
 
 <Authors date="August 27th, 2021">
   <Author name="Shu Ding" link="https://twitter.com/shuding_" />
@@ -18,13 +18,13 @@ import Video from 'components/video'
   <Author name="Yixuan Xu" link="https://twitter.com/yixuanxu94" />
 </Authors>
 
-Today, we are excited to announce the release of SWR 2.0! This new version comes with a lot of improvements and new features: new mutation APIs and improvements to optimistic UI scenarios, new DevTools, better support for concurrent rendering, etc. We would like to give a big shout-out to all the contributors and maintainers who helped make this release possible.
+本日、SWR 2.0 のリリースを発表できることに興奮しています！この新しいバージョンには、新しいミューテーション API や楽観的更新パターンに対する改善、DevTools、React の並行処理機能のサポートといった多くの改善と新しい機能が含まれています。このリリースを可能にしてくれた全てのコントリビュータとメンテナに感謝しています。
 
-## Mutation and Optimistic UI
+## ミューテーションと楽観的 UI 更新
 
 ### useSWRMutation
 
-Mutation is an important part of the data-fetching process. They allow you to make changes to your data both locally and remotely. Our existing `mutate` API allows you to revalidate and mutate resources manually. In SWR 2.0, the new hook `useSWRMutation` makes it even simpler to remotely change data using a declarative API. You can set up a mutation using the hook, and then activate it later:
+ミューテーションはデータフェッチングの重要な要素の一つです。ミューテーションはローカルとリモートのデータそれぞれの更新を可能にします。既存の `mutate` API は、リソースの再検証及び手動による更新をサポートしています。SWR 2.0 では、`useSWRMutation` という新しいフックは宣言的な API でよりシンプルにリモートのデータ更新を可能にします。このフックを使いミューテーションをセットアップし、その後利用できます。
 
 ```jsx {11,16}
 import useSWRMutation from 'swr/mutation'
@@ -50,37 +50,37 @@ function App() {
 }
 ```
 
-The example above defines a `sendRequest` mutation that affects the `'/api/user'` resource. Unlike `useSWR`, `useSWRMutation` will not immediately start the request upon rendering. Instead, it returns a `trigger` function that can later be called to manually start the mutation.
+上記の例では、`sendRequest` という `'/api/user'` のリソースに対して影響を与えるミューテーションを定義しています。`useSWR` と違い、`useSWRMutation` はレンダリング中に即座にリクエストを開始しません。代わりに、後ほど手動でミューテーションを開始するための `trigger` 関数を返します。
 
-The `sendRequest` function will be called when the button is clicked, with the extra argument `{ username: 'johndoe' }`. The value of `isMutating` will be set to `true` until the mutation has finished.
+`sendRequest` 関数はボタンがクリックされた時に追加の引数 `{ username: 'johndoe' }` と一緒に呼ばれます。`isMutating` の値はミューテーションが終了するまでの間、`true` に設定されます。
 
-Additionally, this new hook addresses other issues you may have with mutations:
+加えて、新しいフックはその他のミューテーションに対する課題もカバーします。
 
-- Optimistically update the UI while data is being mutated
-- Automatically revert when mutation fails
-- Avoid any potential race conditions between `useSWR` and other mutations of the same resource
-- Populate the `useSWR` cache after mutation completes
+- ミューテーション中の楽観的な UI の更新
+- ミューテーションが失敗した際には自動的に変更を取り消す
+- 同じリソースに対する `useSWR` や他のミューテーションとのレースコンディションを避ける
+- ミューテーションが完了した後に `useSWR` のキャッシュにデータを反映する
 - ...
 
-You can find in-depth API references and examples by reading the [docs](/docs/mutation#useswrmutation) or scrolling through the next few sections.
+この API に対する詳細な参照や例は [ドキュメント](/docs/mutation#useswrmutation) または以降のセクションまでスクロールすることで確認できます。
 
-### Optimistic UI
+### 楽観的 UI 更新
 
-Optimistic UI is an excellent model for creating websites that feel fast and responsive; however, it can be difficult to implement correctly. SWR 2.0 has added some new powerful options to make it easier.
+楽観的 UI 更新は速く反応がいいウェブサイトを作るための素晴らしいモデルです。しかしながら正しく実装することは難しいです。SWR 2.0 ではこれを簡単にするためのオプションを追加しました。
 
-Let’s say we have an API that adds a new todo to the todo list and sends it to the server:
+Todo リストに新しい Todo を追加するための API があり、それを用いてサーバにデータを送信する場合を見てみましょう。
 
 ```jsx
 await addNewTodo('New Item')
 ```
 
-In our UI, we use a `useSWR` hook to display the todo list, with an “Add New Item” button that triggers this request and asks SWR to re-fetch the data via `mutate()`:
+この UI では、`useSWR` フックを Todo リストを表示するために使っており、`mutate()` を通じてサーバにリクエストを送信して SWR に再フェッチを依頼するための “Add New Item” ボタンがあります。
 
 ```jsx {7,8}
 const { mutate, data } = useSWR('/api/todos')
 
 return <>
-  <ul>{/* Display data */}</ul>
+  <ul>{/* データの表示 */}</ul>
 
   <button onClick={async () => {
     await addNewTodo('New Item')
@@ -91,13 +91,13 @@ return <>
 </>
 ```
 
-However, the `await addNewTodo(...)` request could be very slow. When it’s ongoing, users still see the old list even if we can already know what the new list will look like. With the new `optimisticData` option, we can show the new list optimistically, before the server responds:
+しかしながら、`await addNewTodo(...)` によるリクエストに時間がかかる場合があります。リクエストを実行中、ユーザーは新しいリストがどうなるか知っているにも関わらず古い状態のリストを見続けることになります。新しい `optimisticData` オプションを使うことで、サーバがレスポンスを返す前に新しい状態のリストを楽観的 UI として表示できます。
 
 ```jsx {8}
 const { mutate, data } = useSWR('/api/todos')
 
 return <>
-  <ul>{/* Display data */}</ul>
+  <ul>{/* データの表示 */}</ul>
 
   <button onClick={() => {
     mutate(addNewTodo('New Item'), {
@@ -109,15 +109,15 @@ return <>
 </>
 ```
 
-SWR will immediately update the `data` with the `optimisticData` value, and then send the request to the server. Once the request finishes, SWR will revalidate the resource to ensure it’s the latest.
+SWR は即座に `data` を `optimisticData` の値によって更新し、サーバにリクエストを送信します。リクエストが完了したら SWR はリソースを再検証しデータが最新であることを保証します。
 
-Like many APIs, if the `addNewTodo(...)` request returns us the latest data from the server, we can directly show that result, too (instead of starting a new revalidation)! There’s the new `populateCache` option to tell SWR to update the local data with the mutate response:
+他の多くの API のように、`addNewTodo(...)` が最新の結果をサーバから返す場合、私達はその結果を（再検証を行うことなしに）そのまま表示することもできます。新しい `populateCache` オプションは SWR にミューテーションのレスポンスでローカルデータを更新することを伝えるオプションです。
 
 ```jsx {9}
 const { mutate, data } = useSWR('/api/todos')
 
 return <>
-  <ul>{/* Display data */}</ul>
+  <ul>{/* データの表示 */}</ul>
 
   <button onClick={() => {
     mutate(addNewTodo('New Item'), {
@@ -130,13 +130,13 @@ return <>
 </>
 ```
 
-At the same time, we don’t need another revalidation afterward as the response data is from the source of truth, we can disable it with the `revalidate` option:
+同時に、レスポンスデータが正しいデータである場合には再検証が必要ありません。`revalidate` オプションで再検証を無効化できます。
 
 ```jsx {10}
 const { mutate, data } = useSWR('/api/todos')
 
 return <>
-  <ul>{/* Display data */}</ul>
+  <ul>{/* データの表示 */}</ul>
 
   <button onClick={() => {
     mutate(addNewTodo('New Item'), {
@@ -150,13 +150,13 @@ return <>
 </>
 ```
 
-Lastly, if `addNewTodo(...)` fails with an exception, we can revert the optimistic data (`[...data, 'New Item']`) we just set, by setting `rollbackOnError` to `true` (which is also the default option). When that happens, SWR will roll back `data` to the previous value.
+最後に、もし `addNewTodo(...)` が例外で失敗した場合、`rollbackOnError` オプションを `true`  (デフォルトのオプション) に設定することで楽観的更新としてセットしたデータ (`[...data, 'New Item']`) を取り消すことができます。それが起きた時、SWR は `data` の更新前のデータにロールバックします。
 
 ```jsx {11}
 const { mutate, data } = useSWR('/api/todos')
 
 return <>
-  <ul>{/* Display data */}</ul>
+  <ul>{/* データの表示 */}</ul>
 
   <button onClick={() => {
     mutate(addNewTodo('New Item'), {
@@ -171,27 +171,27 @@ return <>
 </>
 ```
 
-All these APIs are supported in the new `useSWRMutation` hook as well. To learn more about them, you can check out our [docs](/docs/mutation#optimistic-updates). And here is a demo showing that behavior:
+これらの全ての API は新しい `useSWRMutation` でも同様にサポートされています。更なる情報は [ドキュメント](/docs/mutation#optimistic-updates) で確認できます。下記はこの挙動を示したデモです。
 
 <Video
   src="/video/optimistic-ui.mp4"
-  caption="Optimistic UI with automatic error rollback"
+  caption="エラー時の自動ロールバック付きの楽観的な UI 更新"
   ratio={223/584}
 />
 
-### Mutate Multiple Keys
+### 複数キーのミューテーション
 
-The global `mutate` API now accepts a filter function, where you can mutate or revalidate specific keys. This will be helpful for use cases such as invalidating all the cached data. To learn more, you can read [Mutate Multiple Keys](/docs/mutation#mutate-multiple-items) in the docs.
+グローバルの `mutate` API がフィルター関数を受け取るようになり、特定のキーに対するミューテーションが可能になります。これは全てのキャッシュデータを無効化するようなユースケースで便利です。詳細はドキュメントの [複数のキーをミューテーションする](/docs/mutation#mutate-multiple-items) で確認できます。
 
 ```jsx
 import { mutate } from 'swr'
-// Or from the hook if you have customized your cache provider:
+// またはキャッシュプロバイダをカスタマイズしている場合には、フックから
 // { mutate } = useSWRConfig()
 
-// Mutate single resource
+// 単一のリソースをミューテートする
 mutate(key)
 
-// Mutate multiple resources and clear the cache (set to undefined)
+// 複数のリソースをミューテートしてキャッシュをクリアする（undefined をセットする）
 mutate(
   key => typeof key === 'string' && key.startsWith('/api/item?id='),
   undefined,
@@ -201,24 +201,24 @@ mutate(
 
 ## SWR DevTools
 
-[SWRDevTools](https://swr-devtools.vercel.app) is a browser extension that helps you debug your SWR cache and the fetch results. Check our [devtools](/docs/advanced/devtools) section for how to use devtools in your application.
+[SWRDevTools](https://swr-devtools.vercel.app) はブラウザ拡張で SWR のキャッシュやフェッチの結果をデバッグするのに役に立ちます。アプリケーションでの使い方は [開発者ツール](/docs/advanced/devtools) セクションを確認ください。
 
 ![](/img/devtools/cache-view.jpg)
 
-## Preloading Data
+## データのプリロード
 
-Preloading data can improve the user experience tremendously. If you know the resource is going to be used later in the application, you can use the new `preload` API to start fetching it early:
+データのプリロードはユーザー体験を劇的に改善します。もしリソースが後ほど使われることがわかっている場合、`preload` API を使うことでフェッチの開始を事前に行うことができます。
 
 ```jsx {6}
 import useSWR, { preload } from 'swr'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
-// You can call the preload function in anywhere
+// preload 関数をどこでも呼べます
 preload('/api/user', fetcher)
 
 function Profile() {
-  // The component that actually uses the data:
+  // 実際のコンポーネントの中でデータを使う箇所
   const { data, error } = useSWR('/api/user', fetcher)
   // ...
 }
@@ -228,16 +228,16 @@ export function Page () {
 }
 ```
 
-In this example, the `preload` API is called in the global scope. This means that we start to preload the resource before React even starts to render anything.
-And when the `Profile` component is being rendered, the data can probably be available already. If it’s still ongoing, the `useSWR` hook will reuse that ongoing preloading request instead of starting a new one.
+この例では、`preload` API はグローバルスコープ内で呼ばれています。これは、リソースのプリロードを React がレンダリングを開始するより前に行なっていることを意味します。
+それにより `Profile` コンポーネントがレンダリングされた時、データはすでに利用可能になっているでしょう。もしリクエストが実行中だった場合、`useSWR` フックは新しいリクエストを開始するのではなく実行中のプリロードのリクエストを再利用します。
 
-The `preload` API can also be used in cases like preloading data for another page that will likely be rendered. More information about prefetching data with SWR can be found [here](/docs/prefetching).
+`preload` API は後に表示されそうなページのデータをプリロードするためにも利用できます。SWR を使ったプリフェッチに関する更なる情報は [こちら](/docs/prefetching) より確認できます。
 
 ## `isLoading`
 
-`isLoading` is a new state returned by `useSWR`, that indicates **if the request is still ongoing, and there is no data loaded yet**. Previously, the `isValidating` state represents both the initial loading state and revalidating state so we had to check if both `data` and `error` are `undefined` to determine if it was the initial loading state.
+`isLoading` は `useSWR` から返される新しい状態で、**リクエストが実行中で、ロードされたデータがない** ことを示します。これまでは、`isValidating` は初期ローディングと再検証の状態のどちらも表していたため、初期ローディングかどうかを知るためには `data` と `error` が `undefined` であるかどうかをチェックする必要がありました。
 
-Now, it is so easy that you can directly use the `isLoading` value to render a loading message:
+今は、`isLoading` をそのまま使うことで簡単にローディングメッセージの表示ができます。
 
 ```jsx
 import useSWR from 'swr'
@@ -250,15 +250,15 @@ function Profile() {
 }
 ```
 
-Note that `isValidating` is still present so you can still use it to show a loading indicator for revalidations.
+引き続き、`isValidating` は提供されており、再検証時のローディングを出すために利用可能な点に注意してください。
 
 <Callout emoji="📝">
-  We have added the new [Understanding SWR](/docs/advanced/understanding) page to describe how SWR returns values, which includes the difference between `isValidating` and `isLoading`, and how to combine them to improve user experience.
+  今回、SWR がどのように値を返すかを示した新しい [SWR を理解する](/docs/advanced/understanding) ページを追加しました。このページでは `isValidating` と `isLoading` の違いやこれらを組み合わせてどのようにユーザー体験を向上させるかが解説されています。
 </Callout>
 
-## Laggy UI
+## 遅延のある UI
 
-The `keepPreviousData` option is a new addition that allows you to keep the data that was fetched before. This improves UX immensely when you’re fetching data based on user actions happening in real time, like with a live search feature, where the resource’s `key` keeps changing:
+`keepPreviousData` は新しく追加されたオプションで、以前にフェッチされたデータを保持します。これは、リアルタイム検索のようにリソースの `key` が変化し続けユーザーアクションに応じて都度データのフェッチが発生するようなケースで UX を劇的に向上させます。
 
 ```jsx {5}
 function Search() {
@@ -287,15 +287,15 @@ function Search() {
 
 <Video
   src="https://user-images.githubusercontent.com/3676859/163695903-a3eb1259-180e-41e0-821e-21c320201194.mp4"
-  caption="Keep previous search results when keepPreviousData has been enabled"
+  caption="keepPreviousData が有効にされた場合に以前の結果を保持している様子"
   ratio={640/730}
 />
 
-Check the code on [CodeSandbox](https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m) and you can read more about it [here](/docs/advanced/understanding#return-previous-data-for-better-ux).
+詳しくは [CodeSandbox](https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m) のコードと [ドキュメント](/docs/advanced/understanding#return-previous-data-for-better-ux) を確認ください。
 
-## Extending Configurations
+## 設定の拡張
 
-`SWRConfig` can now accept a function value. When you have multiple levels of `<SWRConfig>`, the inner receives the parent configuration and returns a new one. This change makes it more flexible to configure SWR in a large codebase. More information can be found [here](/docs/global-configuration).
+`SWRConfig` は関数を値として受け取るようになりました。複数レベルの `<SWRConfig>` を持っている場合、内部のコンポーネントは親の設定を受け取り、新しい設定を返します。これは、大規模なコードベースにおいて柔軟な SWR の設定を可能にします。詳細は [ドキュメント](/docs/global-configuration) を確認ください。
 
 ```jsx
 <SWRConfig
@@ -308,17 +308,17 @@ Check the code on [CodeSandbox](https://codesandbox.io/s/swr-keeppreviousdata-fs
 </SWRConfig>
 ```
 
-## Improved React 18 Support
+## React 18 サポートの改善
 
-SWR has updated its internal code to use `useSyncExternalStore` and `startTransition` APIs in React 18. These ensure stronger consistency when rendering UI concurrently. This change doesn’t require any user code changes and all developers will benefit from it directly. Shims are included for React 17 and below.
+SWR は内部実装において `useSyncExternalStore` や `startTransition` といった React 18 で追加された API を使うようになりました。これらは UI のレンダリングが並行処理になった場合においても一貫性を保証してくれます。これにより利用者の実装を変更する必要はなく、全ての開発者が恩恵を受けることができます。React 17 や古いバージョンのための実装も含まれています。
 
-SWR 2.0 and all the new features are still compatible with React 16 and 17.
+SWR 2.0 と全ての新しい機能は引き続き、React 16 や 17 に対して互換性があります。
 
-## Migration Guide
+## 移行ガイド
 
-### Fetcher No Longer Accepts Multiple Arguments
+### フェッチャーが引数を複数の引数として受け取らなくなります
 
-`key` is now passed as a single argument.
+`key` は単一の引数として渡されるようになります。
 
 ```diff
 - useSWR([1, 2, 3], (a, b, c) => {
@@ -329,18 +329,19 @@ SWR 2.0 and all the new features are still compatible with React 16 and 17.
 })
 ```
 
-### Global Mutate No Longer Accepts a `getKey` Function
+### グローバルのミューテーション API が `getKey` 関数を受け取らなくなります
 
-Now, if you pass a function to the global `mutate`, it will be used as a [filter](/blog/swr-v2#mutate-multiple-keys). Previously, you can pass a function that returns a key to the global `mutate`:
+もしグローバルな `mutate` に対して関数を渡した場合、それは [フィルター関数](/blog/swr-v2#mutate-multiple-keys) として使われます。これまでは、グローバルの `mutate` に対してキーを返す関数を渡すことができました。
+
 
 ```diff
-- mutate(() => '/api/item') // a function to return a key
-+ mutate('/api/item')       // to mutate the key, directly pass it
+- mutate(() => '/api/item') // キーを返す関数
++ mutate('/api/item')       // 直接キーを渡すようにする
 ```
 
-### New Required Property `keys()` for Cache Interface
+### キャッシュのインターフェイスで `keys()` が必須になりました
 
-When you use your own cache implementation, the Cache interface now requires a `keys()` method that returns all keys in the cache object, similar to the JavaScript Map instances.
+独自のキャッシュ実装を使っている場合、キャッシュのインターフェイスとして JavaScript の Map のようにキャッシュの全てのキーを返す `keys()` メソッドが必須になりました。
 
 ```diff
 interface Cache<Data> {
@@ -351,9 +352,9 @@ interface Cache<Data> {
 }
 ```
 
-### Changed Cache Internal Structure
+### キャッシュの内部構造を変更しました
 
-The internal structure of the cache data will be an object that holds all the current states.
+キャッシュの内部構造が、全ての状態を保持する単一のオブジェクトになりました。
 
 ```diff
 - assert(cache.get(key) === data)
@@ -369,41 +370,42 @@ The internal structure of the cache data will be an object that holds all the cu
 ```
 
 <Callout emoji="🚨" type="error">
-  You should not write to the cache directly, it might cause undefined behavior.
+  キャッシュに対して直接データを書き込むことはすべきではありません。予期せぬ挙動を引き起こす可能性があります。
 </Callout>
 
-### `SWRConfig.default` Is Renamed as `SWRConfig.defaultValue`
+### `SWRConfig.default` が `SWRConfig.defaultValue` に変更されました
 
-`SWRConfig.defaultValue` is the property for accessing the default SWR config.
+`SWRConfig.defaultValue` はデフォルトの SWR の設定にアクセスするためのプロパティです。
 
 ```diff
 - SWRConfig.default
 + SWRConfig.defaultValue
 ```
 
-### Type `infinitefetcher` Is Renamed as `swrinfinitefetcher`
+### `infinitefetcher` の型が `swrinfinitefetcher` に変更されました
 
 ```diff
 - import type { InfiniteFetcher } from 'swr/infinite'
 + import type { SWRInfiniteFetcher } from 'swr/infinite'
 ```
 
-### Avoid Suspense on Server
+### サーバサイドでのサスペンスを用いたデータフェッチを避ける
 
-If you want to use `suspense: true` with SWR on the server-side, including pre-rendering in Next.js, then you must provide initial data via [`fallbackData` or `fallback`](/docs/with-nextjs#pre-rendering-with-default-data). Today, this means that you can't use Suspense to fetch data on the server side. Your other two options are doing fully client-side data-fetching or getting your framework to fetch the data for you (like getStaticProps does in Next.js).
+SWR を `suspense: true` と一緒にサーバーサイドで使いたい場合には (Next.js によるプリレンダリングも含みます)、[`fallbackData` or `fallback`](/docs/with-nextjs#pre-rendering-with-default-data) により初期データが必ず提供されている必要があります。これは現時点でサスペンスを使ったデータ取得をサーバーサイドで行えないことを意味します。その他の 2 つのオプションは完全にクライアントサイドでデータ取得を行うかフレームワークを用いたデータの取得 (Next.js が getStaticProps でやっているような) を行うかです。
 
-### ES2018 as the Build Target
+### ES2018 がビルドターゲットに
 
-If you want to support IE 11, you have to target ES5 in your framework or a bundler. This change has made a performance improvement on SSR, and keeps the bundle size small.
+IE 11 をサポートしたい場合、フレームワークやバンドラで ES5 をビルドターゲットにする必要があります。この変更により SSR 時のパフォーマンス改善やバンドルサイズ削減を実現しました。
 
-## Changelog
+## 変更ログ
 
-Read the full Changelog [on GitHub](https://github.com/vercel/swr/releases).
+完全な変更ログを [GitHub 上で](https://github.com/vercel/swr/releases) 確認できます。
 
-## The Future & Thank You!
+## 今後と感謝
 
-With the new release of [Next.js 13](https://nextjs.org/blog/next-13), we see a lot of exciting new things as well as paradigm shifts in the React ecosystem: [React Server Components](https://beta.nextjs.org/docs/rendering/server-and-client-components), streaming SSR, [async components](https://beta.nextjs.org/docs/data-fetching/fetching#asyncawait-in-server-components), and the [`use` hook](https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md#usepromise). Many of them are related to data-fetching, and some of them have overlapping use cases with SWR.
+新しい [Next.js 13](https://nextjs.org/blog/next-13) のリリースにおいては、多くのエキサイティングな新機能だけでなく、[React Server Components](https://beta.nextjs.org/docs/rendering/server-and-client-components) やストリーミング SSR、[非同期コンポーネント](https://beta.nextjs.org/docs/data-fetching/fetching#asyncawait-in-server-components)、[`use` フック](https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md#usepromise) といった React のエコシステムにおけるパラダイムシフトがありました。それらの多くはデータ取得に関するものであり、いくつかは SWR のユースケースとも被るものです。
 
-However, the goal of the SWR project remains the same. We want it to be a drop-in library that is lightweight, framework agnostic, and a little bit _opinionated_ (i.e. revalidate upon focus). Instead of trying to be a standard solution, we want to focus on innovations that make the UX better. In the meantime, we are also doing research on how to improve SWR with these new abilities of React.
+しかしながら、SWR プロジェクトのゴールは引き続き変わらないままです。私たちは軽量に導入可能で、フレームワークに依存せず、少し _こだわりのある_ (例: フォーカス時の再検証) を目指しています。標準的な手法になるのを目指す代わりに、よりよい UX を実現するためイノベーションにフォーカスしたいと考えています。その一方で私たちは React の新しい力を用いてどのように SWR を改善できるのかを調査しています。
 
-We want to thank every one of the [143](https://github.com/vercel/swr/graphs/contributors) contributors (+ [106](https://github.com/vercel/swr-site/graphs/contributors) docs contributors), as well as those who helps us out or gave feedback. A special thanks goes to [Toru Kobayashi](https://twitter.com/koba04) for all his work on DevTools and docs– we couldn’t have done it without you!
+
+[143](https://github.com/vercel/swr/graphs/contributors) 人のコントリビュータ (+ [106](https://github.com/vercel/swr-site/graphs/contributors) のドキュメントコントリビュータ)、そしてご協力いただいた皆様、フィードバックをいただいた皆様にも感謝しています。[Toru Kobayashi](https://twitter.com/koba04) さんの DevTools やドキュメントに対する貢献には特に感謝しています。彼の貢献なしにはこのリリースは実現できませんでした！
