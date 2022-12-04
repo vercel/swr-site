@@ -46,9 +46,9 @@ function Profile () {
       <h1>My name is {data.name}.</h1>
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
-        // データを更新するために API にリクエストを送信する
+        // データを更新するために API にリクエストを送信します
         await requestUpdateUsername(newName)
-        // ローカルのデータを即座に更新して再検証（再フェッチ）する
+        // ローカルのデータを即座に更新して再検証（再フェッチ）します
         // 注意: useSWR の mutate は key が対応付けられているため、key の指定は必要ありません
         mutate({ ...data, name: newName })
       }}>Uppercase my name!</button>
@@ -59,9 +59,9 @@ function Profile () {
 
 #### 再検証
 
-`mutate(key)` (または単にバウンドミューテートの `mutate()`) をデータの指定なしに読んだ場合、そのリソースに対して再検証を発行 (データを期限切れとしてマークして再フェッチを発行する) します。
+`mutate(key)` (または単にバウンドミューテートの `mutate()`) をデータの指定なしに呼んだ場合、そのリソースに対して再検証を発行 (データを期限切れとしてマークして再フェッチを発行する) します。
 この例は、ユーザーが "Logout"　ボタンをクリックした場合に、
-どのようにログイン情報 (例: `<Profile/>` の中身) をどのように自動的に再フェッチするかを示しています。
+ログイン情報 (例: `<Profile/>` の中身) をどのように自動的に再フェッチするかを示しています。
 
 ```jsx {14}
 import useSWR, { useSWRConfig } from 'swr'
@@ -97,7 +97,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 #### パラメータ
 
-- `key`: `useSWR` の `key` と同じです。しかしながら、関数は [フィルタ関数](/docs/mutation#mutate-multiple-items)　として振る舞います
+- `key`: `useSWR` の `key` と同じです。しかしながら、関数は [フィルタ関数](/docs/mutation#mutate-multiple-items) として振る舞います
 - `data`: クライアントキャッシュを更新するためのデータ、またはリモートミューテーションのための非同期関数
 - `options`: 下記のオプションを受け取ります
   - `optimisticData`: クライアントキャッシュを即座に更新するためのデータ、または現在のデータを受け取り新しいクライアントキャッシュデータを返す関数。楽観的 UI のために使われます
@@ -109,13 +109,13 @@ import Callout from 'nextra-theme-docs/callout'
 #### 返り値
 
 `mutate` は `data` パラメータとして扱われる結果を返します。`mutate` に渡された関数は対応するキャッシュの値としても使われる更新後のデータを返します。
-もし、関数の実行中にエラーが発生した場合、そのエラーは投げられるので適切に処理できます。
+もし、関数の実行中にエラーが発生した場合、そのエラーはスローされるので適切に処理できます。
 
 ```jsx
 try {
   const user = await mutate('/api/user', updateUser(newUser))
 } catch (error) {
-  // ユーザーの更新中に発生したエラーを処理する
+  // ユーザーの更新中に発生したエラーを処理します
 }
 ```
 
@@ -277,14 +277,14 @@ function Profile () {
         const options = {
           optimisticData: user,
           rollbackOnError(error) {
-            // タイムアウトの AbortError だった場合はロールバックしない
+            // タイムアウトの AbortError だった場合はロールバックしません
             return error.name !== 'AbortError'
           },
         }
 
-        // ローカルのデータを即座に更新する
-        // データを更新するためにリクエストを送信する
-        // ローカルデータが正しいことを保証するために再検証 (再フェッチ) を発行
+        // ローカルのデータを即座に更新します
+        // データを更新するためにリクエストを送信します
+        // ローカルデータが正しいことを保証するために再検証 (再フェッチ) を発行します
         mutate('/api/user', updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
@@ -345,13 +345,13 @@ function Profile () {
 ## エラー時のロールバック
 
 `optimisticData` を持っている場合でリモートミューテーションが失敗した場合、
-楽観的なデータがユーザーに表示されます。
+楽観的な更新によるデータがユーザーに表示されます。
 この場合、ユーザーが正しいデータを見ていることを保証するために、
 `rollbackOnError` を有効にしてローカルキャッシュに対する変更を取り消して以前のデータに戻すことができます。
 
 ## ミューテーション後にキャッシュを更新する
 
-時々、リモートミューテーションのリクエストが更新後のデータを直接返す場合があります。この場合、データをロードするための余計なフェッチが必要ありません。
+リモートミューテーションのリクエストが更新後のデータを直接返す場合もあります。この場合、データをロードするための余計なフェッチが必要ありません。
 `populateCache` オプションを有効にすることで、ミューテーションのレスポンスで `useSWR` のキャッシュを更新できます！
 
 ```jsx
@@ -362,12 +362,12 @@ const updateTodo = () => fetch('/api/todos/1', {
 
 mutate('/api/todos', updateTodo, {
   populateCache: (updatedTodo, todos) => {
-    // リストをフィルタリングして更新後のアイテムと一緒に返す
+    // リストをフィルタリングして更新後のアイテムと一緒に返します
     const filteredTodos = todos.filter(todo => todo.id !== '1')
     return [...filteredTodos, updatedTodo]
   },
   // API が更新後の情報を返してくれているので、
-  // 再検証は必要ない
+  // 再検証は必要ありません
   revalidate: false
 })
 ```
@@ -377,12 +377,12 @@ mutate('/api/todos', updateTodo, {
 ```jsx
 useSWRMutation('/api/todos', updateTodo, {
   populateCache: (updatedTodo, todos) => {
-    // リストをフィルタリングして更新後のアイテムと一緒に返す
+    // リストをフィルタリングして更新後のアイテムと一緒に返します
     const filteredTodos = todos.filter(todo => todo.id !== '1')
     return [...filteredTodos, updatedTodo]
   },
   // API が更新後の情報を返してくれているので、
-  // 再検証は必要ない
+  // 再検証は必要ありません
   revalidate: false
 })
 ```
@@ -414,7 +414,7 @@ function Profile() {
 
 ## 現在のデータをもとにミューテートする
 
-時々、現在のデータに基づいてデータを更新したい場合があります。
+現在のデータに基づいてデータを更新したい場合もあります。
 
 `mutate` では、現在のデータを受け取り更新後のデータを返す非同期関数を渡すことができます。
 
@@ -431,7 +431,7 @@ mutate('/api/todos', async todos => {
   const filteredTodos = todos.filter(todo => todo.id !== '1')
   return [...filteredTodos, updatedTodo]
 // API が更新後の情報を返してくれているので、
-// 再検証は必要ない
+// 再検証は必要ありません
 }, { revalidate: false })
 ```
 
@@ -468,12 +468,12 @@ mutate(
 フィルタ関数は全ての存在するキャッシュキーに対して適用されます。そのため複数の形式のキーを扱っている場合、キャッシュの形式に対して思い込みを持ってはいけません。
 
 ```jsx
-// ✅ 配列のキーに対してマッチする
+// ✅ 配列のキーに対してマッチします
 mutate((key) => key[0].startsWith('/api'), data)
-// ✅ 文字列のキーに対してマッチする
+// ✅ 文字列のキーに対してマッチします
 mutate((key) => typeof key === 'string' && key.startsWith('/api'), data)
 
-// ❌ エラー: 不確かなキー (配列または文字列) に対してミューテートする
+// ❌ エラー: 不確かなキー (配列または文字列) に対してミューテートします
 mutate((key: any) => /\/api/.test(key.toString()))
 ```
 
@@ -486,6 +486,6 @@ const clearCache = () => mutate(
   { revalidate: false }
 )
 
-// ...ログアウト時にキャッシュをクリアする
+// ...ログアウト時にキャッシュをクリアします
 clearCache()
 ```
