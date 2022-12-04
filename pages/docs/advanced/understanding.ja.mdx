@@ -43,17 +43,17 @@ import Video from 'components/video'
 
 ![キーの変更を keepPreviousData オプションとフォールバックありで行うパターン](/img/understanding/key-change-previous-data-fallback.svg)
 
-## Combining with isLoading and isValidating for better UX
+## よりよい UX のために isLoading と isValidating を組み合わせる
 
-Comparing to the existing `isValidating` value, `isLoading` is a new property that can help you for the more general loading cases for UX.
+既存の `isValidating` の値と比較して、`isLoading` はより一般的なローディングのための UX に役に立つ新しいプロパティです。
 
-- `isValidating` becomes `true` whenever there is an ongoing request **whatever the the data is loaded or not**
-- `isLoading` becomes `true` when there is an ongoing request and **data is not loaded yet**.
+- `isValidating` は実行中のリクエストがある場合に **データがロード済みかどうかに関わらず** `true` になります
+- `isLoading` は実行中のリクエストがあり ***ロード済みのデータがまだない場合** に `true` になります
 
-Simply saying you can use `isValidating` for indicating everytime there is an ongoing revalidation, and `isLoading` for indicating that SWR is revalidating but there is no data yet to display.
+わかりやすく言うと、`isValidating` は実行中の再検証が存在する場合全てで、`isLoading` は SWR が再検証中だけど表示するためのデータがない場合に使えます。
 
 <Callout emoji="📝">
-  Fallback data and previous data are not considered "loaded data," so when you use fallback data or enable the keepPreviousData option, you might have data to display.
+  フォールバックデータと以前のデータ (previous data) は "ロードされたデータ" とは扱われません。そのため、フォールバックデータや `keepPreviousData` オプションを使う場合には、表示するためのデータがあるかもしれません。
 </Callout>
 
 ```jsx
@@ -62,12 +62,12 @@ function Stock() {
     refreshInterval: 3000
   });
 
-  // If it's still loading the initial data, there is nothing to display.
-  // We return a skeleton here.
+  // 初期データのローディング中の場合には、表示するためのデータはありません
+  // そのため、スケルトンの表示を返します
   if (isLoading) return <div className="skeleton" />;
 
-  // Otherwise, display the data and a spinner that indicates a background
-  // revalidation.
+  // そうでなければ、データとバックグラウンドで再検証中であることを示す
+  // UI を表示します
   return (
     <>
       <div>${data}</div>
@@ -77,9 +77,9 @@ function Stock() {
 }
 ```
 
-![An example of using the isLoading state](/img/understanding/isloading.gif)
+![isLoading を使った例](/img/understanding/isloading.gif)
 
-You can find the code example [here](https://codesandbox.io/s/swr-isloading-jtopow)
+[こちら](https://codesandbox.io/s/swr-isloading-jtopow) から実際のコードを確認できます。
 
 ## よりよいユーザー体験のために以前のデータを返す
 
