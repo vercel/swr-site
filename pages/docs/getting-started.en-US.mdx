@@ -25,6 +25,12 @@ For normal RESTful APIs with JSON data, first you need to create a `fetcher` fun
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 ```
 
+Or with TypeScript:
+
+```jsx
+const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
+```
+
 <Callout emoji="💡">
   If you want to use GraphQL API or libs like Axios, you can create your own fetcher function. 
   Check <Link href="/docs/data-fetching"><a href="/docs/data-fetching">here</a></Link> for more examples.

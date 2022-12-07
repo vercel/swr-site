@@ -25,6 +25,12 @@ npm install swr
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 ```
 
+Or with TypeScript:
+
+```jsx
+const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
+```
+
 <Callout emoji="💡">
   如果要使用 GraphQL API 或类似 Axios 的库，可以自己创建 fetcher 函数。 点击 <Link href="/docs/data-fetching"><a href="/docs/data-fetching">这里</a></Link> 查看更多示例。
 </Callout>
