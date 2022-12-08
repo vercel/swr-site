@@ -257,7 +257,7 @@ Note that `isValidating` is still present so you can still use it to show a load
   We have added the new [Understanding SWR](/docs/advanced/understanding) page to describe how SWR returns values, which includes the difference between `isValidating` and `isLoading`, and how to combine them to improve user experience.
 </Callout>
 
-## Laggy UI
+## Preserving Previous State
 
 The `keepPreviousData` option is a new addition that allows you to keep the data that was fetched before. This improves UX immensely when you’re fetching data based on user actions happening in real time, like with a live search feature, where the resource’s `key` keeps changing:
 
