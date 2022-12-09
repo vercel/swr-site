@@ -1,25 +1,69 @@
-# ミューテーション
+# ミューテーションと再検証
+
+SWR はリモートデータとキャッシュデータのミューテーションのために、[`mutate`](/docs/mutation#mutate) と [`useSWRMutation`](/docs/mutation#useswrmutation) の API を提供しています。
+
+## `mutate`
+
+`mutate` API を使いデータをミューテートするには 2 つの方法があります。どんなキーに対してもミューテートできるグローバルのミューテート API と対応する SWR フックのデータのみミューテートできるバウンドミューテート API です。
+
+#### グローバルミューテート
+
+グローバルなミューテートを取得するオススメの方法は [`useSWRConfig`](/docs/global-configuration#access-to-global-configurations) フックを使うことです。
 
 ```js
-mutate(key, data, options)
+import { useSWRConfig } from "swr"
+
+function App() {
+  const { mutate } = useSWRConfig()
+  mutate(key, data, options)
+}
 ```
 
-## オプション
+またはグローバルにインポートすることもできます。
 
-- `optimisticData`: クライアントキャッシュを直ちに更新するデータで、通常は 楽観的な UI で使用されます。
-- `revalidate`: 非同期更新が解決した後、キャッシュを再検証するかどうか。
-- `populateCache`: リモートミューテーションの結果をキャッシュに書き込むかどうか。関数も受け取ります。関数はミューテーションの結果と現在の値を引数として受けとり、ミューテーションの結果を返します。
-- `rollbackOnError`: リモートミューテーションでエラーが発生した場合、キャッシュをロールバックするかどうか。
+```js
+import { mutate } from "swr"
 
-## 再検証
+function App() {
+  mutate(key, data, options)
+}
+```
 
-`useSWRConfig()` フックから `mutate` 関数を取得し、`mutate(key)` を呼び出すことで、
-再検証メッセージを他の SWR フック<sup>\*</sup>に渡すことができます。
+#### バウンドミューテート
 
-次の例では、ユーザーが "Logout" ボタンをクリックしたときに、ログイン情報
-（ たとえば `<Profile/> `の中身 ）を自動的に取得する方法を示します。
+バウンドミューテートは現在のキーのデータをミューテートする最も簡単な方法です。`useSWR` に渡された `key` に対して対応付けられ、`data` を第一引数として受け取ります。
+
+機能自体は前のセクションで紹介したグローバルな `mutate` と同じですが、`key` を引数として指定する必要がありません。
 
 ```jsx
+import useSWR from 'swr'
+
+function Profile () {
+  const { data, mutate } = useSWR('/api/user', fetcher)
+
+  return (
+    <div>
+      <h1>My name is {data.name}.</h1>
+      <button onClick={async () => {
+        const newName = data.name.toUpperCase()
+        // データを更新するために API にリクエストを送信します
+        await requestUpdateUsername(newName)
+        // ローカルのデータを即座に更新して再検証（再フェッチ）します
+        // 注意: useSWR の mutate は key が対応付けられているため、key の指定は必要ありません
+        mutate({ ...data, name: newName })
+      }}>Uppercase my name!</button>
+    </div>
+  )
+}
+```
+
+#### 再検証
+
+`mutate(key)` (または単にバウンドミューテートの `mutate()`) をデータの指定なしに呼んだ場合、そのリソースに対して再検証を発行 (データを期限切れとしてマークして再フェッチを発行する) します。
+この例は、ユーザーが "Logout"　ボタンをクリックした場合に、
+ログイン情報 (例: `<Profile/>` の中身) をどのように自動的に再フェッチするかを示しています。
+
+```jsx {14}
 import useSWR, { useSWRConfig } from 'swr'
 
 function App () {
@@ -32,7 +76,7 @@ function App () {
         // クッキーを期限切れとして設定します
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
 
-        // このキーを使用してすべての SWR に再検証するように指示します
+        // この key を使っている全ての SWR フックに再検証を伝えます
         mutate('/api/user')
       }}>
         Logout
@@ -42,15 +86,180 @@ function App () {
 }
 ```
 
-\*: 同じ [キャッシュプロバイダー](advanced/cache) のスコープ下では、 SWR フックに渡されます。もしキャッシュプロバイダーが無ければ、すべての SWR フックに渡されます。
+import Callout from 'nextra-theme-docs/callout'
 
-## 楽観的な更新
+<Callout>
+これは同じスコープの [キャッシュプロバイダ](/docs/advanced/cache) 内の SWR フックに対して再検証の指示を一斉送信します。もしキャッシュプロバイダが存在しない場合、全ての SWR フックに対して一斉送信されます。
+</Callout>
 
-多くの場合、データにローカルミューテーションを適用することは、変更をより速く
-感じさせるための良い方法です。データのリモートソースを待つ必要はありません。
 
-`mutate` を使用すると、再検証の間にプログラムでローカルデータを更新しておき、
-最終的に最新のデータに置き換えることができます。
+### API
+
+#### パラメータ
+
+- `key`: `useSWR` の `key` と同じです。しかしながら、関数は [フィルタ関数](/docs/mutation#mutate-multiple-items) として振る舞います
+- `data`: クライアントキャッシュを更新するためのデータ、またはリモートミューテーションのための非同期関数
+- `options`: 下記のオプションを受け取ります
+  - `optimisticData`: クライアントキャッシュを即座に更新するためのデータ、または現在のデータを受け取り新しいクライアントキャッシュデータを返す関数。楽観的 UI のために使われます
+  - `revalidate = true`: 非同期の更新処理を完了した後にキャッシュの再検証を行うかどうか
+  - `populateCache = true`: リモートミューテーションの結果をキャッシュに書き込むかどうか、またはリモートミューテーションの結果と現在のデータを引数として受け取り、ミューテーションの結果を返す関数
+  - `rollbackOnError = true`: リモートミューテーションがエラーだった場合にキャッシュをロールバックするかどうか、または発生したエラーを引数として受け取りロールバックするかどうかの真偽値を返す関数
+  - `throwOnError = true`: ミューテートの呼び出しが失敗した場合にエラーを投げるかどうか
+
+#### 返り値
+
+`mutate` は `data` パラメータとして扱われる結果を返します。`mutate` に渡された関数は対応するキャッシュの値としても使われる更新後のデータを返します。
+もし、関数の実行中にエラーが発生した場合、そのエラーはスローされるので適切に処理できます。
+
+```jsx
+try {
+  const user = await mutate('/api/user', updateUser(newUser))
+} catch (error) {
+  // ユーザーの更新中に発生したエラーを処理します
+}
+```
+
+## `useSWRMutation`
+
+加えて SWR はリモートミューテーションのために `useSWRMutation` というフックも提供しています。このリモートミューテーションは、自動的にミューテーションを行う `useSWR` などとは異なり手動でのみ発行されます。
+
+また、このフックは他の `useSWRMutation` と状態を共有しません。
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+// フェッチャーの実装
+// 追加の引数は第二引数の `arg` プロパティとして渡されます
+// 下記の例では、`arg` は `'my_token'` となります
+async function updateUser(url, { arg }) {
+  await fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${arg}`
+    }
+  })
+}
+
+function Profile() {
+  // useSWR と mutate を組み合わせたような API ですが、リクエストを自動的に開始しません
+  const { trigger } = useSWRMutation('/api/user', updateUser, options?)
+
+  return <button onClick={() => {
+    // `updateUser` を指定した引数と一緒に実行します
+    trigger('my_token')
+  }}>Update User</button>
+}
+```
+
+### API
+
+#### パラメータ
+
+- `key`: [`mutate`](/docs/mutation#mutate) の `key` と同様
+- `fetcher(key, { arg })`: リモートミューテーションのための非同期関数
+- `options`: 下記のプロパティを持つオプションのオブジェクト
+  - `optimisticData`: `mutate` の `optimisticData` と同様
+  - `revalidate = true`: `mutate` の `revalidate` と同様
+  - `populateCache = false`: `mutate` の `populateCache` と同様、ただしデフォルト値は `false`
+  - `rollbackOnError = true`: `mutate` の `rollbackOnError` と同様
+  - `throwOnError = true`: `mutate` の `throwOnError` と同様
+  - `onSuccess(data, key, config)`:　リモートミューテーションが成功した場合に呼ばれるコールバック関数
+  - `onError(err, key, config)`: リモートミューテーションがエラーになった場合に呼ばれるコールバック関数
+
+#### 返り値
+
+- `data`: `fetcher` から返された渡されたキーに対応するデータ
+- `error`: `fetcher` で発生したエラー (または undefined)
+- `trigger(arg, options)`: リモートミューテーションを発行するための関数
+- `reset`: 状態 (`data`, `error`, `isMutating`) をリセットするための関数
+- `isMutating`: 実行中のリモートミューテーションがあるかどうか
+
+### 基本的な使い方
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+async function sendRequest(url, { arg }) {
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(arg)
+  })
+}
+
+function App() {
+  const { trigger, isMutating } = useSWRMutation('/api/user', sendRequest, /* options */)
+
+  return (
+    <button
+      disabled={isMutating}
+      onClick={async () => {
+        try {
+          const result = await trigger({ username: 'johndoe' }, /* options */)
+        } catch (e) {
+          // エラーハンドリング
+        }
+      }}
+    >
+      Create User
+    </button>
+  )
+}
+```
+
+もし、ミューテーションの結果をレンダリングで使いたい場合、`useSWRMutation` の返り値から取得できます。
+
+```jsx
+const { trigger, data, error } = useSWRMutation('/api/user', sendRequest)
+```
+
+`useSWRMutation` はキャッシュを `useSWR` と共有します。そのため、`useSWR` とのレースコンディションを検出し回避できます。また、楽観的更新やエラー時のロールバックのような `mutate` が持っている機能もサポートしています。これらのオプションは `useSWRMutation` と `trigger` 関数に渡すことができます。
+
+```jsx
+const { trigger } = useSWRMutation('/api/user', updateUser, {
+  optimisticData: current => ({ ...current, name: newName })
+})
+
+// または
+
+trigger(newName, {
+  optimisticData: current => ({ ...current, name: newName })
+})
+```
+
+### 必要になるまでデータの読み込みを遅延させる
+
+`useSWRMutation` をデータのローディングのために使うこともできます。`useSWRMutation` は `trigger` が呼ばれるまでリクエストを開始しません。そのため、データが実際に必要になるまでデータの読み込みを遅延することができます。
+
+```jsx
+import { useState } from 'react'
+import useSWRMutation from 'swr/mutation'
+
+const fetcher = url => fetch(url).then(res => res.json())
+
+const Page = () => {
+  const [show, setShow] = useState(false)
+  // trigger が呼ばれるまで data は undefined
+  const { data: user, trigger } = useSWRMutation('/api/user', fetcher);
+
+  return (
+    <div>
+      <button onClick={() => {
+        trigger();
+        setShow(true);
+      }}>Show User</button>
+      {show && user ? <div>{usre.name}</div> : null}
+    </div>
+  );
+}
+```
+
+## 楽観的更新
+
+多くの場合、ローカルミューテーションをデータに対して適用することは、変更を速く感じさせるための良い方法です。
+リモートデータが更新されるまで待つ必要はありません。
+
+`optimisticData` オプションを使うことで、リモートミューテーションの完了を待っている間にローカルデータを手動で更新できます。
+また、`rollbackOnError` オプションを組み合わせることで、データのロールバックも制御できます。
 
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'
@@ -65,11 +274,17 @@ function Profile () {
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
         const user = { ...data, name: newName }
-        const options = { optimisticData: user, rollbackOnError: true }
+        const options = {
+          optimisticData: user,
+          rollbackOnError(error) {
+            // タイムアウトの AbortError だった場合はロールバックしません
+            return error.name !== 'AbortError'
+          },
+        }
 
-        // 再検証をせずに直ちにローカルデータを更新します
-        // ソースを更新するためにリクエストを送信します
-        // ローカルデータが最新であることを確かめるために再検証（再取得）を起動します
+        // ローカルのデータを即座に更新します
+        // データを更新するためにリクエストを送信します
+        // ローカルデータが正しいことを保証するために再検証 (再フェッチ) を発行します
         mutate('/api/user', updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
@@ -77,32 +292,67 @@ function Profile () {
 }
 ```
 
-> **`updateFn`** は、リモートミューテーションを処理するための promise 関数か非同期関数でなければならず、更新されたデータを返す必要があります。
+> **`updateFn`** はリモートミューテーションを処理するための Promise か 非同期関数であり、更新後のデータを返します
 
-## 現在のデータにもとづいたミューテート
-
-現在のデータにもとづいて、データの一部を更新したい場合があります。
-
-`mutate` を使用すると、現在キャッシュされている値がある場合はそれを受け取り、更新されたドキュメントを返す非同期関数を渡すことができます。
+現在のデータに応じて処理したい場合、`optimisticData` には関数を渡すことも可能です。
 
 ```jsx
-mutate('/api/todos', async todos => {
-  // 完了するために ID `1` で todo を更新しましょう。
-  // この API は更新されたデータを返します。
-  const updatedTodo = await fetch('/api/todos/1', {
-    method: 'PATCH',
-    body: JSON.stringify({ completed: true })
-  })
+import useSWR, { useSWRConfig } from 'swr'
 
-  // リストをフィルタリングし、更新されたアイテムを返します
-  const filteredTodos = todos.filter(todo => todo.id !== '1')
-  return [...filteredTodos, updatedTodo]
-// API からすでに更新後の情報が取得できるため
-// 再検証する必要はありません
-}, { revalidate: false })
+function Profile () {
+  const { mutate } = useSWRConfig()
+  const { data } = useSWR('/api/user', fetcher)
+
+  return (
+    <div>
+      <h1>My name is {data.name}.</h1>
+      <button onClick={async () => {
+        const newName = data.name.toUpperCase()
+        mutate('/api/user', updateUserName(newName), {
+          optimisticData: user => ({ ...user, name: newName }),
+          rollbackOnError: true
+        });
+      }}>Uppercase my name!</button>
+    </div>
+  )
+}
 ```
 
-`populateCache` オプションも使用可能です。
+同様のことは `useSWRMutation` と `trigger` でも可能です。
+
+```jsx
+import useSWRMutation from 'swr/mutation'
+
+function Profile () {
+  const { trigger } = useSWRMutation('/api/user', updateUserName)
+
+  return (
+    <div>
+      <h1>My name is {data.name}.</h1>
+      <button onClick={async () => {
+        const newName = data.name.toUpperCase()
+
+        trigger(newName, {
+          optimisticData: user => ({ ...user, name: newName }),
+          rollbackOnError: true
+        })
+      }}>Uppercase my name!</button>
+    </div>
+  )
+}
+```
+
+## エラー時のロールバック
+
+`optimisticData` を持っている場合でリモートミューテーションが失敗した場合、
+楽観的な更新によるデータがユーザーに表示されます。
+この場合、ユーザーが正しいデータを見ていることを保証するために、
+`rollbackOnError` を有効にしてローカルキャッシュに対する変更を取り消して以前のデータに戻すことができます。
+
+## ミューテーション後にキャッシュを更新する
+
+リモートミューテーションのリクエストが更新後のデータを直接返す場合もあります。この場合、データをロードするための余計なフェッチが必要ありません。
+`populateCache` オプションを有効にすることで、ミューテーションのレスポンスで `useSWR` のキャッシュを更新できます！
 
 ```jsx
 const updateTodo = () => fetch('/api/todos/1', {
@@ -112,54 +362,130 @@ const updateTodo = () => fetch('/api/todos/1', {
 
 mutate('/api/todos', updateTodo, {
   populateCache: (updatedTodo, todos) => {
-    // リストをフィルタリングし、更新されたアイテムを返します
+    // リストをフィルタリングして更新後のアイテムと一緒に返します
     const filteredTodos = todos.filter(todo => todo.id !== '1')
     return [...filteredTodos, updatedTodo]
   },
-  // API からすでに更新後の情報が取得できるため
-  // 再検証する必要はありません
+  // API が更新後の情報を返してくれているので、
+  // 再検証は必要ありません
   revalidate: false
 })
 ```
 
-## ミューテートから返されたデータ
-
-ほとんどの場合、キャッシュを更新するためにいくつかのデータが必要です。データは、`mutate` に渡された promise や非同期関数から解決または返されます。
-
-`mutate` に渡されるこの関数は、対応するキャッシュ値を更新できるように、更新されたドキュメントを返します。この関数を実行している際にエラーが発生したときには、適切な対処ができるようにそのエラーを投げます。
+`useSWRMutation` フックでも使えます。
 
 ```jsx
-try {
-  const user = await mutate('/api/user', updateUser(newUser))
-} catch (error) {
-  // ここでユーザーの更新中にエラーを処理します
+useSWRMutation('/api/todos', updateTodo, {
+  populateCache: (updatedTodo, todos) => {
+    // リストをフィルタリングして更新後のアイテムと一緒に返します
+    const filteredTodos = todos.filter(todo => todo.id !== '1')
+    return [...filteredTodos, updatedTodo]
+  },
+  // API が更新後の情報を返してくれているので、
+  // 再検証は必要ありません
+  revalidate: false
+})
+```
+
+`optimisticData` と `rollbackOnError` を組み合わせることで、完璧な楽観的 UI 更新の体験を得ることができます。
+
+## レースコンディションを避ける
+
+`mutate` と `useSWRMutation` は `useSWR` とのレースコンディションを避けることができます。例えば、
+
+```tsx
+function Profile() {
+  const { data } = useSWR('/api/user', getUser, { revalidateInterval: 3000 })
+  const { trigger } = useSWRMutation('/api/user', updateUser)
+
+  return <>
+    {data ? data.username : null}
+    <button onClick={() => trigger()}>Update User</button>
+  </>
 }
 ```
 
-## バウンドミューテート
+通常の `useSWR` フックはフォーカスやポーリング、その他の条件によりいつでもそのデータを再検証します。
+これは表示されているユーザー名を可能な限り最新に保ちます。しかしながら、ミューテーションが `useSWR` の再フェッチとほぼ同時に発生する可能性もあり、
+`getUser` が先に開始したものの `updateUser` より時間がかかるようなケースでレースコンディションが発生します。
 
-`useSWR` によって返される SWR オブジェクトには、SWR のキーに事前にバインドされている `mutate()` 関数も含まれています。
+幸いにも、`useSWRMutation` はこれを自動的に処理してくれます。ミューテーションの後、`useSWR` に実行中のリクエストを再検証を破棄するように伝えます。
+その結果、古いデータは決して表示されません。
 
-機能的にはグローバルな `mutate` 関数と同等ですが、`key` パラメーターは必要ありません。
+## 現在のデータをもとにミューテートする
+
+現在のデータに基づいてデータを更新したい場合もあります。
+
+`mutate` では、現在のデータを受け取り更新後のデータを返す非同期関数を渡すことができます。
 
 ```jsx
-import useSWR from 'swr'
+mutate('/api/todos', async todos => {
+  // ID が `1` の TODO を完了に更新しましょう
+  // この API は更新後のデータを返します
+  const updatedTodo = await fetch('/api/todos/1', {
+    method: 'PATCH',
+    body: JSON.stringify({ completed: true })
+  })
 
-function Profile () {
-  const { data, mutate } = useSWR('/api/user', fetcher)
+  // リストをフィルタリングして、更新後のデータを返します
+  const filteredTodos = todos.filter(todo => todo.id !== '1')
+  return [...filteredTodos, updatedTodo]
+// API が更新後の情報を返してくれているので、
+// 再検証は必要ありません
+}, { revalidate: false })
+```
 
-  return (
-    <div>
-      <h1>My name is {data.name}.</h1>
-      <button onClick={async () => {
-        const newName = data.name.toUpperCase()
-        // このデータを更新するために API へリクエストを送ります
-        await requestUpdateUsername(newName)
-        // ローカルデータをすぐに更新し、再検証（再フェッチ）します
-        // 注：useSWR の mutate を事前にバインドされているものとして使用する場合にはキーは必要ありません
-        mutate({ ...data, name: newName })
-      }}>Uppercase my name!</button>
-    </div>
-  )
-}
+## 複数のアイテムをミューテートする
+
+グローバルの `mutate` API はフィルタ関数を受け取ります。この関数は `key` を引数として受け取り再検証するかどうかを返します。フィルタ関数は全ての存在するキャッシュキーに対して適用されます。
+
+```jsx
+import { mutate } from 'swr'
+// キャッシュプロバイダをカスタマイズしている場合はフックから
+// { mutate } = useSWRConfig()
+
+mutate(
+  key => typeof key === 'string' && key.startsWith('/api/item?id='),
+  undefined,
+  { revalidate: true }
+)
+```
+
+これは、配列のようなどんなキーの種類に対しても動作します。下記の例では、最初の要素が `'item'` である全てのキーに対してマッチします。
+
+```jsx
+useSWR(['item', 123], ...)
+useSWR(['item', 124], ...)
+useSWR(['item', 125], ...)
+
+mutate(
+  key => Array.isArray(key) && key[0] === 'item',
+  undefined,
+  { revalidate: false }
+)
+```
+
+フィルタ関数は全ての存在するキャッシュキーに対して適用されます。そのため複数の形式のキーを扱っている場合、キャッシュの形式に対して思い込みを持ってはいけません。
+
+```jsx
+// ✅ 配列のキーに対してマッチします
+mutate((key) => key[0].startsWith('/api'), data)
+// ✅ 文字列のキーに対してマッチします
+mutate((key) => typeof key === 'string' && key.startsWith('/api'), data)
+
+// ❌ エラー: 不確かなキー (配列または文字列) に対してミューテートします
+mutate((key: any) => /\/api/.test(key.toString()))
+```
+
+フィルタ関数を全てのキャッシュデータを消去するためにも使えます、これはログアウトした場合などに便利です。
+
+```js
+const clearCache = () => mutate(
+  () => true,
+  undefined,
+  { revalidate: false }
+)
+
+// ...ログアウト時にキャッシュをクリアします
+clearCache()
 ```

@@ -164,7 +164,7 @@ function App () {
 import useSWRInfinite from 'swr/infinite'
 
 // ...
-const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
 ```
@@ -198,6 +198,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 - `data`: 一个数组，每个页面请求的响应值
 - `error`: 与 `useSWR` 的 `error` 返回值相同
+- `isLoading`: 与 `useSWR` 的 `isLoading` 返回值相同
 - `isValidating`: 与 `useSWR` 的 `isValidating` 返回值相同
 - `mutate`: 和 `useSWR` 的绑定 mutate 函数一样，但是操作 data 数组
 - `size`: *即将*请求和返回的页面数

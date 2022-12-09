@@ -22,10 +22,14 @@ useSWR('/api/user', url => fetchWithToken(url, token))
 Вместо этого вы можете использовать **массив** в качестве параметра `key`, который содержит несколько аргументов `fetcher`:
 
 ```js
-const { data: user } = useSWR(['/api/user', token], fetchWithToken)
+const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-Функция `fetchWithToken` по-прежнему принимает те же 2 аргумента, но ключ кеша теперь также будет связан с `token`.
+The `fetcher` function accepts the `key` parameter as is, and the cache key will also be associated with the entire `key` argument. In the above example, `url` and `token` are both tight to the cache key.
+
+<Callout emoji="⚠️">
+  In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
+</Callout>
 
 ## Передача объектов
 

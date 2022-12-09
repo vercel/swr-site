@@ -24,6 +24,7 @@ interface Cache<Data> {
   get(key: string): Data | undefined
   set(key: string, value: Data): void
   delete(key: string): void
+  keys(): IterableIterator<string>
 }
 ```
 
@@ -187,13 +188,28 @@ describe('test suite', async () => {
 })
 ```
 
-### 캐시에 접근하기
-
-알림: 캐시를 직접 쓰면 안 됩니다. 정의되지 않은 동작을 유발할 수도 있습니다.
+### Modify the Cache Data
 
 ```jsx
 const { cache } = useSWRConfig()
 
 cache.get(key) // 키에 대한 현재 데이터 가져오기.
-cache.clear()  // ⚠️ 모든 캐시를 삭제하기. SWR은 다시 렌더링할 때 재검증합니다.
 ```
+
+<Callout emoji="🚨" type="error">
+  캐시를 직접 쓰면 안 됩니다. 정의되지 않은 동작을 유발할 수도 있습니다.
+</Callout>
+
+You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
+
+```jsx
+const { cache } = useSWRConfig()
+
+mutate(
+  key => true, // which cache keys are updated
+  undefined, // update cache data to `undefined`
+  { revalidate: false } // do not revalidate
+)
+```
+
+More information can be found [here](/docs/arguments#multiple-arguments).

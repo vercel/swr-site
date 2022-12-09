@@ -24,6 +24,7 @@ interface Cache<Data> {
   get(key: string): Data | undefined
   set(key: string, value: Data): void
   delete(key: string): void
+  keys(): IterableIterator<string>
 }
 ```
 
@@ -86,7 +87,7 @@ function Avatar() {
 
 当多个 `<SWRConfig>` 组件嵌套时，可以扩展缓存 provider。
 
-`provider` 函数的第一个参数是上层 `<SWRConfig>` 的缓存 provider（如果没有父级 `<SWRConfig>`，则为默认缓存），你可以使用它来扩展缓存 provider：  
+`provider` 函数的第一个参数是上层 `<SWRConfig>` 的缓存 provider（如果没有父级 `<SWRConfig>`，则为默认缓存），你可以使用它来扩展缓存 provider：
 
 ```jsx
 <SWRConfig value={{ provider: (cache) => newCache }}>
@@ -187,13 +188,22 @@ describe('test suite', async () => {
 })
 ```
 
-### 访问缓存
+### Modify the Cache Data
 
-警告：你不应该直接写入缓存，那样可能会导致不可预知的行为。
+<Callout emoji="🚨" type="error">
+  你不应该直接写入缓存，那样可能会导致不可预知的行为。
+</Callout>
+
+You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
 
 ```jsx
 const { cache } = useSWRConfig()
 
-cache.get(key) // 获取 key 的当前数据。
-cache.clear()  // ⚠️ 清除所有缓存。SWR 将在重新渲染时重新请求。
+mutate(
+  key => true, // which cache keys are updated
+  undefined, // update cache data to `undefined`
+  { revalidate: false } // do not revalidate
+)
 ```
+
+More information can be found [here](/docs/arguments#multiple-arguments).

@@ -14,19 +14,87 @@ It will prefetch the data when the HTML loads, even before JavaScript starts to 
 
 ## Programmatically Prefetch
 
-Sometimes, you want to preload a resource conditionally. For example, preloading the data when the user is [hovering](https://github.com/GoogleChromeLabs/quicklink) [a](https://github.com/guess-js/guess) [link](https://instant.page). The most intuitive way is to have a function to refetch and set the cache via the global [mutate](/docs/mutation):
+SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments.
 
-```js
-import { mutate } from 'swr'
+You can call `preload` even outside of React.
 
-function prefetch () {
-  mutate('/api/data', fetch('/api/data').then(res => res.json()))
-  // the second parameter is a Promise
-  // SWR will use the result when it resolves
+```jsx
+import { useState } from 'react'
+import useSWR, { preload } from 'swr'
+
+const fetcher = (url) => fetch(url).then((res) => res.json())
+
+// Preload the resource before rendering the User component below,
+// this prevents potential waterfalls in your application.
+// You can also start preloading when hovering the button or link, too.
+preload('/api/user', fetcher)
+
+function User() {
+  const { data } = useSWR('/api/user', fetcher)
+  ...
+}
+
+export default function App() {
+  const [show, setShow] = useState(false)
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Show User</button>
+      {show ? <User /> : null}
+    </div>
+  )
+}
+```
+
+Within React rendering tree, `preload` is also avaiable to use in event handlers or effects.
+
+```jsx
+function App({ userId }) {
+  const [show, setShow] = useState(false)
+
+  // preload in effects
+  useEffect(() => {
+    preload('/api/user?id=' + userId, fetcher)
+  }, [useId])
+
+  return (
+    <div>
+      <button
+        onClick={() => setShow(true)}
+        {/* preload in event callbacks */}
+        onHover={() => preload('/api/user?id=' + userId, fetcher)}
+      >
+        Show User
+      </button>
+      {show ? <User /> : null}
+    </div>
+  )
 }
 ```
 
 Together with techniques like [page prefetching](https://nextjs.org/docs/api-reference/next/router#routerprefetch) in Next.js, you will be able to load both next page and data instantly.
+
+In Suspense mode, you should utilize `preload` to avoid waterfall problems.
+
+```jsx
+import useSWR, { preload } from 'swr'
+
+// should call before rendering
+preload('/api/user', fetcher);
+preload('/api/movies', fetcher);
+
+const Page = () => {
+  // The below useSWR hooks will suspend the rendering, but the requests to `/api/user` and `/api/movies` have started by `preload` already,
+  // so the waterfall problem doesn't happen.
+  const { data: user } = useSWR('/api/user', fetcher, { suspense: true });
+  const { data: movies } = useSWR('/api/movies', fetcher, { suspense: true });
+  return (
+    <div>
+      <User user={user} />
+      <Movies movies={movies} />
+    </div>
+  );
+}
+```
 
 ## Pre-fill Data
 

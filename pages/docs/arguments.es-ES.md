@@ -22,10 +22,14 @@ Esto es **incorrecto**. Dado que el identificador (también la key del caché) d
 En su lugar, puedes utilizar un **array** como parámetro `key`, que contiene múltiples argumentos de `fetcher`:
 
 ```js
-const { data: user } = useSWR(['/api/user', token], fetchWithToken)
+const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-La función `fetchWithToken` sigue aceptando los mismo 2 argumentos, pero ahora la key del caché también estará asociada al `token`.
+The `fetcher` function accepts the `key` parameter as is, and the cache key will also be associated with the entire `key` argument. In the above example, `url` and `token` are both tight to the cache key.
+
+<Callout emoji="⚠️">
+  In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
+</Callout>
 
 ## Pasar objetos
 

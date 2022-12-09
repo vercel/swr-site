@@ -60,7 +60,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 SWR usa o [algoritmo de retentativa exponencial (em inglês)](https://en.wikipedia.org/wiki/Exponential_backoff) para tentar novamente a requisição em caso de erro.
 O algoritmo permite a aplicação se recuperar rapidamente de erros, mas não gasta muitos recursos tentando novamente muito frequentemente.
 
-Você também pode sobrescrever este comportamento através da opção [onErrorRetry](/docs/options#options):
+Você também pode sobrescrever este comportamento através da opção [onErrorRetry](/docs/api#options):
 
 ```js
 useSWR('/api/user', fetcher, {
@@ -88,7 +88,7 @@ Também é possível provê-lo via contexto de [Configuração Global](/docs/glo
 
 Você pode sempre obter o objeto de erro dentro do componente reativamente.
 Mas, no caso de você querer lidar com o erro globalmente, para notificar a UI para mostrar um [toast](https://vercel.com/design/toast) ou [snackbar](https://material.io/components/snackbars), ou reportá-lo em algum lugar como [Sentry](https://sentry.io),
-há um evento chamado [`onError`](/docs/options#options):
+há um evento chamado [`onError`](/docs/api#options):
 
 ```jsx
 <SWRConfig value={{

@@ -33,6 +33,11 @@ module.exports = withNextra({
         statusCode: 301,
       },
       {
+        source: "/docs/options",
+        destination: "/docs/api",
+        statusCode: 301
+      },
+      {
         source: "/change-log",
         destination: "/docs/change-log",
         statusCode: 301,

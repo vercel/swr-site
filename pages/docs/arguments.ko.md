@@ -23,10 +23,14 @@ useSWR('/api/user', url => fetchWithToken(url, token))
 대신에 `fetcher`의 다중 인자를 포함하는 **배열**을 `key` 파라미터로 사용할 수 있습니다.
 
 ```js
-const { data: user } = useSWR(['/api/user', token], fetchWithToken)
+const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-`fetchWithToken` 함수는 여전히 동일한 두 개의 인자를 받지만, 캐시 키는 이제 `token`과 연결되었습니다.
+The `fetcher` function accepts the `key` parameter as is, and the cache key will also be associated with the entire `key` argument. In the above example, `url` and `token` are both tight to the cache key.
+
+<Callout emoji="⚠️">
+  In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
+</Callout>
 
 ## 객체 전달
 

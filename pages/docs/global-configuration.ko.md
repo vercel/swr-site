@@ -1,6 +1,6 @@
 # 전역 설정
 
-`SWRconfig` 컨텍스트는 모든 SWR hook에 대한 전역 설정([options](/docs/options))을 제공합니다.
+`SWRconfig` 컨텍스트는 모든 SWR hook에 대한 전역 설정([options](/docs/api))을 제공합니다.
 
 ```jsx
 <SWRConfig value={options}>
@@ -35,11 +35,86 @@ function App () {
 }
 ```
 
+## Nesting Configurations
+
+`SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
+
+### Object Configuration Example
+
+```jsx
+import { SWRConfig, useSWRConfig } from 'swr'
+
+function App() {
+  return (
+    <SWRConfig
+      value={{
+        dedupingInterval: 100,
+        refreshInterval: 100,
+        fallback: { a: 1, b: 1 },
+      }}
+    >
+      <SWRConfig
+        value={{
+          dedupingInterval: 200, // will override the parent value since the value is primitive
+          fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
+        }}
+      >
+        <Page />
+      </SWRConfig>
+    </SWRConfig>
+  )
+}
+
+function Page() {
+  const config = useSWRConfig()
+  // {
+  //   dedupingInterval: 200,
+  //   refreshInterval: 100,
+  //   fallback: { a: 2,  b: 1, c: 2 },
+  // }
+}
+```
+
+### Functional Configuration Example
+
+```jsx
+import { SWRConfig, useSWRConfig } from 'swr'
+
+function App() {
+  return (
+    <SWRConfig
+      value={{
+        dedupingInterval: 100,
+        refreshInterval: 100,
+        fallback: { a: 1, b: 1 },
+      }}
+    >
+      <SWRConfig
+        value={parent => ({
+          dedupingInterval: parent.dedupingInterval * 5,
+          fallback: { a: 2, c: 2 },
+        })}
+      >
+        <Page />
+      </SWRConfig>
+    </SWRConfig>
+  )
+}
+
+function Page() {
+  const config = useSWRConfig()
+  // {
+  //   dedupingInterval: 500,
+  //   fallback: { a: 2, c: 2 },
+  // }
+}
+```
+
 ## 부가적인 APIs
 
 ### 캐시 공급자
 
-나열된 모든 [옵션](/docs/options) 외에도, `SWRConfig`는 선택적으로 `provider` 함수도 받습니다. 더 자세한 내용은 [캐시](/docs/advanced/cache) 섹션을 참고해 주세요.
+나열된 모든 [옵션](/docs/api) 외에도, `SWRConfig`는 선택적으로 `provider` 함수도 받습니다. 더 자세한 내용은 [캐시](/docs/advanced/cache) 섹션을 참고해 주세요.
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>

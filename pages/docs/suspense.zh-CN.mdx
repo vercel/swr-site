@@ -3,12 +3,7 @@ import Callout from 'nextra-theme-docs/callout'
 # Suspense
 
 <Callout emoji="🚨" type="error">
-  目前 Suspense 是 React 的一个 <strong>实验</strong> 特性。这些 API 可能会有重大改变，并且在成为 React 一部分之前不会有任何警告。<br/>
-  <a href="https://reactjs.org/docs/concurrent-mode-suspense.html" target="_blank" rel="noopener">了解更多</a>
-</Callout>
-
-<Callout>
-  注意：SSR 模式还不支持 React Suspense。
+  React still <strong>doesn't recommend</strong> using `Suspense` in data frameworks like SWR (<a href="https://reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks" target="_blank" rel="noopener">More information</a>). These APIs may change in the future as the results of our research.
 </Callout>
 
 你可以启用 `suspense` 选项，从而让 SWR 和 React Suspense 一起使用：
@@ -45,6 +40,10 @@ function App () {
 </ErrorBoundary>
 ```
 
+<Callout>
+Suspense mode suspends rendering until the data is ready, which means it causes waterfall problems easily. To avoid that, you should prefetch resources before rendering. [More information](/docs/prefetching)
+</Callout>
+
 ---
 
 ### 注意：使用条件请求
@@ -72,3 +71,7 @@ function Profile () {
 ```
 
 如果你想阅读有关该限制的更多技术细节，请查看[这里的讨论](https://github.com/vercel/swr/pull/357#issuecomment-627089889)。
+
+### Server-Side Rendering
+
+When using suspense mode on the server-side (including pre-rendering in Next.js), it's **required** to provide the initial data via [fallbackData or fallback](/docs/with-nextjs#pre-rendering-with-default-data). This means that you can't use `Suspense` to fetch data on the server side, but either doing fully client-side data fetching, or fetch the data via the framework level data fetching method(such as getStaticProps in Next.js). More discussions can be found [here](https://github.com/vercel/swr/issues/1906).

@@ -1,6 +1,6 @@
 # 全局配置
 
-`SWRConfig` 可以为所有的 SWR hook 提供全局配置 ([选项](/docs/options))。
+`SWRConfig` 可以为所有的 SWR hook 提供全局配置 ([选项](/docs/api))。
 
 ```jsx
 <SWRConfig value={options}>
@@ -35,11 +35,86 @@ function App () {
 }
 ```
 
+## Nesting Configurations
+
+`SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
+
+### Object Configuration Example
+
+```jsx
+import { SWRConfig, useSWRConfig } from 'swr'
+
+function App() {
+  return (
+    <SWRConfig
+      value={{
+        dedupingInterval: 100,
+        refreshInterval: 100,
+        fallback: { a: 1, b: 1 },
+      }}
+    >
+      <SWRConfig
+        value={{
+          dedupingInterval: 200, // will override the parent value since the value is primitive
+          fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
+        }}
+      >
+        <Page />
+      </SWRConfig>
+    </SWRConfig>
+  )
+}
+
+function Page() {
+  const config = useSWRConfig()
+  // {
+  //   dedupingInterval: 200,
+  //   refreshInterval: 100,
+  //   fallback: { a: 2,  b: 1, c: 2 },
+  // }
+}
+```
+
+### Functional Configuration Example
+
+```jsx
+import { SWRConfig, useSWRConfig } from 'swr'
+
+function App() {
+  return (
+    <SWRConfig
+      value={{
+        dedupingInterval: 100,
+        refreshInterval: 100,
+        fallback: { a: 1, b: 1 },
+      }}
+    >
+      <SWRConfig
+        value={parent => ({
+          dedupingInterval: parent.dedupingInterval * 5,
+          fallback: { a: 2, c: 2 },
+        })}
+      >
+        <Page />
+      </SWRConfig>
+    </SWRConfig>
+  )
+}
+
+function Page() {
+  const config = useSWRConfig()
+  // {
+  //   dedupingInterval: 500,
+  //   fallback: { a: 2, c: 2 },
+  // }
+}
+```
+
 ## 额外的 API
 
 ### 缓存 Provider
 
-除去以上所列的 [选项](/docs/options)，`SWRConfig` 还接受一个可选的 `provider` 函数。详细信息请参考 [缓存](/docs/advanced/cache) 这一节。
+除去以上所列的 [选项](/docs/api)，`SWRConfig` 还接受一个可选的 `provider` 函数。详细信息请参考 [缓存](/docs/advanced/cache) 这一节。
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>

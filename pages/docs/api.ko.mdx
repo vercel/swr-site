@@ -1,14 +1,14 @@
 import Callout from 'nextra-theme-docs/callout'
 
-# API 옵션
+# API
 
 ```js
-const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
+const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
 ## 파라미터
 
-- `key`: 요청을 위한 고유한 키 문자열(또는 함수 / 배열 / null) [(고급 사용법)](/docs/conditional-fetching)
+- `key`: 요청을 위한 고유한 키 문자열(또는 함수 / 배열 / null) [(상세내용)](/docs/arguments),  [(고급 사용법)](/docs/conditional-fetching)
 - `fetcher`: (_옵션_) 데이터를 가져오기 위한 함수를 반환하는 Promise [(상세내용)](/docs/data-fetching)
 - `options`: (_옵션_) SWR hook을 위한 옵션 객체
 
@@ -16,8 +16,11 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 - `data`: `fetcher`가 이행한 주어진 키에 대한 데이터(로드되지 않았다면 undefined)
 - `error`: `fetcher`가 던진 에러(또는 undefined)
+- `isLoading`: if there's an ongoing request and no "loaded data". Fallback data and previous data are not considered "loaded data"
 - `isValidating`: 요청이나 갱신 로딩의 여부
 - `mutate(data?, options?)`: 캐시 된 데이터를 뮤테이트하기 위한 함수 [（상세내용）](/docs/mutation)
+
+More information can be found [here](/docs/advanced/understanding).
 
 ## 옵션
 
@@ -41,10 +44,12 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `errorRetryCount`: 최대 에러 재시도 수
 - `fallback`: 다중 폴백 데이터의 키-값 객체 [(예시)](/docs/with-nextjs)
 - `fallbackData`: 반환될 초기 데이터(노트: hook 별로 존재)
+- `keepPreviousData = false`: return the previous key's data until the new data has been loaded [(상세내용)](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: 요청을 로드하는 데 너무 오래 걸리는 경우의 콜백 함수(`loadingTimeout`을 보세요)
 - `onSuccess(data, key, config)`: 요청이 성공적으로 종료되었을 경우의 콜백 함수
 - `onError(err, key, config)`: 요청이 에러를 반환했을 경우의 콜백 함수
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: 에러 재시도 핸들러
+- `onDiscarded(key)`: callback function when a request is ignored due to race conditions
 - `compare(a, b)`: 비논리적인 리렌더러를 회피하기 위해 반환된 데이터가 변경되었는지를 감지하는데 사용하는 비교 함수. 기본적으로 [stable-hash](https://github.com/shuding/stable-hash)을 사용합니다.
 - `isPaused()`: 갱신의 중지 여부를 감지하는 함수. `true`가 반환될 경우 가져온 데이터와 에러는 무시합니다. 기본적으로는 `false`를 반환합니다.
 - `use`: 미들웨어 함수의 배열 [(상세내용)](/docs/middleware)

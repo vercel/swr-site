@@ -46,24 +46,24 @@ Each `<Avatar>` component has a `useSWR` hook inside. Since they have the same S
 
 You can reuse your data hooks (like `useUser` in the example above) everywhere, without worrying about performance or duplicated requests.
 
-There is also a [`dedupingInterval` option](/docs/options) for overriding the default deduplication interval.
+There is also a [`dedupingInterval` option](/docs/api) for overriding the default deduplication interval.
 
 ## Deep Comparison
 
 SWR **deep compares** data changes by default. If the `data` value isn’t changed, a re-render will not be triggered.
 
-You can also customize the comparison function via the [`compare` option](/docs/options) if you want to change the behavior.
+You can also customize the comparison function via the [`compare` option](/docs/api) if you want to change the behavior.
 For example, some API responses return a server timestamp that you might want to exclude from the data diff.
 
 ## Dependency Collection
 
-`useSWR` returns 3 **stateful** values: `data`, `error` and `isValidating`, each one can be updated independently.
+`useSWR` returns 4 **stateful** values: `data`, `error`, `isLoading` and `isValidating`, each one can be updated independently.
 For example, if we print those values within a full data-fetching lifecycle, it will be something like this:
 
 ```jsx
 function App () {
-  const { data, error, isValidating } = useSWR('/api', fetcher)
-  console.log(data, error, isValidating)
+  const { data, error, isLoading, isValidating } = useSWR('/api', fetcher)
+  console.log(data, error, isLoading, isValidating)
   return null
 }
 ```
@@ -71,11 +71,11 @@ function App () {
 In the worst case (the first request failed, then the retry was successful), you will see 4 lines of logs:
 
 ```js
-// console.log(data, error, isValidating)
-undefined undefined true  // => start fetching
-undefined Error false     // => end fetching, got an error
-undefined Error true      // => start retrying
-Data undefined false      // => end retrying, get the data
+// console.log(data, error, isLoading, isValidating)
+undefined undefined true true  // => start fetching
+undefined Error false false    // => end fetching, got an error
+undefined Error true true      // => start retrying
+Data undefined false false     // => end retrying, get the data
 ```
 
 The state changes make sense. But that also means our component **rendered 4 times**.

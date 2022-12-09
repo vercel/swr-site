@@ -60,7 +60,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 SWR は [exponential backoff アルゴリズム](https://en.wikipedia.org/wiki/Exponential_backoff) を使用して、エラー時にリクエストを再試行します。
 このアルゴリズムにより、アプリはエラーから素早く回復することができますが、再試行しすぎてリソースを無駄にすることはありません。
 
-また [onErrorRetry](/docs/options#options) オプションで、この動作をオーバーライドすることもできます:
+また [onErrorRetry](/docs/api#options) オプションで、この動作をオーバーライドすることもできます:
 
 ```js
 useSWR('/api/user', fetcher, {
@@ -88,7 +88,7 @@ useSWR('/api/user', fetcher, {
 
 コンポーネント内の `error` オブジェクトをいつでもリアクティブに取得することができます。
 ただし、エラーをグローバルに処理したり、 [トースト](https://vercel.com/design/toast) や [スナックバー](https://material.io/components/snackbars) を表示するように UI に通知したり、 [Sentry](https://sentry.io) などの場所で報告する場合は、
-[`onError`](/docs/options#options) イベントがあります:
+[`onError`](/docs/api#options) イベントがあります:
 
 ```jsx
 <SWRConfig value={{
