@@ -47,6 +47,9 @@ export default {
   toc: {
     float: true,
   },
+  editLink: {
+    text: "Edit this page on GitHub",
+  },
   feedback: {
     content: () => {
       const { locale } = useRouter();

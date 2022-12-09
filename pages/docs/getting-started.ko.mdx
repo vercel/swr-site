@@ -1,4 +1,4 @@
-import { Callout } from 'nextra-theme-docs'
+import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 import Link from 'next/link'
 
 # 시작하기
@@ -7,15 +7,23 @@ import Link from 'next/link'
 
 React 프로젝트 폴더 안에서 다음을 실행하세요.
 
-```plaintext
-yarn add swr
-```
-
-npm을 사용한다면
-
-```plaintext
-npm install swr
-```
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tab>
+    ```bash
+    pnpm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    npm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    yarn add swr
+    ```
+  </Tab>
+</Tabs>
 
 ## 빠른 시작
 

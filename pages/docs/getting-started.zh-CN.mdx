@@ -1,4 +1,4 @@
-import { Callout } from 'nextra-theme-docs';
+import { Callout, Tabs, Tab } from 'nextra-theme-docs';
 import Link from "next/link";
 
 # 入门
@@ -7,15 +7,23 @@ import Link from "next/link";
 
 在 React 项目目录运行以下命令：
 
-```plaintext
-yarn add swr
-```
-
-或者用 npm:
-
-```plaintext
-npm install swr
-```
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tab>
+    ```bash
+    pnpm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    npm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    yarn add swr
+    ```
+  </Tab>
+</Tabs>
 
 ## 快速开始
 

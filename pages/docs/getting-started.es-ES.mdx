@@ -1,4 +1,4 @@
-import { Callout } from 'nextra-theme-docs'
+import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 import Link from 'next/link'
 
 # Comienza
@@ -7,15 +7,23 @@ import Link from 'next/link'
 
 Dentro del directorio de su proyecto React, ejecute lo siguiente:
 
-```plaintext
-yarn add swr
-```
-
-O con npm
-
-```plaintext
-npm install swr
-```
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tab>
+    ```bash
+    pnpm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    npm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    yarn add swr
+    ```
+  </Tab>
+</Tabs>
 
 ## Inicio rápido
 
