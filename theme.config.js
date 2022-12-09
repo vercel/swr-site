@@ -33,6 +33,16 @@ const FEEDBACK_LINK_WITH_TRANSLATIONS = {
   "zh-CN": "有疑问？给我们反馈 →",
   "pt-BR": "Dúvidas? Nos dê feedback →",
 };
+
+const EDIT_TEXT = {
+  "en-US": "Edit this page on GitHub →",
+  "es-ES": "Edite esta página en GitHub →",
+  ja: "Github で編集する →",
+  ko: "Github에서 이 페이지 편집하기 →",
+  ru: "Редактировать на GitHub →",
+  "zh-CN": "在 GitHub 上编辑本页 →",
+};
+
 /** @type {import('nextra-theme-docs').DocsThemeConfig} */
 export default {
   project: {
@@ -48,7 +58,10 @@ export default {
     float: true,
   },
   editLink: {
-    text: "Edit this page on GitHub",
+    text: () => {
+      const { locale } = useRouter();
+      return EDIT_TEXT[locale] || EDIT_TEXT["en-US"];
+    },
   },
   feedback: {
     content: () => {
