@@ -1,15 +1,16 @@
 {
   "index": {
-    "title": "Introducción",
+    "title": "Introduction",
     "type": "page",
-    "hidden": true
+    "hidden": true,
+    "display": "hidden"
   },
   "docs": {
     "title": "Docs",
     "type": "page"
   },
   "examples": {
-    "title": "Ejemplos",
+    "title": "Examples",
     "type": "page"
   },
   "blog": {

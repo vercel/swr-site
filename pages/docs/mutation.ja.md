@@ -86,7 +86,7 @@ function App () {
 }
 ```
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 <Callout>
 これは同じスコープの [キャッシュプロバイダ](/docs/advanced/cache) 内の SWR フックに対して再検証の指示を一斉送信します。もしキャッシュプロバイダが存在しない場合、全ての SWR フックに対して一斉送信されます。

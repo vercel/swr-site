@@ -34,7 +34,7 @@ The `fetcher` function accepts the `key` parameter as is, and the cache key will
 
 ## Passando Objetos
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 <Callout>
   Desde a versão 1.1.0, chaves de objeto serão serializadas por baixo dos panos automaticamente. 

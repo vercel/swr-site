@@ -1,8 +1,11 @@
 const withNextra = require("nextra")({
   theme: "nextra-theme-docs",
   themeConfig: "./theme.config.js",
-  unstable_flexsearch: true,
-  unstable_staticImage: true,
+  staticImage: true,
+  flexsearch: {
+    codeblocks: false,
+  },
+  defaultShowCopyCode: true,
 });
 
 module.exports = withNextra({
@@ -35,7 +38,7 @@ module.exports = withNextra({
       {
         source: "/docs/options",
         destination: "/docs/api",
-        statusCode: 301
+        statusCode: 301,
       },
       {
         source: "/change-log",
@@ -59,4 +62,5 @@ module.exports = withNextra({
       },
     ];
   },
+  reactStrictMode: true,
 });

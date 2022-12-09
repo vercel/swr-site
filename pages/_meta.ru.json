@@ -1,19 +1,20 @@
 {
   "index": {
-    "title": "前書き",
+    "title": "Введение",
     "type": "page",
-    "hidden": true
+    "hidden": true,
+    "display": "hidden"
   },
   "docs": {
-    "title": "ドキュメント",
+    "title": "Документация",
     "type": "page"
   },
   "examples": {
-    "title": "例",
+    "title": "Примеры",
     "type": "page"
   },
   "blog": {
-    "title": "ブログ",
+    "title": "Блог",
     "type": "page",
     "theme": {
       "sidebar": false

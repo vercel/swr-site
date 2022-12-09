@@ -1,19 +1,20 @@
 {
   "index": {
-    "title": "Введение",
+    "title": "Introducción",
     "type": "page",
-    "hidden": true
+    "hidden": true,
+    "display": "hidden"
   },
   "docs": {
-    "title": "Документация",
+    "title": "Docs",
     "type": "page"
   },
   "examples": {
-    "title": "Примеры",
+    "title": "Ejemplos",
     "type": "page"
   },
   "blog": {
-    "title": "Блог",
+    "title": "Blog",
     "type": "page",
     "theme": {
       "sidebar": false

@@ -32,7 +32,7 @@ The `fetcher` function accepts the `key` parameter as is, and the cache key will
 
 ## 传入对象
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 <Callout>
   从 SWR 1.1.0 开始，object 类型的 keys 可以在内部自动被序列化。
