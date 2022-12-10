@@ -1,7 +1,7 @@
-export default function Authors({ date, children }) {
+export default function Authors({ date, children, by = "by" }) {
   return (
     <div className="mt-8 mb-16 text-gray-400 text-sm">
-      {date} by {children}
+      {date} {by} {children}
     </div>
   );
 }

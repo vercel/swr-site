@@ -22,8 +22,7 @@ useSWR(['user', 8], ([arg0, arg1]) => {})
 useSWR(() => ['user', 8], ([arg0, arg1]) => {})
 ```
 
-You can also explicitly specify the types for `key` and `fetcher`'s arguments.
-Вы также можете явно указать типы `key` и аргументов `fetcher`.
+Вы также можете явно указать типы аргументов `key` и `fetcher`
 
 ```typescript
 import useSWR, { Key, Fetcher } from 'swr'
@@ -35,12 +34,12 @@ const { data } = useSWR(uid, fetcher)
 // `data` будет `User | undefined`.
 ```
 
-By default, [the error thrown](/docs/error-handling) inside the `fetcher` function has type `any`. The type can also explicitly specified.
+По умолчанию [ошибка вызванная](/docs/error-handling) внутри функции `fetcher` имеет тип `any`. Тип также может быть указан явно.
 
 ```typescript
 const { data, error } = useSWR<User, Error>(uid, fetcher);
-// `data` will be `User | undefined`.
-// `error` will be `Error | undefined`.
+// `data` будет `User | undefined`.
+// `error` будет `Error | undefined`.
 ```
 
 ### useSWRInfinite
