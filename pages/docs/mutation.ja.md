@@ -247,7 +247,7 @@ const Page = () => {
         trigger();
         setShow(true);
       }}>Show User</button>
-      {show && user ? <div>{usre.name}</div> : null}
+      {show && user ? <div>{user.name}</div> : null}
     </div>
   );
 }
