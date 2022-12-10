@@ -3,7 +3,7 @@ import Callout from 'nextra-theme-docs/callout'
 # Задержка (Suspense)
 
 <Callout emoji="🚨" type="error">
-  React still <strong>doesn't recommend</strong> using `Suspense` in data frameworks like SWR (<a href="https://reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks" target="_blank" rel="noopener">More information</a>). These APIs may change in the future as the results of our research.
+  React по-прежнему <strong>не рекомендует</strong> использовать Suspense в таких фреймворках, как SWR. (<a href="https://ru.reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks" target="_blank" rel="noopener">Дополнительная информация</a>). По результатам нашего исследования эти API могут измениться в будущем.
 </Callout>
 
 Вы можете включить опцию `suspense`, чтобы использовать SWR с React Suspense:
@@ -42,7 +42,7 @@ function App () {
 ```
 
 <Callout>
-Suspense mode suspends rendering until the data is ready, which means it causes waterfall problems easily. To avoid that, you should prefetch resources before rendering. [More information](/docs/prefetching)
+Режим Suspense приостанавливает рендеринг до тех пор, пока данные не будут готовы, что означает, что он легко вызывает проблемы водопада. Чтобы избежать этого, вы должны делать предвыборку ресурсов перед рендерингом. [Дополнительная информация](/docs/prefetching)
 </Callout>
 
 ---
@@ -73,6 +73,6 @@ function Profile () {
 
 Если вы хотите узнать больше технических подробностей об этом ограничении, смотрите [обсуждения здесь](https://github.com/vercel/swr/pull/357#issuecomment-627089889).
 
-### Server-Side Rendering
+### Серверный рендеринг (SSR)
 
-When using suspense mode on the server-side (including pre-rendering in Next.js), it's **required** to provide the initial data via [fallbackData or fallback](/docs/with-nextjs#pre-rendering-with-default-data). This means that you can't use `Suspense` to fetch data on the server side, but either doing fully client-side data fetching, or fetch the data via the framework level data fetching method(such as getStaticProps in Next.js). More discussions can be found [here](https://github.com/vercel/swr/issues/1906).
+При использовании режима задержки на сервере (включая предварительный рендеринг в Next.js) **требуется** предоставить исходные данные через [fallbackData или fallback](/docs/with-nextjs#предварительный-рендеринг-с-исходными-данными). Это означает, что вы не можете использовать `Suspense` для получения данных на сервере, а либо полностью извлекаете данные на стороне клиента, либо извлекаете данные с помощью метода извлечения данных на уровне фреймворка (например, getStaticProps в Next.js). Больше обсуждений можно найти [здесь](https://github.com/vercel/swr/issues/1906).
