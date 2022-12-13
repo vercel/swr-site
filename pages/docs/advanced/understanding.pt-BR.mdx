@@ -1,59 +1,59 @@
 import Callout from 'nextra-theme-docs/callout'
 import Video from 'components/video'
 
-# Understanding SWR
+# Entendendo o SWR
 
-## State Machine
+## Máquina de Estado
 
-`useSWR` returns `data`, `error`, `isLoading`, and `isValidating` depending on the state of the `fetcher` function. This diagrams describe how SWR returns values in some scenarios.
+`useSWR` retorna `data`, `error`, `isLoading` e `isValidating` dependendo do estado da função `fetcher`. Esses diagramas descrevem como o SWR retorna valores em alguns cenários.
 
-### Fetch and Revalidate
+### Obter e Revalidar
 
-This pattern is to fetch data and revalidate it later.
+Esse padrão é para obter dados e revalidar depois.
 
-![A pattern for fetch and revalidate](/img/understanding/fetch-and-revalidate.svg)
+![Um padrão para obter e revalidar](/img/understanding/fetch-and-revalidate.svg)
 
-### Key Change
+### Mudança de Chave
 
-This pattern is to fetch data and change the key and revalidate it later.
+Esse padrão é para obter dados, mudar a chave, e revalidar depois.
 
-![A pattern for key change](/img/understanding/key-change.svg)
+![Um padrão para mudança de chave.](/img/understanding/key-change.svg)i
 
-### Key Change + Previous Data
+### Mudança de Chave + Dados Antigos
 
-This pattern is to fetch data and change the key and revalidate it later with the `keepPreviousData` option.
+Esse padrão é para obter dados, mudar a chave e revalidar depois usando a opção `keepPreviousData`.
 
-![A pattern for key change + previous data](/img/understanding/key-change-previous-data.svg)
+![Um padrão para mudança de chave + dados antigos](/img/understanding/key-change-previous-data.svg)
 
 ### Fallback
 
-This pattern is to fetch data and revalidate it later with fallback data.
+Esse padrão é para obter dados e revalidar depois usando dados de fallback.
 
-![A pattern for fallback](/img/understanding/fallback.svg)
+![Um padrão para fallback](/img/understanding/fallback.svg)
 
-### Key Change + Fallback
+### Mudança de Chave + Fallback
 
-This pattern is to fetch data and change the key and revalidate it later with fallback data.
+Esse padrão é para obter dados, mudar a chave e revalidar depois com dados de fallback.
 
-![A pattern for key change + fallback](/img/understanding/key-change-fallback.svg)
+![Um padrão para mudança de chave + fallback](/img/understanding/key-change-fallback.svg)
 
-### Key Change + Previous Data + Fallback
+### Mudança de Chave + Dados Antigos + Fallback
 
-This pattern is to fetch data and change the key and revalidate it later with the `keepPreviousData` option and fallback data.
+Esse padrão é para obter dados, mudar a chave, revalidar depois usando a opção `keepPreviousData` e com dados de fallback.
 
-![A pattern for key change + previous data + fallback](/img/understanding/key-change-previous-data-fallback.svg)
+![Um padrão para mudança de chave + dados antigos + fallback](/img/understanding/key-change-previous-data-fallback.svg)
 
-## Combining with isLoading and isValidating for better UX
+## Combinando com isLoading e isValidating para melhorar a UX
 
-Comparing to the existing `isValidating` value, `isLoading` is a new property that can help you for the more general loading cases for UX.
+Comparado com o valor existente de `isValidating`, `isLoading` é uma nova propriedade que pode te ajudar para os casos de carregamento mais gerais para UX.
 
-- `isValidating` becomes `true` whenever there is an ongoing request **whatever the the data is loaded or not**
-- `isLoading` becomes `true` when there is an ongoing request and **data is not loaded yet**.
+- `isValidating` se torna `true` toda vez que há um requisição em andamento **independente se os dados foram carregados ou não**
+- `isLoading` se torna `true` quando há um requisição em andamento e **os dados ainda não foram carregados**.
 
-Simply saying you can use `isValidating` for indicating everytime there is an ongoing revalidation, and `isLoading` for indicating that SWR is revalidating but there is no data yet to display.
+Simplesmente dizendo que você pode usar `isValidating` para indicar toda vez que há uma requisição em andamento e `isLoading` para indicar que o SWR está revalidando mas ainda não há dados para exibir.
 
 <Callout emoji="📝">
-  Fallback data and previous data are not considered "loaded data," so when you use fallback data or enable the keepPreviousData option, you might have data to display.
+  Dados de fallback e dados antigos não são considerados "dados carregados", então quando você usa dados de fallback ou habilita a opção `keepPreviousData`, você talvez terá dados para exibir.
 </Callout>
 
 ```jsx
@@ -62,12 +62,12 @@ function Stock() {
     refreshInterval: 3000
   });
 
-  // If it's still loading the initial data, there is nothing to display.
-  // We return a skeleton here.
+  // Se ainda estiver carregando os dados iniciais, não há nada para exibir.
+  // Iremos retornar um skeleton aqui.
   if (isLoading) return <div className="skeleton" />;
 
-  // Otherwise, display the data and a spinner that indicates a background
-  // revalidation.
+  // Se não, exibiremos os dados e um spinner que indica a revalidação
+  //em segundo plano.
   return (
     <>
       <div>${data}</div>
@@ -77,13 +77,13 @@ function Stock() {
 }
 ```
 
-![An example of using the isLoading state](/img/understanding/isloading.gif)
+![Um exemplo de uso do isLoading](/img/understanding/isloading.gif)
 
-You can find the code example [here](https://codesandbox.io/s/swr-isloading-jtopow)
+Você pode achar o código de exemplo [aqui](https://codesandbox.io/s/swr-isloading-jtopow)
 
-## Return previous data for better UX
+## Retorne dados antigos para melhorar a UX
 
-When doing data fetching based on continuous user actions, e.g. real-time search when typing, keeping the previous fetched data can improve the UX a lot. `keepPreviousData` is an option to enable that behavior. Here's a simple search UI:
+Quando estiver obtendo dados baseado em ações contínuas do usuário, como por exemplo, pesquisa em tempo real enquanto digita, manter os últimos dados obtidos pode melhorar bastante a UX. `keepPreviousData` é uma opção para habilitar esse comportamento. Aqui está uma UI de pesquisa simples:
 
 ```jsx
 function Search() {
@@ -99,7 +99,7 @@ function Search() {
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search..."
+        placeholder="Pesquisar..."
       />
 
       <div className={isLoading ? "loading" : ""}>
@@ -110,16 +110,16 @@ function Search() {
 }
 ```
 
-With `keepPreviousData` enabled, you will still get the previous data even if you change the SWR key and the data for the new key starts loading again.
+Com o `keepPreviousData` habilitado, você ainda obterá os dados antigos mesmo se você mudar a chave do SWR e a data com a chave nova começar a carregar denovo.
 
 <Video
   src="https://user-images.githubusercontent.com/3676859/163695903-a3eb1259-180e-41e0-821e-21c320201194.mp4"
-  caption="Keep previous search results when keepPreviousData has been enabled"
+  caption="Manter resultados de busca antigos quando keepPreviousData estiver habilitado"
   ratio={640/730}
 />
 
-You can find the full code for this example here: https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m.
+Você pode achar o código completo para esse exemplo aqui: (https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m).
 
-## Dependency Collection for performance
+## Coleção de Dependência para performance
 
-SWR only triggers re-rendering when the states used in the component have been updated. If you only use `data` in the component, SWR ignores the updates of other properties like `isValidating`, and `isLoading`. This reduces rendering counts a lot. More information can be found [here](/docs/advanced/performance#dependency-collection).
+SWR apenas aciona a nova renderização quando os estados usados no componente forem atualizados. Se você apenas usar `data` no componente, o SWR irá ignorar as atualizações das outras propriedades como `isValidating` e `isLoading`. Isso reduz bastante o número de renderizações. Mais informações podem ser encontradas [aqui](/docs/advanced/performance#dependency-collection).
