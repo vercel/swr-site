@@ -183,7 +183,7 @@ async function sendRequest(url, { arg }) {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(arg)
-  })
+  }).then(res => res.json())
 }
 
 function App() {
