@@ -54,7 +54,7 @@ function App({ userId }) {
   // preload in effects
   useEffect(() => {
     preload('/api/user?id=' + userId, fetcher)
-  }, [useId])
+  }, [userId])
 
   return (
     <div>
