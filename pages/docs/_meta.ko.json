@@ -17,8 +17,7 @@
   "advanced": "고급",
   "change-log": {
     "title": "변경 로그",
-    "theme": {
-      "typesetting": "article"
-    }
+    "href": "https://github.com/vercel/swr/releases",
+    "newWindow": true
   }
 }

@@ -17,8 +17,7 @@
   "advanced": "Avançado",
   "change-log": {
     "title": "Change Log",
-    "theme": {
-      "typesetting": "article"
-    }
+    "href": "https://github.com/vercel/swr/releases",
+    "newWindow": true
   }
 }

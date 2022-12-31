@@ -17,8 +17,7 @@
   "advanced": "高级",
   "change-log": {
     "title": "更新日志",
-    "theme": {
-      "typesetting": "article"
-    }
+    "href": "https://github.com/vercel/swr/releases",
+    "newWindow": true
   }
 }
