@@ -15,5 +15,10 @@
   "suspense": "サスペンス",
   "middleware": "ミドルウェア",
   "advanced": "高度な使い方",
-  "change-log": "変更履歴"
+  "change-log": {
+    "title": "変更履歴",
+    "theme": {
+      "typesetting": "article"
+    }
+  }
 }

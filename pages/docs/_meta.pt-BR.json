@@ -15,5 +15,10 @@
   "suspense": "Suspense",
   "middleware": "Middleware",
   "advanced": "Avançado",
-  "change-log": "Change Log"
+  "change-log": {
+    "title": "Change Log",
+    "theme": {
+      "typesetting": "article"
+    }
+  }
 }

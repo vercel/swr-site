@@ -8,7 +8,7 @@ export default function BlogIndex({ more = "Read more" }) {
     return (
       <div className="">
         <h3>
-          <Link href={page.route}>
+          <Link href={page.route} legacyBehavior>
             <A style={{ color: "inherit", textDecoration: "none" }}>
               {page.meta?.title || page.frontMatter?.title || page.name}
             </A>

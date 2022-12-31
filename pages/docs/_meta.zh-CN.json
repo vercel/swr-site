@@ -15,5 +15,10 @@
   "suspense": "Suspense",
   "middleware": "中间件",
   "advanced": "高级",
-  "change-log": "更新日志"
+  "change-log": {
+    "title": "更新日志",
+    "theme": {
+      "typesetting": "article"
+    }
+  }
 }

@@ -15,5 +15,10 @@
   "suspense": "Задержка (Suspense)",
   "middleware": "Промежуточное ПО (Middleware)",
   "advanced": "Продвинутые",
-  "change-log": "Журнал изменений"
+  "change-log": {
+    "title": "Журнал изменений",
+    "theme": {
+      "typesetting": "article"
+    }
+  }
 }
