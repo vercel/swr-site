@@ -14,9 +14,9 @@ import { Callout } from 'nextra-theme-docs'
 
 ### API
 
-_Notes: The function name shouldn't be capitalized (e.g. `myMiddleware` instead of `MyMiddleware`) or React lint rules will throw `Rules of Hook` error_
+_Примечание: Имя функции не должно быть написано с заглавной буквы (например, `myMiddleware` вместо `MyMiddleware`), иначе правила линтера React будут выдавать ошибку `Rules of Hook`_
 
-[TypeScript](https://swr.vercel.app/docs/typescript#middleware-types)
+[TypeScript](https://swr.vercel.app/docs/typescript#типы-промежуточного-по)
 
 ```jsx
 function myMiddleware (useSWRNext) {
@@ -175,7 +175,7 @@ const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 ### Сериализация ключей объекта
 
 <Callout>
-  Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
+  Начиная с версии SWR 1.1.0 объектно-подобные ключи будут автоматически сериализоваться «из коробки».
 </Callout>
 
 <Callout emoji="⚠️">

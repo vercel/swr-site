@@ -45,7 +45,7 @@ export default function App() {
 }
 ```
 
-Within React rendering tree, `preload` is also avaiable to use in event handlers or effects.
+Within React rendering tree, `preload` is also available to use in event handlers or effects.
 
 ```jsx
 function App({ userId }) {
@@ -54,7 +54,7 @@ function App({ userId }) {
   // preload in effects
   useEffect(() => {
     preload('/api/user?id=' + userId, fetcher)
-  }, [useId])
+  }, [userId])
 
   return (
     <div>

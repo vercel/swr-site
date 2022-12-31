@@ -54,7 +54,7 @@ function App({ userId }) {
   // エフェクトの中でプリロードする
   useEffect(() => {
     preload('/api/user?id=' + userId, fetcher)
-  }, [useId])
+  }, [userId])
 
   return (
     <div>

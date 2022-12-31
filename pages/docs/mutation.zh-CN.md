@@ -182,7 +182,7 @@ async function sendRequest(url, { arg }) {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(arg)
-  })
+  }).then(res => res.json())
 }
 
 function App() {
@@ -246,7 +246,7 @@ const Page = () => {
         trigger();
         setShow(true);
       }}>Show User</button>
-      {show && user ? <div>{usre.name}</div> : null}
+      {show && user ? <div>{user.name}</div> : null}
     </div>
   );
 }

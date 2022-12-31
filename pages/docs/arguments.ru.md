@@ -25,10 +25,10 @@ useSWR('/api/user', url => fetchWithToken(url, token))
 const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-The `fetcher` function accepts the `key` parameter as is, and the cache key will also be associated with the entire `key` argument. In the above example, `url` and `token` are both tight to the cache key.
+Функция `fetcher` принимает параметр `key` как есть, и ключ кеша также будет связан со всем аргументом `key`. В приведенном выше примере `url` и `token` тесно связаны с ключом кеша.
 
 <Callout emoji="⚠️">
-  In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
+  В более старых версиях (< 2) функция `fetcher` принимает параметр `key` в качестве аргументов отдельно
 </Callout>
 
 ## Передача объектов

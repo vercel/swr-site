@@ -1,6 +1,6 @@
 # Глобальная конфигурация
 
-Контекст `SWRConfig` может предоставить глобальные конфигурации ([опции](/docs/api)) для всех SWR хуков.
+Контекст `SWRConfig` может предоставить глобальные конфигурации ([опции](/docs/api#опции)) для всех SWR хуков.
 
 ```jsx
 <SWRConfig value={options}>
@@ -35,11 +35,11 @@ function App () {
 }
 ```
 
-## Nesting Configurations
+## Вложение конфигураций
 
-`SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
+`SWRConfig` объединяет конфигурацию из родительского контекста. Он может принимать либо объект, либо функциональную конфигурацию. Функциональная получает в качестве аргумента родительскую конфигурацию и возвращает новую конфигурацию, которую вы можете настроить самостоятельно.
 
-### Object Configuration Example
+### Пример объектной конфигурации
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -55,8 +55,8 @@ function App() {
     >
       <SWRConfig
         value={{
-          dedupingInterval: 200, // will override the parent value since the value is primitive
-          fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
+          dedupingInterval: 200, // переопределит родительское значение, поскольку значение является примитивным
+          fallback: { a: 2, c: 2 }, // будет сливаться с родительским значением, поскольку значение является объединяемым объектом
         }}
       >
         <Page />
@@ -75,7 +75,7 @@ function Page() {
 }
 ```
 
-### Functional Configuration Example
+### Пример функциональной конфигурации
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -114,8 +114,8 @@ function Page() {
 
 ### Провайдер кеша
 
-Помимо всех перечисленных [опций](/docs/api), `SWRConfig` также принимает опциональную функцию `provider`.
-Пожалуйста, обратитесь к разделу [Кэш](/docs/advanced/cache) для более подробной информации.
+Помимо всех перечисленных [опций](/docs/api#опции), `SWRConfig` также принимает опциональную функцию `provider`.
+Пожалуйста, обратитесь к разделу [Кеш](/docs/advanced/cache) для более подробной информации.
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>

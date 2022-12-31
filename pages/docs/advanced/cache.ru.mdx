@@ -21,7 +21,7 @@ import { Callout } from 'nextra-theme-docs'
 ## Провайдер кеша
 
 Поставщик кеша — это объект типа Map, который соответствует следующему определению TypeScript
-(которое может быть импортировано из `swr`):
+(может быть импортировано из `swr`):
 
 ```typescript
 interface Cache<Data> {
@@ -66,8 +66,8 @@ import { Cache } from 'components/diagrams/cache'
   <Cache/>
 </div>
 
-При вложенности, хуки SWR будут использовать провайдер кеша верхнего уровня. Если нет провайдера кеша
-верхнего уровня, он возвращается к провайдеру кэша по умолчанию, который является пустым `Map`.
+В случае вложенности, хуки SWR будут использовать провайдер кеша верхнего уровня. Если нет провайдера кеша
+верхнего уровня, он возвращается к провайдеру кеша по умолчанию, который является пустым `Map`.
 
 <Callout emoji="⚠️">
   Если используется провайдер кеша, глобальный `mutate` **не** будет работать для хуков SWR в пределе
@@ -205,7 +205,7 @@ describe('тестирование', async () => {
 })
 ```
 
-### Modify the Cache Data
+### Модификация данных кеша
 
 ```jsx
 const { cache } = useSWRConfig()
@@ -217,16 +217,16 @@ cache.get(key) // Получить текущие данные для ключа
   вы не должны писать в кеш напрямую, это может привести к неопределенному поведению.
 </Callout>
 
-You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
+Вы можете использовать [`mutate`](/docs/mutation) для модификации кеша. Например, вы можете очистить все данные кеша, как показано ниже.
 
 ```jsx
 const { cache } = useSWRConfig()
 
 mutate(
-  key => true, // which cache keys are updated
-  undefined, // update cache data to `undefined`
-  { revalidate: false } // do not revalidate
+  key => true, // какие ключи кеша обновляются
+  undefined, // обновить данные кеша до `undefined`
+  { revalidate: false } // не ревалидировать
 )
 ```
 
-More information can be found [here](/docs/arguments#multiple-arguments).
+Дополнительную информацию можно найти [здесь](/docs/arguments#множественные-аргументы).

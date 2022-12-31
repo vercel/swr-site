@@ -47,7 +47,7 @@ This pattern is to fetch data and change the key and revalidate it later with th
 
 Comparing to the existing `isValidating` value, `isLoading` is a new property that can help you for the more general loading cases for UX.
 
-- `isValidating` becomes `true` whenever there is an ongoing request **whatever the the data is loaded or not**
+- `isValidating` becomes `true` whenever there is an ongoing request **whether the data is loaded or not**
 - `isLoading` becomes `true` when there is an ongoing request and **data is not loaded yet**.
 
 Simply saying you can use `isValidating` for indicating everytime there is an ongoing revalidation, and `isLoading` for indicating that SWR is revalidating but there is no data yet to display.
