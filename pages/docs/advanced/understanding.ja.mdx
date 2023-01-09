@@ -120,6 +120,6 @@ function Search() {
 
 この例のコードはこちらです: https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m.
 
-## パフォーマンのための依存収集
+## パフォーマンスのための依存収集
 
 SWR はコンポーネントで使われているデータが更新された場合のみ再レンダリングします。コンポーネントの中で `data` しか使っていない場合、SWR は `isValidating` や `isLoading` のプロパティの更新を無視します。これはレンダリングの回数を減らします。詳細については [こちら](/docs/advanced/performance#dependency-collection)。
