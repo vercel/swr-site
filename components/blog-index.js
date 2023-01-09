@@ -19,7 +19,7 @@ export default function BlogIndex({ more = "Read more" }) {
           <span className="inline-block">
             <Link
               href={page.route}
-              className="underline underline-offset-2 decoration-from-font"
+              className="text-[color:hsl(var(--nextra-primary-hue),100%,50%)] underline underline-offset-2 decoration-from-font"
             >
               {more + " →"}
             </Link>
