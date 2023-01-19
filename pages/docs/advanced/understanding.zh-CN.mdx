@@ -19,27 +19,27 @@ import Video from 'components/video'
 
 ![A pattern for key change](/img/understanding/key-change.svg)
 
-### 改变 Key 值 + 保留上一次请求的数据
+### 改变 Key 值 + 保留之前的数据
 
 这种模式表示在开启 `keepPreviousData` 选项时，请求数据，再改变 key 值，并在之后重新请求的场景。
 
 ![A pattern for key change + previous data](/img/understanding/key-change-previous-data.svg)
 
-### 设置回退数据
+### 设置预请求数据
 
-这种模式表示设置了回退数据时，请求数据，并在之后进行重新请求的场景。
+这种模式表示设置了预请求数据时，请求数据，并在之后进行重新请求的场景。
 
 ![A pattern for fallback](/img/understanding/fallback.svg)
 
-### 改变 Key 值 + 设置回退数据
+### 改变 Key 值 + 设置预请求数据
 
-这种模式表示在设置回退数据时，请求数据，再改变 key 值，并在之后进行重新请求的场景。
+这种模式表示在设置预请求数据时，请求数据，再改变 key 值，并在之后进行重新请求的场景。
 
 ![A pattern for key change + fallback](/img/understanding/key-change-fallback.svg)
 
-### 改变 Key 值 + 保留上一次请求的数据 + 设置回退数据
+### 改变 Key 值 + 保留之前的数据 + 设置预请求数据
 
-这种模式表示在开启 `keepPreviousData` 选项并设置回退数据时，请求数据，再改变 key 值，并在之后进行重新请求的场景。
+这种模式表示在开启 `keepPreviousData` 选项并设置预请求数据时，请求数据，再改变 key 值，并在之后进行重新请求的场景。
 
 ![A pattern for key change + previous data + fallback](/img/understanding/key-change-previous-data-fallback.svg)
 
@@ -53,7 +53,7 @@ import Video from 'components/video'
 简而言之，我们可以使用 `isValidating` 来表示每次正在进行的重新请求；使用 `isLoding` 来表示 SWR 正在重新请求中，但目前还没有数据可以展示。
 
 <Callout emoji="📝">
-  回退数据（Fallback Data）和上一次请求的数据（Previous Data）不会被认为是“已加载的数据”，因此在设置了回退数据或启用 `keepPreviousData` 选项时，你可能有数据要展示。
+  预请求数据（Fallback Data）和之前的数据（Previous Data）不会被认为是“已加载的数据”，因此在设置了预请求数据或启用 `keepPreviousData` 选项时，你可能有数据要展示。
 </Callout>
 
 ```jsx
@@ -83,9 +83,9 @@ function Stock() {
 点击 [这里](https://codesandbox.io/s/swr-isloading-jtopow) 查看完整代码示例。
 
 
-## 返回上一次请求的数据以获得更好的用户体验
+## 返回之前的数据以获得更好的用户体验
 
-在用户连续操作的情况下进行数据请时，例如输入时实时搜索，保留上一次请求的数据可以极大提升用户体验，`keepPreviousData` 选项可以用于启用该行为。下例是一个简单的用户搜索界面:
+在用户连续操作的情况下进行数据请时，例如输入时实时搜索，保留之前的数据可以极大提升用户体验，`keepPreviousData` 选项可以用于启用该行为。下例是一个简单的用户搜索界面:
 
 ```jsx
 function Search() {
@@ -112,7 +112,7 @@ function Search() {
 }
 ```
 
-如果启用了 `keepPreviousData`，即使我们改变了 SWR key 值并以新的 key 值重新开始加载，我们仍然可以保留上一次请求的数据。
+如果启用了 `keepPreviousData`，即使我们改变了 SWR key 值并以新的 key 值重新开始加载，我们仍然可以保留之前的数据。
 
 <Video
   src="https://user-images.githubusercontent.com/3676859/163695903-a3eb1259-180e-41e0-821e-21c320201194.mp4"
