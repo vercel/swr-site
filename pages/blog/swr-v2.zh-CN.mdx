@@ -20,14 +20,18 @@ import Video from 'components/video'
 </Authors>
 
 We are thrilled to announce the release of SWR 2.0, the popular React data-fetching library that enables components to fetch, cache, and mutate data and keeps the UI up-to-date with changes in that data over time.
+我们很高兴宣布 SWR 2.0 的发布，SWR 是一款主流的 React数据请求库，它使组件能够获取、缓存及更改数据，并使 UI 能随时间变化保持最新的数据。
 
 This new version comes packed with improvements and new features, such as new mutation APIs, improved optimistic UI capabilities, new DevTools, and better support for concurrent rendering. We would like to extend a huge thank you to all the contributors and maintainers who made this release possible.
+这个新版本包含了很多优化和新功能，例如新的数据变更 API，优化过的乐观 UI 功能，新的 DevTools，以及对并发渲染的更好支持。衷心感谢所有使这个版本成为可能的贡献者和维护者。
 
 ## Mutation and Optimistic UI
+## 数据更改和乐观 UI
 
 ### useSWRMutation
 
 Mutation is an important part of the data-fetching process. They allow you to make changes to your data both locally and remotely. Our existing `mutate` API allows you to revalidate and mutate resources manually. In SWR 2.0, the new hook `useSWRMutation` makes it even simpler to remotely change data using a declarative API. You can set up a mutation using the hook, and then activate it later:
+数据更改（Mutation）是数据请求过程中非常重要的一部分，它是你可以在本地或者远程修改你的数据。我们目前使用的 `mutate` API 允许你手动重新验证或者更新资源。在 SWR 2.0 中，新的 hook `useSWRMutation` 使用了声明式的 API 使远程更改数据更加简单。你可以使用 hook 设置一个数据更改，并在随后触发它。
 
 ```jsx {11,16}
 import useSWRMutation from 'swr/mutation'
@@ -54,30 +58,42 @@ function App() {
 ```
 
 The example above defines a `sendRequest` mutation that affects the `'/api/user'` resource. Unlike `useSWR`, `useSWRMutation` will not immediately start the request upon rendering. Instead, it returns a `trigger` function that can later be called to manually start the mutation.
+上例定义了一个影响 “/api/user” 资源的 `sendRequest` 数据更改。与 `useSWR` `不同，`useSWRMutation` 并不会在渲染时立即发送请求，它会返回一个 `trigger` 函数，之后可以手动调用该函数触发数据更改。
 
 The `sendRequest` function will be called when the button is clicked, with the extra argument `{ username: 'johndoe' }`. The value of `isMutating` will be set to `true` until the mutation has finished.
+`sendRequest` 函数会在按钮被点击时触发，并传入着额外的参数 `{ username: 'johndoe' }`。`isMutating` 的值会被设置为 `true` 直到数据变更的请求完成。
 
 Additionally, this new hook addresses other issues you may have with mutations:
+此外，这个新的 hook 还解决了数据变更可能带来的其他问题:
 
 - Optimistically update the UI while data is being mutated
+- 当数据发生变化时，乐观地更新 UI
 - Automatically revert when mutation fails
+- 在数据变更失败时自动回滚
 - Avoid any potential race conditions between `useSWR` and other mutations of the same resource
+- 避免了 `useSWR` 和同一资源的其他数据变更之间任何的潜在竞态条件。
 - Populate the `useSWR` cache after mutation completes
+- 数据变更完成后，填充 "useSWR "缓存。
 - ...
 
 You can find in-depth API references and examples by reading the [docs](/docs/mutation#useswrmutation) or scrolling through the next few sections.
+通过阅读 [文档](/docs/mutation#useswrmutation) 或阅读接下来的几节，你可以找到更加深入的 API 参考和示例。
 
 ### Optimistic UI
+### 乐观 UI
 
 Optimistic UI is an excellent model for creating websites that feel fast and responsive; however, it can be difficult to implement correctly. SWR 2.0 has added some new powerful options to make it easier.
+乐观 UI 是一种很好的模型用于创建让人感觉快速和敏捷的网站；然而，它可能很难正确实现。SWR 2.0 增加了一些新的强大的选项，使之更加容易实现。
 
 Let’s say we have an API that adds a new todo to the todo list and sends it to the server:
+假设我们有一个 API 用于添加一个新的待办事项到待办列表中，并将它发送到服务端
 
 ```jsx
 await addNewTodo('New Item')
 ```
 
 In our UI, we use a `useSWR` hook to display the todo list, with an “Add New Item” button that triggers this request and asks SWR to re-fetch the data via `mutate()`:
+在我们的 UI 中，我们使用 `useSWR` 这个 hook 去展示待办列表，其中的 "Add New Item" 按钮用于触发这个请求并要求 SWR 通过 `mutate()` 重新获取数据。
 
 ```jsx {7,8}
 const { mutate, data } = useSWR('/api/todos')
@@ -95,6 +111,7 @@ return <>
 ```
 
 However, the `await addNewTodo(...)` request could be very slow. When it’s ongoing, users still see the old list even if we can already know what the new list will look like. With the new `optimisticData` option, we can show the new list optimistically, before the server responds:
+然而，`await addNewTodo(...)` 请求可能会特别慢。当它正在请求时，用户看到仍然是旧的列表，即使我们已经知道新的列表会是什么样子。有了新的 `optimisticData` 选项，我们可以在服务端响应之前，乐观地展示新的列表。
 
 ```jsx {8}
 const { mutate, data } = useSWR('/api/todos')
@@ -113,8 +130,11 @@ return <>
 ```
 
 SWR will immediately update the `data` with the `optimisticData` value, and then send the request to the server. Once the request finishes, SWR will revalidate the resource to ensure it’s the latest.
+SWR 将立即用 `optimisticData` 值去更新 `data`，然后将请求发送到服务端。一旦请求完成，SWR 将重新验证该资源以确保它是最新的。
 
 Like many APIs, if the `addNewTodo(...)` request returns us the latest data from the server, we can directly show that result, too (instead of starting a new revalidation)! There’s the new `populateCache` option to tell SWR to update the local data with the mutate response:
+像许多 API 一样，如果 `addNewTodo(...)` 请求从服务端返回最新的数据，我们也可以直接显示这个结果（而不是开始一个新的重新验证）! 还有一个新的 `populateCache` 选项，告诉 SWR 用 mutate 的响应去更新本地数据。
+
 
 ```jsx {9}
 const { mutate, data } = useSWR('/api/todos')
@@ -134,6 +154,7 @@ return <>
 ```
 
 At the same time, we don’t need another revalidation afterward as the response data is from the source of truth, we can disable it with the `revalidate` option:
+同时，我们不需要请求后再进行重新验证，因为响应数据来自真实源，我们可以使用 `revalidate` 选项禁用它。
 
 ```jsx {10}
 const { mutate, data } = useSWR('/api/todos')
@@ -154,6 +175,7 @@ return <>
 ```
 
 Lastly, if `addNewTodo(...)` fails with an exception, we can revert the optimistic data (`[...data, 'New Item']`) we just set, by setting `rollbackOnError` to `true` (which is also the default option). When that happens, SWR will roll back `data` to the previous value.
+最后，如果 `addNewTodo(...)` 因为意外情况失败了，我们可以通过将 `rollbackOnError` 设置为 `true`（该选项默认开启）以回滚刚刚设置的乐观数据（`[...data, 'New Item']`）。一旦出现这种情况，SWR 会将 `data` 回滚为上一次的值。
 
 ```jsx {11}
 const { mutate, data } = useSWR('/api/todos')
@@ -175,16 +197,19 @@ return <>
 ```
 
 All these APIs are supported in the new `useSWRMutation` hook as well. To learn more about them, you can check out our [docs](/docs/mutation#optimistic-updates). And here is a demo showing that behavior:
+所有 API 都在新的 `useSWRMutationhook` hook 中得到支持。想要了解更多关于它们的信息，你可以查看我们的 [文档](https://swr.vercel.app/docs/mutation#optimistic-updates)，这里有一个 demo 用于演示这种行为:
 
 <Video
   src="/video/optimistic-ui.mp4"
-  caption="Optimistic UI with automatic error rollback"
+  caption="能自动错误回滚的乐观用户界面"
   ratio={223/584}
 />
 
 ### Mutate Multiple Keys
+### 多个 key 数据更改
 
 The global `mutate` API now accepts a filter function, where you can mutate or revalidate specific keys. This will be helpful for use cases such as invalidating all the cached data. To learn more, you can read [Mutate Multiple Keys](/docs/mutation#mutate-multiple-items) in the docs.
+全局 `mutate` API 现在接受一个 `filter` 函数，您可以在其中变异或重新验证特定的键。这对于诸如使所有缓存的数据失效之类的用例非常有帮助。要了解更多信息，可以阅读文档中的“变异多键”。
 
 ```jsx
 import { mutate } from 'swr'
