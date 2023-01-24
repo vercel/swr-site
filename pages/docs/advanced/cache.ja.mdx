@@ -203,7 +203,7 @@ cache.get(key) // キーの現在のデータを取得します。
 [`mutate`](/docs/mutation) をキャッシュを更新するために利用できます。例えば、下記のようにすることで全てのキャッシュデータをクリアできます。
 
 ```jsx
-const { cache } = useSWRConfig()
+const { mutate } = useSWRConfig()
 
 mutate(
   key => true, // どのキャッシュキーを更新するか

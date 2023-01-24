@@ -203,7 +203,7 @@ cache.get(key) // 키에 대한 현재 데이터 가져오기.
 You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
 
 ```jsx
-const { cache } = useSWRConfig()
+const { mutate } = useSWRConfig()
 
 mutate(
   key => true, // which cache keys are updated

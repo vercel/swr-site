@@ -220,7 +220,7 @@ cache.get(key) // Получить текущие данные для ключа
 Вы можете использовать [`mutate`](/docs/mutation) для модификации кеша. Например, вы можете очистить все данные кеша, как показано ниже.
 
 ```jsx
-const { cache } = useSWRConfig()
+const { mutate } = useSWRConfig()
 
 mutate(
   key => true, // какие ключи кеша обновляются
