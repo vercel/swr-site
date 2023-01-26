@@ -110,50 +110,6 @@ function Avatar() {
 
 ## Примеры
 
-### Мутация множества ключей из регулярных выражений (RegEx)
-
-Благодаря гибкости API кеш-провайдера вы даже можете создать помощник «частичной мутации».
-
-В приведенном ниже примере `matchMutate` может принимать регулярное выражение в качестве ключа
-и использоваться для мутации тех, кто соответствует этому шаблону.
-
-```js
-function useMatchMutate() {
-  const { cache, mutate } = useSWRConfig()
-  return (matcher, ...args) => {
-    if (!(cache instanceof Map)) {
-      throw new Error('matchMutate требует, чтобы провайдер кеша был экземпляром Map')
-    }
-
-    const keys = []
-
-    for (const key of cache.keys()) {
-      if (matcher.test(key)) {
-        keys.push(key)
-      }
-    }
-
-    const mutations = keys.map((key) => mutate(key, ...args))
-    return Promise.all(mutations)
-  }
-}
-```
-
-Затем внутри вашего компонента:
-
-```jsx
-function Button() {
-  const matchMutate = useMatchMutate()
-  return <button onClick={() => matchMutate(/^\/api\//)}>
-    Ревалидировать все ключи, начинающиеся на "/api/"
-  </button>
-}
-```
-
-<Callout>
-  Обратите внимание, что данный пример требует, чтобы провайдер кеша был экземпляром Map.
-</Callout>
-
 ### Постоянный кеш на основе LocalStorage
 
 Возможно, вы захотите синхронизировать свой кеш с `localStorage`. Вот пример реализации:
