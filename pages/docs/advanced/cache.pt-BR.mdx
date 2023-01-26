@@ -100,49 +100,6 @@ O primeiro argumento para a função `provider` é o cache provider do nível su
 
 ## Exemplos
 
-### Mudar Várias Chaves de RegEx
-
-Com a flexibilidade da API do cache provider, você pode até criar um auxiliar de "mutação parcial".
-
-No exemplo abaixo, `matchMutate` pode receber uma expressão regular como chave e ser usada para alterar aqueles que corresponderem a esse padrão.
-
-```js
-function useMatchMutate() {
-  const { cache, mutate } = useSWRConfig()
-  return (matcher, ...args) => {
-    if (!(cache instanceof Map)) {
-      throw new Error('matchMutate requer que o cache provider seja uma instância de Map')
-    }
-
-    const keys = []
-
-    for (const key of cache.keys()) {
-      if (matcher.test(key)) {
-        keys.push(key)
-      }
-    }
-
-    const mutations = keys.map((key) => mutate(key, ...args))
-    return Promise.all(mutations)
-  }
-}
-```
-
-Em seguida, dentro de seu componente:
-
-```jsx
-function Button() {
-  const matchMutate = useMatchMutate()
-  return <button onClick={() => matchMutate(/^\/api\//)}>
-    Revalidar todas as chaves começando com "/api/"
-  </button>
-}
-```
-
-<Callout>
-  Observe que este exemplo requer que o cache provider seja uma instância de Map.
-</Callout>
-
 ### Cache Persistente Baseado em LocalStorage
 
 Você pode querer sincronizar seu cache com `localStorage`. Aqui está um exemplo de implementação:
