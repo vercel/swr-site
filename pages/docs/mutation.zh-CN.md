@@ -1,6 +1,7 @@
 # 数据更改 & 重新验证
 
 SWR 提供了 `mutate` 和 `useSWRMutation` 两个 API 用于更改远程数据及相关缓存。
+
 ## `mutate`
 
 有两种方法可以使用 `mutate` API 来进行数据更改，全局数据更改 API 可以更改任何 key 的数据，而绑定数据更改只能更改对应 SWR hook 的数据。
