@@ -14,19 +14,87 @@ JavaScriptのダウンロードが開始される前であっても、HTMLの読
 
 ## プログラムによるプリフェッチ
 
-しばしば、リソースを条件付きでプリロードしたい場合があります。たとえば、ユーザーが [hovering](https://github.com/GoogleChromeLabs/quicklink) [a](https://github.com/guess-js/guess) [link](https://instant.page) にカーソルを合わせたときにデータをプリロードするような場合です。最も直観的な方法は、グローバルミューテートを使ってキャッシュを再取得し、設定する関数を作成することです。
+SWR は `preload` というデータをプログラマブルにプリフェッチして結果をキャッシュに保存する API を提供しています。`preload` は `key` と `fetcher` を引数として受け取ります。
 
-```js
-import { mutate } from 'swr'
+`preload` は React の外からも呼ぶことが可能です。
 
-function prefetch () {
-  mutate('/api/data', fetch('/api/data').then(res => res.json()))
-  // 2番目のパラメータはPromise
-  // SWRは、その結果を解決する際に使用します。
+```jsx
+import { useState } from 'react'
+import useSWR, { preload } from 'swr'
+
+const fetcher = (url) => fetch(url).then((res) => res.json())
+
+// User コンポーネントがレンダリングされる前にプリロードします
+// これによりウォーターフォール問題の発生を避けられます
+// また、ボタンやリンクにホバーされたタイミングでプリロードを開始することもできます
+preload('/api/user', fetcher)
+
+function User() {
+  const { data } = useSWR('/api/user', fetcher)
+  ...
+}
+
+export default function App() {
+  const [show, setShow] = useState(false)
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Show User</button>
+      {show ? <User /> : null}
+    </div>
+  )
+}
+```
+
+React のレンダリングツリー内においては, `preload` はイベントコールバックやエフェクトの中で利用可能です。
+
+```jsx
+function App({ userId }) {
+  const [show, setShow] = useState(false)
+
+  // エフェクトの中でプリロードする
+  useEffect(() => {
+    preload('/api/user?id=' + userId, fetcher)
+  }, [userId])
+
+  return (
+    <div>
+      <button
+        onClick={() => setShow(true)}
+        {/* イベントコールバックの中でプリロードする */}
+        onHover={() => preload('/api/user?id=' + userId, fetcher)}
+      >
+        Show User
+      </button>
+      {show ? <User /> : null}
+    </div>
+  )
 }
 ```
 
 Next.js の [ページプリフェッチ](https://nextjs.org/docs/api-reference/next/router#routerprefetch) などの技術と合わせて、次のページとデータの両方を瞬時に読み込むことができるようになります。
+
+サスペンスモードでは特に `preload` を利用してウォーターフォール問題を避けた方がいいでしょう。
+
+```jsx
+import useSWR, { preload } from 'swr'
+
+// レンダリング前に呼ぶべき
+preload('/api/user', fetcher);
+preload('/api/movies', fetcher);
+
+const Page = () => {
+  // 下記の useSWR はレンダリングを中断しますが、`/api/user` と`/api/movies` に対するリクエストは `preload` によって開始されています
+  // そのため、ウォーターフォール問題は起きません
+  const { data: user } = useSWR('/api/user', fetcher, { suspense: true });
+  const { data: movies } = useSWR('/api/movies', fetcher, { suspense: true });
+  return (
+    <div>
+      <User user={user} />
+      <Movies movies={movies} />
+    </div>
+  );
+}
+```
 
 ## 事前データ
 

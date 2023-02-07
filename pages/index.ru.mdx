@@ -7,7 +7,7 @@ import Features from 'components/features'
 import Bleed from 'nextra-theme-docs/bleed'
 
 {
-// wrapped with {} to mark it as javascript so mdx will not put it under a p tag
+// обернут {}, чтобы пометить его как javascript, чтобы mdx не помещал его под тег p
 }
 {<h1 className="text-center font-extrabold md:text-5xl mt-8">SWR</h1>}
 
@@ -32,10 +32,10 @@ import Bleed from 'nextra-theme-docs/bleed'
 import useSWR from 'swr'
 
 function Profile() {
-  const { data, error } = useSWR('/api/user', fetcher)
+  const { data, error, isLoading } = useSWR('/api/user', fetcher)
 
   if (error) return <div>ошибка загрузки</div>
-  if (!data) return <div>загрузка...</div>
+  if (isLoading) return <div>загрузка...</div>
   return <div>привет, {data.name}!</div>
 }
 ```
@@ -79,7 +79,7 @@ SWR охватывает все аспекты скорости, правиль�
   <img alt="лицензия" src="https://badgen.net/npm/license/swr" className="inline-block mr-2"/>
 </p>
 
-SWR создана той же командой, что стоит за React фреймворком [Next.js](https://nextjs.org).  
+SWR создана той же командой, что стоит за React фреймворком [Next.js](https://nextjs.org).
 Следите за [@vercel](https://twitter.com/vercel) в Твиттере, чтобы получать новости о проекте.
 
 Присоединяйтесь к [обсуждениям на GitHub](https://github.com/vercel/swr/discussions)!

@@ -27,7 +27,7 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 <Callout emoji="💡">
   もし GraphQL API または Axios のようなライブラリを使いたい場合は、独自のフェッチャー関数を作ることができます。
-  その他の例は<Link href="/docs/data-fetching"><a href="/docs/data-fetching">こちら</a></Link>をご覧ください。  
+  その他の例は<Link href="/docs/data-fetching"><a href="/docs/data-fetching">こちら</a></Link>をご覧ください。
 </Callout>
 
 そして、 `useSWR` をインポートして、任意の関数コンポーネント内で使用することができます：
@@ -36,17 +36,17 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 import useSWR from 'swr'
 
 function Profile () {
-  const { data, error } = useSWR('/api/user/123', fetcher)
+  const { data, error, isLoading } = useSWR('/api/user/123', fetcher)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (isLoading) return <div>loading...</div>
 
   // データをレンダリングする
   return <div>hello {data.name}!</div>
 }
 ```
 
-通常、 リクエストには "loading" 、 "ready" 、 "error" の三つの状態があります。 `data` と `error` の値を使ってリクエストの現在の状態を判断し、
+通常、 リクエストには "loading" 、 "ready" 、 "error" の三つの状態があります。 `data` と `error` と `isLoading` の値を使ってリクエストの現在の状態を判断し、
 対応する UI を返すことができます。
 
 ## 再利用可能にする
@@ -55,11 +55,11 @@ function Profile () {
 
 ```jsx
 function useUser (id) {
-  const { data, error } = useSWR(`/api/user/${id}`, fetcher)
+  const { data, error, isLoading } = useSWR(`/api/user/${id}`, fetcher)
 
   return {
     user: data,
-    isLoading: !error && !data,
+    isLoading,
     isError: error
   }
 }

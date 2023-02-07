@@ -27,6 +27,7 @@ interface Cache<Data> {
   get(key: string): Data | undefined
   set(key: string, value: Data): void
   delete(key: string): void
+  keys(): IterableIterator<string>
 }
 ```
 
@@ -99,49 +100,6 @@ O primeiro argumento para a função `provider` é o cache provider do nível su
 
 ## Exemplos
 
-### Mudar Várias Chaves de RegEx
-
-Com a flexibilidade da API do cache provider, você pode até criar um auxiliar de "mutação parcial".
-
-No exemplo abaixo, `matchMutate` pode receber uma expressão regular como chave e ser usada para alterar aqueles que corresponderem a esse padrão.
-
-```js
-function useMatchMutate() {
-  const { cache, mutate } = useSWRConfig()
-  return (matcher, ...args) => {
-    if (!(cache instanceof Map)) {
-      throw new Error('matchMutate requer que o cache provider seja uma instância de Map')
-    }
-
-    const keys = []
-
-    for (const key of cache.keys()) {
-      if (matcher.test(key)) {
-        keys.push(key)
-      }
-    }
-
-    const mutations = keys.map((key) => mutate(key, ...args))
-    return Promise.all(mutations)
-  }
-}
-```
-
-Em seguida, dentro de seu componente:
-
-```jsx
-function Button() {
-  const matchMutate = useMatchMutate()
-  return <button onClick={() => matchMutate(/^\/api\//)}>
-    Revalidar todas as chaves começando com "/api/"
-  </button>
-}
-```
-
-<Callout>
-  Observe que este exemplo requer que o cache provider seja uma instância de Map.
-</Callout>
-
 ### Cache Persistente Baseado em LocalStorage
 
 Você pode querer sincronizar seu cache com `localStorage`. Aqui está um exemplo de implementação:
@@ -190,13 +148,28 @@ describe('test suite', async () => {
 })
 ```
 
-### Acesso ao Cache
-
-Alerta: você não deve gravar diretamente no cache, isso pode causar um comportamento indefinido.
+### Modify the Cache Data
 
 ```jsx
 const { cache } = useSWRConfig()
 
 cache.get(key) // Obtém os dados atuais para uma chave.
-cache.clear() // ⚠️ Limpa todo o cache. O SWR será revalidado após a re-renderização.
 ```
+
+<Callout emoji="🚨" type="error">
+  você não deve gravar diretamente no cache, isso pode causar um comportamento indefinido.
+</Callout>
+
+You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
+
+```jsx
+const { mutate } = useSWRConfig()
+
+mutate(
+  key => true, // which cache keys are updated
+  undefined, // update cache data to `undefined`
+  { revalidate: false } // do not revalidate
+)
+```
+
+More information can be found [here](/docs/arguments#multiple-arguments).

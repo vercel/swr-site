@@ -172,7 +172,7 @@ function App () {
 import useSWRInfinite from 'swr/infinite'
 
 // ...
-const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
 ```
@@ -207,6 +207,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 - `data`: 각 페이지의 가져오기 응답 값의 배열
 - `error`: `useSWR`의 `error`와 동일
+- `isLoading`: `useSWR`의 `isLoading`과 동일
 - `isValidating`: `useSWR`의 `isValidating`과 동일
 - `mutate`: `useSWR`의 바인딩 된 뮤테이트 함수와 동일하지만 데이터 배열을 다룸
 - `size`: 가져*올* 페이지 및 반환*될* 페이지의 수
@@ -312,6 +313,24 @@ const getKey = (pageIndex, previousPageData) => {
   return `/users?cursor=${previousPageData.nextCursor}&limit=10`
 }
 ```
+
+### Global Mutate with `useSWRInfinite`
+
+`useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infintie` to revalidate the data with the global mutate.
+
+```jsx
+import { useSWRConfig } from "swr"
+import { unstable_serialize } from "swr/infinte"
+
+function App() {
+    const { mutate } = useSWRConfig()
+    mutate(unstable_serialize(getKey))
+}
+````
+
+<Callout emoji="⚠️">
+    As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
+</Callout>
 
 ### 고급 기능
 

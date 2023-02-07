@@ -1,14 +1,14 @@
 import Callout from 'nextra-theme-docs/callout'
 
-# Opções da API
+# API
 
 ```js
-const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
+const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
 ## Parâmetros
 
-- `key`: uma chave única em string para o pedido (ou uma função / array / null) [(uso avançado)](/docs/conditional-fetching)
+- `key`: uma chave única em string para o pedido (ou uma função / array / null) [(detalhes)](/docs/arguments), [(uso avançado)](/docs/conditional-fetching)
 - `fetcher`: (_opcional_) uma Promise retornando uma função para obter seus dados [(detalhes)](/docs/data-fetching)
 - `options`: (_opcional_) um objeto de opções para esse hook SWR
 
@@ -16,8 +16,11 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 - `data`: dados para a chave fornecida pelo `fetcher` (ou undefined se não carregado)
 - `error`: erro lançado pelo `fetcher` (ou undefined)
+- `isLoading`: if there's an ongoing request and no "loaded data". Fallback data and previous data are not considered "loaded data"
 - `isValidating`: se há um pedido ou revalidação carregando
 - `mutate(data?, options?)`: função para mutar os dados em cache [(detalhes)](/docs/mutation)
+
+More information can be found [here](/docs/advanced/understanding).
 
 ## Opções
 
@@ -41,10 +44,12 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `errorRetryCount`: número máximo de tentativas de erro
 - `fallback`: um objeto de chave-valor de vários dados de fallback [(exemplo)](/docs/with-nextjs)
 - `fallbackData`: dados iniciais para ser retornado (nota: isto é por-hook)
+- `keepPreviousData = false`: return the previous key's data until the new data has been loaded [(detalhes)](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: função callback quando um pedido demora muito tempo a carregar (veja `loadingTimeout`)
 - `onSuccess(data, key, config)`: função callback quando um pedido é bem-sucedido
 - `onError(err, key, config)`: função callback quando um pedido retorna um erro
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: função callback quando um pedido retorna um erro
+- `onDiscarded(key)`: callback function when a request is ignored due to race conditions
 - `compare(a, b)`: função de comparação para detectar quando o dado retornado está diferente, para evitar rerenderizações desnecessárias. Por padrão, [stable-hash](https://github.com/shuding/stable-hash) é usado.
 - `isPaused()`: função para detectar quando o revalidador está pausado, e deve ignorar os dados e erros quando retorna `true`. Por padrão, retorna `false`.
 - `use`: array de middleware functions [(details)](/docs/middleware)

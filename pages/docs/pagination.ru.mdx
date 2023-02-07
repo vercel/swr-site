@@ -172,7 +172,7 @@ function App () {
 import useSWRInfinite from 'swr/infinite'
 
 // ...
-const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
 ```
@@ -196,7 +196,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 - `options`: принимает все опции, которые поддерживает `useSWR`, с 3 дополнительными опциями:
   - `initialSize = 1`: количество страниц, которые должны быть загружены изначально
   - `revalidateAll = false`: всегда пытаться ревалидировать все страницы
-  - `revalidateFirstPage = true`: always try to revalidate the first page
+  - `revalidateFirstPage = true`: всегда пытаться ревалидировать первую страницу
   - `persistSize = false`: не сбрасывать размер страницы до 1 (или `initialSize`, если установлен), когда ключ первой страницы изменяется
 
 <Callout>
@@ -207,6 +207,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 - `data`: массив значений ответа выборки каждой страницы
 - `error`: то же , что и `error` в `useSWR`
+- `isLoading`: то же, что и `isLoading` в `useSWR`
 - `isValidating`: то же, что и `isValidating` в `useSWR`
 - `mutate`: то же, что и связанная функция мутации в `useSWR`, но манипулирует массивом данных
 - `size`: количество страниц, которые _будут_ извлекаться и возвращаться
@@ -312,6 +313,24 @@ const getKey = (pageIndex, previousPageData) => {
   return `/users?cursor=${previousPageData.nextCursor}&limit=10`
 }
 ```
+
+### Global Mutate with `useSWRInfinite`
+
+`useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infintie` to revalidate the data with the global mutate.
+
+```jsx
+import { useSWRConfig } from "swr"
+import { unstable_serialize } from "swr/infinte"
+
+function App() {
+    const { mutate } = useSWRConfig()
+    mutate(unstable_serialize(getKey))
+}
+````
+
+<Callout emoji="⚠️">
+    As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
+</Callout>
 
 ### Расширенные возможности
 

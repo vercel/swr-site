@@ -26,7 +26,7 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 ```
 
 <Callout emoji="💡">
-  GraphQL API 또는 Axios와 같은 라이브러리를 사용하려면 여러분만의 fetcher 함수를 생성하면 됩니다. 
+  GraphQL API 또는 Axios와 같은 라이브러리를 사용하려면 여러분만의 fetcher 함수를 생성하면 됩니다.
   <Link href="/docs/data-fetching"><a href="/docs/data-fetching">여기</a></Link>에서 더 많은 예시를 확인하세요.
 </Callout>
 
@@ -36,18 +36,18 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 import useSWR from 'swr'
 
 function Profile () {
-  const { data, error } = useSWR('/api/user/123', fetcher)
+  const { data, error, isLoading } = useSWR('/api/user/123', fetcher)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (isLoading) return <div>loading...</div>
 
   // 데이터 렌더링
   return <div>hello {data.name}!</div>
 }
 ```
 
-일반적으로, 세 가지 요청 상태가 가능합니다: "loading", "ready", "error". `data`와 `error` 값을 사용해
-현재 요청의 상태를 알아내고, 해당하는 UI를 반환할 수 있습니다.
+Normally, there're 3 possible states of a request: "loading", "ready", or "error". You can use the value of `data`, `error` and `isLoading` to
+determine the current state of the request, and return the corresponding UI.
 
 ## 재사용 가능하게 만들기
 
@@ -56,11 +56,11 @@ function Profile () {
 
 ```jsx
 function useUser (id) {
-  const { data, error } = useSWR(`/api/user/${id}`, fetcher)
+  const { data, error, isLoading } = useSWR(`/api/user/${id}`, fetcher)
 
   return {
     user: data,
-    isLoading: !error && !data,
+    isLoading,
     isError: error
   }
 }

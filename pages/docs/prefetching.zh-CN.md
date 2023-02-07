@@ -14,21 +14,87 @@
 
 ## 手动预请求
 
-有时，你想有条件地预加载资源。比如当用户 [hovering](https://github.com/GoogleChromeLabs/quicklink) [a](https://github.com/guess-js/guess) [link](https://instant.page) 时预加载数据。最直观的方法就是用全局的 [mutate](/docs/mutation) 重新请求和设置缓存：
+SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments.
 
-另一个选择是有条件地预请求数据。你可以通过 [mutate](/docs/mutation) 来重新请求以及设置缓存：
+You can call `preload` even outside of React.
 
-```js
-import { mutate } from 'swr'
+```jsx
+import { useState } from 'react'
+import useSWR, { preload } from 'swr'
 
-function prefetch () {
-  mutate('/api/data', fetch('/api/data').then(res => res.json()))
-  // 第二个参数是个 Promise
-  // SWR 将在解析时使用结果
+const fetcher = (url) => fetch(url).then((res) => res.json())
+
+// Preload the resource before rendering the User component below,
+// this prevents potential waterfalls in your application.
+// You can also start preloading when hovering the button or link, too.
+preload('/api/user', fetcher)
+
+function User() {
+  const { data } = useSWR('/api/user', fetcher)
+  ...
+}
+
+export default function App() {
+  const [show, setShow] = useState(false)
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Show User</button>
+      {show ? <User /> : null}
+    </div>
+  )
+}
+```
+
+Within React rendering tree, `preload` is also available to use in event handlers or effects.
+
+```jsx
+function App({ userId }) {
+  const [show, setShow] = useState(false)
+
+  // preload in effects
+  useEffect(() => {
+    preload('/api/user?id=' + userId, fetcher)
+  }, [userId])
+
+  return (
+    <div>
+      <button
+        onClick={() => setShow(true)}
+        {/* preload in event callbacks */}
+        onHover={() => preload('/api/user?id=' + userId, fetcher)}
+      >
+        Show User
+      </button>
+      {show ? <User /> : null}
+    </div>
+  )
 }
 ```
 
 配合 Next.js 的 [页面预加载](https://nextjs.org/docs/api-reference/next/router#routerprefetch)，你将能立即加载下一页和数据。
+
+In Suspense mode, you should utilize `preload` to avoid waterfall problems.
+
+```jsx
+import useSWR, { preload } from 'swr'
+
+// should call before rendering
+preload('/api/user', fetcher);
+preload('/api/movies', fetcher);
+
+const Page = () => {
+  // The below useSWR hooks will suspend the rendering, but the requests to `/api/user` and `/api/movies` have started by `preload` already,
+  // so the waterfall problem doesn't happen.
+  const { data: user } = useSWR('/api/user', fetcher, { suspense: true });
+  const { data: movies } = useSWR('/api/movies', fetcher, { suspense: true });
+  return (
+    <div>
+      <User user={user} />
+      <Movies movies={movies} />
+    </div>
+  );
+}
+```
 
 ## 数据预填充
 

@@ -37,10 +37,10 @@ Luego puede importar `useSWR` y empezar a usarlo dentro de cualquier componente 
 import useSWR from "swr"
 
 function Profile () {
-  const { data, error } = useSWR("/api/user/123", fetcher)
+  const { data, error, isLoading } = useSWR("/api/user/123", fetcher)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (isLoading) return <div>loading...</div>
 
   // renderizar datos
   return <div>hello {data.name}!</div>
@@ -48,7 +48,7 @@ function Profile () {
 ```
 
 Normalmente, hay 3 estados posibles de una solicitud: "loading", "ready", o "error". Puedes utilizar el valor
-`data` y `error` para determinar el estado actual de la solicitud, y devolver la UI correspondiente.
+`data`, `error` y `isLoading` para determinar el estado actual de la solicitud, y devolver la UI correspondiente.
 
 ## Hágalo reutilizable
 
@@ -58,11 +58,11 @@ Es increíblemente fácil crear hooks de datos reutilizables sobre SWR:
 ```jsx
 
 function useUser (id) {
-    const { data, error } = useSWR(`/api/user/${id}`, fetcher)
+    const { data, error, isLoading } = useSWR(`/api/user/${id}`, fetcher)
 
     return {
         user: data,
-        isLoading: !error && !data,
+        isLoading,
         isError: error
     }
 }

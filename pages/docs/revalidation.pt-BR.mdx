@@ -20,10 +20,10 @@ Isso pode ser útil para sincronizar imediatamente para o último estado. Isso �
     src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/focus-revalidate.mp4"
     caption="Video: usando revalidação de foco para sincronizar automaticamente o estado de login entre páginas."
     ratio={307/768}
-  />    
+  />
 </Bleed>
 
-Essa funcionalidade é habilitada por padrão. Você pode desabilitá-la pela opção [`revalidateOnFocus`](/docs/options).
+Essa funcionalidade é habilitada por padrão. Você pode desabilitá-la pela opção [`revalidateOnFocus`](/docs/api).
 
 ## Revalidar em Intervalos
 
@@ -39,7 +39,7 @@ SWR lhe dará a opção de revalidar automaticamente. É **inteligente**, o que 
   />
 </Bleed>
 
-Você pode habilitá-lo definindo um valor para [`refreshInterval`](/docs/options):
+Você pode habilitá-lo definindo um valor para [`refreshInterval`](/docs/api):
 
 ```js
 useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
@@ -53,7 +53,7 @@ Existem também opções como `refreshWhenHidden` e `refreshWhenOffline`. Ambas 
 
 Para ter certeza que os dados estão sempre atualizados, SWR revalidará automaticamente quando a rede for recuperada.
 
-Essa funcionalidade é habilitada por padrão. Você pode desabilitá-la pela opção [`revalidateOnReconnect`](/docs/options).
+Essa funcionalidade é habilitada por padrão. Você pode desabilitá-la pela opção [`revalidateOnReconnect`](/docs/api).
 
 ## Desabilitar Revalidações Automáticas
 

@@ -24,6 +24,7 @@ interface Cache<Data> {
   get(key: string): Data | undefined
   set(key: string, value: Data): void
   delete(key: string): void
+  keys(): IterableIterator<string>
 }
 ```
 
@@ -86,7 +87,7 @@ function Avatar() {
 
 当多个 `<SWRConfig>` 组件嵌套时，可以扩展缓存 provider。
 
-`provider` 函数的第一个参数是上层 `<SWRConfig>` 的缓存 provider（如果没有父级 `<SWRConfig>`，则为默认缓存），你可以使用它来扩展缓存 provider：  
+`provider` 函数的第一个参数是上层 `<SWRConfig>` 的缓存 provider（如果没有父级 `<SWRConfig>`，则为默认缓存），你可以使用它来扩展缓存 provider：
 
 ```jsx
 <SWRConfig value={{ provider: (cache) => newCache }}>
@@ -95,49 +96,6 @@ function Avatar() {
 ```
 
 ## 示例
-
-### 根据正则更改多个 Key
-
-借助缓存 provider API 的灵活性，你甚至可以构建一个“部分更改”的助手函数。
-
-在下面的示例中，`matchMutate` 可以接收一个正则表达式作为 key，并用于更改匹配该模式的。
-
-```js
-function useMatchMutate() {
-  const { cache, mutate } = useSWRConfig()
-  return (matcher, ...args) => {
-    if (!(cache instanceof Map)) {
-      throw new Error('matchMutate requires the cache provider to be a Map instance')
-    }
-
-    const keys = []
-
-    for (const key of cache.keys()) {
-      if (matcher.test(key)) {
-        keys.push(key)
-      }
-    }
-
-    const mutations = keys.map((key) => mutate(key, ...args))
-    return Promise.all(mutations)
-  }
-}
-```
-
-在你的组件内：
-
-```jsx
-function Button() {
-  const matchMutate = useMatchMutate()
-  return <button onClick={() => matchMutate(/^\/api\//)}>
-    重新请求所有以 `/api/` 开头的 key
-  </button>
-}
-```
-
-<Callout>
-  注意，该示例要求缓存 provider 为 Map 实例。
-</Callout>
 
 ### 基于 LocalStorage 的持久缓存
 
@@ -187,13 +145,22 @@ describe('test suite', async () => {
 })
 ```
 
-### 访问缓存
+### Modify the Cache Data
 
-警告：你不应该直接写入缓存，那样可能会导致不可预知的行为。
+<Callout emoji="🚨" type="error">
+  你不应该直接写入缓存，那样可能会导致不可预知的行为。
+</Callout>
+
+You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
 
 ```jsx
-const { cache } = useSWRConfig()
+const { mutate } = useSWRConfig()
 
-cache.get(key) // 获取 key 的当前数据。
-cache.clear()  // ⚠️ 清除所有缓存。SWR 将在重新渲染时重新请求。
+mutate(
+  key => true, // which cache keys are updated
+  undefined, // update cache data to `undefined`
+  { revalidate: false } // do not revalidate
+)
 ```
+
+More information can be found [here](/docs/arguments#multiple-arguments).

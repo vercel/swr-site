@@ -21,10 +21,14 @@ useSWR('/api/user', url => fetchWithToken(url, token))
 相反，你可以使用一个 **数组** 作为参数 `key`，它包含 `fetcher` 的多个参数：
 
 ```js
-const { data: user } = useSWR(['/api/user', token], fetchWithToken)
+const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-`fetchWithToken` 函数仍然接受同样的2个参数，但现在缓存 key 也将与 `token` 相关联。
+The `fetcher` function accepts the `key` parameter as is, and the cache key will also be associated with the entire `key` argument. In the above example, `url` and `token` are both tight to the cache key.
+
+<Callout emoji="⚠️">
+  In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
+</Callout>
 
 ## 传入对象
 

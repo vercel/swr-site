@@ -24,6 +24,7 @@ interface Cache<Data> {
   get(key: string): Data | undefined
   set(key: string, value: Data): void
   delete(key: string): void
+  keys(): IterableIterator<string>
 }
 ```
 
@@ -96,49 +97,6 @@ function Avatar() {
 
 ## 예시
 
-### RegEx로 여러 키 변경하기
-
-캐시 공급자 API의 유연성으로, "부분 변경" 헬퍼를 구축할 수도 있습니다.
-
-아래 예시에서는 `matchMutate`가 정규 표현식을 키로 받고, 이 패턴에 일치하는 것들을 변경하는데 사용할 수 있습니다.
-
-```js
-function useMatchMutate() {
-  const { cache, mutate } = useSWRConfig()
-  return (matcher, ...args) => {
-    if (!(cache instanceof Map)) {
-      throw new Error('matchMutate requires the cache provider to be a Map instance')
-    }
-
-    const keys = []
-
-    for (const key of cache.keys()) {
-      if (matcher.test(key)) {
-        keys.push(key)
-      }
-    }
-
-    const mutations = keys.map((key) => mutate(key, ...args))
-    return Promise.all(mutations)
-  }
-}
-```
-
-그 후 여러분의 컴포넌트 내에서:
-
-```jsx
-function Button() {
-  const matchMutate = useMatchMutate()
-  return <button onClick={() => matchMutate(/^\/api\//)}>
-    Revalidate all keys start with "/api/"
-  </button>
-}
-```
-
-<Callout>
-  이 예시는 캐시 공급자가 Map 인스턴스여야 합니다.
-</Callout>
-
 ### LocalStorage 기반 영구 캐시
 
 캐시를 `localStorage`와 동기화하길 원할 수도 있습니다. 다음은 구현 예시입니다.
@@ -187,13 +145,28 @@ describe('test suite', async () => {
 })
 ```
 
-### 캐시에 접근하기
-
-알림: 캐시를 직접 쓰면 안 됩니다. 정의되지 않은 동작을 유발할 수도 있습니다.
+### Modify the Cache Data
 
 ```jsx
 const { cache } = useSWRConfig()
 
 cache.get(key) // 키에 대한 현재 데이터 가져오기.
-cache.clear()  // ⚠️ 모든 캐시를 삭제하기. SWR은 다시 렌더링할 때 재검증합니다.
 ```
+
+<Callout emoji="🚨" type="error">
+  캐시를 직접 쓰면 안 됩니다. 정의되지 않은 동작을 유발할 수도 있습니다.
+</Callout>
+
+You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
+
+```jsx
+const { mutate } = useSWRConfig()
+
+mutate(
+  key => true, // which cache keys are updated
+  undefined, // update cache data to `undefined`
+  { revalidate: false } // do not revalidate
+)
+```
+
+More information can be found [here](/docs/arguments#multiple-arguments).

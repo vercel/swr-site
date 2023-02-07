@@ -31,10 +31,10 @@ SWR é a estratégia de primeiro retornar os dados do cache (stale), depois envi
 import useSWR from 'swr'
 
 function Profile() {
-  const { data, error } = useSWR('/api/user', fetcher)
+  const { data, error, isLoading } = useSWR('/api/user', fetcher)
 
   if (error) return <div>falhou em carregar</div>
-  if (!data) return <div>carregando...</div>
+  if (isLoading) return <div>carregando...</div>
   return <div>Olá {data.name}!</div>
 }
 ```

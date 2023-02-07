@@ -23,10 +23,14 @@ useSWR('/api/user', url => fetchWithToken(url, token))
 代わりに、`fetcher` の複数の引数を含む**配列**を `key` パラメーターとして使用できます。
 
 ```js
-const { data: user } = useSWR(['/api/user', token], fetchWithToken)
+const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-この関数 `fetchWithToken` は引き続き同じ二つの引数を受け取りますが、キャッシュキーも `token` と関連付けられます。
+`fetcher` 関数は `key` パラメータをそのまま受け取り、キャッシュキーもまた `key` の引数全てと関連づけられます。上記の例では `url` と `token` の組み合わせがキャッシュキーとなります。
+
+<Callout emoji="⚠️">
+  In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
+</Callout>
 
 ## オブジェクトの受け渡し
 

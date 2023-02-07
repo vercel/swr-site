@@ -1,14 +1,14 @@
 import Callout from 'nextra-theme-docs/callout'
 
-# Опции API
+# API
 
 ```js
-const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
+const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
 ## Параметры
 
-- `key`: уникальный строчный ключ для запроса (или функция / массив / null) [(продвинутое использование)](/docs/conditional-fetching)
+- `key`: уникальный строчный ключ для запроса (или функция / массив / null) [(подробнее)](/docs/arguments), [(продвинутое использование)](/docs/conditional-fetching)
 - `fetcher`: (_опционально_) Promise возвращающий функцию для выборки данных [(подробнее)](/docs/data-fetching)
 - `options`: (_опционально_) объект опций для этого SWR хука
 
@@ -16,21 +16,24 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
 - `data`: данные для данного ключа, разрешенные `fetcher` (или undefined, если не загружено)
 - `error`: ошибка, выброшенная `fetcher`-ом (или undefined)
+- `isLoading`: если есть текущий запрос и нет «загруженных данных». Резервные данные и предыдущие данные не считаются «загруженными данными»
 - `isValidating`: если запрос или ревалидация загружается
 - `mutate(data?, options?)`: функция для мутации закешированных данных [(подробнее)](/docs/mutation)
+
+Более подробно можно почитать [здесь](/docs/advanced/understanding).
 
 ## Опции
 
 - `suspense = false`: включить режим задержки React Suspense [(подробнее)](/docs/suspense)
 - `fetcher(args)`: функция-fetcher
-- `revalidateIfStale = true`: automatically revalidate even if there is stale data [(details)](/docs/revalidation#disable-automatic-revalidations)
+- `revalidateIfStale = true`: автоматически ревалидировать, даже если есть устаревшие данные [(подробнее)](/docs/revalidation#отключение-автоматических-ревалидаций)
 - `revalidateOnMount`: включить или отключить автоматическую ревалидацию при монтировании компонента
 - `revalidateOnFocus = true`: автоматически ревалидировать, когда окно фокусируется [(подробнее)](/docs/revalidation)
 - `revalidateOnReconnect = true`: автоматически ревалидировать, когда браузер восстанавливает сетевое подключение (через `navigator.onLine`) [(подробнее)](/docs/revalidation)
 - `refreshInterval` [(подробнее)](/docs/revalidation):
-  - по умолчанию отключен: `refreshInterval = 0`
-  - If set to a number, интервал поллинга в миллисекундах
-  - If set to a function, the function will receive the latest data and should return the interval in milliseconds
+  - По умолчанию отключен: `refreshInterval = 0`
+  - Если установлено числовое значение, интервал поллинга в миллисекундах
+  - Если установлено значение функции, функция будет получать последние данные и должна возвращать интервал в миллисекундах
 - `refreshWhenHidden = false`: поллинг, когда окно невидимо (если `refreshInterval` включён)
 - `refreshWhenOffline = false`: поллинг, когда браузер оффлайн (определяется `navigator.onLine`)
 - `shouldRetryOnError = true`: повторить попытку, если в fetcher-е возникла ошибка
@@ -39,12 +42,14 @@ const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 - `loadingTimeout = 3000`: тайм-аут для запуска события onLoadingSlow в миллисекундах
 - `errorRetryInterval = 5000`: интервал повторной попытки ошибки в миллисекундах
 - `errorRetryCount`: максимальное количество повторных попыток при ошибке
-- `fallback`: объект типа "ключ-значение" из нескольких резервных данных [(example)](/docs/with-nextjs)
+- `fallback`: объект типа "ключ-значение" из нескольких резервных данных [(пример)](/docs/with-nextjs)
 - `fallbackData`: исходные данные, которые должны быть возвращены (примечание: это для каждого хука)
+- `keepPreviousData = false`: возвращать данные предыдущего ключа, пока не будут загружены новые данные [(подробнее)](/docs/advanced/understanding#возврат-предыдущих-данных-для-лучшего-ux)
 - `onLoadingSlow(key, config)`: колбэк-функция, когда запрос загружается слишком долго (см. `loadingTimeout`)
 - `onSuccess(data, key, config)`: колбэк-функция при успешном завершении запроса
 - `onError(err, key, config)`: колбэк-функция, когда запрос возвращает ошибку
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: обработчик повторной попытки при ошибке
+- `onDiscarded(key)`: колбэк-функция, когда запрос игнорируется из-за состояния гонки
 - `compare(a, b)`: функция сравнения, используемая для определения того, когда возвращаемые данные были изменены, чтобы избежать ложных повторных отрисовок. По умолчанию используется [stable-hash](https://github.com/shuding/stable-hash).
 - `isPaused()`: функция, определяющая, приостанавливается ли ревалидация, игнорирует полученные данные и ошибки, когда возвращает `true`. По умолчанию возвращает `false`.
 - `use`: массив middleware-функций [(подробнее)](/docs/middleware)

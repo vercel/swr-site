@@ -3,12 +3,7 @@ import Callout from 'nextra-theme-docs/callout'
 # Suspense
 
 <Callout emoji="🚨" type="error">
-    Suspense é atualmente uma funcionalidade <strong>experimental</strong> do React. Estas APIs podem mudar significativamente e sem aviso antes de serem adicionadas ao React.<br/>
-    <a href="https://reactjs.org/docs/concurrent-mode-suspense.html" target="_blank" rel="noopener">Mais informações</a>
-</Callout>
-
-<Callout>
-  Note que o React Suspense não é suportado no modo SSR.
+  O React <strong>não recoomenda</strong> usar `Suspense` em frameworks de dados como o SWR (<a href="https://reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks" target="_blank" rel="noopener">Mais informações</a>). Essas APIs podem mudar no futuro como resultados da nossa pesquisa.
 </Callout>
 
 Você pode habilitar a opção `suspense` para usar SWR com React Suspense:
@@ -24,7 +19,7 @@ function Profile () {
 
 function App () {
   return (
-    <Suspense fallback={<div>loading...</div>}>
+    <Suspense fallback={<div>carregando...</div>}>
       <Profile/>
     </Suspense>
   )
@@ -39,14 +34,16 @@ Em modo Suspense, `data` é sempre a resposta do fetch (então você não precis
 Mas se um erro ocorreu, você precisa usar um [limite de erro (Error Boundary)](https://pt-br.reactjs.org/docs/error-boundaries.html) para o capturar:
 
 ```jsx
-<ErrorBoundary fallback={<h2>Could not fetch posts.</h2>}>
-  <Suspense fallback={<h1>Loading posts...</h1>}>
+<ErrorBoundary fallback={<h2>Não foi possível obter posts.</h2>}>
+  <Suspense fallback={<h1>Carregando posts...</h1>}>
     <Profile />
   </Suspense>
 </ErrorBoundary>
 ```
 
----
+<Callout>
+  O modo Suspense suspende a renderização até que os dados estejam prontos, o que singifica que pode causar problemas de waterfall fácilmente. Para evitar isso, você deve fazer prefetch de recursos antes de renderizar. [Mais informações](/docs/prefetching)
+</Callout>
 
 ### Nota: Com Fetching Condicional
 
@@ -73,3 +70,7 @@ function Profile () {
 ```
 
 Se você quiser ler mais detalhes técnicos sobre essa restrição, cheque [a discussão aqui](https://github.com/vercel/swr/pull/357#issuecomment-627089889).
+
+### Server-Side Rendering
+
+Quando usando o modo Suspense no lado do servidor (incluindo pre-rendering com Next.js), é **obrigatório** informar dados iniciais via [fallbackData ou fallback](/docs/with-nextjs#pre-rendering-with-default-data). Isso significa que você não pode usar `Suspense` para obter dados no lado do servidor, mas fazendo a busca de dados totalmente do lado do cliente ou buscando os dados por meio do método de busca de dados à nível de framework (como getStaticProps com Next.js). Mais discussões podem ser enconrtradas [aqui](https://github.com/vercel/swr/issues/1906).

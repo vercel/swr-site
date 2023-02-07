@@ -60,7 +60,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 SWR은 [지수 백오프 알고리즘](https://en.wikipedia.org/wiki/Exponential_backoff)를 사용해 에러 시 요청을 재시도합니다.
 이 알고리즘을 사용하면 에러로부터 앱을 빠르게 복구할 수 있으며 너무 자주 재시도하여 리소스를 낭비하지도 않습니다.
 
-[onErrorRetry](/docs/options#options) 옵션을 통해 이 동작을 오버라이드할 수도 있습니다.
+[onErrorRetry](/docs/api#options) 옵션을 통해 이 동작을 오버라이드할 수도 있습니다.
 
 ```js
 useSWR('/api/user', fetcher, {
@@ -86,9 +86,9 @@ useSWR('/api/user', fetcher, {
 
 ## 전역 에러 기록
 
-항상 컴포넌트 내에서 반응적으로 `error` 객체를 얻을 수 있습니다. 
-하지만 UI에 [토스트](https://vercel.com/design/toast) 또는 [스낵바](https://material.io/components/snackbars)를 보여주거나 [Sentry](https://sentry.io)와 같은 어딘가에 기록하기 위해 에러를 전역으로 처리하길 원할 경우, 
-[`onError`](/docs/options#options) 이벤트가 있습니다.
+항상 컴포넌트 내에서 반응적으로 `error` 객체를 얻을 수 있습니다.
+하지만 UI에 [토스트](https://vercel.com/design/toast) 또는 [스낵바](https://material.io/components/snackbars)를 보여주거나 [Sentry](https://sentry.io)와 같은 어딘가에 기록하기 위해 에러를 전역으로 처리하길 원할 경우,
+[`onError`](/docs/api#options) 이벤트가 있습니다.
 
 ```jsx
 <SWRConfig value={{

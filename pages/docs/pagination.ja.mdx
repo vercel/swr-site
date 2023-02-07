@@ -172,7 +172,7 @@ function App () {
 import useSWRInfinite from 'swr/infinite'
 
 // ...
-const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
 ```
@@ -183,7 +183,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 無限ローディングでは、1 *ページ*が一つのリクエストであり、目標は複数ページをフェッチしてレンダリングすることです。
 
 <Callout emoji="⚠️">
-  もし SWR 0.x バージョンを使っている場合は、 `swr` から `useSWRInfinite` をインポートする必要があります：<br/> 
+  もし SWR 0.x バージョンを使っている場合は、 `swr` から `useSWRInfinite` をインポートする必要があります：<br/>
   `import { useSWRInfinite } from 'swr'`
 </Callout>
 
@@ -207,6 +207,7 @@ const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
 
 - `data`: 各ページのフェッチしたレスポンス値の配列
 - `error`: `useSWR` の `error` と同じ
+- `isLoading`: `useSWR` の `isLoading` と同じ
 - `isValidating`: `useSWR` の `isValidating` と同じ
 - `mutate`: `useSWR` のバインドされたミューテート関数と同じですが、データ配列を操作します
 - `size`: フェッチして返される*だろう*ページ数
@@ -312,6 +313,24 @@ const getKey = (pageIndex, previousPageData) => {
   return `/users?cursor=${previousPageData.nextCursor}&limit=10`
 }
 ```
+
+### Global Mutate with `useSWRInfinite`
+
+`useSWRInfinite` は各ページのデータに加え、全てのページデータを特別な形式のキーでキャッシュに保存するため、グローバルなミューテートを使い再検証するためには、`swr/infintie` にある `unstable_serialize` を使う必要があります。
+
+```jsx
+import { useSWRConfig } from "swr"
+import { unstable_serialize } from "swr/infinte"
+
+function App() {
+    const { mutate } = useSWRConfig()
+    mutate(unstable_serialize(getKey))
+}
+````
+
+<Callout emoji="⚠️">
+    名前が示す通り、`unstable_serialize` は安定した API ではなく、将来的に変更される可能性があります。
+</Callout>
 
 ### 高度な機能
 

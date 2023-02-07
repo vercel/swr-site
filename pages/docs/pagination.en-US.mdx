@@ -172,7 +172,7 @@ That's how this new `useSWRInfinite` Hook can help.
 import useSWRInfinite from 'swr/infinite'
 
 // ...
-const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRInfinite(
   getKey, fetcher?, options?
 )
 ```
@@ -207,6 +207,7 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
 
 - `data`: an array of fetch response values of each page
 - `error`: same as `useSWR`'s `error`
+- `isLoading`: same as `useSWR`'s `isLoading`
 - `isValidating`: same as `useSWR`'s `isValidating`
 - `mutate`: same as `useSWR`'s bound mutate function but manipulates the data array
 - `size`: the number of pages that _will_ be fetched and returned
@@ -312,6 +313,24 @@ const getKey = (pageIndex, previousPageData) => {
   return `/users?cursor=${previousPageData.nextCursor}&limit=10`
 }
 ```
+
+### Global Mutate with `useSWRInfinite`
+
+`useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infintie` to revalidate the data with the global mutate.
+
+```jsx
+import { useSWRConfig } from "swr"
+import { unstable_serialize } from "swr/infinte"
+
+function App() {
+    const { mutate } = useSWRConfig()
+    mutate(unstable_serialize(getKey))
+}
+````
+
+<Callout emoji="⚠️">
+    As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
+</Callout>
 
 ### Advanced Features
 

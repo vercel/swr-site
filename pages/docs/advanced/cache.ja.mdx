@@ -24,6 +24,7 @@ interface Cache<Data> {
   get(key: string): Data | undefined
   set(key: string, value: Data): void
   delete(key: string): void
+  keys(): IterableIterator<string>
 }
 ```
 
@@ -96,49 +97,6 @@ function Avatar() {
 
 ## 例
 
-### 正規表現から複数のキーを変更する
-
-キャッシュプロバイダー API の柔軟性により、"部分的な変更"のヘルパーを構築することもできます。
-
-以下の例では、 `matchMutate` はキーとして正規表現を受け取り、パターンに一致するものを変更するために使用できます。
-
-```js
-function useMatchMutate() {
-  const { cache, mutate } = useSWRConfig()
-  return (matcher, ...args) => {
-    if (!(cache instanceof Map)) {
-      throw new Error('matchMutate requires the cache provider to be a Map instance')
-    }
-
-    const keys = []
-
-    for (const key of cache.keys()) {
-      if (matcher.test(key)) {
-        keys.push(key)
-      }
-    }
-
-    const mutations = keys.map((key) => mutate(key, ...args))
-    return Promise.all(mutations)
-  }
-}
-```
-
-次に、コンポーネントの内部：
-
-```jsx
-function Button() {
-  const matchMutate = useMatchMutate()
-  return <button onClick={() => matchMutate(/^\/api\//)}>
-    Revalidate all keys start with "/api/"
-  </button>
-}
-```
-
-<Callout>
-  この例では、キャッシュプロバイダーが Map インスタンスである必要があることに注意してください。
-</Callout>
-
 ### LocalStorage を使った永続キャッシュ
 
 キャッシュを `localStorage` で同期しても良いかもしれません。実装例は次の通りです：
@@ -187,13 +145,28 @@ describe('test suite', async () => {
 })
 ```
 
-### キャッシュへアクセスする
-
-警告：キャッシュに直接書き込むことはするべきではありません。予期しない動作が発生する可能性があります。
+### キャッシュを更新する
 
 ```jsx
 const { cache } = useSWRConfig()
 
 cache.get(key) // キーの現在のデータを取得します。
-cache.clear()  // ⚠️ すべてのキャッシュをクリアします。 SWRは、再レンダリング時に再検証します。
 ```
+
+<Callout emoji="🚨" type="error">
+  キャッシュに直接書き込むことはするべきではありません。予期しない動作が発生する可能性があります。
+</Callout>
+
+[`mutate`](/docs/mutation) をキャッシュを更新するために利用できます。例えば、下記のようにすることで全てのキャッシュデータをクリアできます。
+
+```jsx
+const { mutate } = useSWRConfig()
+
+mutate(
+  key => true, // どのキャッシュキーを更新するか
+  undefined, // キャッシュデータを `undefined` に更新する
+  { revalidate: false } // 再検証しない
+)
+```
+
+更なる情報は [こちら](/docs/arguments#multiple-arguments) から確認できます。

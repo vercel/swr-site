@@ -14,23 +14,91 @@
 
 ## Программная предварительная выборка
 
-Иногда вы хотите предварительно загрузить ресурс условно. Например, предварительная загрузка данных, когда пользователь [наводит](https://github.com/GoogleChromeLabs/quicklink) [курсор](https://github.com/guess-js/guess) [на ссылку](https://instant.page). Самый интуитивно понятный способ — иметь функцию для повторной выборки и установки кеша с помощью глобального [mutate](/docs/mutation):
+SWR предоставляет API `preload` для предварительной загрузки ресурсов программным путем и сохранения результатов в кеше. `preload` принимает в качестве аргументов `key` и `fetcher`.
 
-```js
-import { mutate } from 'swr'
+Вы можете вызывать `preload` даже вне React.
 
-function prefetch () {
-  mutate('/api/data', fetch('/api/data').then(res => res.json()))
-  // вторым параметром является промис
-  // SWR использует его результат, после того, как он разрешится
+```jsx
+import { useState } from 'react'
+import useSWR, { preload } from 'swr'
+
+const fetcher = (url) => fetch(url).then((res) => res.json())
+
+// Предварительно загрузите ресурс перед рендерингом компонента User ниже,
+// это предотвращает потенциальные водопады в вашем приложении.
+// Вы также можете начать предварительную загрузку при наведении на кнопку или ссылку.
+preload('/api/user', fetcher)
+
+function User() {
+  const { data } = useSWR('/api/user', fetcher)
+  ...
+}
+
+export default function App() {
+  const [show, setShow] = useState(false)
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Показать пользователя</button>
+      {show ? <User /> : null}
+    </div>
+  )
+}
+```
+
+В дереве рендеринга React `preload` также доступен для использования в обработчиках событий или эффектах.
+
+```jsx
+function App({ userId }) {
+  const [show, setShow] = useState(false)
+
+  // предзагрузка в эффектах
+  useEffect(() => {
+    preload('/api/user?id=' + userId, fetcher)
+  }, [userId])
+
+  return (
+    <div>
+      <button
+        onClick={() => setShow(true)}
+        {/* предзагрузка в колбэках событий */}
+        onHover={() => preload('/api/user?id=' + userId, fetcher)}
+      >
+        Показать пользователя
+      </button>
+      {show ? <User /> : null}
+    </div>
+  )
 }
 ```
 
 Вместе с такими техниками, как [предзагрузка страниц](https://nextjs.org/docs/api-reference/next/router#routerprefetch) в Next.js, вы сможете мгновенно загружать как следующую страницу, так и данные.
 
+Во избежание проблем с водопадом, в режиме Suspense вы должны использовать `preload`.
+
+```jsx
+import useSWR, { preload } from 'swr'
+
+// следует вызывать перед рендерингом
+preload('/api/user', fetcher);
+preload('/api/movies', fetcher);
+
+const Page = () => {
+  // Приведенные ниже хуки useSWR приостановят рендеринг, но `preload` уже начал запросы к `/api/user` и `/api/movies`,
+  // чтобы не возникало проблемы с водопадом.
+  const { data: user } = useSWR('/api/user', fetcher, { suspense: true });
+  const { data: movies } = useSWR('/api/movies', fetcher, { suspense: true });
+  return (
+    <div>
+      <User user={user} />
+      <Movies movies={movies} />
+    </div>
+  );
+}
+```
+
 ## Предварительное заполнение данных
 
-Если вы хотите предварительно заполнить существующие данные в кэш SWR, вы можете использовать опцию `fallbackData`. Например:
+Если вы хотите предварительно заполнить существующие данные в кеш SWR, вы можете использовать опцию `fallbackData`. Например:
 
 ```jsx
 useSWR('/api/data', fetcher, { fallbackData: prefetchedData })

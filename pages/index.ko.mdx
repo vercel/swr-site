@@ -22,7 +22,7 @@ SWR은 먼저 캐시(스태일)로부터 데이터를 반환한 후, fetch 요�
 </Callout>
 
 <div className="mt-16 mb-20 text-center">
-  [시작하기](/docs/getting-started) · [예시](/examples/basic) · [블로그](/blog/swr-v1) · [GitHub 리포지토리](https://github.com/vercel/swr)
+  [시작하기](/docs/getting-started) · [예시](/examples/basic) · [블로그](/blog/swr-v1) · [GitHub 리포지터리](https://github.com/vercel/swr)
 </div>
 
 ## 개요
@@ -31,10 +31,10 @@ SWR은 먼저 캐시(스태일)로부터 데이터를 반환한 후, fetch 요�
 import useSWR from 'swr'
 
 function Profile() {
-  const { data, error } = useSWR('/api/user', fetcher)
+  const { data, error, isLoading } = useSWR('/api/user', fetcher)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (isLoading) return <div>loading...</div>
   return <div>hello {data.name}!</div>
 }
 ```
@@ -78,7 +78,7 @@ SWR은 더 나은 경험을 구축할 수 있도록 속도, 정확성, 안정성
   <img alt="license" src="https://badgen.net/npm/license/swr" className="inline-block mr-2"/>
 </p>
 
-SWR은 React 프레임워크인 [Next.js](https://nextjs.org)를 만든 동일한 팀이 만들었습니다.  
+SWR은 React 프레임워크인 [Next.js](https://nextjs.org)를 만든 동일한 팀이 만들었습니다.
 앞으로의 프로젝트 업데이트를 위해 Twitter에서 [@vercel](https://twitter.com/vercel)을 팔로우해주세요.
 
 언제라도 편하게 [GitHub discussions](https://github.com/vercel/swr/discussions)에 참여해주세요!

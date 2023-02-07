@@ -24,7 +24,7 @@ como stale mobile tabs, o laptops que están **suspendida**.
   />
 </Bleed>
 
-Esta caracteristica está activada por defecto. Puede desactivarla mediante de la opción [`revalidateOnFocus`](/docs/options).
+Esta caracteristica está activada por defecto. Puede desactivarla mediante de la opción [`revalidateOnFocus`](/docs/api).
 
 ## Revalidar on interval
 
@@ -42,7 +42,7 @@ componente asociado al hook está **en la pantalla**.
   />
 </Bleed>
 
-Puede activarlo estableciendo un valor de [`refreshInterval`](/docs/options).
+Puede activarlo estableciendo un valor de [`refreshInterval`](/docs/api).
 
 ```js
 useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
@@ -58,7 +58,7 @@ Este escenario se da con frecuencia cuando el usuario desbloquea su ordenador, p
 
 Para asegurarse de que los datos están siempre actualizados, SWR revalida automáticamente cuando la red se recupera.
 
-Esta función está activada por defecto. Puede desactivarla mediante la opción [`revalidateOnReconnect`](/docs/options).
+Esta función está activada por defecto. Puede desactivarla mediante la opción [`revalidateOnReconnect`](/docs/api).
 
 ## Disable Automatic Revalidations
 
