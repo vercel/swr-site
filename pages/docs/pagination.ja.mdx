@@ -316,17 +316,17 @@ const getKey = (pageIndex, previousPageData) => {
 
 ### Global Mutate with `useSWRInfinite`
 
-`useSWRInfinite` は各ページのデータに加え、全てのページデータを特別な形式のキーでキャッシュに保存するため、グローバルなミューテートを使い再検証するためには、`swr/infintie` にある `unstable_serialize` を使う必要があります。
+`useSWRInfinite` は各ページのデータに加え、全てのページデータを特別な形式のキーでキャッシュに保存するため、グローバルなミューテートを使い再検証するためには、`swr/infinite` にある `unstable_serialize` を使う必要があります。
 
 ```jsx
 import { useSWRConfig } from "swr"
-import { unstable_serialize } from "swr/infinte"
+import { unstable_serialize } from "swr/infinite"
 
 function App() {
     const { mutate } = useSWRConfig()
     mutate(unstable_serialize(getKey))
 }
-````
+```
 
 <Callout emoji="⚠️">
     名前が示す通り、`unstable_serialize` は安定した API ではなく、将来的に変更される可能性があります。
