@@ -175,10 +175,10 @@ function Profile() {
 
 ### Базовое использование
 
-```jsx
+```tsx
 import useSWRMutation from 'swr/mutation'
 
-async function sendRequest(url, { arg }) {
+async function sendRequest(url, { arg }: { arg: { username: string } }) {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(arg)

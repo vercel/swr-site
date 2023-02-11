@@ -26,9 +26,9 @@ useSWR(() => ['user', 8], ([arg0, arg1]) => {})
 명시적으로 `key`와 `fetcher`의 인자에 대한 타입을 지정할 수도 있습니다.
 
 ```typescript
-import useSWR, { Key, Fetcher } from 'swr'
+import useSWR, { Fetcher } from 'swr'
 
-const uid: Key = '<user_id>'
+const uid = '<user_id>'
 const fetcher: Fetcher<User, string> = (id) => getUserById(id)
 
 const { data } = useSWR(uid, fetcher)
