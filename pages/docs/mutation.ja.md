@@ -125,13 +125,13 @@ try {
 
 また、このフックは他の `useSWRMutation` と状態を共有しません。
 
-```jsx
+```tsx
 import useSWRMutation from 'swr/mutation'
 
 // フェッチャーの実装
 // 追加の引数は第二引数の `arg` プロパティとして渡されます
 // 下記の例では、`arg` は `'my_token'` となります
-async function updateUser(url, { arg }) {
+async function updateUser(url, { arg }: { arg: string }) {
   await fetch(url, {
     method: 'POST',
     headers: {

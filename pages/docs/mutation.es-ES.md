@@ -124,13 +124,13 @@ SWR also provides `useSWRMutation` as a hook for remote mutations. The remote mu
 
 Also, this hook doesn’t share states with other `useSWRMutation` hooks.
 
-```jsx
+```tsx
 import useSWRMutation from 'swr/mutation'
 
 // Fetcher implementation.
 // The extra argument will be passed via the `arg` property of the 2nd parameter.
 // In the example below, `arg` will be `'my_token'`
-async function updateUser(url, { arg }) {
+async function updateUser(url, { arg }: { arg: string }) {
   await fetch(url, {
     method: 'POST',
     headers: {

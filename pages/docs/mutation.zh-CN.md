@@ -121,13 +121,13 @@ SWR 还提供了 `useSWRMutation` 作为一个远程数据更改的 hook。远�
 
 另外，这个 hook 不会与其他 `useSWRMutation` hook 共享状态。
 
-```jsx
+```tsx
 import useSWRMutation from 'swr/mutation'
 
 // 实现 fetcher
 // 额外的参数可以通过第二个参数 `arg` 传入
 // 在下例中，`arg` 为 `'my_token'`
-async function updateUser(url, { arg }) {
+async function updateUser(url, { arg }: { arg: string }) {
   await fetch(url, {
     method: 'POST',
     headers: {
