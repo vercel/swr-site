@@ -15,5 +15,9 @@
   "suspense": "Suspense",
   "middleware": "Middleware",
   "advanced": "Advanced",
-  "change-log": "Change Log"
+  "change-log": {
+    "title": "Change Log",
+    "href": "https://github.com/vercel/swr/releases",
+    "newWindow": true
+  }
 }

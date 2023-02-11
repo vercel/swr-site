@@ -1,4 +1,4 @@
-import Callout from 'nextra-theme-docs/callout'
+import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 import Link from 'next/link'
 
 # Getting Started
@@ -7,15 +7,24 @@ import Link from 'next/link'
 
 Inside your React project directory, run the following:
 
-```plaintext
-yarn add swr
-```
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tab>
+    ```bash
+    pnpm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    npm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    yarn add swr
+    ```
+  </Tab>
+</Tabs>
 
-Or with npm:
-
-```plaintext
-npm install swr
-```
 
 ## Quick Start
 
@@ -27,7 +36,7 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 <Callout emoji="💡">
   If you want to use GraphQL API or libs like Axios, you can create your own fetcher function.
-  Check <Link href="/docs/data-fetching"><a href="/docs/data-fetching">here</a></Link> for more examples.
+  Check <Link href="/docs/data-fetching">here</Link> for more examples.
 </Callout>
 
 Then you can import `useSWR` and start using it inside any function components:

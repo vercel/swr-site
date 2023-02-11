@@ -86,7 +86,7 @@ function App () {
 }
 ```
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 <Callout>
 Распространяется на SWR хуки в одной области [проайдера кеша](/docs/advanced/cache). Если провайдера кеша не существует, будет распространяться на все SWR хуки.

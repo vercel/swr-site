@@ -15,5 +15,9 @@
   "suspense": "Задержка (Suspense)",
   "middleware": "Промежуточное ПО (Middleware)",
   "advanced": "Продвинутые",
-  "change-log": "Журнал изменений"
+  "change-log": {
+    "title": "Журнал изменений",
+    "href": "https://github.com/vercel/swr/releases",
+    "newWindow": true
+  }
 }

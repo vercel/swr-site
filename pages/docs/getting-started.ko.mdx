@@ -1,4 +1,4 @@
-import Callout from 'nextra-theme-docs/callout'
+import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 import Link from 'next/link'
 
 # 시작하기
@@ -7,15 +7,23 @@ import Link from 'next/link'
 
 React 프로젝트 폴더 안에서 다음을 실행하세요.
 
-```plaintext
-yarn add swr
-```
-
-npm을 사용한다면
-
-```plaintext
-npm install swr
-```
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tab>
+    ```bash
+    pnpm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    npm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    yarn add swr
+    ```
+  </Tab>
+</Tabs>
 
 ## 빠른 시작
 
@@ -27,7 +35,7 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 <Callout emoji="💡">
   GraphQL API 또는 Axios와 같은 라이브러리를 사용하려면 여러분만의 fetcher 함수를 생성하면 됩니다.
-  <Link href="/docs/data-fetching"><a href="/docs/data-fetching">여기</a></Link>에서 더 많은 예시를 확인하세요.
+  <Link href="/docs/data-fetching">여기</Link>에서 더 많은 예시를 확인하세요.
 </Callout>
 
 그 다음, `useSWR`을 임포트하고 함수 컴포넌트 내에서 사용하여 시작하면 됩니다.

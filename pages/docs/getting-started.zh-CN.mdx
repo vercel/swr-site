@@ -1,4 +1,4 @@
-import Callout from "nextra-theme-docs/callout";
+import { Callout, Tabs, Tab } from 'nextra-theme-docs';
 import Link from "next/link";
 
 # 入门
@@ -7,15 +7,23 @@ import Link from "next/link";
 
 在 React 项目目录运行以下命令：
 
-```plaintext
-yarn add swr
-```
-
-或者用 npm:
-
-```plaintext
-npm install swr
-```
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tab>
+    ```bash
+    pnpm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    npm i swr
+    ```
+  </Tab>
+  <Tab>
+    ```bash
+    yarn add swr
+    ```
+  </Tab>
+</Tabs>
 
 ## 快速开始
 
@@ -26,7 +34,7 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json())
 ```
 
 <Callout emoji="💡">
-  如果要使用 GraphQL API 或类似 Axios 的库，可以自己创建 fetcher 函数。 点击 <Link href="/docs/data-fetching"><a href="/docs/data-fetching">这里</a></Link> 查看更多示例。
+  如果要使用 GraphQL API 或类似 Axios 的库，可以自己创建 fetcher 函数。 点击 <Link href="/docs/data-fetching">这里</Link> 查看更多示例。
 </Callout>
 
 然后你可以 import `useSWR` 并开始在任何函数组件中使用它：

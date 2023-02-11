@@ -1,19 +1,19 @@
 {
   "index": {
-    "title": "소개",
+    "title": "Введение",
     "type": "page",
-    "hidden": true
+    "display": "hidden"
   },
   "docs": {
-    "title": "문서",
+    "title": "Документация",
     "type": "page"
   },
   "examples": {
-    "title": "예시",
+    "title": "Примеры",
     "type": "page"
   },
   "blog": {
-    "title": "블로그",
+    "title": "Блог",
     "type": "page",
     "theme": {
       "sidebar": false

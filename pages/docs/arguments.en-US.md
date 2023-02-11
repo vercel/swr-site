@@ -35,7 +35,7 @@ The `fetcher` function accepts the `key` parameter as is, and the cache key will
 
 ## Passing Objects
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 <Callout>
   Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 

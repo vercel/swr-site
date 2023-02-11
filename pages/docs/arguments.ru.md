@@ -33,7 +33,7 @@ const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithT
 
 ## Передача объектов
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 <Callout>
   Начиная с версии SWR 1.1.0 объектно-подобные ключи будут автоматически сериализоваться.

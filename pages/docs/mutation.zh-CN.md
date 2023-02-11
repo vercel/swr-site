@@ -84,7 +84,7 @@ function App () {
 }
 ```
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 <Callout>
 它向同一个 [缓存 provider](/docs/advanced/cache) 范围内的 SWR hook 进行广播。如果不存在缓存 provider 就会向 SWR hook 进行广播。

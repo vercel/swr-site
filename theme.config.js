@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-
+import { useConfig } from "nextra-theme-docs";
 const Logo = ({ height }) => (
   <svg height={height} viewBox="0 0 291 69" fill="none">
     <path
@@ -39,27 +39,44 @@ const SEARCH_PLACEHOLDER_WITH_TRANSLATIONS = {
   ko: "문서 검색...",
 };
 
+const EDIT_TEXT = {
+  "en-US": "Edit this page on GitHub →",
+  "es-ES": "Edite esta página en GitHub →",
+  ja: "Github で編集する →",
+  ko: "Github에서 이 페이지 편집하기 →",
+  ru: "Редактировать на GitHub →",
+  "zh-CN": "在 GitHub 上编辑本页 →",
+};
+
+/** @type {import('nextra-theme-docs').DocsThemeConfig} */
 export default {
-  projectLink: "https://github.com/vercel/swr",
-  docsRepositoryBase: "https://github.com/vercel/swr-site/blob/master/pages",
-  titleSuffix: " – SWR",
-  search: true,
-  unstable_flexsearch: true,
-  searchPlaceholder: () => {
-    const { locale } = useRouter();
-    return (
-      SEARCH_PLACEHOLDER_WITH_TRANSLATIONS[locale] || "Search documentation..."
-    );
+  project: {
+    link: "https://github.com/vercel/swr",
   },
-  floatTOC: true,
-  feedbackLink: () => {
-    const { locale } = useRouter();
-    return (
-      FEEDBACK_LINK_WITH_TRANSLATIONS[locale] ||
-      FEEDBACK_LINK_WITH_TRANSLATIONS["en-US"]
-    );
+  docsRepositoryBase: "https://github.com/vercel/swr-site/blob/main",
+  useNextSeoProps() {
+    return {
+      titleTemplate: "%s – SWR",
+    };
   },
-  feedbackLabels: "feedback",
+  toc: {
+    float: true,
+  },
+  editLink: {
+    text: () => {
+      const { locale } = useRouter();
+      return EDIT_TEXT[locale] || EDIT_TEXT["en-US"];
+    },
+  },
+  feedback: {
+    content: () => {
+      const { locale } = useRouter();
+      return (
+        FEEDBACK_LINK_WITH_TRANSLATIONS[locale] ||
+        FEEDBACK_LINK_WITH_TRANSLATIONS["en-US"]
+      );
+    },
+  },
   logo: () => {
     const { locale } = useRouter();
     return (
@@ -74,11 +91,11 @@ export default {
       </>
     );
   },
-  head: ({ title, meta }) => {
+  head: () => {
     const { route } = useRouter();
-
+    const { frontMatter, title } = useConfig();
     const ogImage =
-      meta.image ||
+      frontMatter.image ||
       `https://swr-card.vercel.app${
         /\/index\.+/.test(route) ? "" : "?title=" + encodeURIComponent(title)
       }`;
@@ -115,14 +132,14 @@ export default {
         <meta
           name="description"
           content={
-            meta.description ||
+            frontMatter.description ||
             "SWR is a React Hooks library for data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
           }
         />
         <meta
           name="og:description"
           content={
-            meta.description ||
+            frontMatter.description ||
             "SWR is a React Hooks library for data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
           }
         />
@@ -140,126 +157,111 @@ export default {
       </>
     );
   },
-  footerEditLink: ({ locale }) => {
-    switch (locale) {
-      case "zh-CN":
-        return "在 GitHub 上编辑本页 →";
-      case "es-ES":
-        return "Edite esta página en GitHub →";
-      case "pt-BR":
-        return "Edite essa página no GitHub →";
-      case "ja":
-        return "Github で編集する →";
-      case "ko":
-        return "Github에서 이 페이지 편집하기 →";
-      case "ru":
-        return "Редактировать на GitHub →";
-      default:
-        return "Edit this page on GitHub →";
-    }
-  },
-  footerText: ({ locale }) => {
-    switch (locale) {
-      case "zh-CN":
-        return (
-          <a
-            href="https://vercel.com/?utm_source=swr_zh-cn"
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center no-underline text-current font-semibold"
-          >
-            <span className="mr-2">由</span>
-            <span className="mr-2">
-              <Vercel />
-            </span>
-            驱动
-          </a>
-        );
-      case "es-ES":
-        return (
-          <a
-            href="https://vercel.com/?utm_source=swr_es-es"
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center no-underline text-current font-semibold"
-          >
-            <span className="mr-2">Desarrollado por</span>
-            <span className="mr-2">
-              <Vercel />
-            </span>
-          </a>
-        );
-      case "pt-BR":
-        return (
-          <a
-            href="https://vercel.com/?utm_source=swr_es-es"
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center no-underline text-current font-semibold"
-          >
-            <span className="mr-2">Desenvolvido por</span>
-            <span className="mr-2">
-              <Vercel />
-            </span>
-          </a>
-        );
-      case "ja":
-        return (
-          <a
-            href="https://vercel.com/?utm_source=swr_ja"
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center no-underline text-current font-semibold"
-          >
-            <span className="mr-2">提供</span>
-            <span className="mr-2">
-              <Vercel />
-            </span>
-          </a>
-        );
-      case "ko":
-        return (
-          <a
-            href="https://vercel.com/?utm_source=swr_ko"
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center no-underline text-current font-semibold"
-          >
-            <span className="mr-2">Powered by</span>
-            <span className="mr-2">
-              <Vercel />
-            </span>
-          </a>
-        );
-      case "ru":
-        return (
-          <a
-            href="https://vercel.com/?utm_source=swr_ru"
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center no-underline text-current font-semibold"
-          >
-            <span className="mr-2">Работает на</span>
-            <span className="mr-2">
-              <Vercel />
-            </span>
-          </a>
-        );
-      default:
-        return (
-          <a
-            href="https://vercel.com/?utm_source=swr"
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center no-underline text-current font-semibold"
-          >
-            <span className="mr-1">Powered by</span>
-            <span>
-              <Vercel />
-            </span>
-          </a>
-        );
-    }
+  footer: {
+    text: () => {
+      const { locale } = useRouter();
+      switch (locale) {
+        case "zh-CN":
+          return (
+            <a
+              href="https://vercel.com/?utm_source=swr_zh-cn"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center no-underline text-current font-semibold"
+            >
+              <span className="mr-2">由</span>
+              <span className="mr-2">
+                <Vercel />
+              </span>
+              驱动
+            </a>
+          );
+        case "es-ES":
+          return (
+            <a
+              href="https://vercel.com/?utm_source=swr_es-es"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center no-underline text-current font-semibold"
+            >
+              <span className="mr-2">Desarrollado por</span>
+              <span className="mr-2">
+                <Vercel />
+              </span>
+            </a>
+          );
+        case "pt-BR":
+          return (
+            <a
+              href="https://vercel.com/?utm_source=swr_es-es"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center no-underline text-current font-semibold"
+            >
+              <span className="mr-2">Desenvolvido por</span>
+              <span className="mr-2">
+                <Vercel />
+              </span>
+            </a>
+          );
+        case "ja":
+          return (
+            <a
+              href="https://vercel.com/?utm_source=swr_ja"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center no-underline text-current font-semibold"
+            >
+              <span className="mr-2">提供</span>
+              <span className="mr-2">
+                <Vercel />
+              </span>
+            </a>
+          );
+        case "ko":
+          return (
+            <a
+              href="https://vercel.com/?utm_source=swr_ko"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center no-underline text-current font-semibold"
+            >
+              <span className="mr-2">Powered by</span>
+              <span className="mr-2">
+                <Vercel />
+              </span>
+            </a>
+          );
+        case "ru":
+          return (
+            <a
+              href="https://vercel.com/?utm_source=swr_ru"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center no-underline text-current font-semibold"
+            >
+              <span className="mr-2">Работает на</span>
+              <span className="mr-2">
+                <Vercel />
+              </span>
+            </a>
+          );
+        default:
+          return (
+            <a
+              href="https://vercel.com/?utm_source=swr"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center no-underline text-current font-semibold"
+            >
+              <span className="mr-1">Powered by</span>
+              <span>
+                <Vercel />
+              </span>
+            </a>
+          );
+      }
+    },
   },
   i18n: [
     { locale: "en-US", text: "English" },

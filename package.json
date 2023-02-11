@@ -12,21 +12,20 @@
   "author": "Shu Ding",
   "license": "Apache-2.0",
   "dependencies": {
-    "@reach/skip-nav": "^0.16.0",
-    "focus-visible": "^5.1.0",
-    "intersection-observer": "^0.10.0",
-    "markdown-to-jsx": "^6.11.4",
-    "next": "^12.2.0",
-    "nextra": "^2.0.0-beta.6",
-    "nextra-theme-docs": "^2.0.0-beta.6",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-intersection-observer": "^8.26.2"
+    "@vercel/analytics": "^0.1.8",
+    "focus-visible": "^5.2.0",
+    "intersection-observer": "^0.12.2",
+    "next": "^13.1.6",
+    "nextra": "^2.2.14",
+    "nextra-theme-docs": "^2.2.14",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.4.2"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.5",
-    "tailwindcss": "^3.0.16"
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.6"
   },
   "prettier": {
     "embeddedLanguageFormatting": "off",

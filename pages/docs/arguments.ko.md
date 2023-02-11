@@ -34,7 +34,7 @@ The `fetcher` function accepts the `key` parameter as is, and the cache key will
 
 ## 객체 전달
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 <Callout>
   SWR 1.1.0부터, 유사 객체 키들은 내부에서 자동으로 직렬화됩니다.

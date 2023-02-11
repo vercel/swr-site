@@ -1,19 +1,19 @@
 {
   "index": {
-    "title": "前書き",
+    "title": "Introduction",
     "type": "page",
-    "hidden": true
+    "display": "hidden"
   },
   "docs": {
-    "title": "ドキュメント",
+    "title": "Docs",
     "type": "page"
   },
   "examples": {
-    "title": "例",
+    "title": "Examples",
     "type": "page"
   },
   "blog": {
-    "title": "ブログ",
+    "title": "Blog",
     "type": "page",
     "theme": {
       "sidebar": false
