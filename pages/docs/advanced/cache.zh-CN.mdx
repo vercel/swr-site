@@ -97,49 +97,6 @@ function Avatar() {
 
 ## 示例
 
-### 根据正则更改多个 Key
-
-借助缓存 provider API 的灵活性，你甚至可以构建一个“部分更改”的助手函数。
-
-在下面的示例中，`matchMutate` 可以接收一个正则表达式作为 key，并用于更改匹配该模式的。
-
-```js
-function useMatchMutate() {
-  const { cache, mutate } = useSWRConfig()
-  return (matcher, ...args) => {
-    if (!(cache instanceof Map)) {
-      throw new Error('matchMutate requires the cache provider to be a Map instance')
-    }
-
-    const keys = []
-
-    for (const key of cache.keys()) {
-      if (matcher.test(key)) {
-        keys.push(key)
-      }
-    }
-
-    const mutations = keys.map((key) => mutate(key, ...args))
-    return Promise.all(mutations)
-  }
-}
-```
-
-在你的组件内：
-
-```jsx
-function Button() {
-  const matchMutate = useMatchMutate()
-  return <button onClick={() => matchMutate(/^\/api\//)}>
-    重新请求所有以 `/api/` 开头的 key
-  </button>
-}
-```
-
-<Callout>
-  注意，该示例要求缓存 provider 为 Map 实例。
-</Callout>
-
 ### 基于 LocalStorage 的持久缓存
 
 你可能希望将缓存同步到 `localStorage`。下面是一个示例实现：

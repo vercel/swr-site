@@ -97,49 +97,6 @@ function Avatar() {
 
 ## 例
 
-### 正規表現から複数のキーを変更する
-
-キャッシュプロバイダー API の柔軟性により、"部分的な変更"のヘルパーを構築することもできます。
-
-以下の例では、 `matchMutate` はキーとして正規表現を受け取り、パターンに一致するものを変更するために使用できます。
-
-```js
-function useMatchMutate() {
-  const { cache, mutate } = useSWRConfig()
-  return (matcher, ...args) => {
-    if (!(cache instanceof Map)) {
-      throw new Error('matchMutate requires the cache provider to be a Map instance')
-    }
-
-    const keys = []
-
-    for (const key of cache.keys()) {
-      if (matcher.test(key)) {
-        keys.push(key)
-      }
-    }
-
-    const mutations = keys.map((key) => mutate(key, ...args))
-    return Promise.all(mutations)
-  }
-}
-```
-
-次に、コンポーネントの内部：
-
-```jsx
-function Button() {
-  const matchMutate = useMatchMutate()
-  return <button onClick={() => matchMutate(/^\/api\//)}>
-    Revalidate all keys start with "/api/"
-  </button>
-}
-```
-
-<Callout>
-  この例では、キャッシュプロバイダーが Map インスタンスである必要があることに注意してください。
-</Callout>
-
 ### LocalStorage を使った永続キャッシュ
 
 キャッシュを `localStorage` で同期しても良いかもしれません。実装例は次の通りです：

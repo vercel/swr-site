@@ -93,7 +93,7 @@ useSWRImmutable(key, fetcher, options)
 
 ### useSWRConfig()
 
-현재 캐시 제공자 및 전역 `mutate` 함수를 포함해 모든 전역 구성을 반환하는 새로운 Hook API입니다. 
+현재 캐시 제공자 및 전역 `mutate` 함수를 포함해 모든 전역 구성을 반환하는 새로운 Hook API입니다.
 
 ```jsx
 import { useSWRConfig } from 'swr'
@@ -193,7 +193,7 @@ useSWR(key, (url) => fetch(url).then(res => res.json()))
 
 ### Hook 반환 `mutate` 사용 권장
 
-긴급한 변경 사항은 **아니지만**, 항상 `useSWRConfig` hook으로부터 반환된 `mutate`를 사용할 것을 _권장_합니다.
+긴급한 변경 사항은 **아니지만**, 항상 `useSWRConfig` hook으로부터 반환된 `mutate`를 사용할 것을 *권장*합니다.
 
 ```diff
 - import { mutate } from 'swr'
@@ -234,9 +234,9 @@ TypeScript를 사용하고 있다면, 일관성을 위해 다음 타입명이 �
 - `revalidateWhenStale`은 `revalidateIfStale`로 이름이 변경되었습니다.
 - `middlewares`는 `use`로 이름이 변경되었습니다.
 
-### Changelog
+### 변경 로그
 
-전체 Changelog는 [GitHub](https://github.com/vercel/swr/releases)을 참고하세요.
+전체 변경 로그는 [GitHub](https://github.com/vercel/swr/releases)을 참고하세요.
 
 ## 향후 계획
 
@@ -247,6 +247,5 @@ TypeScript를 사용하고 있다면, 일관성을 위해 다음 타입명이 �
 ## 감사합니다!
 
 라이브러리에 기여해주신 [Toru Kobayashi](https://twitter.com/koba04), [Yixuan Xu](https://twitter.com/yixuanxu94) 그리고 문서 및 번역에 기여해주신 [Paco Coursey](https://twitter.com/pacocoursey), [uttk](https://github.com/uttk), [Tomohiro SHIOYA](https://github.com/shioyang), [Markoz Peña](https://github.com/markozxuu), [SeulGi Choi](https://github.com/cs09g), [Fang Lu](https://github.com/huzhengen), [Valentin Politov](https://github.com/valentinpolitov)에게 특별한 감사를 표합니다. 이들이 없었다면 이번 릴리즈는 불가능했을 겁니다.
-
 
 모든 커뮤니티 및 [110명의 기여자](https://github.com/vercel/swr/graphs/contributors)([+ 45명의 문서 기여자](https://github.com/vercel/swr-site/graphs/contributors))분들, 그리고 의견을 주신 모든 분들께도 감사를 표합니다.

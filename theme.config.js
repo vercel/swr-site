@@ -32,6 +32,11 @@ const FEEDBACK_LINK_WITH_TRANSLATIONS = {
   "en-US": "Question? Give us feedback →",
   "zh-CN": "有疑问？给我们反馈 →",
   "pt-BR": "Dúvidas? Nos dê feedback →",
+  ko: "질문이 있으신가요? 피드백을 남겨주세요 →",
+};
+
+const SEARCH_PLACEHOLDER_WITH_TRANSLATIONS = {
+  ko: "문서 검색...",
 };
 
 const EDIT_TEXT = {

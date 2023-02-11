@@ -97,49 +97,6 @@ The first argument for the `provider` function is the cache provider of the uppe
 
 ## Examples
 
-### Mutate Multiple Keys from RegEx
-
-With the flexibility of the cache provider API, you can even build a "partial mutation" helper.
-
-In the example below, `matchMutate` can receive a regex expression as key, and be used to mutate the ones who matched this pattern.
-
-```js
-function useMatchMutate() {
-  const { cache, mutate } = useSWRConfig()
-  return (matcher, ...args) => {
-    if (!(cache instanceof Map)) {
-      throw new Error('matchMutate requires the cache provider to be a Map instance')
-    }
-
-    const keys = []
-
-    for (const key of cache.keys()) {
-      if (matcher.test(key)) {
-        keys.push(key)
-      }
-    }
-
-    const mutations = keys.map((key) => mutate(key, ...args))
-    return Promise.all(mutations)
-  }
-}
-```
-
-Then inside your component:
-
-```jsx
-function Button() {
-  const matchMutate = useMatchMutate()
-  return <button onClick={() => matchMutate(/^\/api\//)}>
-    Revalidate all keys start with "/api/"
-  </button>
-}
-```
-
-<Callout>
-  Note that this example requires the cache provider to be a Map instance.
-</Callout>
-
 ### LocalStorage Based Persistent Cache
 
 You might want to sync your cache to `localStorage`. Here's an example implementation:

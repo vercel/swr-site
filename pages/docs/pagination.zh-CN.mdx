@@ -303,6 +303,24 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
+### Global Mutate with `useSWRInfinite`
+
+`useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infinite` to revalidate the data with the global mutate.
+
+```jsx
+import { useSWRConfig } from "swr"
+import { unstable_serialize } from "swr/infinite"
+
+function App() {
+    const { mutate } = useSWRConfig()
+    mutate(unstable_serialize(getKey))
+}
+```
+
+<Callout emoji="⚠️">
+    As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
+</Callout>
+
 ### 高级特性
 
 [这里有一个示例](/examples/infinite-loading) 演示如何使用 `useSWRInfinite` 实现以下功能：
