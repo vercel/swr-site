@@ -48,7 +48,7 @@ import Video from 'components/video'
 既存の `isValidating` の値と比較して、`isLoading` はより一般的なローディングのための UX に役に立つ新しいプロパティです。
 
 - `isValidating` は実行中のリクエストがある場合に **データがロード済みかどうかに関わらず** `true` になります
-- `isLoading` は実行中のリクエストがあり ***ロード済みのデータがまだない場合** に `true` になります
+- `isLoading` は実行中のリクエストがあり **ロード済みのデータがまだない場合** に `true` になります
 
 わかりやすく言うと、`isValidating` は実行中の再検証が存在する場合全てで、`isLoading` は SWR が再検証中だけど表示するためのデータがない場合に使えます。
 
