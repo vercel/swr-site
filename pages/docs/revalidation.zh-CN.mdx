@@ -20,6 +20,7 @@ import Link from 'next/link'
     src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/focus-revalidate.mp4"
     caption="视频：使用聚焦时重新验证在页面间自动同步登陆状态。"
     ratio={307/768}
+    className="mx-8 2xl:mx-24"
   />
 </Bleed>
 
@@ -36,6 +37,7 @@ SWR 会为你提供自动重新请求数据的选项。这很 **智能**，意�
     src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/refetch-interval.mp4"
     caption="视频：当用户进行更改时，两个会话最终将呈现相同的数据。"
     ratio={307/768}
+    className="mx-8 2xl:mx-24"
   />
 </Bleed>
 
@@ -68,7 +70,7 @@ import useSWRImmutable from 'swr/immutable'
 useSWRImmutable(key, fetcher, options)
 ```
 
-它具有与普通 `useSWR` hook 相同的 API 接口。你还可以通过禁用以下重新请求​​选项来执行相同的操作：
+它具有与普通 `useSWR` hook 相同的 API 接口。你还可以通过禁用以下重新请求 ​​ 选项来执行相同的操作：
 
 ```js
 useSWR(key, fetcher, {
