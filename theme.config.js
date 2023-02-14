@@ -28,6 +28,11 @@ const TITLE_WITH_TRANSLATIONS = {
   ru: "React хуки для выборки данных",
 };
 
+const TABLE_OF_CONTENTS_TITLE = {
+  "en-US": "On This Page",
+  "es-ES": "En esta página",
+};
+
 const FEEDBACK_LINK_WITH_TRANSLATIONS = {
   "en-US": "Question? Give us feedback →",
   "zh-CN": "有疑问？给我们反馈 →",
@@ -64,6 +69,10 @@ export default {
   },
   toc: {
     float: true,
+    title: () => {
+      const { locale } = useRouter();
+      return TABLE_OF_CONTENTS_TITLE[locale] || TABLE_OF_CONTENTS_TITLE["en-US"];
+    },
   },
   search:{
     placeholder: () => {
