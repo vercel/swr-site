@@ -227,7 +227,7 @@ trigger(newName, {
 
 ### Defer loading data until needed
 
-You can also use `useSWRMutation` for loading data. `useSWRMutation` never start requesting until `trigger` is called, so you can defer loading data when you actually need it.
+You can also use `useSWRMutation` for loading data. `useSWRMutation` won't start requesting until `trigger` is called, so you can defer loading data when you actually need it.
 
 ```jsx
 import { useState } from 'react'
