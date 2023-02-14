@@ -31,11 +31,14 @@ const TITLE_WITH_TRANSLATIONS = {
 const FEEDBACK_LINK_WITH_TRANSLATIONS = {
   "en-US": "Question? Give us feedback →",
   "zh-CN": "有疑问？给我们反馈 →",
+  "es-ES": "¿Dudas? Danos tu feedback →",
   "pt-BR": "Dúvidas? Nos dê feedback →",
   ko: "질문이 있으신가요? 피드백을 남겨주세요 →",
 };
 
 const SEARCH_PLACEHOLDER_WITH_TRANSLATIONS = {
+  "en-US": "Search documentation...",
+  "es-ES": "Buscar documento...",
   ko: "문서 검색...",
 };
 
@@ -61,6 +64,12 @@ export default {
   },
   toc: {
     float: true,
+  },
+  search:{
+    placeholder: () => {
+      const { locale } = useRouter();
+      return SEARCH_PLACEHOLDER_WITH_TRANSLATIONS[locale] || SEARCH_PLACEHOLDER_WITH_TRANSLATIONS["en-US"];
+    },
   },
   editLink: {
     text: () => {
