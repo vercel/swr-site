@@ -60,11 +60,11 @@ Para asegurarse de que los datos están siempre actualizados, SWR revalida autom
 
 Esta función está activada por defecto. Puede desactivarla mediante la opción [`revalidateOnReconnect`](/docs/api).
 
-## Disable Automatic Revalidations
+## Desactivar las revalidaciones automáticas
 
-If the resource is **immutable**, that will never change if we revalidate again, we can disable all kinds of automatic revalidations for it.
+Si el recurso es **inmutable** (que nunca cambiará si revalidamos de nuevo), podemos desactivar todo tipo de revalidaciones automáticas para él.
 
-Since version 1.0, SWR provides a helper hook `useSWRImmutable` to mark the resource as immutable:
+Desde la versión 1.0, SWR proporciona un "helper hook" llamado `useSWRImmutable` para marcar el recurso como inmutable:
 
 ```js
 import useSWRImmutable from 'swr/immutable'
@@ -73,7 +73,7 @@ import useSWRImmutable from 'swr/immutable'
 useSWRImmutable(key, fetcher, options)
 ```
 
-It has the same API interface as the normal `useSWR` hook. You can also do the same thing by disable the following revalidation options:
+Tiene la misma interfaz API que el hook normal `useSWR`. También puedes hacer lo mismo deshabilitando las siguientes opciones de revalidación:
 
 ```js
 useSWR(key, fetcher, {
@@ -86,6 +86,6 @@ useSWR(key, fetcher, {
 useSWRImmutable(key, fetcher)
 ```
 
-The `revalidateIfStale` controls if SWR should revalidate when it mounts and there is stale data.
+El `revalidateIfStale` controla si SWR debe revalidar cuando se monta y hay datos obsoletos.
 
-These 2 hooks above do the **exact same** thing. Once the data is cached, they will never request it again.
+Estos dos hooks hacen exactamente lo mismo. Una vez que los datos se almacenan en caché, no volverán a solicitarlos.
