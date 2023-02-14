@@ -16,17 +16,17 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 
 - `data`: data de la key dada resueltos por el `fetcher` (o undefined si no está cargado)
 - `error`: error lanzado por el `fetcher` (o undefined)
-- `isLoading`: if there's an ongoing request and no "loaded data". Fallback data and previous data are not considered "loaded data"
+- `isLoading`: si hay una solicitud en curso y no hay "datos cargados". Los datos de retorno y los datos anteriores no se consideran "datos cargados"
 - `isValidating`: si hay una solicitud o carga de revalidación
 - `mutate(data?, options?`: función para mutar los datos en caché [(detalles)](/docs/mutation)
 
-More information can be found [here](/docs/advanced/understanding).
+Puede encontrar más información [aquí](/docs/advanced/understanding).
 
 ## Opciones
 
 - `suspense = false`: activar el modo React Suspense [(detalles)](/docs/suspense)
 - `fetcher(args)`: la fetcher función
-- `revalidateIfStale = true`: automatically revalidate even if there is stale data [(details)](/docs/revalidation#disable-automatic-revalidations)
+- `revalidateIfStale = true`: revalida automáticamente aunque haya datos obsoletos [(detalles)](/docs/revalidation#disable-automatic-revalidations)
 - `revalidateOnMount`: activar o desactivar la revalidación automática cuando se monta el componente
 - `revalidateOnFocus = true`: revalidación automática cuanto window gets focused [(detalles)](/docs/revalidation)
 - `revalidateOnReconnect = true`: revalidación automática cuando el navegador recupera la conexión a la red
@@ -34,18 +34,18 @@ More information can be found [here](/docs/advanced/understanding).
 - `refreshInterval` [(detalles)](/docs/revalidation):
   - desactivado por defecto: `refreshInterval = 0`
   - If set to a number, polling interval
-  - If set to a function, the function will receive the latest data and should return the interval in milliseconds
+  - Si se establece en una función, ésta recibirá los últimos datos y deberá devolver el intervalo en milisegundos
 - `refreshWhenHidden = false`: polling cuando window es invisible (si `refreshInterval` está activado)
 - `refreshWhenOffline = false`: polling cuando el navegador está desconectado (determinado por `navigator.onLine`)
-- `shouldRetryOnError = true`: reitentar cuando el fetcher tiene un error
+- `shouldRetryOnError = true`: reintentar cuando el fetcher tiene un error
 - `dedupingInterval = 2000`: solicitudes de deduplicación con la misma key en este lapso de tiempo
 - `focusThrottleInterval = 5000`: sólo revalidar una vez durante un periodo de tiempo
 - `loadingTimeout = 3000`: tiempo de espera para activar el evento onLoadingSlow
-- `errorRetryInterval = 5000`: error retry interval
+- `errorRetryInterval = 5000`: intervalo de reintento de error
 - `errorRetryCount`: número máximo de reintentos de error
-- `fallback`: a key-value object of multiple fallback data [(example)](/docs/with-nextjs)
+- `fallback`: un objeto clave-valor de múltiples datos alternativos [(ejemplo)](/docs/with-nextjs)
 - `fallbackData`: datos iniciales a devolver (nota: Esto es por un hook)
-- `keepPreviousData = false`: return the previous key's data until the new data has been loaded [(detalles)](/docs/advanced/understanding#return-previous-data-for-better-ux)
+- `keepPreviousData = false`: devuelve la data anterior de la key hasta que se hayan cargado los nuevos datos [(detalles)](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: función callback cuando una petición tarda demasiado en cargase (véase: `loadingTimeout`)
 - `onSuccess(data, key, config)`: función callback cuando una petición termina con éxito
 - `onError(err, key, config)`: función callback cuando una petición devuelve un error
@@ -54,7 +54,7 @@ More information can be found [here](/docs/advanced/understanding).
 - `compare(a, b)`: función de comparación utilizada para detectar cuando los datos devueltos han cambiado,
   para evitar spurious rerenders. Por defecto, se utiliza [stable-hash](https://github.com/shuding/stable-hash).
 - `isPaused()`: para detectar si pause revalidations, ignorará los datos obtenidos y los errores cuando devuelva `true`. Devuelve `false` por defecto.
-- `use`: array of middleware functions [(details)](/docs/middleware)
+- `use`: arreglo de funciones middleware [(detalles)](/docs/middleware)
 
 <Callout emoji="💡">
 Cuando una red lenta (2G, {'<='} 70Kbps), `errorRetryInterval` serian 10 segundos, y
