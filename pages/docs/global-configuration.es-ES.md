@@ -36,11 +36,11 @@ function App () {
 }
 ```
 
-## Nesting Configurations
+## Anidando configuraciones
 
-`SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
+`SWRConfig` fusiona la configuración del contexto padre. Puede recibir un objeto o una configuración funcional. La funcional recibe la configuración padre como argumento y devuelve una nueva configuración que puedes personalizar tú mismo. 
 
-### Object Configuration Example
+### Ejemplo de configuración de objetos
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -56,8 +56,8 @@ function App() {
     >
       <SWRConfig
         value={{
-          dedupingInterval: 200, // will override the parent value since the value is primitive
-          fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
+          dedupingInterval: 200, // anulará el valor del objeto padre, ya que el valor es primitivo
+          fallback: { a: 2, c: 2 }, // se fusionará con el valor del objeto padre, ya que el valor es un objeto fusionable
         }}
       >
         <Page />
@@ -76,7 +76,7 @@ function Page() {
 }
 ```
 
-### Functional Configuration Example
+### Ejemplo de configuración funcional
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -113,9 +113,9 @@ function Page() {
 
 ## Extra APIs
 
-### Cache Provider
+### Proveedor de caché(Cache provider)
 
-Besides all the [options](/docs/api) listed, `SWRConfig` also accepts an optional `provider` function. Please refer to the [Cache](/docs/cache) section for more details.
+Además de todas las [opciones](/docs/api) listadas, `SWRConfig` también acepta una función opcional `provider`. Consulte la sección [Cache](/docs/cache) para obtener más detalles.
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>
@@ -123,9 +123,9 @@ Besides all the [options](/docs/api) listed, `SWRConfig` also accepts an optiona
 </SWRConfig>
 ```
 
-### Access To Global Configurations
+### Acceso a configuraciones globales
 
-You can use the `useSWRConfig` hook to get the global configurations, as well as [`mutate`](/docs/mutation) and [`cache`](/docs/advanced/cache):
+Puedes utilizar el hook `useSWRConfig`para obtener las configuraciones globales, así como [`mutate`](/docs/mutation) y [`cache`](/docs/advanced/cache):
 
 ```jsx
 import { useSWRConfig } from 'swr'
@@ -137,4 +137,4 @@ function Component () {
 }
 ```
 
-Nested configurations will be extended. If no `<SWRConfig>` is used, it will return the default ones.
+Se extenderán las configuraciones anidadas. Si no se utiliza `SWRConfig` devolverá las predeterminadas.
