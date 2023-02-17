@@ -29,6 +29,10 @@ function App() {
 }
 ```
 
+<Callout emoji="⚠️">
+  Using global mutator only with the `key` parameter will ***not update the cache or trigger revalidation*** unless there is a mounted SWR hook using the same key.
+</Callout>
+
 #### バウンドミューテート
 
 バウンドミューテートは現在のキーのデータをミューテートする最も簡単な方法です。`useSWR` に渡された `key` に対して対応付けられ、`data` を第一引数として受け取ります。

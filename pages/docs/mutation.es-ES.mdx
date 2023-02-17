@@ -29,6 +29,10 @@ function App() {
 }
 ```
 
+<Callout emoji="⚠️">
+  Using global mutator only with the `key` parameter will ***not update the cache or trigger revalidation*** unless there is a mounted SWR hook using the same key.
+</Callout>
+
 #### Bound Mutate
 
 Bound mutate is the short path to mutate the current key with data. Which `key` is bounded to the `key` passing to `useSWR`, and receive the `data` as the first argument.

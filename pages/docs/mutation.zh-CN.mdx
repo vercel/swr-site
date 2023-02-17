@@ -29,6 +29,10 @@ function App() {
 }
 ```
 
+<Callout emoji="⚠️">
+  如果在调用全局 mutator 函数式只提供了 key 参数，那么除非有一个使用相同 key 的 SWR hook 被挂载，否则缓存不会被更新，也不会触发重新验证。
+</Callout>
+
 #### 绑定数据更改
 
 绑定数据更改可以更便捷的更改当前 key 数据，它的 `key` 与传递给 `useSWR` 的 `key` 相绑定，并接收 `data` 作为第一个参数。

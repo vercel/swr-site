@@ -31,6 +31,10 @@ function App() {
 }
 ```
 
+<Callout emoji="⚠️">
+  Using global mutator only with the `key` parameter will ***not update the cache or trigger revalidation*** unless there is a mounted SWR hook using the same key.
+</Callout>
+
 #### Bound Mutate
 
 Bound mutate is the short path to mutate the current key with data. Which `key` is bounded to the `key` passing to `useSWR`, and receive the `data` as the first argument.
@@ -91,7 +95,6 @@ function App () {
 <Callout>
 It broadcasts to SWR hooks under the same [cache provider](/docs/advanced/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks.
 </Callout>
-
 
 ### API
 
@@ -162,7 +165,7 @@ function Profile() {
   - `populateCache = false`: same as `mutate`'s `populateCache`, but the default is `false`
   - `rollbackOnError = true`: same as `mutate`'s `rollbackOnError`
   - `throwOnError = true`: same as `mutate`'s `throwOnError`
-  - `onSuccess(data, key, config)`:　callback function when a remote mutation has been finished successfully
+  - `onSuccess(data, key, config)`:　 callback function when a remote mutation has been finished successfully
   - `onError(err, key, config)`: callback function when a remote mutation has returned an error
 
 #### Return Values

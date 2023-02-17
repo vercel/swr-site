@@ -29,6 +29,10 @@ function App() {
 }
 ```
 
+<Callout emoji="⚠️">
+  Using global mutator only with the `key` parameter will ***not update the cache or trigger revalidation*** unless there is a mounted SWR hook using the same key.
+</Callout>
+
 #### Привязанная мутация
 
 Привязанная мутация — это короткий путь для изменения текущего ключа с данными. Какой `key` привязан к `key`, передаваемому в `useSWR`, и получает `data` в качестве первого аргумента.
