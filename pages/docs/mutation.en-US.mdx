@@ -1,3 +1,5 @@
+import { Callout } from 'nextra-theme-docs'
+
 # Mutation & Revalidation
 
 SWR provides the [`mutate`](/docs/mutation#mutate) and [`useSWRMutation`](/docs/mutation#useswrmutation) APIs for mutating remote data and related cache.
@@ -85,8 +87,6 @@ function App () {
   )
 }
 ```
-
-import { Callout } from 'nextra-theme-docs'
 
 <Callout>
 It broadcasts to SWR hooks under the same [cache provider](/docs/advanced/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks.
