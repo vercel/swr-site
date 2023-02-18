@@ -35,7 +35,7 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 <Callout emoji="💡">
     Se você quer usar APIs GraphQL ou outras bibliotecas como Axios, você pode criar sua própria função fetcher.
-    Veja <Link href="/docs/data-fetching">aqui</Link> para mais exemplos.
+    Veja maias exemplos clicando <Link href="/docs/data-fetching">aqui</Link>.
 </Callout>
 
 Então você pode importar `useSWR` e começar a usá-lo em qualquer componente funcional:
@@ -49,7 +49,7 @@ function Profile () {
   if (error) return <div>falhou ao carregar</div>
   if (isLoading) return <div>carregando...</div>
 
-  // rednerizar dados
+  // renderizar dados
   return <div>olá {data.name}!</div>
 }
 ```
@@ -108,14 +108,14 @@ filhos via props (note que nós não tratamos o estado de erro por agora).
 function Page () {
   const [user, setUser] = useState(null)
 
-  // fetch data
+  // obtendo os dados data
   useEffect(() => {
     fetch('/api/user')
       .then(res => res.json())
       .then(data => setUser(data))
   }, [])
 
-  // global loading state
+  // estado de carregamento (loading) global
   if (!user) return <Spinner/>
 
   return <div>
@@ -124,7 +124,7 @@ function Page () {
   </div>
 }
 
-// child components
+// componentes filho
 
 function Navbar ({ user }) {
   return <div>
@@ -151,7 +151,7 @@ componentes dentro da página podem ser dinâmicos, e o componente principal pod
 SWR resolve o problema perfeitamente. Com o hook `useUser`, o código pode ser refatorado para:
 
 ```jsx {20,26}
-// page component
+// componente page
 
 function Page () {
   return <div>
@@ -160,7 +160,7 @@ function Page () {
   </div>
 }
 
-// child components
+// componentes filho
 
 function Navbar () {
   return <div>
@@ -172,7 +172,7 @@ function Navbar () {
 function Content () {
   const { user, isLoading } = useUser()
   if (isLoading) return <Spinner />
-  return <h1>Welcome back, {user.name}</h1>
+  return <h1>Bem-vindo de volta, {user.name}</h1>
 }
 
 function Avatar () {

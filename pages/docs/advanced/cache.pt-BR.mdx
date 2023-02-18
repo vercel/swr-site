@@ -148,7 +148,7 @@ describe('test suite', async () => {
 })
 ```
 
-### Modify the Cache Data
+### Modificar os Dados do Cache
 
 ```jsx
 const { cache } = useSWRConfig()
@@ -157,19 +157,19 @@ cache.get(key) // Obtém os dados atuais para uma chave.
 ```
 
 <Callout emoji="🚨" type="error">
-  você não deve gravar diretamente no cache, isso pode causar um comportamento indefinido.
+  Você não deve escrever diretamente no cache, isso pode causar um comportamento indefinido.
 </Callout>
 
-You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
+Você pode usar [`mutate`](/docs/mutation) para modificar o cache. Por exemplo, você pode limpar todos os dados do cache como no exemplo a seguir.
 
 ```jsx
 const { mutate } = useSWRConfig()
 
 mutate(
-  key => true, // which cache keys are updated
-  undefined, // update cache data to `undefined`
-  { revalidate: false } // do not revalidate
+  key => true, // quais chaves de cache devem ser atualizadas
+  undefined, // atualiza os dados de cache para undefined
+  { revalidate: false } // não revalidar os dados
 )
 ```
 
-More information can be found [here](/docs/arguments#multiple-arguments).
+Mais informação pode ser encontrada [aqui](/docs/arguments#multiple-arguments).
