@@ -7,8 +7,8 @@
 export const languageMap = {
   "en-US": "English",
   "es-ES": "Español",
-  "zh-CN": "简体中文",
   "pt-BR": "Português Brasileiro",
+  "zh-CN": "简体中文",
   ja: "日本語",
   ko: "한국어",
   ru: "Русский",
@@ -17,9 +17,9 @@ export const languageMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const titleMap = {
   "en-US": "React Hooks for Data Fetching",
-  "zh-CN": "用于数据请求的 React Hooks 库",
   "es-ES": "Biblioteca React Hooks para la obtención de datos",
   "pt-BR": "React Hooks para Data Fetching",
+  "zh-CN": "用于数据请求的 React Hooks 库",
   ja: "データ取得のための React Hooks ライブラリ",
   ko: "데이터 가져오기를 위한 React Hooks",
   ru: "React хуки для выборки данных",
@@ -69,9 +69,9 @@ export const headDescriptionMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const feedbackLinkMap = {
   "en-US": "Question? Give us feedback →",
-  "zh-CN": "有疑问？给我们反馈 →",
   "es-ES": "¿Dudas? Danos tu feedback →",
   "pt-BR": "Dúvidas? Nos dê feedback →",
+  "zh-CN": "有疑问？给我们反馈 →",
   ko: "질문이 있으신가요? 피드백을 남겨주세요 →",
   ru: "Вопросы? Оставьте нам отзыв →",
 };
@@ -79,9 +79,9 @@ export const feedbackLinkMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const editTextMap = {
   "en-US": "Edit this page on GitHub →",
-  "zh-CN": "在 GitHub 上编辑本页 →",
   "es-ES": "Edite esta página en GitHub →",
   "pt-BR": "Edite essa página no GitHub →",
+  "zh-CN": "在 GitHub 上编辑本页 →",
   ja: "Github で編集する →",
   ko: "Github에서 이 페이지 편집하기 →",
   ru: "Редактировать эту страницу на GitHub →",
@@ -90,9 +90,9 @@ export const editTextMap = {
 /** @type {Readonly<Record<Locale, { utmSource: string; text: string; suffix?: string | undefined }>>} */
 export const footerTextMap = {
   "en-US": { utmSource: "swr", text: "Powered by" },
-  "zh-CN": { utmSource: "swr_zh-cn", text: "由", suffix: "驱动" },
   "es-ES": { utmSource: "swr_es-es", text: "Desarrollado por" },
   "pt-BR": { utmSource: "swr_pt-br", text: "Desenvolvido por" },
+  "zh-CN": { utmSource: "swr_zh-cn", text: "由", suffix: "驱动" },
   ja: { utmSource: "swr_ja", text: "提供" },
   ko: { utmSource: "swr_ko", text: "Powered by" },
   ru: { utmSource: "swr_ru", text: "Работает на" },
