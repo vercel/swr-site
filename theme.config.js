@@ -31,6 +31,7 @@ const TITLE_WITH_TRANSLATIONS = {
 const TABLE_OF_CONTENTS_TITLE = {
   "en-US": "On This Page",
   "es-ES": "En esta página",
+  "pt-BR": "Nessa página",
 };
 
 const FEEDBACK_LINK_WITH_TRANSLATIONS = {
@@ -44,6 +45,7 @@ const FEEDBACK_LINK_WITH_TRANSLATIONS = {
 const SEARCH_PLACEHOLDER_WITH_TRANSLATIONS = {
   "en-US": "Search documentation...",
   "es-ES": "Buscar documento...",
+  pt: "Buscar documentação...",
   ko: "문서 검색...",
 };
 
@@ -54,6 +56,7 @@ const EDIT_TEXT = {
   ko: "Github에서 이 페이지 편집하기 →",
   ru: "Редактировать на GitHub →",
   "zh-CN": "在 GitHub 上编辑本页 →",
+  "pt-BR": "Edite essa página no GitHub →",
 };
 
 /** @type {import('nextra-theme-docs').DocsThemeConfig} */
@@ -71,13 +74,18 @@ export default {
     float: true,
     title: () => {
       const { locale } = useRouter();
-      return TABLE_OF_CONTENTS_TITLE[locale] || TABLE_OF_CONTENTS_TITLE["en-US"];
+      return (
+        TABLE_OF_CONTENTS_TITLE[locale] || TABLE_OF_CONTENTS_TITLE["en-US"]
+      );
     },
   },
-  search:{
+  search: {
     placeholder: () => {
       const { locale } = useRouter();
-      return SEARCH_PLACEHOLDER_WITH_TRANSLATIONS[locale] || SEARCH_PLACEHOLDER_WITH_TRANSLATIONS["en-US"];
+      return (
+        SEARCH_PLACEHOLDER_WITH_TRANSLATIONS[locale] ||
+        SEARCH_PLACEHOLDER_WITH_TRANSLATIONS["en-US"]
+      );
     },
   },
   editLink: {
