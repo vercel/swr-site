@@ -45,7 +45,7 @@ const FEEDBACK_LINK_WITH_TRANSLATIONS = {
 const SEARCH_PLACEHOLDER_WITH_TRANSLATIONS = {
   "en-US": "Search documentation...",
   "es-ES": "Buscar documento...",
-  pt: "Buscar documentação...",
+  "pt-BR": "Buscar documentação...",
   ko: "문서 검색...",
 };
 
