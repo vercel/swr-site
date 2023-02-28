@@ -196,6 +196,7 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
   - `revalidateAll=false`: sempre tentar revalidar todas as páginas
   - `revalidateFirstPage=true`: sempre tentar revalidar a primeira página
   - `persistSize=false`: não reseta o tamanho da página para 1 (ou `initialSize` se setado) quando a chave da primeira página muda
+  - `parallel = false`: fetches multiple pages in parallel
 
 <Callout>
   Note que a opção `initialSize` não é permitida a mudar no ciclo de vida.
@@ -312,11 +313,36 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
+### Parallel Fetching Mode
+
+By default, `useSWRInfinite` fetches each page data sequentially. That makes sense because `useSWRInfinite` supports APIs based on the returned data, like cursor-based API. However, getting all page data takes a long time when we have many pages. You can fetch all page data in parallel by enabling the `parallel` option.
+
+```jsx
+// parallel = false (default)
+// page1 ===> page2 ===> page3 ===> done
+//
+// parallel = true
+// page1 ===>
+// page2 ===> done
+// page3 ===>
+//
+// previousPageData is always `null`
+const getKey = (pageIndex, previousPageData) => {
+  return `/users?page=${pageIndex}&limit=10`
+}
+
+function App () {
+  const { data } = useSWRInfinite(getKey, fetcher, { parallel: true })
+}
+```
+
+<Callout emoji="⚠️">
+    The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
+</Callout>
+
 ### Mutação Global com `useSWRInfinite`
 
 `useSWRInfinite` armazena todos os dados da página com uma chave de cache especial junto com cada dado da página. Você deve usar `unstable_serialize` em `swr/infinite` para revalidar os dados com a mutação global.
-
-````jsx
 
 ```jsx
 import { useSWRConfig } from "swr"

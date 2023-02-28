@@ -200,6 +200,7 @@ En la carga infinita, una _page_ es una petición, y nuestro objetivo es obtener
   - `revalidateAll = false`: intentar siempre revalidar todas las páginas
   - `revalidateFirstPage = true`: always try to revalidate the first page
   - `persistSize = false`: no restablecer el page size a 1 (o `initialSize` si está establecido) cuando la key de la primera página cambia
+  - `parallel = false`: fetches multiple pages in parallel
 
 <Callout>
     Tenga en cuenta que la opción `InitialSize` no puede cambiar en el ciclo de vida.
@@ -315,6 +316,33 @@ const getKey = (pageIndex, previousPageData) => {
   return `/users?cursor=${previousPageData.nextCursor}&limit=10`
 }
 ```
+
+### Parallel Fetching Mode
+
+By default, `useSWRInfinite` fetches each page data sequentially. That makes sense because `useSWRInfinite` supports APIs based on the returned data, like cursor-based API. However, getting all page data takes a long time when we have many pages. You can fetch all page data in parallel by enabling the `parallel` option.
+
+```jsx
+// parallel = false (default)
+// page1 ===> page2 ===> page3 ===> done
+//
+// parallel = true
+// page1 ===>
+// page2 ===> done
+// page3 ===>
+//
+// previousPageData is always `null`
+const getKey = (pageIndex, previousPageData) => {
+  return `/users?page=${pageIndex}&limit=10`
+}
+
+function App () {
+  const { data } = useSWRInfinite(getKey, fetcher, { parallel: true })
+}
+```
+
+<Callout emoji="⚠️">
+    The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
+</Callout>
 
 ### Global Mutate with `useSWRInfinite`
 

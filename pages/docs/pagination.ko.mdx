@@ -198,6 +198,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   - `revalidateAll = false`: 항상 모든 페이지의 갱신 시도
   - `revalidateFirstPage = true`: always try to revalidate the first page
   - `persistSize = false`: 첫 페이지의 키가 변경될 때, 페이지 크기를 1(`initialSize`가 설정된 경우 `initialSize`)로 초기화하지 않음
+  - `parallel = false`: fetches multiple pages in parallel
 
 <Callout>
   `initialSize` 옵션은 생명 주기 내의 변경을 허용하지 않습니다.
@@ -313,6 +314,33 @@ const getKey = (pageIndex, previousPageData) => {
   return `/users?cursor=${previousPageData.nextCursor}&limit=10`
 }
 ```
+
+### Parallel Fetching Mode
+
+By default, `useSWRInfinite` fetches each page data sequentially. That makes sense because `useSWRInfinite` supports APIs based on the returned data, like cursor-based API. However, getting all page data takes a long time when we have many pages. You can fetch all page data in parallel by enabling the `parallel` option.
+
+```jsx
+// parallel = false (default)
+// page1 ===> page2 ===> page3 ===> done
+//
+// parallel = true
+// page1 ===>
+// page2 ===> done
+// page3 ===>
+//
+// previousPageData is always `null`
+const getKey = (pageIndex, previousPageData) => {
+  return `/users?page=${pageIndex}&limit=10`
+}
+
+function App () {
+  const { data } = useSWRInfinite(getKey, fetcher, { parallel: true })
+}
+```
+
+<Callout emoji="⚠️">
+    The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
+</Callout>
 
 ### Global Mutate with `useSWRInfinite`
 
