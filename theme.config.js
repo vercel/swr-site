@@ -163,7 +163,7 @@ export default {
           }
         />
         <meta
-          name="og:description"
+          property="og:description"
           content={
             frontMatter.description ||
             "SWR is a React Hooks library for data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again."
@@ -173,12 +173,12 @@ export default {
         <meta name="twitter:site" content="@vercel" />
         <meta name="twitter:image" content={ogImage} />
         <meta
-          name="og:title"
+          property="og:title"
           content={
             title ? title + " – SWR" : "SWR: React Hooks for Data Fetching"
           }
         />
-        <meta name="og:image" content={ogImage} />
+        <meta property="og:image" content={ogImage} />
         <meta name="apple-mobile-web-app-title" content="SWR" />
       </>
     );
