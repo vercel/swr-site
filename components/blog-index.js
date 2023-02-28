@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function BlogIndex({ more = "Read more" }) {
   return getPagesUnderRoute("/blog").map((page) => {
     return (
-      <div className="mb-10">
+      <div key={page.route} className="mb-10">
         <h3>
           <Link
             href={page.route}

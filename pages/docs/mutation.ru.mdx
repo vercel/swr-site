@@ -29,6 +29,10 @@ function App() {
 }
 ```
 
+<Callout emoji="⚠️">
+  Using global mutator only with the `key` parameter will ***not update the cache or trigger revalidation*** unless there is a mounted SWR hook using the same key.
+</Callout>
+
 #### Привязанная мутация
 
 Привязанная мутация — это короткий путь для изменения текущего ключа с данными. Какой `key` привязан к `key`, передаваемому в `useSWR`, и получает `data` в качестве первого аргумента.
@@ -124,13 +128,13 @@ SWR также предоставляет `useSWRMutation` в качестве �
 
 Кроме того, этот хук не имеет общих состояний с другими хуками `useSWRMutation`.
 
-```jsx
+```tsx
 import useSWRMutation from 'swr/mutation'
 
 // Реализация fetcher-а.
 // Дополнительный аргумент будет передан через свойство `arg` второго параметра.
 // В приведенном ниже примере `arg` будет `'my_token'`
-async function updateUser(url, { arg }) {
+async function updateUser(url, { arg }: { arg: string }) {
   await fetch(url, {
     method: 'POST',
     headers: {
@@ -175,10 +179,10 @@ function Profile() {
 
 ### Базовое использование
 
-```jsx
+```tsx
 import useSWRMutation from 'swr/mutation'
 
-async function sendRequest(url, { arg }) {
+async function sendRequest(url, { arg }: { arg: { username: string } }) {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(arg)

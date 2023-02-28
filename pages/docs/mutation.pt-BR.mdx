@@ -29,6 +29,10 @@ function App() {
 }
 ```
 
+<Callout emoji="⚠️">
+  Using global mutator only with the `key` parameter will ***not update the cache or trigger revalidation*** unless there is a mounted SWR hook using the same key.
+</Callout>
+
 #### Mutação vinculada
 
 Mutação vinculada é o caminho curto para modificar a chave atual com dados. Onde `key` é vinculada a `key` repassada para `useSWR` e recebe `data` como primeiro argumento.
@@ -121,13 +125,13 @@ SWR também fornece `useSWRMutation` como um hook para mutações remotas. As mu
 
 Também, esse hook não compartilha estado com outros hooks `useSWRMutation`.
 
-```jsx
+```tsx
 import useSWRMutation from 'swr/mutation'
 
 // Implementação do fetcher.
 // O argumento extra será passado via propriedade `arg` do segundo parâmetro.
 // No exemplo abaixo, `arg` será `my_token`
-async function updateUser(url, { arg }) {
+async function updateUser(url, { arg }: { arg: string }) {
   await fetch(url, {
     method: 'POST',
     headers: {
@@ -175,7 +179,7 @@ function Profile() {
 ```jsx
 import useSWRMutation from 'swr/mutation'
 
-async function sendRequest(url, { arg }) {
+async function sendRequest(url, { arg }: { arg: { username: string } }) {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(arg)
