@@ -25,9 +25,9 @@ useSWR(() => ['user', 8], ([arg0, arg1]) => {})
 `key` と `fetcher` の引数の型を明示的に指定することもできます。
 
 ```typescript
-import useSWR, { Key, Fetcher } from 'swr'
+import useSWR, { Fetcher } from 'swr'
 
-const uid: Key = '<user_id>'
+const uid = '<user_id>'
 const fetcher: Fetcher<User, string> = (id) => getUserById(id)
 
 const { data } = useSWR(uid, fetcher)
