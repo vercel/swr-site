@@ -51,7 +51,7 @@ const themeConfig = {
     );
   },
   head: () => {
-    const { route, locales, locale, defaultLocale } = useRouter();
+    const { route, locales, locale } = useRouter();
     const { frontMatter, title } = useConfig();
     const titleSuffix = useLocalesMap(titleMap);
     const description = useLocalesMap(headDescriptionMap);
@@ -60,8 +60,6 @@ const themeConfig = {
 
     if (!/\/index\.+/.test(route)) {
       imageUrl.searchParams.set("title", title || titleSuffix);
-    } else if (locale !== defaultLocale) {
-      imageUrl.pathname = `/${locale}${imageUrl.pathname}`;
     }
 
     const contentLanguage = locales.join(", ");
@@ -103,8 +101,8 @@ const themeConfig = {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@vercel" />
         <meta name="twitter:image" content={ogImage} />
-        <meta property="og:description" content={ogDescription} />
         <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={ogDescription} />
         <meta property="og:image" content={ogImage} />
         <meta property="og:locale" content={locale} />
         {locales
