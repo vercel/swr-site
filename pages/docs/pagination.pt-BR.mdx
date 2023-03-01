@@ -315,16 +315,16 @@ const getKey = (pageIndex, previousPageData) => {
 
 ### Parallel Fetching Mode
 
-By default, `useSWRInfinite` fetches each page data sequentially. That makes sense because `useSWRInfinite` supports APIs based on the returned data, like cursor-based API. However, getting all page data takes a long time when we have many pages. You can fetch all page data in parallel by enabling the `parallel` option.
+The default behavior of useSWRInfinite is to fetch data for each page in sequence, as key creation is based on the previously fetched data. However, fetching data sequentially for a large number of pages may not be optimal, particularly if the pages are not interdependent. By specifying `parallel` option to `true` will let you fetch pages independently in parallel, which can significantly speed up the loading process.
 
 ```jsx
 // parallel = false (default)
 // page1 ===> page2 ===> page3 ===> done
 //
 // parallel = true
-// page1 ===>
-// page2 ===> done
-// page3 ===>
+// page1 ==> done
+// page2 =====> done
+// page3 ===> done
 //
 // previousPageData is always `null`
 const getKey = (pageIndex, previousPageData) => {
