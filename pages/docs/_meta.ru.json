@@ -9,7 +9,7 @@
   "arguments": "Аргументы",
   "mutation": "Мутация",
   "pagination": "Пагинация",
-  "subscription": "Subscription",
+  "subscription": "Подписка",
   "prefetching": "Пред-выборка",
   "with-nextjs": "Next.js SSG и SSR",
   "typescript": "TypeScript",
