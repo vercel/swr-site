@@ -8,10 +8,10 @@ import { Callout } from 'nextra-theme-docs'
 
 ## `useSWRSubscription`
 
-`useSWRSubscription` is a React hook that allows subscribing to real-time data sources with SWR. Here is the API documentation for the code you provided:
+`useSWRSubscription` is a React hook that allows subscribing to real-time data sources with SWR.
 
 ```tsx
-useSWRSubscription(key: any, subscribe: Function): { data: any, error: Error | null }
+useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next: (error?: Error | null, data: Data) => void }) => () => void): { data?: Data, error?: Error }
 ```
 
 ### API
@@ -27,10 +27,12 @@ This hook subscribes to a real-time data source using the subscribe function pro
 
 #### Return Values
 
-- `subscription`: An object with the following properties:
+- `state`: An object with the following properties:
   - `data`: The latest data received from the real-time data source.
-  - `error`: An Error object if an error occurred while subscribing to the real-time data source, otherwise null.
+  - `error`: An Error object if an error occurred while subscribing to the real-time data source, otherwise undefined.
 
+
+When new data is received, the `error` will be reset to `undefined`.
 
 ### Usage
 
