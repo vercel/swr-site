@@ -9,6 +9,7 @@
   "arguments": "引数",
   "mutation": "ミューテーションと再検証",
   "pagination": "ページネーション",
+  "subscription": "Subscription",
   "prefetching": "プリフェッチ",
   "with-nextjs": "Next.js の SSG と SSR",
   "typescript": "TypeScript",

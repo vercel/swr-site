@@ -9,6 +9,7 @@
   "arguments": "Argumentos",
   "mutation": "Mutación",
   "pagination": "Paginación",
+  "subscription": "Subscription",
   "prefetching": "Prefetching",
   "with-nextjs": "Next.js SSG and SSR",
   "typescript": "TypeScript",

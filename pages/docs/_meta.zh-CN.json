@@ -9,6 +9,7 @@
   "arguments": "传入参数",
   "mutation": "数据更改",
   "pagination": "分页",
+  "subscription": "Subscription",
   "prefetching": "预请求",
   "with-nextjs": "Next.js SSG 和 SSR",
   "typescript": "TypeScript",
