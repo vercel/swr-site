@@ -1,17 +1,16 @@
-import { useId } from "react"
+import { useId } from "react";
 import styles from "./features.module.css";
-import useLocalesMap from "./useLocalesMap";
+import useLocalesMap from "./use-locales-map";
 import { featuresMap, titleMap } from "../translations/text";
-import {
-  BackendAgnosticIcon,
-  LightweightIcon,
-  PaginationIcon,
-  RealtimeIcon,
-  RemoteLocalIcon,
-  RenderingStrategiesIcon,
-  SuspenseIcon,
-  TypeScriptIcon,
-} from '../components/icons'
+
+import BackendAgnosticIcon from "../components/icons/backend-agnostic";
+import LightweightIcon from "../components/icons/lightweight";
+import PaginationIcon from "../components/icons/pagination";
+import RealtimeIcon from "../components/icons/realtime";
+import RemoteLocalIcon from "../components/icons/remote-local";
+import RenderingStrategiesIcon from "../components/icons/rendering-strategies";
+import SuspenseIcon from "../components/icons/suspense";
+import TypeScriptIcon from "../components/icons/typescript";
 
 export function Feature({ text, icon }) {
   return (

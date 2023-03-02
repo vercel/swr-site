@@ -1,4 +1,4 @@
-import useLocalesMap from "../useLocalesMap";
+import useLocalesMap from "../use-locales-map";
 import { diagramWelcomePathMap } from "../../translations/svgs";
 
 export const Welcome = () => {
