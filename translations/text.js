@@ -115,3 +115,9 @@ export const searchPlaceholderMap = {
   ko: "문서 검색...",
   ru: "Искать в документации...",
 };
+
+/** @type {Readonly<Record<Locale, string>>} */
+export const gitTimestampMap = {
+  "en-US": "Last updated on",
+  ru: "Последнее обновление",
+};
