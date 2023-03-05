@@ -35,11 +35,11 @@ function App () {
 }
 ```
 
-## Nesting Configurations
+## 嵌套配置
 
-`SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
+`SWRConfig` 会合并来自父级上下文的配置。它可以接收一个对象式或函数式配置。函数式配置可以从参数中得到父层的配置信息，并返回一个你自定义定制的配置。
 
-### Object Configuration Example
+### 对象式配置示例
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -55,8 +55,8 @@ function App() {
     >
       <SWRConfig
         value={{
-          dedupingInterval: 200, // will override the parent value since the value is primitive
-          fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
+          dedupingInterval: 200, // 这里将会覆盖父层配置，因为这里的优先级更高
+          fallback: { a: 2, c: 2 }, // 这里将与父值合并，因为当前的值是可合并的对象
         }}
       >
         <Page />
@@ -75,7 +75,7 @@ function Page() {
 }
 ```
 
-### Functional Configuration Example
+### 函数式配置示例
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
