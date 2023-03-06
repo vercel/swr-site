@@ -198,6 +198,7 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
   - `revalidateAll = false`: always try to revalidate all pages
   - `revalidateFirstPage = true`: always try to revalidate the first page
   - `persistSize = false`: don't reset the page size to 1 (or `initialSize` if set) when the first page's key changes
+  - `parallel = false`: fetches multiple pages in parallel
 
 <Callout>
   Note that the `initialSize` option is not allowed to change in the lifecycle.
@@ -313,6 +314,37 @@ const getKey = (pageIndex, previousPageData) => {
   return `/users?cursor=${previousPageData.nextCursor}&limit=10`
 }
 ```
+
+### Parallel Fetching Mode
+
+<Callout emoji="✅">
+  Please update to the latest version (≥ 2.1.0) to use this API.
+</Callout>
+
+The default behavior of useSWRInfinite is to fetch data for each page in sequence, as key creation is based on the previously fetched data. However, fetching data sequentially for a large number of pages may not be optimal, particularly if the pages are not interdependent. By specifying `parallel` option to `true` will let you fetch pages independently in parallel, which can significantly speed up the loading process.
+
+```jsx
+// parallel = false (default)
+// page1 ===> page2 ===> page3 ===> done
+//
+// parallel = true
+// page1 ==> done
+// page2 =====> done
+// page3 ===> done
+//
+// previousPageData is always `null`
+const getKey = (pageIndex, previousPageData) => {
+  return `/users?page=${pageIndex}&limit=10`
+}
+
+function App () {
+  const { data } = useSWRInfinite(getKey, fetcher, { parallel: true })
+}
+```
+
+<Callout emoji="⚠️">
+    The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
+</Callout>
 
 ### Global Mutate with `useSWRInfinite`
 
