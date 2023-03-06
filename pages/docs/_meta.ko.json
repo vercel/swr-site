@@ -9,6 +9,7 @@
   "arguments": "인자",
   "mutation": "뮤테이션",
   "pagination": "페이지네이션",
+  "subscription": "Subscription",
   "prefetching": "프리패칭",
   "with-nextjs": "Next.js SSG 및 SSR",
   "typescript": "TypeScript",
