@@ -11,7 +11,13 @@ import { Callout } from 'nextra-theme-docs'
 `useSWRSubscription`은 SWR을 사용하여 실시간 데이터를 구독할 수 있는 hook 입니다.
 
 ```tsx
-useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next: (error?: Error | null, data: Data) => void }) => () => void): { data?: Data, error?: Error }
+useSWRSubscription<Data, Error>(
+    key: Key,
+    subscribe: (
+        key: Key,
+        options: { next: (error?: Error | null, data: Data) => void }
+    ) => () => void
+): { data?: Data, error?: Error }
 ```
 
 ### API
@@ -25,7 +31,7 @@ useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next:
 
 `subscribe` 인자
   - `next`: 데이터와 에러를 받고, 실시간으로 얻은 최신 데이터로 상태를 업데이트하는 기능입니다.
-    
+
 `subscribe` 함수는 실시간 데이터 구독을 취소하는 함수를 반환합니다.
 
 
@@ -58,7 +64,7 @@ import useSWRSubscription from 'swr/subscription'
 function Post({ id }) {
   const { data } = useSWRSubscription(['views', id], ([_, postId], { next }) => {
     const ref = firebase.database().ref('views/' + postId)
-    ref.on('value', 
+    ref.on('value',
       snapshot => next(null, snapshot.data()),
       err => next(err)
     )
@@ -81,7 +87,7 @@ function App() {
     socket.addEventListener('error', (event) => next(event.error))
     return () => socket.close()
   })
-  
+
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
   return <div>hello {data}!</div>
