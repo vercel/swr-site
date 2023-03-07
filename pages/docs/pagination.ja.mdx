@@ -318,10 +318,10 @@ const getKey = (pageIndex, previousPageData) => {
 ### Parallel Fetching Mode
 
 <Callout emoji="✅">
-  Please update to the latest version (≥ 2.1.0) to use this API.
+  この API を利用するには最新バージョン (≥ 2.1.0) に更新してください。
 </Callout>
 
-The default behavior of useSWRInfinite is to fetch data for each page in sequence, as key creation is based on the previously fetched data. However, fetching data sequentially for a large number of pages may not be optimal, particularly if the pages are not interdependent. By specifying `parallel` option to `true` will let you fetch pages independently in parallel, which can significantly speed up the loading process.
+useSWRInfinite のデフォルトの挙動は、キー作成を前のページのフェッチしたデータを元に行えるように各ページのフェッチを順番に行います。しかしながら、特にページのキー生成に依存関係がない場合ページ数が増えた場合においては 1 ページずつ順番にフェッチするのは最適な方法ではありません。`parallel` オプションを `true` にすることでページのフェッチがそれぞれ独立して並列に実行されるようになり、ローディング速度が劇的に向上します。
 
 ```jsx
 // parallel = false (default)
@@ -332,7 +332,7 @@ The default behavior of useSWRInfinite is to fetch data for each page in sequenc
 // page2 =====> done
 // page3 ===> done
 //
-// previousPageData is always `null`
+// previousPageData は常に `null`
 const getKey = (pageIndex, previousPageData) => {
   return `/users?page=${pageIndex}&limit=10`
 }
@@ -343,7 +343,7 @@ function App () {
 ```
 
 <Callout emoji="⚠️">
-    The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
+    `parallel` オプションを有効にした場合、`getKey` 関数の `previousPageData` 引数は `null` になります。
 </Callout>
 
 ### Global Mutate with `useSWRInfinite`
