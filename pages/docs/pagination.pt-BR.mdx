@@ -178,7 +178,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
 Similar ao `useSWR`, esse novo Hook aceita uma função que retorna a chave de pedido, uma função de busca, e opções.
 Ele retorna todos os valores que `useSWR` retorna, incluindo 2 valores extras: o tamanho da página e um setter do tamanho da página, como um state do React.
 
-No carregamento infinito, uma _página_ é uma solicitação, e nosso objetivo é buscar múltiplas páginas e renderizá-las.
+No carregamento infinito, uma _página_ é uma requisição, e nosso objetivo é buscar múltiplas páginas e renderizá-las.
 
 <Callout emoji="⚠️">
   Se você está usando versões SWR 0.x, `useSWRInfinite` precisa ser importado de `swr`:<br/>
