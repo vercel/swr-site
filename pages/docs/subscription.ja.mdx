@@ -1,14 +1,14 @@
 import { Callout } from 'nextra-theme-docs'
 
-# Subscription
+# サブスクリプション
 
 <Callout emoji="✅">
-  Please update to the latest version (≥ 2.1.0) to use this API.
+  この API を利用するには最新バージョン (≥ 2.1.0) に更新してください。
 </Callout>
 
 ## `useSWRSubscription`
 
-`useSWRSubscription` is a React hook that allows subscribing to real-time data sources with SWR.
+`useSWRSubscription` はリアルタイムのデータソースを SWR で購読するための React フックです。
 
 ```tsx
 useSWRSubscription<Data, Error>(
@@ -22,21 +22,21 @@ useSWRSubscription<Data, Error>(
 
 ### API
 
-This hook subscribes to a real-time data source using the subscribe function provided, and returns the latest data received and any errors encountered. The hook automatically updates the returned data as new events are received.
+このフックは提供された購読関数を使ってリアルタイムのデータソースを購読し、受け取った最新のデータや発生したエラーを返します。このフックは新しいイベントを受け取った時には自動的に更新されたデータを返します。
 
-#### Parameters
+#### 引数
 
-- `key`: A unique key that identifies the data being subscribed to, same key as `useSWR` key.
-- `subscribe`: A function that subscribes to the real-time data source. It receives the key and an object with the following properties:
-
-
-`subscribe` arguments
-  - `next`: A function that accepts an error and data, and updates the state with the latest data received from the real-time data source.
-
-`subscribe` returns a function that unsubscribes from the real-time data source.
+- `key`: 購読するデータを示すユニークなキー。`useSWR` の `key` と同様
+- `subscribe`: リアルタイムデータソースを購読する関数。キーと次のプロパティを持つオブジェクトを受け取る
 
 
-For instance
+`subscribe` 引数
+  - `next`: エラーとデータを受け取る関数で、リアルタイムデータソースからデータを受け取った時に状態を更新する
+
+`subscribe` はリアルタイムデータソースの購読を解除するための関数を返します。
+
+
+例えば
 
 ```tsx
 function subscribe(key, { next }) {
@@ -46,18 +46,18 @@ function subscribe(key, { next }) {
 ```
 
 
-#### Return Values
+#### 返り値
 
-- `state`: An object with the following properties:
-  - `data`: The latest data received from the real-time data source.
-  - `error`: An Error object if an error occurred while subscribing to the real-time data source, otherwise undefined.
+- `state`: 次のプロパティを持つオブジェクト
+  - `data`: リアルタイムデータソースから受け取った最新のデータ
+  - `error`: リアルタイムデータソースの購読で発生したエラーのオブジェクト、もしくは `undefined`
 
 
-When new data is received, the `error` will be reset to `undefined`.
+新しいデータを受け取った時には、`error` は `undefined` にリセットされます。
 
-### Usage
+### 利用方法
 
-Using `useSWRSubscription` to subscribe to a Firestore data source:
+`useSWRSubscription` を使って Firestore のデータソースを購読する
 
 ```tsx
 import useSWRSubscription from 'swr/subscription'
@@ -76,7 +76,7 @@ function Post({ id }) {
 }
 ```
 
-Using `useSWRSubscription` to subscribe to a WebSocket data source:
+`useSWRSubscription` を使って WebSocket のデータソースを購読する
 
 ```tsx
 import useSWRSubscription from 'swr/subscription'
@@ -95,11 +95,11 @@ function App() {
 }
 ```
 
-### Deduplication
+### 重複排除
 
-`useSWRSubscription` deduplicates the subscription requests with the same key.
-If there are multiple components using the same key, they will share the same subscription.
-When the last component using the key unmounts, the subscription will be closed.
+`useSWRSubscription` は同じキーを用いた購読リクエストに対して重複排除を行います。
+複数のコンポーネントで同じキーを使っている場合には、それらは同じ購読処理を共有します。
+最後のコンポーネントがアンマウントされた時に、購読は解除されます。
 
-This means that if you have multiple components using the same key, they will all receive the same data.
-And there's only one subscription to the real-time data source per key.
+これは、もし複数のコンポーネントでそれぞれ同じキーに対する購読処理を行なっている場合には、全てのコンポーネントが同じデータを受け取ることを意味します。
+加えて、リアルタイムデータソースに対しては、キー毎に一つだけ購読処理が登録されます。

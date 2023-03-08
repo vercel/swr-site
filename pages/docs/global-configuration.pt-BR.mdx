@@ -35,11 +35,12 @@ function App () {
 }
 ```
 
-## Nesting Configurations
+## Configurações Aninhadas
 
-`SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
 
-### Object Configuration Example
+`SWRConfig` mescla as configurações do contexto pai. Ele pode receber um objeto ou uma configuração funcional. A funcional recebe a configuração pai como argumento e retorna uma nova configuração que você pode personalizar.
+
+### Exemplo de Configuração de Objeto
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -55,8 +56,8 @@ function App() {
     >
       <SWRConfig
         value={{
-          dedupingInterval: 200, // will override the parent value since the value is primitive
-          fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
+          dedupingInterval: 200, // irá sobrescrever o valor do pai, pois o valor é primitivo
+          fallback: { a: 2, c: 2 }, // será mesclado com o valor do pai, pois o valor é um objeto mesclável
         }}
       >
         <Page />
@@ -75,7 +76,7 @@ function Page() {
 }
 ```
 
-### Functional Configuration Example
+### Exemplo de Configuração Funcional
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -112,7 +113,7 @@ function Page() {
 
 ## APIs Extras
 
-### Cache Provider
+### Provedor de Cache
 
 Além de todas as [opções](/docs/api) listadas, `SWRConfig` também aceita uma função opcional `provider`. Consulte a seção [Cache](/docs/advanced/cache) para obter mais detalhes.
 
