@@ -1,14 +1,14 @@
-# Mutation & Revalidation
+# 뮤테이션(Mutation) & 재검증(Revalidation)
 
-SWR provides the [`mutate`](/docs/mutation#mutate) and [`useSWRMutation`](/docs/mutation#useswrmutation) APIs for mutating remote data and related cache.
+SWR은 원격 데이터 및 관련 캐시를 변경하기 위한 [`mutate`](/docs/mutation#mutate) 및 [`useSWRMutation`](/docs/mutation#useswrmutation) API를 제공합니다.
 
 ## `mutate`
 
-There're 2 ways to use the `mutate` API to mutate the data, the global mutate API which can mutate any key and the bound mutate API which only can mutate the data of corresponding SWR hook.
+`mutate` API를 사용하여 데이터를 변경하는 방법에는 모든 키를 변경할 수 있는 global mutate API와 해당 SWR hook의 데이터만 변경할 수 있는 bound mutate API가 있습니다.
 
 #### Global Mutate
 
-The recommended way to get the global mutator is to use the [`useSWRConfig`](/docs/global-configuration#access-to-global-configurations) hook:
+global mutator를 가져오는 권장 방법은 [`useSWRConfig`](/docs/global-configuration#access-to-global-configurations) hook을 사용하는 것입니다.
 
 ```js
 import { useSWRConfig } from "swr"
@@ -19,7 +19,7 @@ function App() {
 }
 ```
 
-You can also import it globally:
+전역으로 가져올 수도 있습니다.
 
 ```js
 import { mutate } from "swr"
@@ -30,14 +30,14 @@ function App() {
 ```
 
 <Callout emoji="⚠️">
-  Using global mutator only with the `key` parameter will ***not update the cache or trigger revalidation*** unless there is a mounted SWR hook using the same key.
+  `key` 매개변수만 있는 global mutator를 사용하면 동일한 키를 사용하는 마운트된 SWR hook이 없는 한 ***캐시를 업데이트하거나 재검증을 트리거하지 않습니다.***
 </Callout>
 
 #### Bound Mutate
 
-Bound mutate is the short path to mutate the current key with data. Which `key` is bounded to the `key` passing to `useSWR`, and receive the `data` as the first argument.
+Bound mutate는 현재 키를 기반으로 데이터로 변경하는 빠른 방법입니다. `useSWR` 함수에 전달된 키와 연결된 키는 캐시에서 데이터를 찾을 때 사용되며, 이렇게 찾은 데이터는 첫 번째 인자로 반환됩니다.
 
-It is functionally equivalent to the global `mutate` function in the previous section but does not require the `key` parameter:
+이전 섹션의  global `mutate` 함수와 기능적으로 동일하지만 `key` 매개변수가 필요하지 않습니다.
 
 ```jsx
 import useSWR from 'swr'
@@ -50,10 +50,10 @@ function Profile () {
       <h1>My name is {data.name}.</h1>
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
-        // send a request to the API to update the data
+        // API에 대한 요청을 종료하여 데이터를 업데이트 합니다.
         await requestUpdateUsername(newName)
-        // update the local data immediately and revalidate (refetch)
-        // NOTE: key is not required when using useSWR's mutate as it's pre-bound
+        // 로컬 데이터를 즉시 업데이트 하고 다시 유효성 검사(refetch)를 합니다.
+        // NOTE: key는 미리 바인딩되어 있으므로 useSWR의 mutate를 사용할 때 필요하지 않습니다.
         mutate({ ...data, name: newName })
       }}>Uppercase my name!</button>
     </div>
@@ -61,11 +61,10 @@ function Profile () {
 }
 ```
 
-#### Revalidation
+#### 재검증
 
-When you call `mutate(key)` (or just `mutate()` with the bound mutate API) without any data, it will trigger a revalidation (mark the data as expired and trigger a refetch)
-for the resource. This example shows how to automatically refetch the login info (e.g. inside `<Profile/>`)
-when the user clicks the “Logout” button:
+데이터 없이 `mutate(key)` (또는 바인딩된 mutate API로 `mutate()`)를 호출하면, 리소스에 대한 재검증(데이터를 만료된 것으로 표시하고 refetch를 트리거) 합니다.  
+이 예제는 사용자가 "로그아웃" 버튼을 클릭할 때 로그인 정보(예: `<Profile />` 내부)를 자동으로 다시 가져오는 방법을 보여줍니다.
 
 ```jsx {14}
 import useSWR, { useSWRConfig } from 'swr'
@@ -77,10 +76,10 @@ function App () {
     <div>
       <Profile />
       <button onClick={() => {
-        // set the cookie as expired
+        // 쿠키를 만료된 것으로 설정
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
 
-        // tell all SWRs with this key to revalidate
+        // `/api/user` 라는 키를 가진 모든 SWR에게 재검증을 지시합니다.
         mutate('/api/user')
       }}>
         Logout
@@ -93,47 +92,48 @@ function App () {
 import { Callout } from 'nextra-theme-docs'
 
 <Callout>
-It broadcasts to SWR hooks under the same [cache provider](/docs/advanced/cache) scope. If no cache provider exists, it will broadcast to all SWR hooks.
+동일한 [cache provider](/docs/advanced/cache) 범위 내의 SWR hook에 전달합니다. cache provider가 존재하지 않으면 모든 SWR hook에 전달합니다.
 </Callout>
 
 
 ### API
 
-#### Parameters
+#### 매개변수
 
-- `key`: same as `useSWR`'s `key`, but a function behaves as [a filter function](/docs/mutation#mutate-multiple-items)
-- `data`: data to update the client cache, or an async function for the remote mutation
-- `options`: accepts the following options
-  - `optimisticData`: data to immediately update the client cache, or a function that receives current data and returns the new client cache data, usually used in optimistic UI.
-  - `revalidate = true`: should the cache revalidate once the asynchronous update resolves.
-  - `populateCache = true`: should the result of the remote mutation be written to the cache, or a function that receives new result and current result as arguments and returns the mutation result.
-  - `rollbackOnError = true`: should the cache rollback if the remote mutation errors, or a function that receives the error thrown from fetcher as arguments and returns a boolean whether should rollback or not.
-  - `throwOnError = true`: should the mutate call throw the error when fails.
+- `key`: `useSWR`의 `key`와 동일하지만 함수가 [필터 함수](/docs/mutation#mutate-multiple-items)처럼 작동
+- `data`: 데이터를 사용하여 클라이언트 캐시를 업데이트 하거나 클라이언트에서 서버로 데이터를 보내, 서버에서 데이터를 변경하는 작업(remote mutation)을 위한 비동기 함수를 사용할 수 있습니다.
+- `options`: 다음 옵션을 허용합니다.
+  - `optimisticData`: 데이터를 즉시 업데이트 하는 함수 또는 현재 데이터를 수신하여 새 클라이언트 캐시를 반환하는 함수로, 일반적으로 optimistic UI에서 사용
+  - `revalidate = true`: 비동기 업데이트가 완료되면 캐시의 유효성을 다시 검사하는 데 사용
+  - `populateCache = true`: remote mutation 결과를 캐시에 기록하거나, 새 결과와 현재 결과를 인자로 받아 mutation 결과를 반환하는 함수를 호출할 수 있습니다.
+  - `rollbackOnError = true`: remote mutation 과정에서 오류가 발생하면 캐시를 롤백해야 하는지, fetcher에서 던져진 오류를 인자로 받아 롤백할지에 대한 여부를 boolean으로 반환하는 함수를 지정할 수 있습니다.
+  - `throwOnError = true`: 호출이 실패했을 때 오류를 발생시킬 수 있습니다.
 
-#### Return Values
+#### 반환 값
 
-`mutate` returns the results the `data` parameter has been resolved. The function passed to `mutate` will return an updated data which is used to update the corresponding cache value. If there is an error thrown while executing the function, the error will be thrown so it can be handled appropriately.
+`mutate`는 데이터 매개변수가 해결된 결과를 반환합니다. 변경하기 위해 전달된 함수는 해당 캐시 값을 업데이트 하는 데 사용되는 업데이트 된 데이터를 반환합니다.
+함수를 실행하는 동안 에러가 발생하면 적절하게 처리할 수 있도록 에러가 발생합니다.
 
 ```jsx
 try {
   const user = await mutate('/api/user', updateUser(newUser))
 } catch (error) {
-  // Handle an error while updating the user here
+  // 여기에서 사용자를 업데이트 하는 동안 발생한 오류를 처리하세요.
 }
 ```
 
 ## `useSWRMutation`
 
-SWR also provides `useSWRMutation` as a hook for remote mutations. The remote mutations are only triggered manually, instead of automatically like `useSWR`.
+SWR은 remote mutation을 위한 hook으로 `useSWRMutation`을 제공합니다. remote mutation은 `useSWR`처럼 자동으로 트리거 되지 않고 수동으로만 트리거 됩니다.
 
-Also, this hook doesn’t share states with other `useSWRMutation` hooks.
+또한 이 hook은 다른 `useSWRMutation` hook과 상태를 공유하지 않습니다.
 
 ```tsx
 import useSWRMutation from 'swr/mutation'
 
-// Fetcher implementation.
-// The extra argument will be passed via the `arg` property of the 2nd parameter.
-// In the example below, `arg` will be `'my_token'`
+// Fetcher 구현.
+// 추가 인수는 두 번째 매개변수의 `arg` 속성을 통해 전달됩니다.
+// 아래 예제에서 `arg`는 `'my_token'`이 됩니다.
 async function updateUser(url, { arg }: { arg: string }) {
   await fetch(url, {
     method: 'POST',
@@ -144,11 +144,11 @@ async function updateUser(url, { arg }: { arg: string }) {
 }
 
 function Profile() {
-  // A useSWR + mutate like API, but it will not start the request automatically.
+  // useSWR + mutate 같은 API를 사용하지만, 자동으로 요청을 시작하지는 않습니다.
   const { trigger } = useSWRMutation('/api/user', updateUser, options?)
 
   return <button onClick={() => {
-    // Trigger `updateUser` with a specific argument.
+    // 특정 인수를 사용하여 `updateUser`를 트리거 합니다.
     trigger('my_token')
   }}>Update User</button>
 }
@@ -156,28 +156,28 @@ function Profile() {
 
 ### API
 
-#### Parameters
+#### 매개변수
 
-- `key`: same as [`mutate`](/docs/mutation#mutate)'s `key`
-- `fetcher(key, { arg })`: an async function for remote mutation
-- `options`: an optional object with the following properties:
-  - `optimisticData`: same as `mutate`'s `optimisticData`
-  - `revalidate = true`: same as `mutate`'s `revalidate`
-  - `populateCache = false`: same as `mutate`'s `populateCache`, but the default is `false`
-  - `rollbackOnError = true`: same as `mutate`'s `rollbackOnError`
-  - `throwOnError = true`: same as `mutate`'s `throwOnError`
-  - `onSuccess(data, key, config)`:　callback function when a remote mutation has been finished successfully
-  - `onError(err, key, config)`: callback function when a remote mutation has returned an error
+- `key`: [`mutate`](/docs/mutation#mutate)의 `key`와 동일
+- `fetcher(key, { arg })`: remote mutation을 위한 비동기 함수
+- `options`: 다음 속성을 가진 optional 객체
+  - `optimisticData`: `mutate`의 `optimisticData`와 동일
+  - `revalidate = true`: `mutate`의 `revalidate`와 동일
+  - `populateCache = false`: `mutate`의 `populateCache`와 동일하며, 기본 값은 `false`.
+  - `rollbackOnError = true`: `mutate`의 `rollbackOnError`와 동일
+  - `throwOnError = true`: `mutate`의 `throwOnError`와 동일
+  - `onSuccess(data, key, config)`: remote mutation이 성공적으로 완료 되었을 때 사용되는 콜백 함수
+  - `onError(err, key, config)`: remote mutation이 오류를 반환한 경우 사용되는 콜백 함수
 
-#### Return Values
+#### 반환 값
 
-- `data`: data for the given key returned from `fetcher`
-- `error`: error thrown by `fetcher` (or undefined)
-- `trigger(arg, options)`: a function to trigger a remote mutation
-- `reset`: a function to reset the state (`data`, `error`, `isMutating`)
-- `isMutating`: if there's an ongoing remote mutation
+- `data`: `fetcher` 에서 반환된 지정된 키에 대한 데이터
+- `error`: `fetcher`에서 발생한 오류 (또는 undefined)
+- `trigger(arg, options)`: remote mutation을 트리거 하는 함수
+- `reset`: 상태(`data`, `error`, `isMutating`)를 초기화하는 함수
+- `isMutating`: remote mutation이 진행 중인 상태
 
-### Basic Usage
+### 기본 사용법
 
 ```tsx
 import useSWRMutation from 'swr/mutation'
@@ -199,7 +199,7 @@ function App() {
         try {
           const result = await trigger({ username: 'johndoe' }, /* options */)
         } catch (e) {
-          // error handling
+          // 에러 핸들링
         }
       }}
     >
@@ -209,29 +209,30 @@ function App() {
 }
 ```
 
-If you want to use the mutation results in rendering, you can get them from the return values of `useSWRMutation`.
+렌더링에 mutation 결과를 사용하려면 `useSWRMutation`의 반환 값에서 결과를 가져올 수 있습니다.
 
 ```jsx
 const { trigger, data, error } = useSWRMutation('/api/user', sendRequest)
 ```
 
-`useSWRMutation` shares a cache store with `useSWR`, so it can detect and avoid race conditions between `useSWR`. It also supports `mutate`'s functionalities like optimistic updates and rollback on errors. You can pass these options `useSWRMutation` and its `trigger` function.
+`useSWRMutation`은 `useSWR`과 캐시 저장소를 공유하므로 `useSWR` 간의 경합 조건을 감지하고 피할 수 있습니다.
+또한 optimistic update 및 오류 발생 시 롤백과 같은 `mutate`의 기능도 지원합니다. 이러한 옵션은 `useSWRMutation`과 트리거 함수를 통해 전달할 수 있습니다.
 
 ```jsx
 const { trigger } = useSWRMutation('/api/user', updateUser, {
   optimisticData: current => ({ ...current, name: newName })
 })
 
-// or
+// 또는
 
 trigger(newName, {
   optimisticData: current => ({ ...current, name: newName })
 })
 ```
 
-### Defer loading data until needed
+### 필요할 때까지 데이터 로드 연기
 
-You can also use `useSWRMutation` for loading data. `useSWRMutation` never start requesting until `trigger` is called, so you can defer loading data when you actually need it.
+데이터를 로드하는 데 `useSWRMutation`을 사용할 수도 있습니다. `useSWRMutation`은 `trigger`가 호출될 때까지 요청을 시작하지 않으므로 실제로 필요할 때 데이터 로딩을 지연시킬 수 있습니다.
 
 ```jsx
 import { useState } from 'react'
@@ -241,7 +242,7 @@ const fetcher = url => fetch(url).then(res => res.json())
 
 const Page = () => {
   const [show, setShow] = useState(false)
-  // data is undefined until trigger is called
+  // 트리거가 호출될 때까지 데이터가 정의되지 않습니다.
   const { data: user, trigger } = useSWRMutation('/api/user', fetcher);
 
   return (
@@ -258,12 +259,11 @@ const Page = () => {
 
 ## Optimistic Updates
 
-In many cases, applying local mutations to data is a good way to make changes
-feel faster — no need to wait for the remote source of data.
+많은 경우에, 데이터에 local mutation을 적용하는 것은 변경 사항을 빠르게 반영할 수 있는 좋은 방법입니다.
+이렇게 하면, 원격 데이터 소스에서 데이터를 기다릴 필요가 없으므로, 변경 사항이 더 빠르게 반영됩니다.
 
-With the `optimisticData` option, you can update your local data manually, while
-waiting for the remote mutation to finish. Composing `rollbackOnError` you can also
-control when to rollback the data.
+`optimisticData` 옵션을 사용하면 remote mutation이 완료될 때까지 기다리는 동안 로컬 데이터를 수동으로 업데이트 할 수 있습니다.
+`rollbackOnError`를 사용하면 데이터를 롤백할 시기를 제어할 수도 있습니다.
 
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'
@@ -281,14 +281,14 @@ function Profile () {
         const options = {
           optimisticData: user,
           rollbackOnError(error) {
-            // If it's timeout abort error, don't rollback
+            // timeout 오류인 경우 롤백하지 않기
             return error.name !== 'AbortError'
           },
         }
 
-        // updates the local data immediately
-        // send a request to update the data
-        // triggers a revalidation (refetch) to make sure our local data is correct
+        // 로컬 데이터를 즉시 업데이트
+        // 데이터 업데이트 요청 보내기
+        // 로컬 데이터가 올바른지 확인하기 위해 재검증(refetch)를 트리거 합니다
         mutate('/api/user', updateFn(user), options);
       }}>Uppercase my name!</button>
     </div>
@@ -296,9 +296,9 @@ function Profile () {
 }
 ```
 
-> The **`updateFn`** should be a promise or asynchronous function to handle the remote mutation, it should return updated data.
+>  **`updateFn`** 은 remote mutation을 처리하는 프로미스 또는 비동기 함수여야 하며, 업데이트 된 데이터를 반환해야 합니다.
 
-You can also pass a function to `optimisticData` to make it depending on the current data:
+또한 현재 데이터에 따라 함수를 `optimisticData`에 전달할 수 있습니다.
 
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'
@@ -322,7 +322,7 @@ function Profile () {
 }
 ```
 
-You can also create the same thing with `useSWRMutation` and `trigger`:
+`useSWRMutation` 및 `trigger`를 사용하여 동일한 작업을 수행할 수도 있습니다.
 
 ```jsx
 import useSWRMutation from 'swr/mutation'
@@ -346,17 +346,15 @@ function Profile () {
 }
 ```
 
-## Rollback on Errors
+## 오류 시 롤백
 
-When you have `optimisticData` set, it’s possible that the optimistic data gets
-displayed to the user, but the remote mutation fails. In this case, you can leverage
-`rollbackOnError` to revert the local cache to the previous state, to make sure
-the user is seeing the correct data.
+`optimisticData`가 설정되어 있는 경우, optimistic data가 사용자에게 표시되지만 remote mutation이 실패할 수 있습니다.  
+이 경우, `rollbackOnError`를 활용하여 로컬 캐시를 이전 상태로 되돌리면 사용자에게 올바른 데이터가 표시되는지 확인할 수 있습니다.
 
-## Update Cache After Mutation
+## 변경 후 캐시 업데이트
 
-Sometimes, the remote mutation request directly returns the updated data, so there is no need to do an extra fetch to load it.
-You can enable the `populateCache` option to update the cache for `useSWR` with the response of the mutation:
+remote mutation 요청이 업데이트 된 데이터를 직접 반환하는 경우도 있으므로 데이터를 로드하기 위해 추가 가져오기(extra refetch)를 수행할 필요가 없습니다.
+`populateCache` 옵션을 활성화하여 mutation 응답으로 `useSWR`에 대한 캐시를 업데이트 할 수 있습니다.
 
 ```jsx
 const updateTodo = () => fetch('/api/todos/1', {
@@ -366,36 +364,36 @@ const updateTodo = () => fetch('/api/todos/1', {
 
 mutate('/api/todos', updateTodo, {
   populateCache: (updatedTodo, todos) => {
-    // filter the list, and return it with the updated item
+    // 목록을 필터링 하고 업데이트 된 항목과 함께 반환됩니다.
     const filteredTodos = todos.filter(todo => todo.id !== '1')
     return [...filteredTodos, updatedTodo]
   },
-  // Since the API already gives us the updated information,
-  // we don't need to revalidate here.
+  // API가 이미 업데이트 된 정보를 제공하므로,
+  // 여기서 다시 유효성을 검사 할 필요가 없습니다.
   revalidate: false
 })
 ```
 
-Or with the `useSWRMutation` hook:
+또는 `useSWRMutation` hook을 사용합니다.
 
 ```jsx
 useSWRMutation('/api/todos', updateTodo, {
   populateCache: (updatedTodo, todos) => {
-    // filter the list, and return it with the updated item
+    // 목록을 필터링 하고 업데이트 된 항목과 함께 반환됩니다.
     const filteredTodos = todos.filter(todo => todo.id !== '1')
     return [...filteredTodos, updatedTodo]
   },
-  // Since the API already gives us the updated information,
-  // we don't need to revalidate here.
+  // API가 이미 업데이트 된 정보를 제공하므로,
+  // 여기서 다시 유효성을 검사 할 필요가 없습니다.
   revalidate: false
 })
 ```
 
-When combined with `optimisticData` and `rollbackOnError`, you’ll get a perfect optimistic UI experience.
+ `optimisticData` 및 `rollbackOnError`를 함께 사용하면 완벽한 optimistic UI를 경험할 수 있습니다.
 
-## Avoid Race Conditions
+## 경합 상태(Race Conditions) 피하기
 
-Both `mutate` and `useSWRMutation` can avoid race conditions between `useSWR`. For example,
+`mutate`와 `useSWRMutation` 모두 `useSWR` 간의 경합 조건(Race Conditions)을 피할 수 있습니다. 예를 들어,
 
 ```tsx
 function Profile() {
@@ -409,43 +407,43 @@ function Profile() {
 }
 ```
 
-The normal `useSWR` hook might refresh its data any time due to focus, polling, or other conditions. This way the displayed username
-can be as fresh as possible. However, since we have a mutation there that can happen at the nearly same time of a refetch of `useSWR`, there
-could be a race condition that `getUser` request starts earlier, but takes longer than `updateUser`.
+일반적인 `useSWR` hokk은 포커스, 폴링 또는 기타 조건으로 인해 언제든지 데이터를 새로고침 할 수 있습니다.
+이렇게 하면 표시되는 사용자 아이디를 최대한 최신으로 유지할 수 있습니다.
+그러나, `useSWR`을 다시 가져오는 것과 거의 동시에 발생할 수 있는 mutation이 있기 때문에 `getUser` 요청이 더 일찍 시작되지만 `updateUser` 보다 오래 걸리는 경합 조건(Race Conditions)이 있을 수 있습니다.
 
-Luckily, `useSWRMutation` handles this for you automatically. After the mutation, it will tell `useSWR` to ditch the ongoing request and revalidate,
-so the stale data will never be displayed.
+다행히도, `useSWRMutation`은 이 작업을 자동으로 처리합니다.
+mutation 후에는 `useSWR`에 진행 중인 요청을 버리고 재검증 하도록 지시하여 오래된 데이터가 표시되지 않도록 합니다.
 
-## Mutate Based on Current Data
+## 현재 데이터에 기반한 Mutate
 
-Sometimes, you want to update a part of your data based on the current data.
+때로는 현재 데이터를 기반으로 데이터의 일부를 업데이트 하고 싶을 때가 있습니다.
 
-With `mutate`, you can pass an async function which will receive the current cached value, if any, and returns an updated document.
+`mutate`를 사용하면 현재 캐시된 값(있는 경우)을 전달받는 비동기 함수를 전달할 수 있으며, 이 함수는 업데이트된 문서를 반환합니다.
 
 ```jsx
 mutate('/api/todos', async todos => {
-  // let's update the todo with ID `1` to be completed,
-  // this API returns the updated data
+  // ID `1`의 할 일을 업데이트 하여 완료해 봅시다.
+  // 이 API는 업데이트 된 데이터를 반환합니다.
   const updatedTodo = await fetch('/api/todos/1', {
     method: 'PATCH',
     body: JSON.stringify({ completed: true })
   })
 
-  // filter the list, and return it with the updated item
+  // 목록을 필터링 하고 업데이트 된 항목과 함께 반환됩니다.
   const filteredTodos = todos.filter(todo => todo.id !== '1')
   return [...filteredTodos, updatedTodo]
-// Since the API already gives us the updated information,
-// we don't need to revalidate here.
+  // API가 이미 업데이트 된 정보를 제공하므로,
+  // 여기서 다시 유효성을 검사 할 필요가 없습니다.
 }, { revalidate: false })
 ```
 
-## Mutate Multiple Items
+## 여러 항목 변경
 
-The global `mutate` API accepts a filter function, which accepts `key` as the argument and returns which keys to revalidate. The filter function is applied to all the existing cache keys:
+global `mutate` API는 `key`를 인자로 받아 재검증 할 키를 반환하는 필터 함수를 허용합니다. 필터 함수는 기존 모든 캐시 키에 적용됩니다.
 
 ```jsx
 import { mutate } from 'swr'
-// Or from the hook if you customized the cache provider:
+// 또는 cache provider 를 사용자 정의한 경우, hook에서 사용할 수 있습니다.
 // { mutate } = useSWRConfig()
 
 mutate(
@@ -455,7 +453,7 @@ mutate(
 )
 ```
 
-This also works with any key type like an array. The mutation matches all keys, of which the first element is `'item'`.
+배열과 같은 모든 키 유형에서도 작동합니다. mutation은 첫 번째 요소가 `'item'`인 모든 키와 일치합니다.
 
 ```jsx
 useSWR(['item', 123], ...)
@@ -469,19 +467,19 @@ mutate(
 )
 ```
 
-The filter function is applied to all existing cache keys, so you should not assume the shape of keys when using multiple shapes of keys.
+필터 기능은 기존 모든 캐시 키에 적용되므로 여러 모양의 키를 사용할 때, 다양한 형태의 키가 사용될 수 있다는 것을 염두에 두어야 합니다.
 
 ```jsx
-// ✅ matching array key
+// ✅ 일치하는 배열 키
 mutate((key) => key[0].startsWith('/api'), data)
-// ✅ matching string key
+// ✅ 일치하는 문자열 키
 mutate((key) => typeof key === 'string' && key.startsWith('/api'), data)
 
-// ❌ ERROR: mutate uncertain keys (array or string)
+// ❌ 오류: 불확실한 키(배열 또는 문자열) 변경
 mutate((key: any) => /\/api/.test(key.toString()))
 ```
 
-You can use the filter function to clear all cache data, which is useful when logging out:
+필터 기능을 사용하면 모든 캐시 데이터를 지울 수 있어 로그아웃 시에 유용합니다.
 
 ```js
 const clearCache = () => mutate(
@@ -490,6 +488,6 @@ const clearCache = () => mutate(
   { revalidate: false }
 )
 
-// ...clear cache on logout
+// ...로그아웃 시 캐시 지우기
 clearCache()
 ```
