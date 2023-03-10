@@ -20,14 +20,11 @@ useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next:
 
 #### Параметры
 
-- `key`: Уникальный ключ, который идентифицирует данные, на которые подписывается, тот же ключ, что и ключ `useSWR`.
-- `subscribe`: Функция, которая подписывается на реальный источник данных. Онп принемает ключ и объект со следующими свойствами:
-
-
-Аргументы `subscribe`
-- `next`: Функция, которая принимает ошибку и данные и обновляет состояние последними полученными данными от реального источника данных.
-
-`subscribe` возвращает функцию, которая отписывается от реального источника данных.
+- `key`: A unique key that identifies the data being subscribed to, same key as `useSWR` key.
+- `subscribe`: A function that subscribes to the real-time data source. It receives the following arguments:
+  - `key`: same key as above
+  - `options`: an object with the following properties:
+    - `next`: A function that accepts an error and data, and updates the state with the latest data received from the real-time data source.
 
 
 Наприер:
