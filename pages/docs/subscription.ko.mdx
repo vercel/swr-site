@@ -20,13 +20,11 @@ useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next:
 
 #### Parameters
 
-- `key`: 구독 중인 데이터를 식별하는 고유한 키로, `useSWR`의 `key`와 동일합니다.
-- `subscribe`: 실시간 데이터를 구독하기 위한 함수입니다. key와 다음과 같은 속성을 가진 객체를 받습니다:
-
-`subscribe` 인자
-  - `next`: 데이터와 에러를 받고, 실시간으로 얻은 최신 데이터로 상태를 업데이트하는 기능입니다.
-    
-`subscribe` 함수는 실시간 데이터 구독을 취소하는 함수를 반환합니다.
+- `key`: A unique key that identifies the data being subscribed to, same key as `useSWR` key.
+- `subscribe`: A function that subscribes to the real-time data source. It receives the following arguments:
+  - `key`: same key as above
+  - `options`: an object with the following properties:
+    - `next`: A function that accepts an error and data, and updates the state with the latest data received from the real-time data source.
 
 
 예시
