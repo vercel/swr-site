@@ -1,6 +1,6 @@
 import { Callout } from 'nextra-theme-docs'
 
-# Subscription
+# 구독
 
 <Callout emoji="✅">
   이 API를 사용하려면 최신 버전(≥ 2.1.0)으로 업데이트해 주세요.
@@ -8,7 +8,7 @@ import { Callout } from 'nextra-theme-docs'
 
 ## `useSWRSubscription`
 
-`useSWRSubscription`은 SWR을 사용하여 실시간 데이터를 구독할 수 있는 hook 입니다.
+`useSWRSubscription`은 SWR을 사용하여 실시간 데이터를 구독할 수 있는 훅입니다.
 
 ```tsx
 useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next: (error?: Error | null, data: Data) => void }) => () => void): { data?: Data, error?: Error }
@@ -18,14 +18,13 @@ useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next:
 
 이 훅은 실시간 데이터를 구독하고, 가장 최근에 수신된 데이터와 발생한 에러를 반환합니다. 훅은 새 이벤트가 수신되면 반환된 데이터를 자동으로 업데이트 합니다.
 
-#### Parameters
+#### 파라미터
 
-- `key`: A unique key that identifies the data being subscribed to, same key as `useSWR` key.
-- `subscribe`: A function that subscribes to the real-time data source. It receives the following arguments:
-  - `key`: same key as above
-  - `options`: an object with the following properties:
-    - `next`: A function that accepts an error and data, and updates the state with the latest data received from the real-time data source.
-
+- `key`: 구독 중인 데이터를 식별하는 고유 키로, `useSWR`와 동일합니다.
+- `subscribe`: 실시간 데이터 원본을 구독하는 함수입니다. 다음 인자를 받습니다:
+  - `key`: 위 키와 같음
+  - `options`: 다음의 인자를 갖는 객체
+    - `next`: 오류 및 데이터를 수신하고 실시간 데이터 원본에서 수신한 최신 데이터로 상태를 업데이트하는 함수
 
 예시
 
@@ -36,13 +35,11 @@ function subscribe(key, { next }) {
 }
 ```
 
-
 #### 반환 값
 
 - `state`: 다음 속성을 가진 객체:
   - `data`: 실시간으로 수신한 최신 데이터.
   - `error`: 실시간 데이터를 구독하는 동안 에러가 발생하면 Error 객체, 그렇지 않으면 undefined.
-
 
 새 데이터가 수신되면 `error`는 `undefined`로 초기화됩니다.
 
@@ -56,7 +53,7 @@ import useSWRSubscription from 'swr/subscription'
 function Post({ id }) {
   const { data } = useSWRSubscription(['views', id], ([_, postId], { next }) => {
     const ref = firebase.database().ref('views/' + postId)
-    ref.on('value', 
+    ref.on('value',
       snapshot => next(null, snapshot.data()),
       err => next(err)
     )
@@ -79,7 +76,7 @@ function App() {
     socket.addEventListener('error', (event) => next(event.error))
     return () => socket.close()
   })
-  
+
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
   return <div>hello {data}!</div>
