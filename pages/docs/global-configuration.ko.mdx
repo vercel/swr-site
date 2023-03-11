@@ -1,6 +1,6 @@
 # 전역 설정
 
-`SWRconfig` 컨텍스트는 모든 SWR hook에 대한 전역 설정([options](/docs/api))을 제공합니다.
+`SWRConfig` 컨텍스트는 모든 SWR hook에 대한 전역 설정([options](/docs/api))을 제공합니다.
 
 ```jsx
 <SWRConfig value={options}>
@@ -37,7 +37,7 @@ function App () {
 
 ## 중첩 설정
 
-`SWRconfig`는 상위 컨텍스트의 설정을 병합합니다. Object나 Function을 받을 수 있습니다. Function은 상위 설정을 파라미터로 받고 직접 정의할 수 있는 새 설정을 반환합니다.
+`SWRConfig`는 상위 컨텍스트의 설정을 병합합니다. Object나 Function을 받을 수 있습니다. Function은 상위 설정을 파라미터로 받고 직접 정의할 수 있는 새 설정을 반환합니다.
 
 ### Object 설정 예시
 
