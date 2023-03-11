@@ -23,7 +23,7 @@ function Dashboard () {
 
 function App () {
   return (
-    <SWRConfig 
+    <SWRConfig
       value={{
         refreshInterval: 3000,
         fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
@@ -35,11 +35,11 @@ function App () {
 }
 ```
 
-## Nesting Configurations
+## 중첩 설정
 
-`SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
+`SWRconfig`는 상위 컨텍스트의 설정을 병합합니다. Object나 Function을 받을 수 있습니다. Function은 상위 설정을 파라미터로 받고 직접 정의할 수 있는 새 설정을 반환합니다.
 
-### Object Configuration Example
+### Object 설정 예시
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -55,8 +55,8 @@ function App() {
     >
       <SWRConfig
         value={{
-          dedupingInterval: 200, // will override the parent value since the value is primitive
-          fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
+          dedupingInterval: 200, // 값이 원시형이므로 오버라이드
+          fallback: { a: 2, c: 2 }, // 병합 가능한 object이므로 부모와 병합
         }}
       >
         <Page />
@@ -75,7 +75,7 @@ function Page() {
 }
 ```
 
-### Functional Configuration Example
+### Function 설정 예시
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'

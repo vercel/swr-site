@@ -37,7 +37,7 @@ function App() {
 
 Bound mutate는 현재 키를 기반으로 데이터로 변경하는 빠른 방법입니다. `useSWR` 함수에 전달된 키와 연결된 키는 캐시에서 데이터를 찾을 때 사용되며, 이렇게 찾은 데이터는 첫 번째 인자로 반환됩니다.
 
-이전 섹션의  global `mutate` 함수와 기능적으로 동일하지만 `key` 매개변수가 필요하지 않습니다.
+이전 섹션의 global `mutate` 함수와 기능적으로 동일하지만 `key` 매개변수가 필요하지 않습니다.
 
 ```jsx
 import useSWR from 'swr'
@@ -94,7 +94,6 @@ import { Callout } from 'nextra-theme-docs'
 <Callout>
 동일한 [cache provider](/docs/advanced/cache) 범위 내의 SWR hook에 전달합니다. cache provider가 존재하지 않으면 모든 SWR hook에 전달합니다.
 </Callout>
-
 
 ### API
 
@@ -257,7 +256,7 @@ const Page = () => {
 }
 ```
 
-## Optimistic Updates
+## 최적화 업데이트
 
 많은 경우에, 데이터에 local mutation을 적용하는 것은 변경 사항을 빠르게 반영할 수 있는 좋은 방법입니다.
 이렇게 하면, 원격 데이터 소스에서 데이터를 기다릴 필요가 없으므로, 변경 사항이 더 빠르게 반영됩니다.
@@ -296,7 +295,7 @@ function Profile () {
 }
 ```
 
->  **`updateFn`** 은 remote mutation을 처리하는 프로미스 또는 비동기 함수여야 하며, 업데이트 된 데이터를 반환해야 합니다.
+> **`updateFn`** 은 remote mutation을 처리하는 프로미스 또는 비동기 함수여야 하며, 업데이트 된 데이터를 반환해야 합니다.
 
 또한 현재 데이터에 따라 함수를 `optimisticData`에 전달할 수 있습니다.
 
@@ -389,7 +388,7 @@ useSWRMutation('/api/todos', updateTodo, {
 })
 ```
 
- `optimisticData` 및 `rollbackOnError`를 함께 사용하면 완벽한 optimistic UI를 경험할 수 있습니다.
+`optimisticData` 및 `rollbackOnError`를 함께 사용하면 완벽한 optimistic UI를 경험할 수 있습니다.
 
 ## 경합 상태(Race Conditions) 피하기
 
