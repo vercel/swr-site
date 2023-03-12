@@ -12,7 +12,6 @@ export default function useLocalesMap(localesMap) {
   /** @type {NextRouter} */
   const router = useRouter();
   const { locale, defaultLocale } = router;
-
   if (!localesMap) {
     throw new Error("Pass a locales map as argument to useLocalesMap");
   }
@@ -60,19 +59,20 @@ export function isObject(item) {
  * @returns {Record<string, T>}
  */
 export function mergeDeep(target, ...sources) {
-  if (!sources.length) return target;
+  const targetClone = structuredClone(target)
+  if (!sources.length) return targetClone;
   const source = sources.shift();
 
-  if (isObject(target) && isObject(source)) {
+  if (isObject(targetClone) && isObject(source)) {
     for (const key in source) {
       if (isObject(source[key])) {
-        if (!target[key]) Object.assign(target, { [key]: {} });
-        mergeDeep(target[key], source[key]);
+        if (!targetClone[key]) Object.assign(targetClone, { [key]: {} });
+        mergeDeep(targetClone[key], source[key]);
       } else {
-        Object.assign(target, { [key]: source[key] });
+        Object.assign(targetClone, { [key]: source[key] });
       }
     }
   }
 
-  return mergeDeep(target, ...sources);
+  return mergeDeep(targetClone, ...sources);
 }
