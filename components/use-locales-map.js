@@ -59,7 +59,7 @@ export function isObject(item) {
  * @returns {Record<string, T>}
  */
 export function mergeDeep(target, ...sources) {
-  const targetClone = JSON.parse(JSON.stringify(target))
+  const targetClone = structuredClone(target)
   if (!sources.length) return targetClone;
   const source = sources.shift();
 
