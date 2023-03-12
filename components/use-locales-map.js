@@ -39,7 +39,8 @@ export default function useLocalesMap(localesMap) {
     return localesMap[locale] || localesMap[defaultLocale];
   }
 
-  return mergeDeep(localesMap[defaultLocale], localesMap[locale]);
+  const target = JSON.parse(JSON.stringify(localesMap[defaultLocale]));
+  return mergeDeep(target, localesMap[locale]);
 }
 
 /**
@@ -47,7 +48,7 @@ export default function useLocalesMap(localesMap) {
  * @param {any} item
  * @returns {boolean}
  */
-export function isObject(item) {
+function isObject(item) {
   return item && typeof item === "object" && !Array.isArray(item);
 }
 
@@ -58,21 +59,20 @@ export function isObject(item) {
  * @param {Record<string, T>} sources
  * @returns {Record<string, T>}
  */
-export function mergeDeep(target, ...sources) {
-  const targetClone = structuredClone(target)
-  if (!sources.length) return targetClone;
+function mergeDeep(target, ...sources) {
+  if (!sources.length) return target;
   const source = sources.shift();
 
-  if (isObject(targetClone) && isObject(source)) {
+  if (isObject(target) && isObject(source)) {
     for (const key in source) {
       if (isObject(source[key])) {
-        if (!targetClone[key]) Object.assign(targetClone, { [key]: {} });
-        mergeDeep(targetClone[key], source[key]);
+        if (!target[key]) Object.assign(target, { [key]: {} });
+        mergeDeep(target[key], source[key]);
       } else {
-        Object.assign(targetClone, { [key]: source[key] });
+        Object.assign(target, { [key]: source[key] });
       }
     }
   }
 
-  return mergeDeep(targetClone, ...sources);
+  return mergeDeep(target, ...sources);
 }
