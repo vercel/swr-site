@@ -20,12 +20,11 @@ useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next:
 
 #### Параметры
 
-- `key`: A unique key that identifies the data being subscribed to, same key as `useSWR` key.
-- `subscribe`: A function that subscribes to the real-time data source. It receives the following arguments:
-  - `key`: same key as above
-  - `options`: an object with the following properties:
-    - `next`: A function that accepts an error and data, and updates the state with the latest data received from the real-time data source.
-
+- `key`: уникальный ключ, который идентифицирует данные, на которые подписывается, тот же ключ, что и ключ `useSWR`.
+- `subscribe`: Функция, которая подписывается на источник данных в реальном времени. Она получает следующие аргументы:
+  - `key`: тот же ключ, что и выше
+  - `options`: Объект со следующими свойствами:
+    - `next`: Функция, которая принимает ошибку и данные и обновляет состояние последними данными, полученными от источника данных в реальном времени.
 
 Наприер:
 
@@ -36,13 +35,11 @@ function subscribe(key, { next }) {
 }
 ```
 
-
 #### Возвращаемые значения
 
 - `state`: Объект со следующими свойствами:
   - `data`: Последние полученные данные от реального источника данных.
   - `error`: Объект ошибки, если при подписке на реальный источник данных произошла ошибка, в противном случае undefined.
-
 
 Когда получены новые данные, `error` будет сброшен на `undefined`.
 
