@@ -12,7 +12,6 @@ export default function useLocalesMap(localesMap) {
   /** @type {NextRouter} */
   const router = useRouter();
   const { locale, defaultLocale } = router;
-
   if (!localesMap) {
     throw new Error("Pass a locales map as argument to useLocalesMap");
   }
@@ -40,7 +39,8 @@ export default function useLocalesMap(localesMap) {
     return localesMap[locale] || localesMap[defaultLocale];
   }
 
-  return mergeDeep(localesMap[defaultLocale], localesMap[locale]);
+  const target = JSON.parse(JSON.stringify(localesMap[defaultLocale]));
+  return mergeDeep(target, localesMap[locale]);
 }
 
 /**
@@ -48,7 +48,7 @@ export default function useLocalesMap(localesMap) {
  * @param {any} item
  * @returns {boolean}
  */
-export function isObject(item) {
+function isObject(item) {
   return item && typeof item === "object" && !Array.isArray(item);
 }
 
@@ -59,7 +59,7 @@ export function isObject(item) {
  * @param {Record<string, T>} sources
  * @returns {Record<string, T>}
  */
-export function mergeDeep(target, ...sources) {
+function mergeDeep(target, ...sources) {
   if (!sources.length) return target;
   const source = sources.shift();
 

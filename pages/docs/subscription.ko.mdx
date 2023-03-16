@@ -1,6 +1,6 @@
 import { Callout } from 'nextra-theme-docs'
 
-# Subscription
+# 구독
 
 <Callout emoji="✅">
   이 API를 사용하려면 최신 버전(≥ 2.1.0)으로 업데이트해 주세요.
@@ -8,7 +8,7 @@ import { Callout } from 'nextra-theme-docs'
 
 ## `useSWRSubscription`
 
-`useSWRSubscription`은 SWR을 사용하여 실시간 데이터를 구독할 수 있는 hook 입니다.
+`useSWRSubscription`은 SWR을 사용하여 실시간 데이터를 구독할 수 있는 훅입니다.
 
 ```tsx
 useSWRSubscription<Data, Error>(
@@ -24,16 +24,13 @@ useSWRSubscription<Data, Error>(
 
 이 훅은 실시간 데이터를 구독하고, 가장 최근에 수신된 데이터와 발생한 에러를 반환합니다. 훅은 새 이벤트가 수신되면 반환된 데이터를 자동으로 업데이트 합니다.
 
-#### Parameters
+#### 파라미터
 
-- `key`: 구독 중인 데이터를 식별하는 고유한 키로, `useSWR`의 `key`와 동일합니다.
-- `subscribe`: 실시간 데이터를 구독하기 위한 함수입니다. key와 다음과 같은 속성을 가진 객체를 받습니다:
-
-`subscribe` 인자
-  - `next`: 데이터와 에러를 받고, 실시간으로 얻은 최신 데이터로 상태를 업데이트하는 기능입니다.
-
-`subscribe` 함수는 실시간 데이터 구독을 취소하는 함수를 반환합니다.
-
+- `key`: 구독 중인 데이터를 식별하는 고유 키로, `useSWR`와 동일합니다.
+- `subscribe`: 실시간 데이터 원본을 구독하는 함수입니다. 다음 인자를 받습니다:
+  - `key`: 위 키와 같음
+  - `options`: 다음의 인자를 갖는 객체
+    - `next`: 오류 및 데이터를 수신하고 실시간 데이터 원본에서 수신한 최신 데이터로 상태를 업데이트하는 함수
 
 예시
 
@@ -44,13 +41,11 @@ function subscribe(key, { next }) {
 }
 ```
 
-
 #### 반환 값
 
 - `state`: 다음 속성을 가진 객체:
   - `data`: 실시간으로 수신한 최신 데이터.
   - `error`: 실시간 데이터를 구독하는 동안 에러가 발생하면 Error 객체, 그렇지 않으면 undefined.
-
 
 새 데이터가 수신되면 `error`는 `undefined`로 초기화됩니다.
 

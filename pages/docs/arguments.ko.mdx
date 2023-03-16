@@ -11,7 +11,7 @@ useSWR('/api/user', fetcher)
 ## 다중 인자
 
 어떤 시나리오에서는 `fetcher` 함수에 여러 인자(어떠한 값이나 객체도 가능)를 전달하는 것이 유용합니다.
-인증된 가져오기 요청 예시입니다: 
+인증된 가져오기 요청 예시입니다:
 
 ```js
 useSWR('/api/user', url => fetchWithToken(url, token))
@@ -26,10 +26,10 @@ useSWR('/api/user', url => fetchWithToken(url, token))
 const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-The `fetcher` function accepts the `key` parameter as is, and the cache key will also be associated with the entire `key` argument. In the above example, `url` and `token` are both tight to the cache key.
+`fetcher` 함수는 `key` 파라미터를 그대로 받아들이며, 캐시 키도 전체 `key` 인수와 연관됩니다. 위의 예에서 `url`과 `token`은 둘 다 캐시 키에 들어맞습니다.
 
 <Callout emoji="⚠️">
-  In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
+  이전 버전(< 2)에서는 `fetcher` 함수는 `key` 파라미터를 인수로 허용합니다
 </Callout>
 
 ## 객체 전달

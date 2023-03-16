@@ -81,6 +81,6 @@ useSWR(key, fetcher, {
 useSWRImmutable(key, fetcher)
 ```
 
-`revalidateIfStale`은 마운트 시에 스태일 데이터가 존재할 경우 SWR이 갱신해야 할지 여부를 제어합니다.
+`revalidateIfStale`은 마운트 시에 오래된 데이터가 존재할 경우 SWR이 갱신해야 할지 여부를 제어합니다.
 
 위의 두 개의 hook은 **완전히 동일한** 작업을 수행합니다. 데이터가 캐시 되기만 하면 절대 다시 요청하지 않습니다.
