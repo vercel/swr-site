@@ -1,14 +1,16 @@
-const withNextra = require("nextra")({
+/** @type {import('nextra').NextraConfig} */
+const nextraConfig = {
   theme: "nextra-theme-docs",
-  themeConfig: "./theme.config.js",
+  themeConfig: "./theme.config.tsx",
   staticImage: true,
   flexsearch: {
     codeblocks: false,
   },
   defaultShowCopyCode: true,
-});
+};
 
-module.exports = withNextra({
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   i18n: {
     locales: ["en-US", "zh-CN", "es-ES", "pt-BR", "ja", "ko", "ru"],
     defaultLocale: "en-US",
@@ -63,4 +65,11 @@ module.exports = withNextra({
     ];
   },
   reactStrictMode: true,
-});
+};
+
+/** @type {import('nextra').Nextra} */
+const nextra = require("nextra");
+
+const withNextra = nextra(nextraConfig);
+
+module.exports = withNextra(nextConfig);

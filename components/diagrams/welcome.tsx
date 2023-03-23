@@ -1,11 +1,15 @@
 import useLocalesMap from "../use-locales-map";
 import { diagramWelcomePathMap } from "../../translations/svgs";
 
-export const Welcome = () => {
+export const Welcome: React.FC<React.SVGProps<SVGSVGElement>> = ({
+  className,
+  ...props
+}) => {
   const path = useLocalesMap(diagramWelcomePathMap);
+  const cn = [className, "invert-on-dark"].filter(Boolean).join(" ");
 
   return (
-    <svg fill="none" viewBox="0 0 769 193" className="invert-on-dark">
+    <svg fill="none" viewBox="0 0 769 193" className={cn} {...props}>
       <path fill="#fff" d="M0 0h768v193H0z" />
       <mask
         id="a"

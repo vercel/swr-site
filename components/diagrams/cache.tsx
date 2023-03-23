@@ -1,11 +1,15 @@
 import useLocalesMap from "../use-locales-map";
 import { diagramCachePathsMap } from "../../translations/svgs";
 
-export const Cache = () => {
+export const Cache: React.FC<React.SVGProps<SVGSVGElement>> = ({
+  className,
+  ...props
+}) => {
   const paths = useLocalesMap(diagramCachePathsMap);
+  const cn = [className, "invert-on-dark"].filter(Boolean).join(" ");
 
   return (
-    <svg viewBox="0 0 588 311" fill="none" className="invert-on-dark">
+    <svg viewBox="0 0 588 311" fill="none" className={cn} {...props}>
       <path stroke="#D2D2D2" d="M22.5 59.5h543v232h-543z" />
       <path fill="#fff" d="M40 43h116v33H40z" />
       <path fill="#141414" d={paths.firstCacheProvider} />

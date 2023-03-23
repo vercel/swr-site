@@ -1,11 +1,15 @@
 import useLocalesMap from "../use-locales-map";
 import { diagramPaginationPathsMap } from "../../translations/svgs";
 
-export const Pagination = () => {
+export const Pagination: React.FC<React.SVGProps<SVGSVGElement>> = ({
+  className,
+  ...props
+}) => {
   const paths = useLocalesMap(diagramPaginationPathsMap);
+  const cn = [className, "invert-on-dark"].filter(Boolean).join(" ");
 
   return (
-    <svg viewBox="0 0 769 356" fill="none" className="invert-on-dark">
+    <svg viewBox="0 0 769 356" fill="none" className={cn} {...props}>
       <path
         d="M5 0.5H763C765.485 0.5 767.5 2.51472 767.5 5V351C767.5 353.485 765.485 355.5 763 355.5H5.00002C2.51473 355.5 0.5 353.485 0.5 351V5C0.5 2.51472 2.51472 0.5 5 0.5Z"
         fill="white"
