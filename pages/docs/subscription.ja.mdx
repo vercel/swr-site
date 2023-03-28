@@ -11,7 +11,13 @@ import { Callout } from 'nextra-theme-docs'
 `useSWRSubscription` はリアルタイムのデータソースを SWR で購読するための React フックです。
 
 ```tsx
-useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next: (error?: Error | null, data: Data) => void }) => () => void): { data?: Data, error?: Error }
+useSWRSubscription<Data, Error>(
+    key: Key,
+    subscribe: (
+        key: Key,
+        options: { next: (error?: Error | null, data: Data) => void }
+    ) => () => void
+): { data?: Data, error?: Error }
 ```
 
 ### API

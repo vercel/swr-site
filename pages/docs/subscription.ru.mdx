@@ -11,7 +11,13 @@ import { Callout } from 'nextra-theme-docs'
 `useSWRSubscription` это хук React, который позволяет подписываться на реальные источники данных в реальном времени с помощью SWR.
 
 ```tsx
-useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next: (error?: Error | null, data: Data) => void }) => () => void): { data?: Data, error?: Error }
+useSWRSubscription<Data, Error>(
+    key: Key,
+    subscribe: (
+        key: Key,
+        options: { next: (error?: Error | null, data: Data) => void }
+    ) => () => void
+): { data?: Data, error?: Error }
 ```
 
 ### API

@@ -11,7 +11,13 @@ import { Callout } from 'nextra-theme-docs'
 `useSWRSubscription` é um hook React que permite se inscrever em fontes de dados em tempo real com o SWR.
 
 ```tsx
-useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next: (error?: Error | null, data: Data) => void }) => () => void): { data?: Data, error?: Error }
+useSWRSubscription<Data, Error>(
+    key: Key,
+    subscribe: (
+        key: Key,
+        options: { next: (error?: Error | null, data: Data) => void }
+    ) => () => void
+): { data?: Data, error?: Error }
 ```
 
 ### API
@@ -55,7 +61,7 @@ import useSWRSubscription from 'swr/subscription'
 function Post({ id }) {
   const { data } = useSWRSubscription(['views', id], ([_, postId], { next }) => {
     const ref = firebase.database().ref('views/' + postId)
-    ref.on('value', 
+    ref.on('value',
       snapshot => next(null, snapshot.data()),
       err => next(err)
     )

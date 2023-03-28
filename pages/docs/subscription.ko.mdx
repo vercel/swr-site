@@ -11,7 +11,13 @@ import { Callout } from 'nextra-theme-docs'
 `useSWRSubscription`은 SWR을 사용하여 실시간 데이터를 구독할 수 있는 훅입니다.
 
 ```tsx
-useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next: (error?: Error | null, data: Data) => void }) => () => void): { data?: Data, error?: Error }
+useSWRSubscription<Data, Error>(
+    key: Key,
+    subscribe: (
+        key: Key,
+        options: { next: (error?: Error | null, data: Data) => void }
+    ) => () => void
+): { data?: Data, error?: Error }
 ```
 
 ### API
