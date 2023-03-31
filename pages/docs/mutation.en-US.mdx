@@ -53,10 +53,12 @@ function Profile () {
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
         // send a request to the API to update the data
-        await requestUpdateUsername(newName)
         // update the local data immediately and revalidate (refetch)
         // NOTE: key is not required when using useSWR's mutate as it's pre-bound
-        mutate({ ...data, name: newName })
+        mutate(requestUpdateUsername(newName), {
+          optimisticData: { ...data, name: newName },
+          revalidate: true,
+        })
       }}>Uppercase my name!</button>
     </div>
   )
