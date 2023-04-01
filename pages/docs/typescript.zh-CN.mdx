@@ -56,6 +56,45 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
+### useSWRSubscription
+
+* 内联的 `subscribe` 函数，手动指定 `next` 类型为 `SWRSubNext` 的示例代码：
+
+```tsx
+import useSWRSubscription from 'swr/subscription'
+import type { SWRSubNext } from 'swr/subscription'
+
+const { data, error } = useSWRSubscription('key', 
+  (key, { next }: SWRSubNext<number, Error>) => {
+  //^ key 将会被推导为 `string`
+  //....
+  })
+  return {
+    data,
+    //^ data 将会被推导为 as `number | undefined`
+    error
+    //^ error 将会被推导为 as `Error | undefined`
+  }
+}
+```
+
+* 使用 `SWRSubscription` 声明 `subscribe` 函数的示例代码：
+
+```tsx
+import useSWRSubscription from 'swr/subscription'
+import type { SWRSubscription } from 'swr/subscription'
+
+/** 
+ * 第一个泛型是 Key
+ * 第二个泛型是 Data
+ * 第三个泛型是 Error
+ */
+const sub: SWRSubscription<string, number, Error> = (key, { next }) => {                         
+  //......
+}
+const { data, error } = useSWRSubscription('key', sub)
+```
+
 ## 泛型
 
 指定 `data` 的类型很容易。默认情况下，它将使用 `fetcher` 的返回类型（未就绪状态为 `undefined`）作为 `data` 的类型，但你也可以将其作为参数传递：

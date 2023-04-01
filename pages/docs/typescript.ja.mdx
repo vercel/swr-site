@@ -56,6 +56,45 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
+### useSWRSubscription
+
+* Inline subscribe function and mamually specify the type of `next`  using `SWRSubNext`.
+
+```tsx
+import useSWRSubscription from 'swr/subscription'
+import type { SWRSubNext } from 'swr/subscription'
+
+const { data, error } = useSWRSubscription('key', 
+  (key, { next }: SWRSubNext<number, Error>) => {
+  //^ key will be inferred as `string`
+  //....
+  })
+  return {
+    data,
+    //^ data will be inferred as `number | undefined`
+    error
+    //^ error will be inferred as `Error | undefined`
+  }
+}
+```
+
+* declare subscribe function using `SWRSubscription`
+
+```tsx
+import useSWRSubscription from 'swr/subscription'
+import type { SWRSubscription } from 'swr/subscription'
+
+/** 
+ * The first generic is Key
+ * The second generic is Data
+ * The Third generic is Error
+ */
+const sub: SWRSubscription<string, number, Error> = (key, { next }) => {                         
+  //......
+}
+const { data, error } = useSWRSubscription('key', sub)
+```
+
 ## ジェネリクス
 
 `data` の型定義は簡単です。デフォルトでは、`fetcher` の戻り値の型（準備ができていない場合は `undefined`）を `date` 型として使用しますが、パラメーターとして渡すこともできます：
