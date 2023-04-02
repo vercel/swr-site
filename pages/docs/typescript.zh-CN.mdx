@@ -58,14 +58,14 @@ const { data } = useSWRInfinite(getKey, fetcher)
 
 ### useSWRSubscription
 
-* 内联的 `subscribe` 函数，手动指定 `next` 类型为 `SWRSubNext` 的示例代码：
+* 内联的 `subscribe` 函数，手动指定 `next` 类型为 `SWRSubscriptionOptions` 的示例代码：
 
 ```tsx
 import useSWRSubscription from 'swr/subscription'
-import type { SWRSubNext } from 'swr/subscription'
+import type { SWRSubscriptionOptions } from 'swr/subscription'
 
 const { data, error } = useSWRSubscription('key', 
-  (key, { next }: SWRSubNext<number, Error>) => {
+  (key, { next }: SWRSubscriptionOptions<number, Error>) => {
   //^ key 将会被推导为 `string`
   //....
   })
