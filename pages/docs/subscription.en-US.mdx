@@ -36,6 +36,14 @@ function subscribe(key, { next }) {
 }
 ```
 
+You could also pass a updater function as `data` to `next`, which will receive the previous data as the first argument and return the new data.
+
+```tsx
+function subscribe(key, { next }) {
+  const sub = remote.subscribe(key, (err, data) => next(err, prev => prev.concat(data)))
+  return () => sub.close()
+}
+```
 
 #### Return Values
 
@@ -56,7 +64,7 @@ import useSWRSubscription from 'swr/subscription'
 function Post({ id }) {
   const { data } = useSWRSubscription(['views', id], ([_, postId], { next }) => {
     const ref = firebase.database().ref('views/' + postId)
-    ref.on('value', 
+    ref.on('value',
       snapshot => next(null, snapshot.data()),
       err => next(err)
     )
@@ -79,7 +87,6 @@ function App() {
     socket.addEventListener('error', (event) => next(event.error))
     return () => socket.close()
   })
-  
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
   return <div>hello {data}!</div>
@@ -90,9 +97,9 @@ You could also check TypeScript examples of `useSWRSubscription` at [this page](
 
 ### Deduplication
 
-`useSWRSubscription` deduplicates the subscription requests with the same key. 
-If there are multiple components using the same key, they will share the same subscription. 
+`useSWRSubscription` deduplicates the subscription requests with the same key.
+If there are multiple components using the same key, they will share the same subscription.
 When the last component using the key unmounts, the subscription will be closed.
 
-This means that if you have multiple components using the same key, they will all receive the same data. 
+This means that if you have multiple components using the same key, they will all receive the same data.
 And there's only one subscription to the real-time data source per key.

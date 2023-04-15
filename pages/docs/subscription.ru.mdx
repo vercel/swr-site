@@ -35,6 +35,15 @@ function subscribe(key, { next }) {
 }
 ```
 
+You could also pass a updater function as `data` to `next`, which will receive the previous data as the first argument and return the new data.
+
+```tsx
+function subscribe(key, { next }) {
+  const sub = remote.subscribe(key, (err, data) => next(err, prev => prev.concat(data)))
+  return () => sub.close()
+}
+```
+
 #### Возвращаемые значения
 
 - `state`: Объект со следующими свойствами:
