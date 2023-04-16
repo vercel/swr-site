@@ -7,6 +7,7 @@ import {
   editTextMap,
   feedbackLinkMap,
   footerTextMap,
+  gitTimestampMap,
   headDescriptionMap,
   languageMap,
   searchPlaceholderMap,
@@ -134,6 +135,23 @@ const themeConfig = {
         </a>
       );
     },
+  },
+  gitTimestamp({ timestamp }) {
+    const { locale } = useRouter();
+    const lastUpdatedOn = useLocalesMap(gitTimestampMap);
+
+    return (
+      <>
+        {lastUpdatedOn}{" "}
+        <time dateTime={timestamp.toISOString()}>
+          {timestamp.toLocaleDateString(locale, {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+        </time>
+      </>
+    );
   },
   i18n: Object.entries(languageMap).map(([locale, text]) => ({
     locale,
