@@ -36,6 +36,14 @@ function subscribe(key, { next }) {
 }
 ```
 
+你也可以给 `next` 函数的 `data` 参数一个函数，它接收上一次的数据作为第一个参数，然后返回一个新的数据。
+
+```tsx
+function subscribe(key, { next }) {
+  const sub = remote.subscribe(key, (err, data) => next(err, prev => prev.concat(data)))
+  return () => sub.close()
+}
+```
 
 #### 返回值
 
@@ -43,8 +51,7 @@ function subscribe(key, { next }) {
   - `data`: 来自实时数据源的最新数据。
   - `error`: 如果在订阅实时数据源时发生错误，则为一个 `Error` 对象，否则为 `undefined` 。
 
-
-当接收到新数据时，error会被重置为 `undefined`。
+当接收到新数据时，error 会被重置为 `undefined`。
 
 ### 基本用法
 
@@ -56,7 +63,7 @@ import useSWRSubscription from 'swr/subscription'
 function Post({ id }) {
   const { data } = useSWRSubscription(['views', id], ([_, postId], { next }) => {
     const ref = firebase.database().ref('views/' + postId)
-    ref.on('value', 
+    ref.on('value',
       snapshot => next(null, snapshot.data()),
       err => next(err)
     )
@@ -79,7 +86,7 @@ function App() {
     socket.addEventListener('error', (event) => next(event.error))
     return () => socket.close()
   })
-  
+
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
   return <div>hello {data}!</div>
