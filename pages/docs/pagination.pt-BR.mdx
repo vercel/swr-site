@@ -33,8 +33,8 @@ function App () {
 
   return <div>
     {data.map(item => <div key={item.id}>{item.name}</div>)}
-    <button onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
-    <button onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
+    <button onClick={() => setPageIndex(pageIndex - 1)}>Anterior</button>
+    <button onClick={() => setPageIndex(pageIndex + 1)}>Próximo</button>
   </div>
 }
 ```
@@ -55,8 +55,8 @@ function App () {
 
   return <div>
     <Page index={pageIndex}/>
-    <button onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
-    <button onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
+    <button onClick={() => setPageIndex(pageIndex - 1)}>Anterior</button>
+    <button onClick={() => setPageIndex(pageIndex + 1)}>Próximo</button>
   </div>
 }
 ```
@@ -109,7 +109,7 @@ function App () {
       <div key={i}>{
         data.map(item => <div key={item.id}>{item.name}</div>)
       }</div>)}
-    <button onClick={() => setCnt(cnt + 1)}>Load More</button>
+    <button onClick={() => setCnt(cnt + 1)}>Carregar mais</button>
   </div>
 }
 ```
@@ -127,7 +127,7 @@ function App () {
 
   return <div>
     {pages}
-    <button onClick={() => setCnt(cnt + 1)}>Load More</button>
+    <button onClick={() => setCnt(cnt + 1)}>Carregar mais</button>
   </div>
 }
 ```
@@ -152,7 +152,7 @@ function App () {
   return <div>
     <p>??? items</p>
     {pages}
-    <button onClick={() => setCnt(cnt + 1)}>Load More</button>
+    <button onClick={() => setCnt(cnt + 1)}>Carregar mais</button>
   </div>
 }
 ```
@@ -178,7 +178,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
 Similar ao `useSWR`, esse novo Hook aceita uma função que retorna a chave de pedido, uma função de busca, e opções.
 Ele retorna todos os valores que `useSWR` retorna, incluindo 2 valores extras: o tamanho da página e um setter do tamanho da página, como um state do React.
 
-In infinite loading, one _page_ is one request, and our goal is to fetch multiple pages and render them.
+No carregamento infinito, uma _página_ é uma requisição, e nosso objetivo é buscar múltiplas páginas e renderizá-las.
 
 <Callout emoji="⚠️">
   Se você está usando versões SWR 0.x, `useSWRInfinite` precisa ser importado de `swr`:<br/>
@@ -196,6 +196,7 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
   - `revalidateAll=false`: sempre tentar revalidar todas as páginas
   - `revalidateFirstPage=true`: sempre tentar revalidar a primeira página
   - `persistSize=false`: não reseta o tamanho da página para 1 (ou `initialSize` se setado) quando a chave da primeira página muda
+  - `parallel = false`: carrega múltiplas páginas em paralelo
 
 <Callout>
   Note que a opção `initialSize` não é permitida a mudar no ciclo de vida.
@@ -250,7 +251,7 @@ function App () {
       // `data` é um array de respostas da API de cada página.
       return users.map(user => <div key={user.id}>{user.name}</div>)
     })}
-    <button onClick={() => setSize(size + 1)}>Load More</button>
+    <button onClick={() => setSize(size + 1)}>Carregar mais</button>
   </div>
 }
 ```
@@ -312,9 +313,43 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
-### Global Mutate with `useSWRInfinite`
+### Modo de Carregamento Paralelo
 
-`useSWRInfinite` caches all page data with a special cache key along with each page data. you have to use `unstable_serialize` in `swr/infinite` to revalidate the data with the global mutate.
+<Callout emoji="✅">
+  Por favor atualize para a última versão (≥ 2.1.0) para usar essa API.
+</Callout>
+
+
+O comportamento padrão do `useSWRInfinite` é de obter dados para cada página em sequênciaa, pois a criação de chaves é baseada nos dados previamente obtidos. No entanto, fazer fetching de dados sequencialmente para um grande número de páginas pode não ser otimizado, particularmente se as páginas não são interdependentes.
+
+Ao especificar a opção `parallel` como `true`, você poderá obter páginas independentemente em paralelo, o que pode acelerar significativamente o processo de carregamento.
+
+```jsx
+// parallel = false (default)
+// page1 ===> page2 ===> page3 ===> feito
+//
+// parallel = true
+// page1 ==> feito
+// page2 =====> feito
+// page3 ===> feito
+//
+// previousPageData é sempre `null`
+const getKey = (pageIndex, previousPageData) => {
+  return `/users?page=${pageIndex}&limit=10`
+}
+
+function App () {
+  const { data } = useSWRInfinite(getKey, fetcher, { parallel: true })
+}
+```
+
+<Callout emoji="⚠️">
+    O argumento `previousPageData` da função `getKey` se torna `null` quando você habilita a opção `parallel`.
+</Callout>
+
+### Mutação Global com `useSWRInfinite`
+
+`useSWRInfinite` armazena todos os dados da página com uma chave de cache especial junto com cada dado da página. Você deve usar `unstable_serialize` em `swr/infinite` para revalidar os dados com a mutação global.
 
 ```jsx
 import { useSWRConfig } from "swr"
@@ -324,10 +359,10 @@ function App() {
     const { mutate } = useSWRConfig()
     mutate(unstable_serialize(getKey))
 }
-```
+````
 
 <Callout emoji="⚠️">
-    As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
+    Como o nome indica, `unstable_serialize` não é uma API estável, então podemos mudá-la no futuro.
 </Callout>
 
 ### Funcionalidades Avançadas

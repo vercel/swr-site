@@ -1,6 +1,6 @@
-# 全局配置
+# Configuração Global
 
-`SWRConfig` 可以为所有的 SWR hook 提供全局配置 ([选项](/docs/api))。
+O contexto `SWRConfig` pode fornecer configurações globais ([opções](/docs/api)) para todos os hooks SWR.
 
 ```jsx
 <SWRConfig value={options}>
@@ -8,7 +8,7 @@
 </SWRConfig>
 ```
 
-在以下示例中，所有的 SWR hook 都将使用提供的相同的 fetcher 来加载 JSON 数据，默认每 3 秒刷新一次：
+Neste exemplo, todos os hooks SWR usarão o mesmo fetcher fornecido para carregar dados JSON, e atualizar a cada 3 segundos por padrão:
 
 ```jsx
 import useSWR, { SWRConfig } from 'swr'
@@ -23,7 +23,7 @@ function Dashboard () {
 
 function App () {
   return (
-    <SWRConfig 
+    <SWRConfig
       value={{
         refreshInterval: 3000,
         fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
@@ -35,11 +35,12 @@ function App () {
 }
 ```
 
-## Nesting Configurations
+## Configurações Aninhadas
 
-`SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
 
-### Object Configuration Example
+`SWRConfig` mescla as configurações do contexto pai. Ele pode receber um objeto ou uma configuração funcional. A funcional recebe a configuração pai como argumento e retorna uma nova configuração que você pode personalizar.
+
+### Exemplo de Configuração de Objeto
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -55,8 +56,8 @@ function App() {
     >
       <SWRConfig
         value={{
-          dedupingInterval: 200, // will override the parent value since the value is primitive
-          fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
+          dedupingInterval: 200, // irá sobrescrever o valor do pai, pois o valor é primitivo
+          fallback: { a: 2, c: 2 }, // será mesclado com o valor do pai, pois o valor é um objeto mesclável
         }}
       >
         <Page />
@@ -75,7 +76,7 @@ function Page() {
 }
 ```
 
-### Functional Configuration Example
+### Exemplo de Configuração Funcional
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -110,11 +111,11 @@ function Page() {
 }
 ```
 
-## 额外的 API
+## APIs Extras
 
-### 缓存 Provider
+### Provedor de Cache
 
-除去以上所列的 [选项](/docs/api)，`SWRConfig` 还接受一个可选的 `provider` 函数。详细信息请参考 [缓存](/docs/advanced/cache) 这一节。
+Além de todas as [opções](/docs/api) listadas, `SWRConfig` também aceita uma função opcional `provider`. Consulte a seção [Cache](/docs/advanced/cache) para obter mais detalhes.
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>
@@ -122,9 +123,9 @@ function Page() {
 </SWRConfig>
 ```
 
-### 访问全局配置
+### Acesso às Configurações Globais
 
-你可以使用 `useSWRConfig` hook 来获取全局配置，以及[`数据更改`](/docs/mutation)和[`缓存`](/docs/advanced/cache)：
+Você pode usar o hook `useSWRConfig` para obter as configurações globais, assim como [`mutate`](/docs/mutation) e [`cache`](/docs/advanced/cache):
 
 ```jsx
 import { useSWRConfig } from 'swr'
@@ -136,4 +137,4 @@ function Component () {
 }
 ```
 
-嵌套配置将会被扩展。如果没有使用 `<SWRConfig>`，将返回默认配置。
+Configurações aninhadas serão extendidas. Se não houver nenhum `<SWRConfig>` usado, será retornado as configurações padrão.

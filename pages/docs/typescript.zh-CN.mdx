@@ -25,9 +25,9 @@ useSWR(() => ['user', 8], ([arg0, arg1]) => {})
 你还可以显式地指定 `key` 和 `fetcher` 参数的类型。
 
 ```typescript
-import useSWR, { Key, Fetcher } from 'swr'
+import useSWR, { Fetcher } from 'swr'
 
-const uid: Key = '<user_id>'
+const uid = '<user_id>'
 const fetcher: Fetcher<User, string> = (id) => getUserById(id)
 
 const { data } = useSWR(uid, fetcher)
@@ -54,6 +54,45 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 }
 
 const { data } = useSWRInfinite(getKey, fetcher)
+```
+
+### useSWRSubscription
+
+* 内联的 `subscribe` 函数，手动指定 `next` 类型为 `SWRSubscriptionOptions` 的示例代码：
+
+```tsx
+import useSWRSubscription from 'swr/subscription'
+import type { SWRSubscriptionOptions } from 'swr/subscription'
+
+const { data, error } = useSWRSubscription('key', 
+  (key, { next }: SWRSubscriptionOptions<number, Error>) => {
+  //^ key 将会被推导为 `string`
+  //....
+  })
+  return {
+    data,
+    //^ data 将会被推导为 as `number | undefined`
+    error
+    //^ error 将会被推导为 as `Error | undefined`
+  }
+}
+```
+
+* 使用 `SWRSubscription` 声明 `subscribe` 函数的示例代码：
+
+```tsx
+import useSWRSubscription from 'swr/subscription'
+import type { SWRSubscription } from 'swr/subscription'
+
+/** 
+ * 第一个泛型是 Key
+ * 第二个泛型是 Data
+ * 第三个泛型是 Error
+ */
+const sub: SWRSubscription<string, number, Error> = (key, { next }) => {                         
+  //......
+}
+const { data, error } = useSWRSubscription('key', sub)
 ```
 
 ## 泛型

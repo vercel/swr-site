@@ -29,6 +29,10 @@ function App() {
 }
 ```
 
+<Callout emoji="⚠️">
+  如果在调用全局 mutator 函数式只提供了 key 参数，那么除非有一个使用相同 key 的 SWR hook 被挂载，否则缓存不会被更新，也不会触发重新验证。
+</Callout>
+
 #### 绑定数据更改
 
 绑定数据更改可以更便捷的更改当前 key 数据，它的 `key` 与传递给 `useSWR` 的 `key` 相绑定，并接收 `data` 作为第一个参数。
@@ -121,13 +125,13 @@ SWR 还提供了 `useSWRMutation` 作为一个远程数据更改的 hook。远�
 
 另外，这个 hook 不会与其他 `useSWRMutation` hook 共享状态。
 
-```jsx
+```tsx
 import useSWRMutation from 'swr/mutation'
 
 // 实现 fetcher
 // 额外的参数可以通过第二个参数 `arg` 传入
 // 在下例中，`arg` 为 `'my_token'`
-async function updateUser(url, { arg }) {
+async function updateUser(url, { arg }: { arg: string }) {
   await fetch(url, {
     method: 'POST',
     headers: {
@@ -172,10 +176,10 @@ function Profile() {
 
 ### 基本用法
 
-```jsx
+```tsx
 import useSWRMutation from 'swr/mutation'
 
-async function sendRequest(url, { arg }) {
+async function sendRequest(url, { arg }: { arg: { username: string }}) {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(arg)

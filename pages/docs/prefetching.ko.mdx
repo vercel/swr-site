@@ -14,9 +14,9 @@ HTML `<head>` 안에 넣기만 하면 됩니다. 쉽고 빠르며 네이티브�
 
 ## 프로그래밍 방식으로 프리패치
 
-SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments.
+SWR은 프로그래밍 방식으로 리소스를 프리페치하고 결과를 캐시에 저장하기 위한 `preload` API를 제공합니다. `preload`는 `key`와 `fetcher`를 인수로 받습니다.
 
-You can call `preload` even outside of React.
+`preload`를 리액트 밖에서 부를 수도 있습니다.
 
 ```jsx
 import { useState } from 'react'
@@ -24,9 +24,10 @@ import useSWR, { preload } from 'swr'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
-// Preload the resource before rendering the User component below,
-// this prevents potential waterfalls in your application.
-// You can also start preloading when hovering the button or link, too.
+
+// 아래 사용자 구성 요소를 렌더링하기 전에 리소스를 미리 로드합니다.
+// 이는 waterfall 현상을 막을 수 있습니다.
+// 버튼이나 링크를 호버할 때도 preload를 시작할 수 있습니다.
 preload('/api/user', fetcher)
 
 function User() {
@@ -45,13 +46,13 @@ export default function App() {
 }
 ```
 
-Within React rendering tree, `preload` is also available to use in event handlers or effects.
+React 렌더링 트리 내에서 `preload`는 이벤트 핸들러나 effect에서도 사용할 수 있습니다.
 
 ```jsx
 function App({ userId }) {
   const [show, setShow] = useState(false)
 
-  // preload in effects
+  // effect에서의 preload
   useEffect(() => {
     preload('/api/user?id=' + userId, fetcher)
   }, [userId])
@@ -60,7 +61,7 @@ function App({ userId }) {
     <div>
       <button
         onClick={() => setShow(true)}
-        {/* preload in event callbacks */}
+        {/* 이벤트 콜백에서의 preload */}
         onHover={() => preload('/api/user?id=' + userId, fetcher)}
       >
         Show User
@@ -73,7 +74,7 @@ function App({ userId }) {
 
 Next.js내의 [페이지 프리패칭](https://nextjs.org/docs/api-reference/next/router#routerprefetch)같은 기술과 함께 다음 페이지와 데이터 모두를 즉시 로드할 수 있습니다.
 
-In Suspense mode, you should utilize `preload` to avoid waterfall problems.
+서스펜스 모드에서는 waterfall 현상을 방지하기 위해 사전 로드를 사용해야 합니다.
 
 ```jsx
 import useSWR, { preload } from 'swr'
@@ -98,12 +99,12 @@ const Page = () => {
 
 ## 데이터 프리필
 
-이미 존재하는 데이터를 SWR 캐시에 미리 채우길 원한다면, `fallbackData` 옵션을 사용할 수 있습니다. 예를 들면: 
+이미 존재하는 데이터를 SWR 캐시에 미리 채우길 원한다면, `fallbackData` 옵션을 사용할 수 있습니다. 예를 들면:
 
 ```jsx
 useSWR('/api/data', fetcher, { fallbackData: prefetchedData })
 ```
 
-SWR가 데이터를 아직 가져오지 않았다면, 이 hook은 폴백으로 `prefetchedData` 를 반환할 것입니다. 
+SWR가 데이터를 아직 가져오지 않았다면, 이 hook은 폴백으로 `prefetchedData` 를 반환합니다.
 
 `<SWRConfig>` 및 `fallback` 옵션을 사용하여 모든 SWR hooks 및 다중 키에 대해서도 이것을 구성할 수 있습니다. 자세한 내용은 [Next.js SSG 및 SSR](/docs/with-nextjs)을 확인하세요.

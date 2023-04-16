@@ -3,7 +3,7 @@ import { Callout } from 'nextra-theme-docs'
 # 서스펜스
 
 <Callout emoji="🚨" type="error">
-  React still <strong>doesn't recommend</strong> using `Suspense` in data frameworks like SWR (<a href="https://reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks" target="_blank" rel="noopener">More information</a>). These APIs may change in the future as the results of our research.
+  리액트는 여전히 SWR(<a href="https://reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks" target="_blank" rel="noopener">추가 정보</a>) 과 같은 데이터 프레임워크에서 서스펜스를 사용하는 것을 권장하지 않습니다. 이러한 API는 향후 연구 결과에 따라 변경될 수 있습니다.
 </Callout>
 
 React 서스펜스를 SWR과 함께 사용하려면 `suspense` 옵션을 활성화하세요.
@@ -71,8 +71,8 @@ function Profile () {
 }
 ```
 
-이 제한에 대한 더 기술적인 상세 내용을 읽으려면 [여기 discussion](https://github.com/vercel/swr/pull/357#issuecomment-627089889)을 확인해 보세요.
+이 제한에 대한 더 기술적인 상세 내용을 읽으려면 [여기를](https://github.com/vercel/swr/pull/357#issuecomment-627089889) 확인해 보세요.
 
-### Server-Side Rendering
+### 서버 사이드 렌더링
 
-When using suspense mode on the server-side (including pre-rendering in Next.js), it's **required** to provide the initial data via [fallbackData or fallback](/docs/with-nextjs#pre-rendering-with-default-data). This means that you can't use `Suspense` to fetch data on the server side, but either doing fully client-side data fetching, or fetch the data via the framework level data fetching method(such as getStaticProps in Next.js). More discussions can be found [here](https://github.com/vercel/swr/issues/1906).
+서스펜스 모드를 서버 사이드에서 사용할 때 (Next.js에서의 pre-rendering 포함), [fallbackData 또는 fallback](/docs/with-nextjs#pre-rendering-with-default-data)을 통해 초기 데이터를 **제공해야만 합니다**. 즉, 서버 사이드에서`Suspense`를 사용 할 수 없지만, 클라이언트 측 데이터 불러오기나, 프레임워크 수준의 데이터 불러오기(Next.js의 getStaticProps 등)는 가능합니다. 더 많은 정보는 [여기서](https://github.com/vercel/swr/issues/1906) 찾아보세요.

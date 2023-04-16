@@ -198,6 +198,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   - `revalidateAll = false`: 항상 모든 페이지의 갱신 시도
   - `revalidateFirstPage = true`: always try to revalidate the first page
   - `persistSize = false`: 첫 페이지의 키가 변경될 때, 페이지 크기를 1(`initialSize`가 설정된 경우 `initialSize`)로 초기화하지 않음
+  - `parallel = false`: 여러 페이지를 병렬적으로 동시에 불러옴
 
 <Callout>
   `initialSize` 옵션은 생명 주기 내의 변경을 허용하지 않습니다.
@@ -205,7 +206,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
 
 #### 반환 값
 
-- `data`: 각 페이지의 가져오기 응답 값의 배열
+- `data`: 각 페이지의 응답 값의 배열
 - `error`: `useSWR`의 `error`와 동일
 - `isLoading`: `useSWR`의 `isLoading`과 동일
 - `isValidating`: `useSWR`의 `isValidating`과 동일
@@ -314,9 +315,40 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
-### Global Mutate with `useSWRInfinite`
+### 병렬 데이터 요청
 
-`useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infinite` to revalidate the data with the global mutate.
+<Callout emoji="✅">
+  이 API를 사용하려면 최신 버전(≥ 2.1.0)으로 업데이트하세요.
+</Callout>
+
+`useSWRInfinite`의 기본 동작은 키 생성이 이전에 가져온 데이터를 기반으로 하기 때문에 각 페이지에 대한 데이터를 순차적으로 가져오는 것입니다. 그러나 많은 페이지에 대해 순차적으로 데이터를 가져오는 것은 페이지가 상호 의존적이지 않은 경우 최적이 아닐 수 있습니다. `parallel` 옵션을 `true`로 지정하면 페이지를 독립적으로 병렬로 가져올 수 있으므로 로드 프로세스가 상당히 빨라질 수 있습니다.
+
+```jsx
+// parallel = false (default)
+// page1 ===> page2 ===> page3 ===> done
+//
+// parallel = true
+// page1 ==> done
+// page2 =====> done
+// page3 ===> done
+//
+// previousPageData는 항상 `null`
+const getKey = (pageIndex, previousPageData) => {
+  return `/users?page=${pageIndex}&limit=10`
+}
+
+function App () {
+  const { data } = useSWRInfinite(getKey, fetcher, { parallel: true })
+}
+```
+
+<Callout emoji="⚠️">
+    The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
+</Callout>
+
+### `useSWRInfinite`를 사용한 Global Mutate
+
+`useSWRInfinite`는 모든 페이지 데이터를 각 페이지 데이터와 함께 특수 캐시 키로 저장하므로 global mutate로 데이터를 다시 감증하려면 `swr/infinite`에서 `unstable_serialize`를 사용해야 합니다.
 
 ```jsx
 import { useSWRConfig } from "swr"
@@ -329,7 +361,7 @@ function App() {
 ```
 
 <Callout emoji="⚠️">
-    As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
+    이름에서 알 수 있듯이 `unstable_serialize`는 안정적인 API가 아니기 때문에 앞으로 변경될 수도 있습니다.
 </Callout>
 
 ### 고급 기능

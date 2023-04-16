@@ -198,6 +198,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   - `revalidateAll = false`: 常にすべてのページに対して再検証を試みる
   - `revalidateFirstPage = true`: 常に最初のページを再検証します
   - `persistSize = false`: 最初のページのキーが変更されたときに、ページサイズを 1 （またはセットされていれば `initialSize`）にリセットしない
+  - `parallel = false`: fetches multiple pages in parallel
 
 <Callout>
   `initialSize` オプションはライフサイクルで変更できないことに注意してください。
@@ -313,6 +314,37 @@ const getKey = (pageIndex, previousPageData) => {
   return `/users?cursor=${previousPageData.nextCursor}&limit=10`
 }
 ```
+
+### Parallel Fetching Mode
+
+<Callout emoji="✅">
+  この API を利用するには最新バージョン (≥ 2.1.0) に更新してください。
+</Callout>
+
+useSWRInfinite のデフォルトの挙動は、キー作成を前のページのフェッチしたデータを元に行えるように各ページのフェッチを順番に行います。しかしながら、特にページのキー生成に依存関係がない場合ページ数が増えた場合においては 1 ページずつ順番にフェッチするのは最適な方法ではありません。`parallel` オプションを `true` にすることでページのフェッチがそれぞれ独立して並列に実行されるようになり、ローディング速度が劇的に向上します。
+
+```jsx
+// parallel = false (default)
+// page1 ===> page2 ===> page3 ===> done
+//
+// parallel = true
+// page1 ==> done
+// page2 =====> done
+// page3 ===> done
+//
+// previousPageData は常に `null`
+const getKey = (pageIndex, previousPageData) => {
+  return `/users?page=${pageIndex}&limit=10`
+}
+
+function App () {
+  const { data } = useSWRInfinite(getKey, fetcher, { parallel: true })
+}
+```
+
+<Callout emoji="⚠️">
+    `parallel` オプションを有効にした場合、`getKey` 関数の `previousPageData` 引数は `null` になります。
+</Callout>
 
 ### Global Mutate with `useSWRInfinite`
 

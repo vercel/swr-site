@@ -25,10 +25,10 @@ En su lugar, puedes utilizar un **array** como parámetro `key`, que contiene m�
 const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithToken(url, token))
 ```
 
-The `fetcher` function accepts the `key` parameter as is, and the cache key will also be associated with the entire `key` argument. In the above example, `url` and `token` are both tight to the cache key.
+La función `fetcher` acepta el parámetro `key` tal cual, y la clave de caché se asociará también al argumento `key` completo. En el ejemplo anterior, `url` y `token` están unidos a la clave de caché.
 
 <Callout emoji="⚠️">
-  In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
+  En versiones anteriores (< 2), la función `fetcher` acepta el parámetro `key` como argumentos por separado
 </Callout>
 
 ## Pasar objetos
@@ -39,22 +39,22 @@ import { Callout } from 'nextra-theme-docs'
   Since SWR 1.1.0, object-like keys will be serialized under the hood automatically. 
 </Callout>
   
-Say you have another function that fetches data with a user scope: `fetchWithUser(api, user)`. You can do the following:
+Digamos que tienes otra función que obtiene datos con un ámbito de usuario: `fetchWithUser(api, user)`. Puedes hacer lo siguiente:
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 
-// ...and then pass it as an argument to another useSWR hook
+// ...y luego pasarlo como argumento a otro useSWR "hook"
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
 
-You can directly pass an object as the key, and `fetcher` will receive that object too:
+Puedes pasar directamente un objeto como clave, y `fetcher` también recibirá ese objeto:
 
 ```js
 const { data: orders } = useSWR({ url: '/api/orders', args: user }, fetcher)
 ```
 
 <Callout emoji="⚠️">
-  In older versions (< 1.1.0), SWR **shallowly** compares the arguments on every render, and triggers revalidation if any of them has changed. 
+  En versiones anteriores (< 1.1.0), SWR <b>compara superficialmente</b> (shallowly) los argumentos en cada renderización, y activa la revalidación si alguno de ellos ha cambiado. 
 </Callout>
 

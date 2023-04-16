@@ -198,6 +198,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   - `revalidateAll = false`: всегда пытаться ревалидировать все страницы
   - `revalidateFirstPage = true`: всегда пытаться ревалидировать первую страницу
   - `persistSize = false`: не сбрасывать размер страницы до 1 (или `initialSize`, если установлен), когда ключ первой страницы изменяется
+  - `parallel = false`: загружать много страницы параллельно
 
 <Callout>
   Обратите внимание, что опцию `initialSize` нельзя изменять в жизненном цикле.
@@ -314,9 +315,40 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
-### Global Mutate with `useSWRInfinite`
+### Режим параллельной загрузки
 
-`useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infinite` to revalidate the data with the global mutate.
+<Callout emoji="✅">
+  Пожалуйста, обновитесь до последней версии (≥ 2.1.0), чтобы использовать этот API.
+</Callout>
+
+Поведение useSWRInfinite по умолчанию — последовательная загрузка данных для каждой страницы, поскольку создание ключа основывается на ранее загруженных данных. Однако последовательная загрузка данных для большого количества страниц может не быть оптимальной, особенно если страницы не зависят друг от друга. Указание опции `parallel` как `true` позволит вам загружать страницы независимо и параллельно, что может значительно ускорить процесс загрузки.
+
+```jsx
+// parallel = false (по умолчанию)
+// страница1 ===> страница2 ===> страница3 ===> готово
+//
+// parallel = true
+// страница1 ==> готово
+// страница2 =====> готово
+// страница3 ===> готово
+//
+// previousPageData всегда `null`
+const getKey = (pageIndex, previousPageData) => {
+  return `/users?page=${pageIndex}&limit=10`
+}
+
+function App () {
+  const { data } = useSWRInfinite(getKey, fetcher, { parallel: true })
+}
+```
+
+<Callout emoji="⚠️">
+    Аргумент `previousPageData` функции `getKey` становится `null`, когда вы включаете опцию `parallel`.
+</Callout>
+
+### Глобальная мутация с `useSWRInfinite`
+
+`useSWRInfinite` хранит все данные страниц в кеше со специальным ключом кеша вместе с данными каждой страницы, поэтому вам нужно использовать `unstable_serialize` в `swr/infinite`, чтобы ревалидировать данные с глобальной мутацией.
 
 ```jsx
 import { useSWRConfig } from "swr"
@@ -329,7 +361,7 @@ function App() {
 ```
 
 <Callout emoji="⚠️">
-    As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
+    Как и следует из названия, `unstable_serialize` не является стабильным API, поэтому мы можем изменить его в будущем.
 </Callout>
 
 ### Расширенные возможности

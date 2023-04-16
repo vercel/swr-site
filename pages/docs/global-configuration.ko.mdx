@@ -1,6 +1,6 @@
-# Configuração Global
+# 전역 설정
 
-O contexto `SWRConfig` pode fornecer configurações globais ([opções](/docs/api)) para todos os hooks SWR.
+`SWRConfig` 컨텍스트는 모든 SWR hook에 대한 전역 설정([options](/docs/api))을 제공합니다.
 
 ```jsx
 <SWRConfig value={options}>
@@ -8,7 +8,7 @@ O contexto `SWRConfig` pode fornecer configurações globais ([opções](/docs/a
 </SWRConfig>
 ```
 
-Neste exemplo, todos os hooks SWR usarão o mesmo fetcher fornecido para carregar dados JSON, e atualizar a cada 3 segundos por padrão:
+이 예시에서, 모든 SWR hook은 제공된 동일한 fetcher를 사용해 JSON 데이터를 로드하고 기본적으로 3초마다 갱신합니다.
 
 ```jsx
 import useSWR, { SWRConfig } from 'swr'
@@ -16,7 +16,7 @@ import useSWR, { SWRConfig } from 'swr'
 function Dashboard () {
   const { data: events } = useSWR('/api/events')
   const { data: projects } = useSWR('/api/projects')
-  const { data: user } = useSWR('/api/user', { refreshInterval: 0 }) // override
+  const { data: user } = useSWR('/api/user', { refreshInterval: 0 }) // 오버라이드
 
   // ...
 }
@@ -35,11 +35,11 @@ function App () {
 }
 ```
 
-## Nesting Configurations
+## 중첩 설정
 
-`SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
+`SWRConfig`는 상위 컨텍스트의 설정을 병합합니다. Object나 Function을 받을 수 있습니다. Function은 상위 설정을 파라미터로 받고 직접 정의할 수 있는 새 설정을 반환합니다.
 
-### Object Configuration Example
+### Object 설정 예시
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -55,8 +55,8 @@ function App() {
     >
       <SWRConfig
         value={{
-          dedupingInterval: 200, // will override the parent value since the value is primitive
-          fallback: { a: 2, c: 2 }, // will merge with the parent value since the value is a mergeable object
+          dedupingInterval: 200, // 값이 원시형이므로 오버라이드
+          fallback: { a: 2, c: 2 }, // 병합 가능한 object이므로 부모와 병합
         }}
       >
         <Page />
@@ -75,7 +75,7 @@ function Page() {
 }
 ```
 
-### Functional Configuration Example
+### Function 설정 예시
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -110,11 +110,11 @@ function Page() {
 }
 ```
 
-## APIs Extras
+## 부가적인 APIs
 
-### Cache Provider
+### 캐시 공급자
 
-Além de todas as [opções](/docs/api) listadas, `SWRConfig` também aceita uma função opcional `provider`. Consulte a seção [Cache](/docs/advanced/cache) para obter mais detalhes.
+나열된 모든 [옵션](/docs/api) 외에도, `SWRConfig`는 선택적으로 `provider` 함수도 받습니다. 더 자세한 내용은 [캐시](/docs/advanced/cache) 섹션을 참고해 주세요.
 
 ```jsx
 <SWRConfig value={{ provider: () => new Map() }}>
@@ -122,9 +122,9 @@ Além de todas as [opções](/docs/api) listadas, `SWRConfig` também aceita uma
 </SWRConfig>
 ```
 
-### Acesso às Configurações Globais
+### 전역 설정에 접근하기
 
-Você pode usar o hook `useSWRConfig` para obter as configurações globais, assim como [`mutate`](/docs/mutation) e [`cache`](/docs/advanced/cache):
+`useSWRConfig` hook을 사용해 전역 설정과 [`mutate`](/docs/mutation) 및 [`cache`](/docs/advanced/cache)를 얻을 수 있습니다.
 
 ```jsx
 import { useSWRConfig } from 'swr'
@@ -136,4 +136,4 @@ function Component () {
 }
 ```
 
-Configurações aninhadas serão extendidas. Se não houver nenhum `<SWRConfig>` usado, será retornado as configurações padrão.
+중첩된 설정은 확장됩니다. `<SWRConfig>`를 사용하지 않았다면 기본값을 반환합니다.

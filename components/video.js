@@ -2,7 +2,8 @@ import "intersection-observer";
 import { useCallback, useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 
-export default ({ src, caption, ratio, className = "" }) => {
+
+export default function Video({ src, caption, ratio, className = "" }) {
   const [inViewRef, inView] = useInView({
     threshold: 1,
   });

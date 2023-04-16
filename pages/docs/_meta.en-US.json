@@ -9,6 +9,7 @@
   "error-handling": "Error Handling",
   "conditional-fetching": "Conditional Data Fetching",
   "pagination": "Pagination",
+  "subscription": "Subscription",
   "prefetching": "Prefetching",
   "with-nextjs": "Next.js SSG and SSR",
   "typescript": "TypeScript",

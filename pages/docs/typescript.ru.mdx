@@ -25,9 +25,9 @@ useSWR(() => ['user', 8], ([arg0, arg1]) => {})
 Вы также можете явно указать типы аргументов `key` и `fetcher`
 
 ```typescript
-import useSWR, { Key, Fetcher } from 'swr'
+import useSWR, { Fetcher } from 'swr'
 
-const uid: Key = '<user_id>'
+const uid = '<user_id>'
 const fetcher: Fetcher<User, string> = (id) => getUserById(id)
 
 const { data } = useSWR(uid, fetcher)
@@ -54,6 +54,45 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 }
 
 const { data } = useSWRInfinite(getKey, fetcher)
+```
+
+### useSWRSubscription
+
+* Inline subscribe function and mamually specify the type of `next`  using `SWRSubscriptionOptions`.
+
+```tsx
+import useSWRSubscription from 'swr/subscription'
+import type { SWRSubscriptionOptions } from 'swr/subscription'
+
+const { data, error } = useSWRSubscription('key', 
+  (key, { next }: SWRSubscriptionOptions<number, Error>) => {
+  //^ key will be inferred as `string`
+  //....
+  })
+  return {
+    data,
+    //^ data will be inferred as `number | undefined`
+    error
+    //^ error will be inferred as `Error | undefined`
+  }
+}
+```
+
+* declare subscribe function using `SWRSubscription`
+
+```tsx
+import useSWRSubscription from 'swr/subscription'
+import type { SWRSubscription } from 'swr/subscription'
+
+/** 
+ * The first generic is Key
+ * The second generic is Data
+ * The Third generic is Error
+ */
+const sub: SWRSubscription<string, number, Error> = (key, { next }) => {                         
+  //......
+}
+const { data, error } = useSWRSubscription('key', sub)
 ```
 
 ## Обобщения (Generics)
