@@ -34,7 +34,7 @@ const { data } = useSWR(uid, fetcher)
 // `data` will be `User | undefined`.
 ```
 
-By default, [the error thrown](/docs/error-handling) inside the `fetcher` function has type `any`. The type can also explicitly specified.
+By default, [the error thrown](/docs/error-handling) inside the `fetcher` function has type `any`. The type can also be explicitly specified.
 
 ```typescript
 const { data, error } = useSWR<User, Error>(uid, fetcher);
@@ -60,7 +60,6 @@ const { data } = useSWRInfinite(getKey, fetcher)
 ### useSWRSubscription
 
 * Inline subscribe function and manually specify the type of `next` using `SWRSubscriptionOptions`.
-
 
 ```tsx
 import useSWRSubscription from 'swr/subscription'
