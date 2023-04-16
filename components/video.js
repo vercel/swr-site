@@ -1,8 +1,9 @@
-import { useRef, useCallback, useEffect } from "react";
-import { useInView } from "react-intersection-observer";
 import "intersection-observer";
+import { useCallback, useEffect, useRef } from "react";
+import { useInView } from "react-intersection-observer";
 
-export default function Video({ src, caption, ratio }) {
+
+export default function Video({ src, caption, ratio, className = "" }) {
   const [inViewRef, inView] = useInView({
     threshold: 1,
   });
@@ -41,7 +42,10 @@ export default function Video({ src, caption, ratio }) {
   }, [inView]);
 
   return (
-    <div style={{ position: "relative", margin: "2rem 1rem" }}>
+    <div
+      style={{ position: "relative", marginBlock: "2rem 1rem" }}
+      className={className}
+    >
       <div style={{ paddingBottom: ratio * 100 + "%" }} />
       <video
         style={{ position: "absolute", top: 0, left: 0 }}

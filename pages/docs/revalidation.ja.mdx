@@ -20,6 +20,7 @@ import Link from 'next/link'
     src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/focus-revalidate.mp4"
     caption="ビデオ：フォーカスの再検証を使用して、ページ間でログイン状態を自動的に同期します。"
     ratio={307/768}
+    className="mx-8 2xl:mx-24"
   />
 </Bleed>
 
@@ -36,6 +37,7 @@ SWR には、データを自動的に再フェッチするオプションがあ�
     src="https://raw.githubusercontent.com/vercel/swr-site/master/.github/videos/refetch-interval.mp4"
     caption="ビデオ：ユーザーが変更を加えると、両方のセッションで最終的に同じデータをレンダリングします。"
     ratio={307/768}
+    className="mx-8 2xl:mx-24"
   />
 </Bleed>
 
@@ -68,7 +70,7 @@ import useSWRImmutable from 'swr/immutable'
 useSWRImmutable(key, fetcher, options)
 ```
 
-上記のフックは、通常の `useSWR` フックと同じAPIインターフェースを備えています。また、次の再検証オプションを無効にすることで、同じ処理を行うこともできます：
+上記のフックは、通常の `useSWR` フックと同じ API インターフェースを備えています。また、次の再検証オプションを無効にすることで、同じ処理を行うこともできます：
 
 ```js
 useSWR(key, fetcher, {
