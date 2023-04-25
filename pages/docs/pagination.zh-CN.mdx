@@ -12,7 +12,7 @@ SWR 提供了一个专用 API `useSWRInfinite` 来支持常见的 UI 模式，�
 
 ### 分页
 
-首先，我们可能 **并不** 需要 `useSWRInfinite`，如果我们正在构建如下内容，可以只使用 `useSWR`：
+首先，我们可能 **并不** 需要使用 `useSWRInfinite`，而是直接使用 `useSWR`，例如我们正在构建以下场景：
 
 import { Pagination } from 'components/diagrams/pagination'
 
@@ -20,16 +20,16 @@ import { Pagination } from 'components/diagrams/pagination'
   <Pagination/>
 </div>
 
-...这是一个典型的分页 UI。我们来看看如何用 `useSWR` 轻松实现它：
+...这是一个典型的分页用户界面。来看看它如何用 `useSWR` 轻松实现：
 
 ```jsx {5}
 function App () {
   const [pageIndex, setPageIndex] = useState(0);
 
-  // API URL 包括页面索引，它是一个 React state。
+  // API URL 中包含了页面索引，它是一个 React state。
   const { data } = useSWR(`/api/data?page=${pageIndex}`, fetcher);
 
-  // ... 处理加载和错误状态
+  // ... 处理加载和错误的状态
 
   return <div>
     {data.map(item => <div key={item.id}>{item.name}</div>)}
@@ -39,7 +39,7 @@ function App () {
 }
 ```
 
-此外，我们可以为这个 "page 组件" 创建一个抽象：
+我们还可以为这个页面组件创建一个抽象层。：
 
 ```jsx {13}
 function Page ({ index }) {
@@ -61,7 +61,7 @@ function App () {
 }
 ```
 
-SWR 的缓存会让我们在预先加载下一页方面受益匪浅。我们在一个 hidden 的 div 中渲染下一页，所以 SWR 将触发对下一页的数据请求。当用户导航到下一页时，数据已经加载好了：
+由于 SWR 的缓存，我们可以预加载下一页的页面。我们将下一页的页面渲染到隐藏的 div 中，这样 SWR 会触发下一页页面的数据获取。当用户导航到下一页时，数据就已经存在了：
 
 ```jsx {6}
 function App () {
@@ -76,11 +76,11 @@ function App () {
 }
 ```
 
-仅用一行代码，我们就获得了非常好的用户体验。`useSWR` hook 非常强大，它涵盖了大多数场景。
+仅用一行代码，我们就获得了更好的用户体验。`useSWR` hook 已经非常强大了，能够覆盖大多数的场景。
 
 ### 无限加载
 
-有时我们想构建一个**无限加载** UI，用一个 "Load More" 按钮向列表追加数据（或者在滚动时自动完成）：
+有时我们想构建一个**无限加载**的界面，通过一个 "Load More" 按钮向列表追加数据（或者当你滚动时自动加载）：
 
 import { Infinite } from 'components/diagrams/infinite'
 
@@ -88,7 +88,7 @@ import { Infinite } from 'components/diagrams/infinite'
   <Infinite/>
 </div>
 
-要实现这一点，我们需要在这个页面 **动态生成请求数**。React Hooks 有 [2 个规则](https://reactjs.org/docs/hooks-rules.html)，所以我们 **不能** 写下面的代码：
+要实现这个功能，我们需要在该页面上进行**动态的数据请求**。React Hooks 中存在这 [两个规则](https://reactjs.org/docs/hooks-rules.html)，所以我们 **不能** 这么写：
 
 ```jsx {5,6,7,8,9}
 function App () {
@@ -111,7 +111,7 @@ function App () {
 }
 ```
 
-相反，我们可以使用创建的 `<Page />` 抽象来实现它：
+相反，我们可以使用我们创建的 `<Page/>` 抽象来实现这个功能:
 
 ```jsx {5,6,7}
 function App () {
@@ -131,9 +131,9 @@ function App () {
 
 ### 高级用例
 
-但是，在某些高级用例中，上面的解决方案并不起作用。
+但是，在某些高级用例中，上述的解决方案并不适用。
 
-比如，我们仍然实现相同的 "Load More" UI，但还需要显示一个 item 总数的数字。我们不能再使用 `<Page />` 这个解决方案了，因为顶级 UI (`<App />`) 需要每个页面的数据：
+例如，我们仍然实现相同的 "Load More" 界面，但还需要显示一共有多少项。我们无法再使用 `<Page />` 的解决方案，因为顶层 UI `(<App/>)` 需要每个页面中的数据。
 
 ```jsx {10}
 function App () {
@@ -152,9 +152,9 @@ function App () {
 }
 ```
 
-另外，如果分页 API 是 **基于游标的**，那么这个解决方案也不起作用。因为每个页面都需要上一页的数据，它们不是孤立的。
+此外，如果分页的API是 **基于游标（cursor）**的，那么这个解决方案也不适用。因为每个页面都需要前一页的数据，它们不是隔离的。
 
-这就是这个新 `useSWRInfinite` Hook 的作用。
+这意味着我们需要一个更高级的解决方案来解决这个问题，因此，我们引入了一个新的 `useSWRInfinite` Hook。。
 
 ## useSWRInfinite
 
@@ -169,9 +169,9 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
 )
 ```
 
-和 `useSWR` 类似，这个新的 Hook 接受一个函数，该函数返回请求的 key、1 个 fetcher 函数和 options。它返回 `useSWR` 的所有返回值，还包括 2 个额外的值：page size 和 page size setter，类似一个 React state。
+与 useSWR 类似，这个新 Hook 接受一个返回请求 key 的函数、一个 fetcher 函数和一些选项。它返回和 useSWR 一样的所有值，并增加了两个额外的值：页面大小和一个页面大小的 setter，类似于 React 的 state。
 
-在无限加载中，一个 _页面_ 是一个请求，我们的目标是请求多页面并渲染它们。
+在无限滚动中，一个 “页面” 就是一个请求，我们的目标是获取多个页面并将它们渲染出来。
 
 <Callout emoji="⚠️">
   如果你使用的是 SWR 0.x 版本，则需要从 `swr` 导入 `useSWRInfinite`：<br/>
@@ -182,9 +182,9 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
 
 #### 参数
 
-- `getKey`: 一个函数，接受索引和上一页数据，返回页面的 key
+- `getKey`: 一个接受索引值和上一页数据，并返回页面 key 值的函数
 - `fetcher`: 和 `useSWR` 的 [fetcher 函数](/docs/data-fetching) 一样
-- `options`: 接受 `useSWR` 支持的所有选项，以及 4 个额外选项：
+- `options`: 接受 `useSWR` 支持的所有选项，以及四个额外选项：
   - `initialSize = 1`: 最初应加载的页面数量
   - `revalidateAll = false`: 始终尝试重新验证所有页面
   - `revalidateFirstPage = true`: 始终尝试重新验证第一页
@@ -192,18 +192,18 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   - `parallel = false`: fetches multiple pages in parallel
 
 <Callout>
-  请注意，`initialSize` 选项并不支持在渲染过程中发生改变。
+  请注意，`initialSize` 选项不允许在运行时更改。
 </Callout>
 
 #### 返回值
 
-- `data`: 一个数组，每个页面请求的响应值
+- `data`: 由每一页的请求的响应数据组成的数组
 - `error`: 与 `useSWR` 的 `error` 返回值相同
 - `isLoading`: 与 `useSWR` 的 `isLoading` 返回值相同
 - `isValidating`: 与 `useSWR` 的 `isValidating` 返回值相同
-- `mutate`: 和 `useSWR` 的绑定 mutate 函数一样，但是操作 data 数组
-- `size`: *即将*请求和返回的页面数
-- `setSize`: 设置需要请求的页面数
+- `mutate`: 和 `useSWR` 的绑定数据更改函数一样，但可以用于操作 `data` 数组
+- `size`: 即将请求并返回的页面数量
+- `setSize`: 设置需要被请求的页面数量
 
 ### 示例 1：基于索引的分页 API
 
@@ -220,11 +220,11 @@ GET /users?page=0&limit=10
 ```
 
 ```jsx {4,5,6,7,10}
-// 一个函数，拿到每个页面的 key，
-// `fetcher` 接受它的返回值。
-// 如果返回是 `null`，该页面不会开始请求。
+// 一个用于拿到每个页面的 SWR key 的函数，
+// 它的返回值会被 `fetcher` 接收。
+// 如果返回值是 `null`，则该页面不会开始请求。
 const getKey = (pageIndex, previousPageData) => {
-  if (previousPageData && !previousPageData.length) return null // reached the end
+  if (previousPageData && !previousPageData.length) return null // 已经到最后一页
   return `/users?page=${pageIndex}&limit=10`                    // SWR key
 }
 
@@ -232,7 +232,7 @@ function App () {
   const { data, size, setSize } = useSWRInfinite(getKey, fetcher)
   if (!data) return 'loading'
 
-  // 我们现在可以计算出所有用户的数量
+  // 现在我们可以计算出用户的总数
   let totalUsers = 0
   for (let i = 0; i < data.length; i++) {
     totalUsers += data[i].length
@@ -293,10 +293,10 @@ GET /users?cursor=123&limit=10
 
 ```jsx
 const getKey = (pageIndex, previousPageData) => {
-  // reached the end
+  // 已经到最后一页
   if (previousPageData && !previousPageData.data) return null
 
-  // 首页，没有 `previousPageData`
+  // 在首页时，没有 `previousPageData`
   if (pageIndex === 0) return `/users?limit=10`
 
   // 将游标添加到 API
@@ -304,13 +304,13 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
-### Parallel Fetching Mode
+### 并行请求模式
 
 <Callout emoji="✅">
-  Please update to the latest version (≥ 2.1.0) to use this API.
+  请升级至最新版本（≥ 2.1.0）以使用此 API
 </Callout>
 
-The default behavior of useSWRInfinite is to fetch data for each page in sequence, as key creation is based on the previously fetched data. However, fetching data sequentially for a large number of pages may not be optimal, particularly if the pages are not interdependent. By specifying `parallel` option to `true` will let you fetch pages independently in parallel, which can significantly speed up the loading process.
+`useSWRInfinite` 的默认行为是按顺序获取每个页面的数据，因为 key 的创建基于先前获取的数据。然而，对于一大堆没有相互依赖关系的页面，按顺序获取数据可能不是最优的，尤其是当页面数量很多时。通过将 `parallel` 选项设置为 `true`，你可以独立地并行获取页面数据，这可以显着加快加载过程。
 
 ```jsx
 // parallel = false (default)
@@ -321,7 +321,7 @@ The default behavior of useSWRInfinite is to fetch data for each page in sequenc
 // page2 =====> done
 // page3 ===> done
 //
-// previousPageData is always `null`
+// previousPageData 始终为 `null`
 const getKey = (pageIndex, previousPageData) => {
   return `/users?page=${pageIndex}&limit=10`
 }
@@ -332,12 +332,14 @@ function App () {
 ```
 
 <Callout emoji="⚠️">
-    The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
+    当你启用了 `parallel` 选项，`getKey` 函数的参数 `previousPageData` 会变为 `null`。
 </Callout>
 
-### Global Mutate with `useSWRInfinite`
+### 全局变更 `useSWRInfinite` 数据
 
 `useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infinite` to revalidate the data with the global mutate.
+
+`useSWRInfinite` 会将所有页面数据存储在缓存中，并使用特殊的缓存 key 来存储每个页面的数据。因此，您需要在 `swr/infinite` 中使用 `unstable_serialize` 对数据进行序列化，才能使用全局的 `mutate` 方法重新验证数据。
 
 ```jsx
 import { useSWRConfig } from "swr"
@@ -350,15 +352,15 @@ function App() {
 ```
 
 <Callout emoji="⚠️">
-    As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
+    正如命名所示，`unstable_serialize` 目前并不是一个稳定的 API，所以我们可能会在未来修改它。
 </Callout>
 
 ### 高级特性
 
-[这里有一个示例](/examples/infinite-loading) 演示如何使用 `useSWRInfinite` 实现以下功能：
+[这里有一个示例](/examples/infinite-loading) 演示了如何使用 `useSWRInfinite` 实现以下功能：
 
-- 加载状态
+- 显示加载状态
 - 如果为空，显示一个特殊的 UI
-- 如果 reached the end，禁用 "Load More" 按钮
-- 数据源可变
+- 如果加载到最后一页，禁用 "Load More" 按钮
+- 可变的数据源
 - 刷新整个列表
