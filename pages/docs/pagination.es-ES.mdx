@@ -8,9 +8,9 @@ import { Callout } from 'nextra-theme-docs'
 
 SWR proporciona una API dedicada `useSWRInfinite` para admitir patrones de UI comunes como la **paginación** y la **carga infinita**.
 
-## Cuándo utilizar `useSWR`
+## Cuándo utilizar `useSWR` [#when-to-use-useswr]
 
-### Paginación
+### Paginación [#pagination]
 
 En primer lugar, es posible que **NO** necesitemos `useSWRInfinite`, sino que podemos utilizar simplemente `useSWR`
 si estamos construyendo algo como esto:
@@ -83,7 +83,7 @@ function App () {
 Con sólo 1 línea de código, conseguimos una UX mucho mejor. El hook `useSWR` es tan potente,
 que la mayoría de los escenarios están cubiertos por él.
 
-### Carga infinita
+### Carga infinita [#infinite-loading]
 
 A veces queremos construir una UI de **carga infinita**, con un botón "Load More" que añada datos
 a la lista (o que lo haga automáticamente al desplazarse):
@@ -136,7 +136,7 @@ function App () {
 }
 ```
 
-### Casos avanzados
+### Casos avanzados [#advanced-cases]
 
 Sin embargo, en algunos casos de uso avanzado, la solución anterior no funciona.
 
@@ -166,7 +166,7 @@ necesita los datos de la página anterior, no están aisladas.
 
 Así es como este nuevo hook `useSWRInfinite` puede ayudar.
 
-## useSWRInfinite
+## useSWRInfinite [#useswrinfinite]
 
 `useSWRInfinite` nos da la posibilidad de lanzar un número de peticiones con un solo Hook. Así es como se ve:
 
@@ -189,9 +189,9 @@ En la carga infinita, una _page_ es una petición, y nuestro objetivo es obtener
   `import { useSWRInfinite } from 'swr'`
 </Callout>
 
-### API
+### API [#api]
 
-#### Parametrós
+#### Parametrós [#parameters]
 
 - `getKey`: una función que acepta el índice y los datos de la página anterior, devuelve la key de una página
 - `fetcher`: igual que la función [fetcher](/docs/data-fetching) de `useSWR`
@@ -206,7 +206,7 @@ En la carga infinita, una _page_ es una petición, y nuestro objetivo es obtener
     Tenga en cuenta que la opción `InitialSize` no puede cambiar en el ciclo de vida.
 </Callout>
 
-#### Valores de retorno
+#### Valores de retorno [#return-values]
 
 - `data`: una array de valores de respuesta fetch de cada página
 - `error`: El mismo valor devuelto de `error` que `useSWR`
@@ -216,7 +216,7 @@ En la carga infinita, una _page_ es una petición, y nuestro objetivo es obtener
 - `size`: el número de páginas que _se obtendrán_ y devolverán
 - `setSize`: establecer el número de páginas que deben ser recuperadas
 
-### Ejemplo 1: API paginada basada en índices
+### Ejemplo 1: API paginada basada en índices [#example-1-index-based-paginated-api]
 
 Para las APIs normales basadas en índices:
 
@@ -285,7 +285,7 @@ Además, la `data` ya no son sólo es una respuesta de la API. Es una array de m
 ]
 ```
 
-### Ejemplo 2: Cursor or Offset Based Paginated API
+### Ejemplo 2: Cursor or Offset Based Paginated API [#example-2-cursor-or-offset-based-paginated-api]
 
 Digamos que la API ahora requiere un cursor y devuelve el siguiente cursor junto con los datos:
 
@@ -317,7 +317,7 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
-### Parallel Fetching Mode
+### Parallel Fetching Mode [#parallel-fetching-mode]
 
 <Callout emoji="✅">
   Please update to the latest version (≥ 2.1.0) to use this API.
@@ -348,7 +348,7 @@ function App () {
     The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
 </Callout>
 
-### Global Mutate with `useSWRInfinite`
+### Global Mutate with `useSWRInfinite` [#global-mutate-with-useswrinfinite]
 
 `useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infinite` to revalidate the data with the global mutate.
 
@@ -366,7 +366,7 @@ function App() {
     As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
 </Callout>
 
-### Características avanzadas
+### Características avanzadas [#advanced-features]
 
 [Aquí hay un ejemplo](/examples/infinite-loading) que muestra cómo se pueden implementar las siguientes características con `useSWRInfinite`:
 

@@ -8,7 +8,7 @@ useSWR('/api/user', url => fetcher(url))
 useSWR('/api/user', fetcher)
 ```
 
-## 多个参数
+## 多个参数 [#multiple-arguments]
 
 在某些场景中，向 `fetcher` 函数传递多个参数（可以是任何值或对象）非常有用。例如授权请求：
 
@@ -30,7 +30,7 @@ The `fetcher` function accepts the `key` parameter as is, and the cache key will
   In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
 </Callout>
 
-## 传入对象
+## 传入对象 [#passing-objects]
 
 import { Callout } from 'nextra-theme-docs'
 

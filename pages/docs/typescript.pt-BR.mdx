@@ -2,11 +2,11 @@
 
 SWR é amigável para aplicações escritas em TypeScript, com tipos prontos para uso.
 
-## Uso Básico
+## Uso Básico [#basic-usage]
 
 Por padrão, SWR irá inferir os tipos de argumento de `fetcher` a partir de `key`, então você pode ter os tipos preferidos automaticamente.
 
-### useSWR
+### useSWR [#useswr]
 
 ```typescript
 // `key` é inferido para ser `string`
@@ -34,7 +34,7 @@ const { data } = useSWR(uid, fetcher)
 // `data`será `User | undefined`.
 ```
 
-### useSWRInfinite
+### useSWRInfinite [#useswrinfinite]
 
 O mesmo para `swr/infinite`, você pode confiar na inferência automática de tipos ou especificar explicitamente os tipos por conta própria:
 
@@ -48,7 +48,7 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
-### useSWRSubscription
+### useSWRSubscription [#useswrsubscription]
 
 * Inline subscribe function and mamually specify the type of `next`  using `SWRSubscriptionOptions`.
 
@@ -87,7 +87,7 @@ const sub: SWRSubscription<string, number, Error> = (key, { next }) => {
 const { data, error } = useSWRSubscription('key', sub)
 ```
 
-## Genéricos
+## Genéricos [#generics]
 
 Especificar o tipo de `data` é fácil. Por padrão, usará o tipo de retorno de `fetcher` (com `undefined` para o estado não pronto) como o tipo de `data`, mas você pode passá-lo como um parâmetro:
 
@@ -116,7 +116,7 @@ const config: SWRConfiguration = {
 const { data } = useSWR<string[]>('/api/data', fetcher, config)
 ```
 
-## Tipos de Middleware
+## Tipos de Middleware [#middleware-types]
 
 Existem alguns definições de tipo extras que você pode importar para ajudar a adicionar tipos ao seu middleware personalizado.
 

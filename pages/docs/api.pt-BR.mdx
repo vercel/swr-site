@@ -6,13 +6,13 @@ import { Callout } from 'nextra-theme-docs'
 const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
-## Parâmetros
+## Parâmetros [#parameters]
 
 - `key`: uma chave única em string para o pedido (ou uma função / array / null) [(detalhes)](/docs/arguments), [(uso avançado)](/docs/conditional-fetching)
 - `fetcher`: (_opcional_) uma Promise retornando uma função para obter seus dados [(detalhes)](/docs/data-fetching)
 - `options`: (_opcional_) um objeto de opções para esse hook SWR
 
-## Valores Retornados
+## Valores Retornados [#return-values]
 
 - `data`: dados para a chave fornecida pelo `fetcher` (ou undefined se não carregado)
 - `error`: erro lançado pelo `fetcher` (ou undefined)
@@ -22,7 +22,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 
 More information can be found [here](/docs/advanced/understanding).
 
-## Opções
+## Opções [#options]
 
 - `suspense = false`: habilita o modo Suspense do React [(detalhes)](/docs/suspense)
 - `fetcher(args)`: a função fetcher

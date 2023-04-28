@@ -2,11 +2,11 @@
 
 SWR 提供了 `mutate` 和 `useSWRMutation` 两个 API 用于更改远程数据及相关缓存。
 
-## `mutate`
+## `mutate` [#mutate]
 
 有两种方法可以使用 `mutate` API 来进行数据更改，全局数据更改 API 可以更改任何 key 的数据，而绑定数据更改只能更改对应 SWR hook 的数据。
 
-#### 全局数据更改
+#### 全局数据更改 [#global-mutate]
 
 推荐使用 [`useSWRConfig`](/docs/global-configuration#access-to-global-configurations) hook 获取全局 `mutator`：
 
@@ -33,7 +33,7 @@ function App() {
   如果在调用全局 mutator 函数式只提供了 key 参数，那么除非有一个使用相同 key 的 SWR hook 被挂载，否则缓存不会被更新，也不会触发重新验证。
 </Callout>
 
-#### 绑定数据更改
+#### 绑定数据更改 [#bound-mutate]
 
 绑定数据更改可以更便捷的更改当前 key 数据，它的 `key` 与传递给 `useSWR` 的 `key` 相绑定，并接收 `data` 作为第一个参数。
 
@@ -61,7 +61,7 @@ function Profile () {
 }
 ```
 
-#### 重新验证
+#### 重新验证 [#revalidation]
 
 当你调用 `mutate(key)`（或者只是使用绑定数据更改 API `mutate()`）时没有传入任何数据，它会触发资源的重新验证(将数据标记为已过期并触发重新请求)。这个例子展示了当用户点击 “Logout” 按钮时如何自动重新请求登陆信息。
 
@@ -94,9 +94,9 @@ import { Callout } from 'nextra-theme-docs'
 它向同一个 [缓存 provider](/docs/advanced/cache) 范围内的 SWR hook 进行广播。如果不存在缓存 provider 就会向 SWR hook 进行广播。
 </Callout>
 
-### API
+### API [#api]
 
-#### Parameters
+#### Parameters [#parameters]
 
 - `key`：与 `useSWR` 的 `key` 相同，但函数表现为一个 [过滤函数](/docs/mutation#mutate-multiple-items)。
 - `data`：用于更新客户端缓存的数据，或者是一个用于进行远程数据更改的异步函数。
@@ -107,7 +107,7 @@ import { Callout } from 'nextra-theme-docs'
   - `rollbackOnError = true`：如果远程数据更改失败，缓存会回滚。或者接受一个函数，它接收从 fetcher 抛出的错误作为参数，并返回一个布尔值判断是否应该回滚。
   - `throwOnError = true`：数据更改失败时抛出错误。
 
-#### 返回值
+#### 返回值 [#return-values]
 
 `mutate` 返回参数的 `data` 是被解析过的结果。传递给 `mutate` 的函数将返回一个更新后的数据，用于更新相应的缓存值。如果在执行函数时出现错误，错误将被抛出，以便进行合适的处理。
 
@@ -119,7 +119,7 @@ try {
 }
 ```
 
-## `useSWRMutation`
+## `useSWRMutation` [#useswrmutation]
 
 SWR 还提供了 `useSWRMutation` 作为一个远程数据更改的 hook。远程数据更改只能手动触发，而不像 `useSWR` 那样会自动触发。
 
@@ -151,9 +151,9 @@ function Profile() {
 }
 ```
 
-### API
+### API [#api]
 
-#### 参数
+#### 参数 [#parameters]
 
 - `key`: 与 [`mutate`](/docs/mutation#mutate) 的 `key` 相同
 - `fetcher(key, { arg })`：一个用于远程数据更改的异步函数
@@ -166,7 +166,7 @@ function Profile() {
   - `onSuccess(data, key, config)`:　远程数据更改完成时的回调函数
   - `onError(err, key, config)`: 远程数据更改返回错误时的回调函数
 
-#### 返回值
+#### 返回值 [#return-values]
 
 - `data`：从 `fetcher` 返回给定 key 的数据
 - `error`：`fetcher` 中抛出的错误（或 undefined）
@@ -174,7 +174,7 @@ function Profile() {
 - `reset`：一个用于重置状态的函数（ `data`, `error`, `isMutating` ）
 - `isMutating`：有一个正在进行中的远程数据变更
 
-### 基本用法
+### 基本用法 [#basic-usage]
 
 ```tsx
 import useSWRMutation from 'swr/mutation'
@@ -226,7 +226,7 @@ trigger(newName, {
 })
 ```
 
-### 延迟加载数据，直到需要的时候
+### 延迟加载数据，直到需要的时候 [#defer-loading-data-until-needed]
 
 你也可以使用 `useSWRMutation` 来加载数据。`useSWRMutation` 在 `trigger` 被调用之前永远不会开始请求，所以你可以推迟到真正需要时再加载数据。
 
@@ -253,7 +253,7 @@ const Page = () => {
 }
 ```
 
-## 乐观更新
+## 乐观更新 [#optimistic-updates]
 
 很多情况下，应用本地的数据更改是一个让人感觉快速的好方法——不需要等待远程数据源。
 
@@ -340,11 +340,11 @@ function Profile () {
 }
 ```
 
-## 错误回滚
+## 错误回滚 [#rollback-on-errors]
 
 当你设置了`optimisticData` 选项时，有可能在乐观数据展示给用户后，远程数据更改却失败了。在这种情况下，你可以启用`rollbackOnError`，将本地缓存恢复到之前的状态，确保用户看到的是正确的数据。
 
-## 在数据更改后更新缓存
+## 在数据更改后更新缓存 [#update-cache-after-mutation]
 
 有时远程数据更改的请求会直接返回更新后的数据，因此不需要发送额外的请求来加载它。
 你可以启用 `populateCache` 选项，用数据更改的响应来更新 `useSWR` 的缓存。
@@ -383,7 +383,7 @@ useSWRMutation('/api/todos', updateTodo, {
 
 当 `optimisticData` 与 `rollbackOnError` 搭配使用时，你将获得最佳的乐观 UI 体验。
 
-## 避免竞态条件
+## 避免竞态条件 [#avoid-race-conditions]
 
 `mutate` 和 `useSWRMutation` 都可以避免 `useSWR` 之间的竞态条件。例如：
 
@@ -403,7 +403,7 @@ function Profile() {
 
 幸运的是 `useSWRMutation` 可以为你自动处理这种情况。在数据更改后，它会告诉 `useSWR` 放弃正在进行的请求和重新验证，所以旧的数据永远不会被显示。
 
-## 基于当前数据进行数据更改
+## 基于当前数据进行数据更改 [#mutate-based-on-current-data]
 
 有时你想根据当前的数据来更新部分数据。
 
@@ -424,7 +424,7 @@ mutate('/api/todos', async todos => {
 }, { revalidate: false })
 ```
 
-## 更改多项数据
+## 更改多项数据 [#mutate-multiple-items]
 
 全局 `mutate` API 接受一个过滤函数，它接受 `key` 作为参数并返回需要重新验证的 key。过滤函数会被应用于所有已有的缓存 key。
 

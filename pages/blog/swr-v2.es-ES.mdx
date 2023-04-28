@@ -10,7 +10,7 @@ import { Bleed } from 'nextra-theme-docs'
 import Authors, { Author } from 'components/authors'
 import Video from 'components/video'
 
-# Announcing SWR 2.0
+# Announcing SWR 2.0 [#announcing-swr-20]
 
 <Authors date="December 9th, 2022">
   <Author name="Shu Ding" link="https://twitter.com/shuding_" />
@@ -23,9 +23,9 @@ We are thrilled to announce the release of SWR 2.0, the popular React data-fetch
 
 This new version comes packed with improvements and new features, such as new mutation APIs, improved optimistic UI capabilities, new DevTools, and better support for concurrent rendering. We would like to extend a huge thank you to all the contributors and maintainers who made this release possible.
 
-## Mutation and Optimistic UI
+## Mutation and Optimistic UI [#mutation-and-optimistic-ui]
 
-### useSWRMutation
+### useSWRMutation [#useswrmutation]
 
 Mutation is an important part of the data-fetching process. They allow you to make changes to your data both locally and remotely. Our existing `mutate` API allows you to revalidate and mutate resources manually. In SWR 2.0, the new hook `useSWRMutation` makes it even simpler to remotely change data using a declarative API. You can set up a mutation using the hook, and then activate it later:
 
@@ -67,7 +67,7 @@ Additionally, this new hook addresses other issues you may have with mutations:
 
 You can find in-depth API references and examples by reading the [docs](/docs/mutation#useswrmutation) or scrolling through the next few sections.
 
-### Optimistic UI
+### Optimistic UI [#optimistic-ui]
 
 Optimistic UI is an excellent model for creating websites that feel fast and responsive; however, it can be difficult to implement correctly. SWR 2.0 has added some new powerful options to make it easier.
 
@@ -182,7 +182,7 @@ All these APIs are supported in the new `useSWRMutation` hook as well. To learn 
   ratio={223/584}
 />
 
-### Mutate Multiple Keys
+### Mutate Multiple Keys [#mutate-multiple-keys]
 
 The global `mutate` API now accepts a filter function, where you can mutate or revalidate specific keys. This will be helpful for use cases such as invalidating all the cached data. To learn more, you can read [Mutate Multiple Keys](/docs/mutation#mutate-multiple-items) in the docs.
 
@@ -202,13 +202,13 @@ mutate(
 )
 ```
 
-## SWR DevTools
+## SWR DevTools [#swr-devtools]
 
 [SWRDevTools](https://swr-devtools.vercel.app) is a browser extension that helps you debug your SWR cache and the fetch results. Check our [devtools](/docs/advanced/devtools) section for how to use devtools in your application.
 
 ![](/img/devtools/cache-view.jpg)
 
-## Preloading Data
+## Preloading Data [#preloading-data]
 
 Preloading data can improve the user experience tremendously. If you know the resource is going to be used later in the application, you can use the new `preload` API to start fetching it early:
 
@@ -236,7 +236,7 @@ And when the `Profile` component is being rendered, the data can probably be ava
 
 The `preload` API can also be used in cases like preloading data for another page that will likely be rendered. More information about prefetching data with SWR can be found [here](/docs/prefetching).
 
-## `isLoading`
+## `isLoading` [#isloading]
 
 `isLoading` is a new state returned by `useSWR`, that indicates **if the request is still ongoing, and there is no data loaded yet**. Previously, the `isValidating` state represents both the initial loading state and revalidating state so we had to check if both `data` and `error` are `undefined` to determine if it was the initial loading state.
 
@@ -259,7 +259,7 @@ Note that `isValidating` is still present so you can still use it to show a load
   We have added the new [Understanding SWR](/docs/advanced/understanding) page to describe how SWR returns values, which includes the difference between `isValidating` and `isLoading`, and how to combine them to improve user experience.
 </Callout>
 
-## Preserving Previous State
+## Preserving Previous State [#preserving-previous-state]
 
 The `keepPreviousData` option is a new addition that allows you to keep the data that was fetched before. This improves UX immensely when you’re fetching data based on user actions happening in real time, like with a live search feature, where the resource’s `key` keeps changing:
 
@@ -296,7 +296,7 @@ function Search() {
 
 Check the code on [CodeSandbox](https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m) and you can read more about it [here](/docs/advanced/understanding#return-previous-data-for-better-ux).
 
-## Extending Configurations
+## Extending Configurations [#extending-configurations]
 
 `SWRConfig` can now accept a function value. When you have multiple levels of `<SWRConfig>`, the inner receives the parent configuration and returns a new one. This change makes it more flexible to configure SWR in a large codebase. More information can be found [here](/docs/global-configuration).
 
@@ -311,15 +311,15 @@ Check the code on [CodeSandbox](https://codesandbox.io/s/swr-keeppreviousdata-fs
 </SWRConfig>
 ```
 
-## Improved React 18 Support
+## Improved React 18 Support [#improved-react-18-support]
 
 SWR has updated its internal code to use `useSyncExternalStore` and `startTransition` APIs in React 18. These ensure stronger consistency when rendering UI concurrently. This change doesn’t require any user code changes and all developers will benefit from it directly. Shims are included for React 17 and below.
 
 SWR 2.0 and all the new features are still compatible with React 16 and 17.
 
-## Migration Guide
+## Migration Guide [#migration-guide]
 
-### Fetcher No Longer Accepts Multiple Arguments
+### Fetcher No Longer Accepts Multiple Arguments [#fetcher-no-longer-accepts-multiple-arguments]
 
 `key` is now passed as a single argument.
 
@@ -332,7 +332,7 @@ SWR 2.0 and all the new features are still compatible with React 16 and 17.
 })
 ```
 
-### Global Mutate No Longer Accepts a `getKey` Function
+### Global Mutate No Longer Accepts a `getKey` Function [#global-mutate-no-longer-accepts-a-getkey-function]
 
 Now, if you pass a function to the global `mutate`, it will be used as a [filter](/blog/swr-v2#mutate-multiple-keys). Previously, you can pass a function that returns a key to the global `mutate`:
 
@@ -341,7 +341,7 @@ Now, if you pass a function to the global `mutate`, it will be used as a [filter
 + mutate('/api/item')       // to mutate the key, directly pass it
 ```
 
-### New Required Property `keys()` for Cache Interface
+### New Required Property `keys()` for Cache Interface [#new-required-property-keys-for-cache-interface]
 
 When you use your own cache implementation, the Cache interface now requires a `keys()` method that returns all keys in the cache object, similar to the JavaScript Map instances.
 
@@ -354,7 +354,7 @@ interface Cache<Data> {
 }
 ```
 
-### Changed Cache Internal Structure
+### Changed Cache Internal Structure [#changed-cache-internal-structure]
 
 The internal structure of the cache data will be an object that holds all the current states.
 
@@ -375,7 +375,7 @@ The internal structure of the cache data will be an object that holds all the cu
   You should not write to the cache directly, it might cause undefined behavior.
 </Callout>
 
-### `SWRConfig.default` Is Renamed as `SWRConfig.defaultValue`
+### `SWRConfig.default` Is Renamed as `SWRConfig.defaultValue` [#swrconfigdefault-is-renamed-as-swrconfigdefaultvalue]
 
 `SWRConfig.defaultValue` is the property for accessing the default SWR config.
 
@@ -384,26 +384,26 @@ The internal structure of the cache data will be an object that holds all the cu
 + SWRConfig.defaultValue
 ```
 
-### Type `InfiniteFetcher` Is Renamed as `SWRInfiniteFetcher`
+### Type `InfiniteFetcher` Is Renamed as `SWRInfiniteFetcher` [#type-infinitefetcher-is-renamed-as-swrinfinitefetcher]
 
 ```diff
 - import type { InfiniteFetcher } from 'swr/infinite'
 + import type { SWRInfiniteFetcher } from 'swr/infinite'
 ```
 
-### Avoid Suspense on Server
+### Avoid Suspense on Server [#avoid-suspense-on-server]
 
 If you want to use `suspense: true` with SWR on the server-side, including pre-rendering in Next.js, then you must provide initial data via [`fallbackData` or `fallback`](/docs/with-nextjs#pre-rendering-with-default-data). Today, this means that you can't use Suspense to fetch data on the server side. Your other two options are doing fully client-side data-fetching or getting your framework to fetch the data for you (like getStaticProps does in Next.js).
 
-### ES2018 as the Build Target
+### ES2018 as the Build Target [#es2018-as-the-build-target]
 
 If you want to support IE 11, you have to target ES5 in your framework or a bundler. This change has made a performance improvement on SSR, and keeps the bundle size small.
 
-## Changelog
+## Changelog [#changelog]
 
 Read the full Changelog [on GitHub](https://github.com/vercel/swr/releases).
 
-## The Future & Thank You!
+## The Future & Thank You! [#the-future--thank-you]
 
 With the new release of [Next.js 13](https://nextjs.org/blog/next-13), we see a lot of exciting new things as well as paradigm shifts in the React ecosystem: [React Server Components](https://beta.nextjs.org/docs/rendering/server-and-client-components), streaming SSR, [async components](https://beta.nextjs.org/docs/data-fetching/fetching#asyncawait-in-server-components), and the [`use` hook](https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md#usepromise). Many of them are related to data-fetching, and some of them have overlapping use cases with SWR.
 

@@ -2,11 +2,11 @@
 
 SWR은 원격 데이터 및 관련 캐시를 변경하기 위한 [`mutate`](/docs/mutation#mutate) 및 [`useSWRMutation`](/docs/mutation#useswrmutation) API를 제공합니다.
 
-## `mutate`
+## `mutate` [#mutate]
 
 `mutate` API를 사용하여 데이터를 변경하는 방법에는 모든 키를 변경할 수 있는 global mutate API와 해당 SWR hook의 데이터만 변경할 수 있는 bound mutate API가 있습니다.
 
-#### Global Mutate
+#### Global Mutate [#global-mutate]
 
 global mutator를 가져오는 권장 방법은 [`useSWRConfig`](/docs/global-configuration#access-to-global-configurations) hook을 사용하는 것입니다.
 
@@ -33,7 +33,7 @@ function App() {
   `key` 매개변수만 있는 global mutator를 사용하면 동일한 키를 사용하는 마운트된 SWR hook이 없는 한 ***캐시를 업데이트하거나 재검증을 트리거하지 않습니다.***
 </Callout>
 
-#### Bound Mutate
+#### Bound Mutate [#bound-mutate]
 
 Bound mutate는 현재 키를 기반으로 데이터로 변경하는 빠른 방법입니다. `useSWR` 함수에 전달된 키와 연결된 키는 캐시에서 데이터를 찾을 때 사용되며, 이렇게 찾은 데이터는 첫 번째 인자로 반환됩니다.
 
@@ -61,7 +61,7 @@ function Profile () {
 }
 ```
 
-#### 재검증
+#### 재검증 [#revalidation]
 
 데이터 없이 `mutate(key)` (또는 바인딩된 mutate API로 `mutate()`)를 호출하면, 리소스에 대한 재검증(데이터를 만료된 것으로 표시하고 refetch를 트리거) 합니다.  
 이 예제는 사용자가 "로그아웃" 버튼을 클릭할 때 로그인 정보(예: `<Profile />` 내부)를 자동으로 다시 가져오는 방법을 보여줍니다.
@@ -95,9 +95,9 @@ import { Callout } from 'nextra-theme-docs'
 동일한 [cache provider](/docs/advanced/cache) 범위 내의 SWR hook에 전달합니다. cache provider가 존재하지 않으면 모든 SWR hook에 전달합니다.
 </Callout>
 
-### API
+### API [#api]
 
-#### 매개변수
+#### 매개변수 [#parameters]
 
 - `key`: `useSWR`의 `key`와 동일하지만 함수가 [필터 함수](/docs/mutation#mutate-multiple-items)처럼 작동
 - `data`: 데이터를 사용하여 클라이언트 캐시를 업데이트 하거나 클라이언트에서 서버로 데이터를 보내, 서버에서 데이터를 변경하는 작업(remote mutation)을 위한 비동기 함수를 사용할 수 있습니다.
@@ -108,7 +108,7 @@ import { Callout } from 'nextra-theme-docs'
   - `rollbackOnError = true`: remote mutation 과정에서 오류가 발생하면 캐시를 롤백해야 하는지, fetcher에서 던져진 오류를 인자로 받아 롤백할지에 대한 여부를 boolean으로 반환하는 함수를 지정할 수 있습니다.
   - `throwOnError = true`: 호출이 실패했을 때 오류를 발생시킬 수 있습니다.
 
-#### 반환 값
+#### 반환 값 [#return-values]
 
 `mutate`는 데이터 매개변수가 해결된 결과를 반환합니다. 변경하기 위해 전달된 함수는 해당 캐시 값을 업데이트 하는 데 사용되는 업데이트 된 데이터를 반환합니다.
 함수를 실행하는 동안 에러가 발생하면 적절하게 처리할 수 있도록 에러가 발생합니다.
@@ -121,7 +121,7 @@ try {
 }
 ```
 
-## `useSWRMutation`
+## `useSWRMutation` [#useswrmutation]
 
 SWR은 remote mutation을 위한 hook으로 `useSWRMutation`을 제공합니다. remote mutation은 `useSWR`처럼 자동으로 트리거 되지 않고 수동으로만 트리거 됩니다.
 
@@ -153,9 +153,9 @@ function Profile() {
 }
 ```
 
-### API
+### API [#api]
 
-#### 매개변수
+#### 매개변수 [#parameters]
 
 - `key`: [`mutate`](/docs/mutation#mutate)의 `key`와 동일
 - `fetcher(key, { arg })`: remote mutation을 위한 비동기 함수
@@ -168,7 +168,7 @@ function Profile() {
   - `onSuccess(data, key, config)`: remote mutation이 성공적으로 완료 되었을 때 사용되는 콜백 함수
   - `onError(err, key, config)`: remote mutation이 오류를 반환한 경우 사용되는 콜백 함수
 
-#### 반환 값
+#### 반환 값 [#return-values]
 
 - `data`: `fetcher` 에서 반환된 지정된 키에 대한 데이터
 - `error`: `fetcher`에서 발생한 오류 (또는 undefined)
@@ -176,7 +176,7 @@ function Profile() {
 - `reset`: 상태(`data`, `error`, `isMutating`)를 초기화하는 함수
 - `isMutating`: remote mutation이 진행 중인 상태
 
-### 기본 사용법
+### 기본 사용법 [#basic-usage]
 
 ```tsx
 import useSWRMutation from 'swr/mutation'
@@ -229,7 +229,7 @@ trigger(newName, {
 })
 ```
 
-### 필요할 때까지 데이터 로드 연기
+### 필요할 때까지 데이터 로드 연기 [#defer-loading-data-until-needed]
 
 데이터를 로드하는 데 `useSWRMutation`을 사용할 수도 있습니다. `useSWRMutation`은 `trigger`가 호출될 때까지 요청을 시작하지 않으므로 실제로 필요할 때 데이터 로딩을 지연시킬 수 있습니다.
 
@@ -256,7 +256,7 @@ const Page = () => {
 }
 ```
 
-## 최적화 업데이트
+## 최적화 업데이트 [#optimistic-updates]
 
 많은 경우에, 데이터에 local mutation을 적용하는 것은 변경 사항을 빠르게 반영할 수 있는 좋은 방법입니다.
 이렇게 하면, 원격 데이터 소스에서 데이터를 기다릴 필요가 없으므로, 변경 사항이 더 빠르게 반영됩니다.
@@ -345,12 +345,12 @@ function Profile () {
 }
 ```
 
-## 오류 시 롤백
+## 오류 시 롤백 [#rollback-on-errors]
 
 `optimisticData`가 설정되어 있는 경우, optimistic data가 사용자에게 표시되지만 remote mutation이 실패할 수 있습니다.  
 이 경우, `rollbackOnError`를 활용하여 로컬 캐시를 이전 상태로 되돌리면 사용자에게 올바른 데이터가 표시되는지 확인할 수 있습니다.
 
-## 변경 후 캐시 업데이트
+## 변경 후 캐시 업데이트 [#update-cache-after-mutation]
 
 remote mutation 요청이 업데이트 된 데이터를 직접 반환하는 경우도 있으므로 데이터를 로드하기 위해 추가 가져오기(extra refetch)를 수행할 필요가 없습니다.
 `populateCache` 옵션을 활성화하여 mutation 응답으로 `useSWR`에 대한 캐시를 업데이트 할 수 있습니다.
@@ -390,7 +390,7 @@ useSWRMutation('/api/todos', updateTodo, {
 
 `optimisticData` 및 `rollbackOnError`를 함께 사용하면 완벽한 optimistic UI를 경험할 수 있습니다.
 
-## 경합 상태(Race Conditions) 피하기
+## 경합 상태(Race Conditions) 피하기 [#avoid-race-conditions]
 
 `mutate`와 `useSWRMutation` 모두 `useSWR` 간의 경합 조건(Race Conditions)을 피할 수 있습니다. 예를 들어,
 
@@ -413,7 +413,7 @@ function Profile() {
 다행히도, `useSWRMutation`은 이 작업을 자동으로 처리합니다.
 mutation 후에는 `useSWR`에 진행 중인 요청을 버리고 재검증 하도록 지시하여 오래된 데이터가 표시되지 않도록 합니다.
 
-## 현재 데이터에 기반한 Mutate
+## 현재 데이터에 기반한 Mutate [#mutate-based-on-current-data]
 
 때로는 현재 데이터를 기반으로 데이터의 일부를 업데이트 하고 싶을 때가 있습니다.
 
@@ -436,7 +436,7 @@ mutate('/api/todos', async todos => {
 }, { revalidate: false })
 ```
 
-## 여러 항목 변경
+## 여러 항목 변경 [#mutate-multiple-items]
 
 global `mutate` API는 `key`를 인자로 받아 재검증 할 키를 반환하는 필터 함수를 허용합니다. 필터 함수는 기존 모든 캐시 키에 적용됩니다.
 

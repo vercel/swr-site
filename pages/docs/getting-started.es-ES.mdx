@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 # Comienza
 
-## Instalación
+## Instalación [#installation]
 
 Dentro del directorio de su proyecto React, ejecute lo siguiente:
 
@@ -25,7 +25,7 @@ Dentro del directorio de su proyecto React, ejecute lo siguiente:
   </Tab>
 </Tabs>
 
-## Inicio rápido
+## Inicio rápido [#quick-start]
 
 Para APIs RESTFul normales con datos JSON, primero necesita crear una función `fetcher`, que no es más que una envoltura
 del `fetch` nativo:
@@ -58,7 +58,7 @@ function Profile () {
 Normalmente, hay 3 estados posibles de una solicitud: "loading", "ready", o "error". Puedes utilizar el valor
 `data`, `error` y `isLoading` para determinar el estado actual de la solicitud, y devolver la UI correspondiente.
 
-## Hágalo reutilizable
+## Hágalo reutilizable [#make-it-reusable]
 
 Cuando construye una aplicación web, es posible que haya que reutilizar los datos en muchos lugares de la UI.
 Es increíblemente fácil crear hooks de datos reutilizables sobre SWR:
@@ -95,7 +95,7 @@ Al adoptar este patrón, puede olvidarse del **fetching** de datos de forma impe
 actualice el estado de carga, y devuelve el resultado final. En cambio, su código es más declarativo: sólo hay
 que especificar qué datos utiliza el componente.
 
-## Ejemplo
+## Ejemplo [#example]
 
 En un ejemplo del mundo real, nuestro sitio web muestra una barra de navegación y el contenido,
 ambos dependen del `user`:

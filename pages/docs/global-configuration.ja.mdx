@@ -35,11 +35,11 @@ function App () {
 }
 ```
 
-## ネストした設定
+## ネストした設定 [#nesting-configurations]
 
 `SWRConfig` は親で指定された設定をマージします。設定はオブジェクトまたは関数として受け取ることができます。関数の場合、親の設定を引数として受け取り新しくカスタマイズした設定を返します。
 
-### オブジェクトによる設定の例
+### オブジェクトによる設定の例 [#object-configuration-example]
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -75,7 +75,7 @@ function Page() {
 }
 ```
 
-### 関数による設定の例
+### 関数による設定の例 [#functional-configuration-example]
 
 
 ```jsx
@@ -111,9 +111,9 @@ function Page() {
 }
 ```
 
-## Extra APIs
+## Extra APIs [#extra-apis]
 
-### キャッシュプロバイダー
+### キャッシュプロバイダー [#cache-provider]
 
 紹介されているすべてのオプションに加えて、 `SWRConfig` は `provider` 関数も受け入れます。詳細は[キャッシュ](/docs/advanced/cache)セクションを参照してください。
 
@@ -123,7 +123,7 @@ function Page() {
 </SWRConfig>
 ```
 
-### グローバル設定へアクセス
+### グローバル設定へアクセス [#access-to-global-configurations]
 
 `useSWRConfig` フックを使ってグローバル設定、および[`ミューテーション`](/docs/mutation)と[`キャッシュ`](/docs/advanced/cache)を取得できます:
 

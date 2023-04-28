@@ -2,7 +2,7 @@ import { Callout } from 'nextra-theme-docs'
 
 # Next.js와 함께 사용하는 방법
 
-## 클라이언트 사이드 데이터 가져오기
+## 클라이언트 사이드 데이터 가져오기 [#client-side-data-fetching]
 
 페이지가 빈번하게 업데이트하는 데이터를 포함하고 이를 프리렌더링할 필요가 없다면, SWR은 완벽하게 적합하며 어떠한 특별한 설정도 필요하지 않습니다. `useSWR`을 임포트하고 데이터를 사용하는 컴포넌트 내에서 이 hook을 사용하기만 하면 됩니다.
 
@@ -13,7 +13,7 @@ import { Callout } from 'nextra-theme-docs'
 
 이런 접근은 사용자 대시보드 페이지 같은 곳에 적합합니다. 대시보드는 비공개용이며 사용자별 페이지이므로 SEO와 관계가 없고 페이지를 프리렌더링할 필요도 없습니다. 데이터는 빈번하게 업데이트되므로 요청 시에 데이터를 가져와야 합니다.
 
-## 기본값으로 프리렌더링하기
+## 기본값으로 프리렌더링하기 [#pre-rendering-with-default-data]
 
 페이지가 반드시 프리렌더링 되어야 한다면, Next.js는 [2가지 형태의 프리렌더링](https://nextjs.org/docs/basic-features/data-fetching)을 지원합니다:
 **정적 생성 (SSG)** 및 **서버 사이드 렌더링 (SSR)**.
@@ -58,7 +58,7 @@ export default function Page({ fallback }) {
   `Article` 컴포넌트는 미리 생성된 데이터로 먼저 렌더링하고, 해당 페이지가 하이드레이트 된 후에 최신 데이터를 다시 가져와 새로 고칩니다.
 </Callout>
 
-### Complex Keys
+### Complex Keys [#complex-keys]
 
 `useSWR`는 `array`나 `function` 타입을 key로 사용할 수 있습니다. 이 타입의 키를 이용해 미리 패치된 데이터를 사용하기 위해선 `fallback` key들을 `unstable_serialize`와 함께 직렬화해야합니다.
 

@@ -1,6 +1,6 @@
 # 조건부 가져오기
 
-## 조건부
+## 조건부 [#conditional]
 
 `null`을 사용하거나 함수를 `key`로 전달하여 데이터를 조건부로 가져옵니다. 함수가 falsy 값을 던지거나 반환하면 SWR은 요청을 시작하지 않습니다.
 
@@ -15,7 +15,7 @@ const { data } = useSWR(() => shouldFetch ? '/api/data' : null, fetcher)
 const { data } = useSWR(() => '/api/data?uid=' + user.id, fetcher)
 ```
 
-## 의존
+## 의존 [#dependent]
 
 SWR은 다른 데이터에 의존하는 데이터를 가져오는 것 또한 허용합니다. 이는 다음 데이터 가져오기를 위한 동적 데이터 조각이 필요할 때, 직렬 가져오기뿐만 아니라 가능한 최대 병렬 처리(폭포수 방지)를 보장합니다.
 

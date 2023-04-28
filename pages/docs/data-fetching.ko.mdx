@@ -16,7 +16,7 @@ const { data, error } = useSWR(key, fetcher)
   파라미터에서 생략할 수 있습니다.
 </Callout>
 
-## 가져오기
+## 가져오기 [#fetch]
 
 데이터 가져오기를 다루는 어떠한 라이브러리든 사용할 수 있습니다. `fetch` 폴리필 [developit/unfetch](https://github.com/developit/unfetch)를 예로 들어보겠습니다.
 
@@ -36,7 +36,7 @@ function App () {
   <a target="_blank" rel="noopener" href="https://nextjs.org/blog/next-9-1-7#new-built-in-polyfills-fetch-url-and-objectassign">새로운 내장 폴리필: fetch(), URL, Object.assign</a>
 </Callout>
 
-## Axios
+## Axios [#axios]
 
 ```js
 import axios from 'axios'
@@ -49,7 +49,7 @@ function App () {
 }
 ```
 
-## GraphQL
+## GraphQL [#graphql]
 
 또는 [graphql-request](https://github.com/prisma-labs/graphql-request)와 같은 라이브러리로 GraphQL 사용
 

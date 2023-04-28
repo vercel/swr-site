@@ -1,6 +1,6 @@
 # 条件数据请求
 
-## 按需请求
+## 按需请求 [#conditional]
 
 使用 `null` 或传一个函数作为 `key` 来有条件地请求数据。如果函数抛出错误或返回 falsy 值，SWR 将不会启动请求。
 
@@ -15,7 +15,7 @@ const { data } = useSWR(() => shouldFetch ? '/api/data' : null, fetcher)
 const { data } = useSWR(() => '/api/data?uid=' + user.id, fetcher)
 ```
 
-## 依赖请求
+## 依赖请求 [#dependent]
 
 SWR 还允许请求依赖于其他数据的数据。当需要一段动态数据才能进行下一次数据请求时，它可以确保最大程度的并行性（avoiding waterfalls）以及串行请求。
 

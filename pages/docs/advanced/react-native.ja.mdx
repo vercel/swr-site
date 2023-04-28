@@ -9,9 +9,9 @@ import { Callout } from 'nextra-theme-docs'
 ブラウザ内で実行されている React とは異なり、React Native の使用体験は大きく異なります。たとえば、“タブフォーカス”はなく、バックグラウンドからアプリの切り替えは“フォーカス”とみなされます。
 これらの動作をカスタマイズするには、デフォルトの `focus` と `online` のイベントリスナーを React Native のアプリの状態検出や、その他のネイティブ移植 API に置き換えて使用するように SWR を構成します。
 
-## 例
+## 例 [#example]
 
-### グローバル設定
+### グローバル設定 [#global-setup]
 
 アプリを `SWRConfig` でラップし、すべての構成を事前に設定できます。
 
@@ -25,7 +25,7 @@ import { Callout } from 'nextra-theme-docs'
 </SWRConfig>
 ```
 
-### `focus` と `reconnect` イベントのカスタマイズ
+### `focus` と `reconnect` イベントのカスタマイズ [#customize-focus-and-reconnect-events]
 
 `isOnline` 、 `isVisible` 、 `initFocus` 、 `initReconnect` など、いくつかの設定を行う必要があります。
 

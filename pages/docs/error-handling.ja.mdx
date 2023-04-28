@@ -14,7 +14,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 フェッチの promise がリジェクトされた場合、 `error` オブジェクトが定義されます。
 
-## ステータスコードとエラーオブジェクト
+## ステータスコードとエラーオブジェクト [#status-code-and-error-object]
 
 しばしば、 API にステータスコードと一緒にエラーオブジェクトを返して欲しいと思うことがあります。
 どちらもクライアントにとっては便利なものです。
@@ -55,7 +55,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 [ここ](/examples/error-handling)ではその例を紹介しています。
 
-## エラー時の再試行
+## エラー時の再試行 [#error-retry]
 
 SWR は [exponential backoff アルゴリズム](https://en.wikipedia.org/wiki/Exponential_backoff) を使用して、エラー時にリクエストを再試行します。
 このアルゴリズムにより、アプリはエラーから素早く回復することができますが、再試行しすぎてリソースを無駄にすることはありません。
@@ -84,7 +84,7 @@ useSWR('/api/user', fetcher, {
 
 また、 [グローバルな設定](/docs/global-configuration) のコンテキストを介して提供することもできます。
 
-## グローバルエラーの報告
+## グローバルエラーの報告 [#global-error-report]
 
 コンポーネント内の `error` オブジェクトをいつでもリアクティブに取得することができます。
 ただし、エラーをグローバルに処理したり、 [トースト](https://vercel.com/design/toast) や [スナックバー](https://material.io/components/snackbars) を表示するように UI に通知したり、 [Sentry](https://sentry.io) などの場所で報告する場合は、

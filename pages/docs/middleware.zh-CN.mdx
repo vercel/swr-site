@@ -8,11 +8,11 @@ import { Callout } from 'nextra-theme-docs'
 
 中间件是 SWR 1.0 中新增的一个功能，它让你能够在 SWR hook 之前和之后执行代码。
 
-## 用法
+## 用法 [#usage]
 
 中间件接收 SWR hook，可以在运行它之前和之后执行逻辑。如果有多个中间件，则每个中间件包装下一个中间件。列表中的最后一个中间件将接收原始的 SWR hook `useSWR`。
 
-### API
+### API [#api]
 
 _Notes: 函数名开头最好不要大写 (如使用 `myMiddleware` 来代替 `MyMiddleware`)，否则 React lint 规则会抛出 `Rules of Hook` 的错误_
 
@@ -42,7 +42,7 @@ function myMiddleware (useSWRNext) {
 useSWR(key, fetcher, { use: [myMiddleware] })
 ```
 
-### 扩展
+### 扩展 [#extend]
 
 中间件会像常规选项一样进行扩展。例如：
 
@@ -69,7 +69,7 @@ function Foo() {
 useSWR(key, fetcher, { use: [a, b, c] })
 ```
 
-### 多个中间件
+### 多个中间件 [#multiple-middleware]
 
 每个中间件包装下一个中间件，最后一个只包装 SWR hook。例如：
 
@@ -89,9 +89,9 @@ enter a
 exit  a
 ```
 
-## 示例
+## 示例 [#examples]
 
-### 请求日志记录器
+### 请求日志记录器 [#request-logger]
 
 我们以构建一个简单的请求日志记录器中间件为例。它打印出从这个 SWR hook 发送的所有 fetcher 请求。你也可以将这个中间件添加到 `SWRConfig` 中，以用于所有的 SWR hook。
 
@@ -121,7 +121,7 @@ SWR Request: /api/user1
 SWR Request: /api/user2
 ```
 
-### 保留之前的结果
+### 保留之前的结果 [#keep-previous-result]
 
 有时你希望 `useSWR` 返回的数据“延迟”。即使 key 发生了变化，你仍然希望它返回之前的结果，直到新数据加载完毕。
 
@@ -173,7 +173,7 @@ function laggy(useSWRNext) {
 const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 ```
 
-### 序列化对象 key
+### 序列化对象 key [#serialize-object-keys]
 
 <Callout>
   从 SWR 1.1.0 开始，object 类型的 keys 可以在内部自动被序列化。

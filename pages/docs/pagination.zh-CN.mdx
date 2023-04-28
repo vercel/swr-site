@@ -8,9 +8,9 @@ import { Callout } from 'nextra-theme-docs'
 
 SWR 提供了一个专用 API `useSWRInfinite` 来支持常见的 UI 模式，比如 **分页** 和 **无限加载**。
 
-## 何时应该继续使用 `useSWR`
+## 何时应该继续使用 `useSWR` [#when-to-use-useswr]
 
-### 分页
+### 分页 [#pagination]
 
 首先，我们可能 **并不** 需要 `useSWRInfinite`，如果我们正在构建如下内容，可以只使用 `useSWR`：
 
@@ -78,7 +78,7 @@ function App () {
 
 仅用一行代码，我们就获得了非常好的用户体验。`useSWR` hook 非常强大，它涵盖了大多数场景。
 
-### 无限加载
+### 无限加载 [#infinite-loading]
 
 有时我们想构建一个**无限加载** UI，用一个 "Load More" 按钮向列表追加数据（或者在滚动时自动完成）：
 
@@ -129,7 +129,7 @@ function App () {
 }
 ```
 
-### 高级用例
+### 高级用例 [#advanced-cases]
 
 但是，在某些高级用例中，上面的解决方案并不起作用。
 
@@ -156,7 +156,7 @@ function App () {
 
 这就是这个新 `useSWRInfinite` Hook 的作用。
 
-## useSWRInfinite
+## useSWRInfinite [#useswrinfinite]
 
 `useSWRInfinite` 让我们能够通过一个 Hook 触发多个请求。就像下面这样：
 
@@ -178,9 +178,9 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   `import { useSWRInfinite } from 'swr'`
 </Callout>
 
-### API
+### API [#api]
 
-#### 参数
+#### 参数 [#parameters]
 
 - `getKey`: 一个函数，接受索引和上一页数据，返回页面的 key
 - `fetcher`: 和 `useSWR` 的 [fetcher 函数](/docs/data-fetching) 一样
@@ -195,7 +195,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   请注意，`initialSize` 选项并不支持在渲染过程中发生改变。
 </Callout>
 
-#### 返回值
+#### 返回值 [#return-values]
 
 - `data`: 一个数组，每个页面请求的响应值
 - `error`: 与 `useSWR` 的 `error` 返回值相同
@@ -205,7 +205,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
 - `size`: *即将*请求和返回的页面数
 - `setSize`: 设置需要请求的页面数
 
-### 示例 1：基于索引的分页 API
+### 示例 1：基于索引的分页 API [#example-1-index-based-paginated-api]
 
 普通的基于索引的 API：
 
@@ -272,7 +272,7 @@ function App () {
 ]
 ```
 
-### 示例 2：基于游标或偏移的分页 API
+### 示例 2：基于游标或偏移的分页 API [#example-2-cursor-or-offset-based-paginated-api]
 
 假设现在 API 需要一个游标，并将下一个游标和数据一起返回：
 
@@ -304,7 +304,7 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
-### Parallel Fetching Mode
+### Parallel Fetching Mode [#parallel-fetching-mode]
 
 <Callout emoji="✅">
   Please update to the latest version (≥ 2.1.0) to use this API.
@@ -335,7 +335,7 @@ function App () {
     The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
 </Callout>
 
-### Global Mutate with `useSWRInfinite`
+### Global Mutate with `useSWRInfinite` [#global-mutate-with-useswrinfinite]
 
 `useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infinite` to revalidate the data with the global mutate.
 
@@ -353,7 +353,7 @@ function App() {
     As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
 </Callout>
 
-### 高级特性
+### 高级特性 [#advanced-features]
 
 [这里有一个示例](/examples/infinite-loading) 演示如何使用 `useSWRInfinite` 实现以下功能：
 

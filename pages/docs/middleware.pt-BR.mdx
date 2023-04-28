@@ -8,11 +8,11 @@ import { Callout } from 'nextra-theme-docs'
 
 A funcionalidade de middleware é uma nova adição em SWR 1.0 que permite executar lógica antes e depois de executar os hooks SWR.
 
-## Uso
+## Uso [#usage]
 
 Middleware recebe o hook SWR e pode executar lógica antes e depois de rodá-lo. Se houver vários middleware, cada middleware embrulha o próximo middleware. O último middleware na lista receberá o hook SWR `useSWR` original.
 
-### API
+### API [#api]
 
 _Notas: O nome da função não pode ser capitalizado (exemplo: `myMiddleware` em vez de `MyMiddleware`) ou React lint irá lançar erro de `Rules of Hook`_
 
@@ -42,7 +42,7 @@ Você pode passar um array de middleware como uma opção para `SWRConfig` ou `u
 useSWR(key, fetcher, { use: [myMiddleware] })
 ```
 
-### Estendendo
+### Estendendo [#extend]
 
 Middleware será estendido como opções regulares. Por exemplo:
 
@@ -69,7 +69,7 @@ function Foo() {
 useSWR(key, fetcher, { use: [a, b, c] })
 ```
 
-### Múltiplos Middleware
+### Múltiplos Middleware [#multiple-middleware]
 
 Cada middleware embrulha o próximo middleware, e o último embrulha o hook SWR. Por exemplo:
 
@@ -89,9 +89,9 @@ entra a
 sai  a
 ```
 
-## Exemplos
+## Exemplos [#examples]
 
-### Request Logger
+### Request Logger [#request-logger]
 
 Vamos construir um middleware de request logger simples como exemplo. Ele imprime todos os requests feitos pelo fetcher enviado por este hook SWR. Você também pode usar este middleware para todos os hooks SWR usando ele em `SWRConfig`.
 
@@ -120,7 +120,7 @@ SWR Request: /api/user1
 SWR Request: /api/user2
 ```
 
-### Manter Resultado Anterior
+### Manter Resultado Anterior [#keep-previous-result]
 
 As vezes você quer que os dados retornados por `useSWR` sejam "lentos". Mesmo se a chave mudar,
 você ainda quer que ele retorne o resultado anterior até que os novos dados tenham carregado.
@@ -174,7 +174,7 @@ Quando você precisa que um hook SWR seja lento, você pode então usar este mid
 const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 ```
 
-### Serializar Chaves de Objeto
+### Serializar Chaves de Objeto [#serialize-object-keys]
 
 <Callout>
   Desde SWR 1.1.0, os keys de objetos serão serializados automaticamente.

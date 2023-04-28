@@ -1,6 +1,6 @@
 # Pre-obtendo Dados
 
-## Dados de Página Top-Level
+## Dados de Página Top-Level [#top-level-page-data]
 
 Existem muitos jeitos de pre-obter os dados para SWR. Para requisições de página top-level, [`rel="preload"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content) é altamente recomendado:
 
@@ -12,7 +12,7 @@ Basta apenas colocá-lo dentro do seu `<head>` do HTML. É fácil, rápido e nat
 
 Irá pré-obter os dados quando o HTML carregar, antes mesmo de iniciar a baixar o JavaScript. Todos os seus pedidos de obtenção de dados com o mesmo URL vão usar o resultado (inclusive SWR, de modo que você pode usar o SWR para obter os dados de página top-level).
 
-## Prefetching Programático
+## Prefetching Programático [#programmatically-prefetch]
 
 SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments.
 
@@ -96,7 +96,7 @@ const Page = () => {
 }
 ```
 
-## Dados de Pré-preenchimento
+## Dados de Pré-preenchimento [#pre-fill-data]
 
 Se você quiser preencher dados existentes no cache do SWR, você pode usar a opção `fallbackData`. Por exemplo:
 

@@ -45,7 +45,7 @@ Mas se um erro ocorreu, você precisa usar um [limite de erro (Error Boundary)](
   O modo Suspense suspende a renderização até que os dados estejam prontos, o que singifica que pode causar problemas de waterfall fácilmente. Para evitar isso, você deve fazer prefetch de recursos antes de renderizar. [Mais informações](/docs/prefetching)
 </Callout>
 
-### Nota: Com Fetching Condicional
+### Nota: Com Fetching Condicional [#note-with-conditional-fetching]
 
 Normalmente, quando você habilita `suspense`, é garantido que `data` estará sempre pronto na renderização:
 
@@ -71,6 +71,6 @@ function Profile () {
 
 Se você quiser ler mais detalhes técnicos sobre essa restrição, cheque [a discussão aqui](https://github.com/vercel/swr/pull/357#issuecomment-627089889).
 
-### Server-Side Rendering
+### Server-Side Rendering [#server-side-rendering]
 
 Quando usando o modo Suspense no lado do servidor (incluindo pre-rendering com Next.js), é **obrigatório** informar dados iniciais via [fallbackData ou fallback](/docs/with-nextjs#pre-rendering-with-default-data). Isso significa que você não pode usar `Suspense` para obter dados no lado do servidor, mas fazendo a busca de dados totalmente do lado do cliente ou buscando os dados por meio do método de busca de dados à nível de framework (como getStaticProps com Next.js). Mais discussões podem ser enconrtradas [aqui](https://github.com/vercel/swr/issues/1906).

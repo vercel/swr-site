@@ -8,9 +8,9 @@ import { Callout } from 'nextra-theme-docs'
 
 SWR provides a dedicated API `useSWRInfinite` to support common UI patterns such as **pagination** and **infinite loading**.
 
-## When to Use `useSWR`
+## When to Use `useSWR` [#when-to-use-useswr]
 
-### Pagination
+### Pagination [#pagination]
 
 First of all, we might **NOT** need `useSWRInfinite` but can use just `useSWR` if we are building something like this:
 
@@ -81,7 +81,7 @@ function App () {
 With just 1 line of code, we get a much better UX. The `useSWR` hook is so powerful,
 that most scenarios are covered by it.
 
-### Infinite Loading
+### Infinite Loading [#infinite-loading]
 
 Sometimes we want to build an **infinite loading** UI, with a "Load More" button that appends data
 to the list (or done automatically when you scroll):
@@ -134,7 +134,7 @@ function App () {
 }
 ```
 
-### Advanced Cases
+### Advanced Cases [#advanced-cases]
 
 However, in some advanced use cases, the solution above doesn't work.
 
@@ -164,7 +164,7 @@ needs the data from the previous page, they're not isolated.
 
 That's how this new `useSWRInfinite` Hook can help.
 
-## useSWRInfinite
+## useSWRInfinite [#useswrinfinite]
 
 `useSWRInfinite` gives us the ability to trigger a number of requests with one Hook. This is how it looks:
 
@@ -187,9 +187,9 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
   `import { useSWRInfinite } from 'swr'`
 </Callout>
 
-### API
+### API [#api]
 
-#### Parameters
+#### Parameters [#parameters]
 
 - `getKey`: a function that accepts the index and the previous page data, returns the key of a page
 - `fetcher`: same as `useSWR`'s [fetcher function](/docs/data-fetching)
@@ -204,7 +204,7 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
   Note that the `initialSize` option is not allowed to change in the lifecycle.
 </Callout>
 
-#### Return Values
+#### Return Values [#return-values]
 
 - `data`: an array of fetch response values of each page
 - `error`: same as `useSWR`'s `error`
@@ -214,7 +214,7 @@ In infinite loading, one _page_ is one request, and our goal is to fetch multipl
 - `size`: the number of pages that _will_ be fetched and returned
 - `setSize`: set the number of pages that need to be fetched
 
-### Example 1: Index Based Paginated API
+### Example 1: Index Based Paginated API [#example-1-index-based-paginated-api]
 
 For normal index based APIs:
 
@@ -283,7 +283,7 @@ Also `data` is no longer just one API response. It's an array of multiple API re
 ]
 ```
 
-### Example 2: Cursor or Offset Based Paginated API
+### Example 2: Cursor or Offset Based Paginated API [#example-2-cursor-or-offset-based-paginated-api]
 
 Let's say the API now requires a cursor and returns the next cursor alongside with the data:
 
@@ -315,7 +315,7 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
-### Parallel Fetching Mode
+### Parallel Fetching Mode [#parallel-fetching-mode]
 
 <Callout emoji="✅">
   Please update to the latest version (≥ 2.1.0) to use this API.
@@ -346,7 +346,7 @@ function App () {
     The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
 </Callout>
 
-### Global Mutate with `useSWRInfinite`
+### Global Mutate with `useSWRInfinite` [#global-mutate-with-useswrinfinite]
 
 `useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infinite` to revalidate the data with the global mutate.
 
@@ -364,7 +364,7 @@ function App() {
     As the name implies, `unstable_serialize` is not a stable API, so we might change it in the future.
 </Callout>
 
-### Advanced Features
+### Advanced Features [#advanced-features]
 
 [Here is an example](/examples/infinite-loading) showing how you can implement the following features with `useSWRInfinite`:
 
