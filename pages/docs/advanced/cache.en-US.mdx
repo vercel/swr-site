@@ -102,9 +102,11 @@ The first argument for the `provider` function is the cache provider of the uppe
 You might want to sync your cache to `localStorage`. Here's an example implementation:
 
 ```jsx
+import { State } from 'swr'
+
 function localStorageProvider() {
   // When initializing, we restore the data from `localStorage` into a map.
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  const map = new Map<string, State>(JSON.parse(localStorage.getItem('app-cache') || '[]'))
 
   // Before unloading the app, we write back all the data into `localStorage`.
   window.addEventListener('beforeunload', () => {

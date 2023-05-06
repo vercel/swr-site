@@ -102,9 +102,11 @@ function Avatar() {
 キャッシュを `localStorage` で同期しても良いかもしれません。実装例は次の通りです：
 
 ```jsx
+import { State } from 'swr'
+
 function localStorageProvider() {
   // 初期化時に、 `localStorage` から Map にデータを復元します。
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  const map = new Map<string, State>(JSON.parse(localStorage.getItem('app-cache') || '[]'))
 
   // アプリが終了する前に、すべてのデータを `localStorage` に保存します。
   window.addEventListener('beforeunload', () => {

@@ -115,9 +115,11 @@ function Avatar() {
 Возможно, вы захотите синхронизировать свой кеш с `localStorage`. Вот пример реализации:
 
 ```jsx
+import { State } from 'swr'
+
 function localStorageProvider() {
   // При инициализации мы восстанавливаем данные из `localStorage` в Map.
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  const map = new Map<string, State>(JSON.parse(localStorage.getItem('app-cache') || '[]'))
 
   // Перед выгрузкой приложения мы записываем все данные обратно в `localStorage`.
   window.addEventListener('beforeunload', () => {

@@ -102,9 +102,11 @@ function Avatar() {
 你可能希望将缓存同步到 `localStorage`。下面是一个示例实现：
 
 ```jsx
+import { State } from 'swr'
+
 function localStorageProvider() {
   // 初始化时，我们将数据从 `localStorage` 恢复到一个 map 中。
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  const map = new Map<string, State>(JSON.parse(localStorage.getItem('app-cache') || '[]'))
 
   // 在卸载 app 之前，我们将所有数据写回 `localStorage` 中。
   window.addEventListener('beforeunload', () => {

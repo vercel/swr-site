@@ -105,9 +105,11 @@ O primeiro argumento para a função `provider` é o cache provider do nível su
 Você pode querer sincronizar seu cache com `localStorage`. Aqui está um exemplo de implementação:
 
 ```jsx
+import { State } from 'swr'
+
 function localStorageProvider() {
   // Ao inicializar, restauramos os dados de `localStorage` em um mapa.
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  const map = new Map<string, State>(JSON.parse(localStorage.getItem('app-cache') || '[]'))
 
   // Antes de descarregar o aplicativo, gravamos todos os dados em `localStorage`.
   window.addEventListener('beforeunload', () => {
