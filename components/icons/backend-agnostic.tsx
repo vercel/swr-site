@@ -1,4 +1,6 @@
-export default function BackendAgnosticIcon() {
+export default function BackendAgnosticIcon(
+  props: React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -10,6 +12,7 @@ export default function BackendAgnosticIcon() {
       strokeLinejoin="round"
       fill="none"
       shapeRendering="geometricPrecision"
+      {...props}
     >
       <path d="M20 17.58A5 5 0 0018 8h-1.26A8 8 0 104 16.25" />
       <path d="M8 16h.01" />

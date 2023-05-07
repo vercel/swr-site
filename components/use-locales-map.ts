@@ -1,17 +1,9 @@
 import { useRouter } from "next/router";
+import { LocalesMap, TypedNextRouter } from "../types";
 
-/**
- * @typedef {"en-US"} DefaultLocale
- * @typedef {DefaultLocale | "zh-CN" | "es-ES" | "pt-BR" | "ja" | "ko" | "ru"} Locale
- * @typedef {{locale?: Locale | undefined; locales?: Locale[] | undefined; defaultLocale?: DefaultLocale | undefined}} TypedRouter
- * @typedef {Omit<import('next/router').NextRouter, "locale" | "locales" | "defaultLocale"> & TypedRouter} NextRouter
- * @template T
- * @type {(localesMap: Record<Locale, T>) => T}
- */
-export default function useLocalesMap(localesMap) {
-  /** @type {NextRouter} */
-  const router = useRouter();
-  const { locale, defaultLocale } = router;
+export default function useLocalesMap<T>(localesMap: LocalesMap<T>): T {
+  const { locale, defaultLocale } = useRouter() as TypedNextRouter;
+
   if (!localesMap) {
     throw new Error("Pass a locales map as argument to useLocalesMap");
   }
@@ -35,31 +27,24 @@ export default function useLocalesMap(localesMap) {
     );
   }
 
-  if (["string", "number", "symbol"].includes(typeof localesMap[defaultLocale])) {
-    return localesMap[locale] || localesMap[defaultLocale];
+  if (
+    ["string", "number", "symbol"].includes(typeof localesMap[defaultLocale])
+  ) {
+    return (localesMap[locale] as T) ?? localesMap[defaultLocale];
   }
 
-  const target = JSON.parse(JSON.stringify(localesMap[defaultLocale]));
+  const target: T = JSON.parse(JSON.stringify(localesMap[defaultLocale]));
   return mergeDeep(target, localesMap[locale]);
 }
 
-/**
- * Simple object check.
- * @param {any} item
- * @returns {boolean}
- */
-function isObject(item) {
+export function isObject(item: any): boolean {
   return item && typeof item === "object" && !Array.isArray(item);
 }
 
-/**
- * Deep merge two objects.
- * @template T
- * @param {Record<string, T>} target
- * @param {Record<string, T>} sources
- * @returns {Record<string, T>}
- */
-function mergeDeep(target, ...sources) {
+export function mergeDeep<T extends Record<string, any> = {}>(
+  target: T,
+  ...sources: Partial<T>[]
+): T {
   if (!sources.length) return target;
   const source = sources.shift();
 

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useConfig } from "nextra-theme-docs";
+import { type DocsThemeConfig, useConfig } from "nextra-theme-docs";
 import Logo from "./components/logo";
 import Vercel from "./components/vercel";
 import useLocalesMap from "./components/use-locales-map";
@@ -15,8 +15,7 @@ import {
   titleMap,
 } from "./translations/text";
 
-/** @type {import('nextra-theme-docs').DocsThemeConfig} */
-const themeConfig = {
+const themeConfig: DocsThemeConfig = {
   project: {
     link: "https://github.com/vercel/swr",
   },
@@ -28,16 +27,25 @@ const themeConfig = {
   },
   toc: {
     float: true,
-    title: () => useLocalesMap(tableOfContentsTitleMap),
+    title: () => {
+      const title = useLocalesMap(tableOfContentsTitleMap);
+      return <>{title}</>;
+    },
   },
   search: {
     placeholder: () => useLocalesMap(searchPlaceholderMap),
   },
   editLink: {
-    text: () => useLocalesMap(editTextMap),
+    text: () => {
+      const editText = useLocalesMap(editTextMap);
+      return <>{editText}</>;
+    },
   },
   feedback: {
-    content: () => useLocalesMap(feedbackLinkMap),
+    content: () => {
+      const feedback = useLocalesMap(feedbackLinkMap);
+      return <>{feedback}</>;
+    },
   },
   logo: () => {
     const title = useLocalesMap(titleMap);
