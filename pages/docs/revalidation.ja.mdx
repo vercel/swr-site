@@ -9,7 +9,7 @@ import Link from 'next/link'
   データを手動で再検証する場合は、<Link href="/docs/mutation">ミューテーション</Link>を確認してください。
 </Callout>
 
-## フォーカス時の再検証
+## フォーカス時の再検証 [#revalidate-on-focus]
 
 ページにフォーカスを合わせるかタブを切りかえると、SWR は自動的にデータを再検証します。
 
@@ -26,7 +26,7 @@ import Link from 'next/link'
 
 この機能はデフォルトで有効になっています。[`revalidateOnFocus`](/docs/api) オプションで無効にできます。
 
-## 定期的な再検証
+## 定期的な再検証 [#revalidate-on-interval]
 
 多くの場合、複数のデバイス、複数のユーザー、複数のタブが原因でデータが変更されます。画面上のデータを時間の経過とともに更新するにはどうすればよいのでしょうか？
 
@@ -49,7 +49,7 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 `refreshWhenHidden` や `refreshWhenOffline` などのオプションもあります。両方ともデフォルトで無効になっているため、ウェブページが画面に表示されていない場合、またはネットワーク接続がない場合、SWR はフェッチしません
 
-## 再接続時の再検証
+## 再接続時の再検証 [#revalidate-on-reconnect]
 
 ユーザーがオンラインに戻ったときに再検証することも役立ちます。このシナリオは、ユーザーがコンピューターのロックを解除したときに頻繁に発生しますが、この時点ではまだインターネットは接続されていません。
 
@@ -57,7 +57,7 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 この機能はデフォルトで有効になっています。[`revalidateOnReconnect`](/docs/api) オプションで無効にできます。
 
-## 自動再検証の無効化
+## 自動再検証の無効化 [#disable-automatic-revalidations]
 
 もしリソースが **イミュータブル** で、再検証を行っても変更されない場合は、そのリソースのすべての種類の自動再検証を無効にできます。
 

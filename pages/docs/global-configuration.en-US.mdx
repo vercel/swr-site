@@ -35,11 +35,11 @@ function App () {
 }
 ```
 
-## Nesting Configurations
+## Nesting Configurations [#nesting-configurations]
 
 `SWRConfig` merges the configuration from the parent context. It can receive either an object or a functional configuration. The functional one receives the parent configuration as argument and returns a new configuration that you can customize it yourself. 
 
-### Object Configuration Example
+### Object Configuration Example [#object-configuration-example]
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -75,7 +75,7 @@ function Page() {
 }
 ```
 
-### Functional Configuration Example
+### Functional Configuration Example [#functional-configuration-example]
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -110,9 +110,9 @@ function Page() {
 }
 ```
 
-## Extra APIs
+## Extra APIs [#extra-apis]
 
-### Cache Provider
+### Cache Provider [#cache-provider]
 
 Besides all the [options](/docs/api) listed, `SWRConfig` also accepts an optional `provider` function. Please refer to the [Cache](/docs/advanced/cache) section for more details.
 
@@ -122,7 +122,7 @@ Besides all the [options](/docs/api) listed, `SWRConfig` also accepts an optiona
 </SWRConfig>
 ```
 
-### Access To Global Configurations
+### Access To Global Configurations [#access-to-global-configurations]
 
 You can use the `useSWRConfig` hook to get the global configurations, as well as [`mutate`](/docs/mutation) and [`cache`](/docs/advanced/cache):
 

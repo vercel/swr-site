@@ -47,7 +47,7 @@ Suspense mode suspends rendering until the data is ready, which means it causes 
 
 ---
 
-### 노트: 조건부 가져오기와 함께
+### 노트: 조건부 가져오기와 함께 [#note-with-conditional-fetching]
 
 일반적으로 `suspense`를 활성화하면 렌더링 시에 `data`가 항상 준비됩니다.
 
@@ -73,6 +73,6 @@ function Profile () {
 
 이 제한에 대한 더 기술적인 상세 내용을 읽으려면 [여기를](https://github.com/vercel/swr/pull/357#issuecomment-627089889) 확인해 보세요.
 
-### 서버 사이드 렌더링
+### 서버 사이드 렌더링 [#server-side-rendering]
 
 서스펜스 모드를 서버 사이드에서 사용할 때 (Next.js에서의 pre-rendering 포함), [fallbackData 또는 fallback](/docs/with-nextjs#pre-rendering-with-default-data)을 통해 초기 데이터를 **제공해야만 합니다**. 즉, 서버 사이드에서`Suspense`를 사용 할 수 없지만, 클라이언트 측 데이터 불러오기나, 프레임워크 수준의 데이터 불러오기(Next.js의 getStaticProps 등)는 가능합니다. 더 많은 정보는 [여기서](https://github.com/vercel/swr/issues/1906) 찾아보세요.

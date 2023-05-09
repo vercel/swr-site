@@ -35,12 +35,12 @@ function App () {
 }
 ```
 
-## Configurações Aninhadas
+## Configurações Aninhadas [#nesting-configurations]
 
 
 `SWRConfig` mescla as configurações do contexto pai. Ele pode receber um objeto ou uma configuração funcional. A funcional recebe a configuração pai como argumento e retorna uma nova configuração que você pode personalizar.
 
-### Exemplo de Configuração de Objeto
+### Exemplo de Configuração de Objeto [#object-configuration-example]
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -76,7 +76,7 @@ function Page() {
 }
 ```
 
-### Exemplo de Configuração Funcional
+### Exemplo de Configuração Funcional [#functional-configuration-example]
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -111,9 +111,9 @@ function Page() {
 }
 ```
 
-## APIs Extras
+## APIs Extras [#extra-apis]
 
-### Provedor de Cache
+### Provedor de Cache [#cache-provider]
 
 Além de todas as [opções](/docs/api) listadas, `SWRConfig` também aceita uma função opcional `provider`. Consulte a seção [Cache](/docs/advanced/cache) para obter mais detalhes.
 
@@ -123,7 +123,7 @@ Além de todas as [opções](/docs/api) listadas, `SWRConfig` também aceita uma
 </SWRConfig>
 ```
 
-### Acesso às Configurações Globais
+### Acesso às Configurações Globais [#access-to-global-configurations]
 
 Você pode usar o hook `useSWRConfig` para obter as configurações globais, assim como [`mutate`](/docs/mutation) e [`cache`](/docs/advanced/cache):
 

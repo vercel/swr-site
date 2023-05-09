@@ -14,7 +14,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 如果 fetch promise 被拒绝，将定义 `error` 对象。
 
-## 状态码和错误对象
+## 状态码和错误对象 [#status-code-and-error-object]
 
 有时我们希望 API 在返回状态码的同时返回一个错误对象。它们对客户端都是有用的。
 
@@ -52,7 +52,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 [这里](/examples/error-handling)有一个示例。
 
-## 错误重试
+## 错误重试 [#error-retry]
 
 在出现错误时 SWR 使用[指数退避算法](https://en.wikipedia.org/wiki/Exponential_backoff)重发请求。该算法允许应用从错误中快速恢复，而不会浪费资源频繁地重试。
 
@@ -80,7 +80,7 @@ useSWR('/api/user', fetcher, {
 
 也可以通过[全局配置](/docs/global-configuration) context 来提供它。
 
-## 全局错误报告
+## 全局错误报告 [#global-error-report]
 
 你总是可以响应性的在组件内部得到 `error` 对象。但如果你想要全局处理错误，通知 UI 显示一个 [toast](https://vercel.com/design/toast) 或者一个 [snackbar](https://material.io/components/snackbars)，或在某处报告它，比如 [Sentry](https://sentry.io)，可以用 [`onError`](/docs/api#options) 事件：
 

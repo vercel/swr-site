@@ -1,6 +1,6 @@
 # Búsqueda Condicional
 
-## Condicional
+## Condicional [#conditional]
 
 Utilice `null` o pase una función como `key` para obtener datos de forma condicional. 
 Si la función lanza o devuelve un falsy value, SWR no iniciará la petición.
@@ -17,7 +17,7 @@ const { data } = useSWR(() => shouldFetch ? '/api/data' : null, fetcher)
 const { data } = useSWR(() => '/api/data?uid=' + user.id, fetcher)
 ```
 
-## Dependiente
+## Dependiente [#dependent]
 
 SWR también permite obtener datos que dependen de otros datos. Garantiza el máximo paralelismo posible (evitando las cascadas), así como la obtención en serie cuando se necesita un dato dinámico para que se produzca la siguiente obtención de datos.
 

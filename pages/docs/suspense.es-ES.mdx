@@ -47,7 +47,7 @@ Suspense mode suspends rendering until the data is ready, which means it causes 
 
 ---
 
-### Note: With Conditional Fetching
+### Note: With Conditional Fetching [#note-with-conditional-fetching]
 
 Normalmente, cuando se habilita `suspense` se garantiza que `data` siempre estarán lista al renderizar:
 
@@ -73,6 +73,6 @@ function Profile () {
 
 Si quiere leer más detalles técnicos sobre esta restricción, consulte [la discusión aquí](https://github.com/vercel/swr/pull/357#issuecomment-627089889).
 
-### Server-Side Rendering
+### Server-Side Rendering [#server-side-rendering]
 
 When using suspense mode on the server-side (including pre-rendering in Next.js), it's **required** to provide the initial data via [fallbackData or fallback](/docs/with-nextjs#pre-rendering-with-default-data). This means that you can't use `Suspense` to fetch data on the server side, but either doing fully client-side data fetching, or fetch the data via the framework level data fetching method(such as getStaticProps in Next.js). More discussions can be found [here](https://github.com/vercel/swr/issues/1906).

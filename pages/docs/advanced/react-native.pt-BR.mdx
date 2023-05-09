@@ -10,9 +10,9 @@ Atualize para a última versão (≥ 1.0.0) para experimentar esta personalizaç
 Diferentemente do React rodando no navegador, React Native tem uma experiência de usuário diferente. Por exemplo, não há tabulação de foco, a troca de foco do background para o app é considerada como um foco em vez de uma troca de foco de app para o background.
 Para customizar estes comportamentos, você pode substituir os listeners de `focus` e `online` do navegador padrão por listeners de foco e online do React Native e configurar o SWR para usá-los.
 
-## Exemplo
+## Exemplo [#example]
 
-### Configuração Global
+### Configuração Global [#global-setup]
 
 Você pode envolver sua aplicação em `SWRConfig` e pré-configurar todas as configurações lá
 
@@ -26,7 +26,7 @@ Você pode envolver sua aplicação em `SWRConfig` e pré-configurar todas as co
 </SWRConfig>
 ```
 
-### Personalize Eventos `focus` e `reconnect`
+### Personalize Eventos `focus` e `reconnect` [#customize-focus-and-reconnect-events]
 
 Existem algumas configurações que você precisa cuidar, como `isOnline`, `isVisible`, `initFocus` e `initReconnect`.
 

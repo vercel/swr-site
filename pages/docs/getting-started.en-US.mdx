@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 # Getting Started
 
-## Installation
+## Installation [#installation]
 
 Inside your React project directory, run the following:
 
@@ -26,7 +26,7 @@ Inside your React project directory, run the following:
 </Tabs>
 
 
-## Quick Start
+## Quick Start [#quick-start]
 
 For normal RESTful APIs with JSON data, first you need to create a `fetcher` function, which is just a wrapper of the native `fetch`:
 
@@ -58,7 +58,7 @@ function Profile () {
 Normally, there're 3 possible states of a request: "loading", "ready", or "error". You can use the value of `data`, `error` and `isLoading` to
 determine the current state of the request, and return the corresponding UI.
 
-## Make It Reusable
+## Make It Reusable [#make-it-reusable]
 
 When building a web app, you might need to reuse the data in many places of the UI. It is incredibly easy to create reusable data hooks
 on top of SWR:
@@ -90,7 +90,7 @@ function Avatar ({ id }) {
 By adopting this pattern, you can forget about **fetching** data in the imperative way: start the request, update the loading state, and return the final result.
 Instead, your code is more declarative: you just need to specify what data is used by the component.
 
-## Example
+## Example [#example]
 
 In a real-world example, our website shows a navbar and the content, both depend on `user`:
 

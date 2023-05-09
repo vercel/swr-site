@@ -10,7 +10,7 @@ import { Bleed } from 'nextra-theme-docs'
 import Authors, { Author } from 'components/authors'
 import Video from 'components/video'
 
-# Anunciando SWR 2.0
+# Anunciando SWR 2.0 [#announcing-swr-20]
 
 <Authors date="December 9th, 2022">
   <Author name="Shu Ding" link="https://twitter.com/shuding_" />
@@ -24,9 +24,9 @@ Nós estamos muito felizes em anunciar o lançamento do SWR 2.0, a popular bibli
 
 Essa nova versão chega carregada com melhorias e novas funcionalidades, como novas APIs de mutação, melhorias nas capacidades de UI otimista, novas ferramentas de desenvolvedor e melhor suporte para renderização concorrente. Gostaríamos de agradecer a todos os contribuidores e mantenedores que tornaram esse lançamento possível.
 
-## Mutação e UI Otimista
+## Mutação e UI Otimista [#mutation-and-optimistic-ui]
 
-### useSWRMutation
+### useSWRMutation [#useswrmutation]
 
 Mutação é uma parte importante do processo de data fetching. Elas permitem que você faça alterações em seus dados tanto localmente quanto remotamente. Nossa API existente `mutate` permite que você revalide e altere recursos manualmente. No SWR 2.0, o novo hook `useSWRMutation` torna ainda mais simples alterar dados remotamente usando uma API declarativa. Você pode configurar uma mutação usando o hook e em seguida, ativá-la mais tarde:
 
@@ -68,7 +68,7 @@ Adicionalmente, esse novo hook resolve outros problemas que você pode ter com m
 
 Você pode achar referências de API e exemplos mais detalhados lendo a [documentação](/docs/mutation#useswrmutation) ou rolando pelas próximas seções.
 
-### UI Otimista
+### UI Otimista [#optimistic-ui]
 
 UI Otimista é um exelente modelo para criar sites que sejam rápidos e responsivos; no entanto, pode ser difícil implementá-lo corretamente. O SWR 2.0 adicionou algumas novas opções poderosas para facilitar isso.
 
@@ -183,7 +183,7 @@ Todas essas APIs são suportadas no novo hook `useSWRMutation` também. Para sab
   ratio={223/584}
 />
 
-### Modificando Múltiplas Chaves
+### Modificando Múltiplas Chaves [#mutate-multiple-keys]
 
 A API global `mutate` agora aceita uma função de filtro, onde você pode mutar ou revalidar chaves específicas. Isso será útil para casos de uso como invalidar todos os dados em cache. Para saber mais, você pode ler [Modificando Múltiplas Chaves](/docs/mutation#modificando-múltiplos-items) na documentação.
 
@@ -203,13 +203,13 @@ mutate(
 )
 ```
 
-## SWR DevTools
+## SWR DevTools [#swr-devtools]
 
 O [SWRDevTools](https://swr-devtools.vercel.app) é uma extensão do navegador que ajuda você a depurar o cache do SWR e os resultados das requisições. Confira nossa [seção de DevTools](/docs/advanced/devtools) para saber como usar o devtools em sua aplicação.
 
 ![](/img/devtools/cache-view.jpg)
 
-## Pré-carregando Dados
+## Pré-carregando Dados [#preloading-data]
 
 Precarregar dados pode melhorar a experiência do usuário tremendamente. Se você souber que o recurso será usado mais tarde na aplicação, pode usar a nova API `preload` para começar a carregá-lo mais cedo:
 
@@ -237,7 +237,7 @@ E quando o componente `Profile` estiver sendo renderizado, os dados provavelment
 
 A `preload` API também pode ser usada em casos como pré-carregar dados para outra página que provavelmente será renderizada. Mais informações sobre pré-carregamento de dados com SWR podem ser encontradas [aqui](/docs/prefetching).
 
-## `isLoading`
+## `isLoading` [#isloading]
 
 `isLoading` é o novo estado retornado pelo `useSWR`, que indica **se a requisição ainda está em andamento e ainda não há dados carregados**. Anteriormente, o estado `isValidating` representava tanto o estado de carregamento inicial quanto o estado de revalidação, então tínhamos que verificar se tanto `data` quanto `error` eram `undefined` para determinar se era o estado de carregamento inicial.
 
@@ -260,7 +260,7 @@ Note que `isValidating` ainda está presente, então você ainda pode usá-lo pa
   Nós adicionamos a nova página [Entendendo SWR](/docs/advanced/understanding) para descrever como o SWR retorna valores, que inclui a diferença entre `isValidating` e `isLoading`, e como combiná-los para melhorar a experiência do usuário.
 </Callout>
 
-## Preservando o Estado Anterior
+## Preservando o Estado Anterior [#preserving-previous-state]
 
 A opção `keepPreviousData` é uma nova adição que permite manter os dados que foram buscados anteriormente. Isso melhora a UX imensamente quando você está buscando dados com base em ações do usuário acontecendo em tempo real, como com um recurso de pesquisa ao vivo, onde a `key` do recurso continua mudando:
 
@@ -298,7 +298,7 @@ function Search() {
 
 Dê uma olhada no código no [CodeSandbox](https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m) e você pode ler mais sobre isso [aqui](/docs/advanced/understanding#retorne-dados-antigos-para-melhorar-a-ux).
 
-## Extendendo Configurações
+## Extendendo Configurações [#extending-configurations]
 
 O `SWRConfig` agora pode aceitar uma função como valor. Quando você tem vários níveis de `<SWRConfig>`, o interno recebe a configuração do pai e retorna uma nova. Essa mudança torna mais flexível configurar o SWR em uma codebase grande. Mais informações podem ser encontradas [aqui](/docs/global-configuration).
 
@@ -313,7 +313,7 @@ O `SWRConfig` agora pode aceitar uma função como valor. Quando você tem vári
 </SWRConfig>
 ```
 
-## Suporte Melhorado ao React 18
+## Suporte Melhorado ao React 18 [#improved-react-18-support]
 
 SWR has updated its internal code to use `useSyncExternalStore` and `startTransition` APIs in React 18. These ensure stronger consistency when rendering UI concurrently. This change doesn’t require any user code changes and all developers will benefit from it directly. Shims are included for React 17 and below.
 
@@ -321,9 +321,9 @@ O SWR atualizou seu código interno para usar o `useSyncExternalStore` e as `sta
 
 SWR 2.0 e todas as novas funcionalidades ainda são compatíveis com o React 16 e 17.
 
-## Guia de Migração
+## Guia de Migração [#migration-guide]
 
-### Fetcher não recebe mais múltiplos argumentos
+### Fetcher não recebe mais múltiplos argumentos [#fetcher-no-longer-accepts-multiple-arguments]
 
 `key` agora é passado como um argumento único.
 
@@ -336,7 +336,7 @@ SWR 2.0 e todas as novas funcionalidades ainda são compatíveis com o React 16 
 })
 ```
 
-### Mutação Global não recebe mais uma função `getKey`
+### Mutação Global não recebe mais uma função `getKey` [#global-mutate-no-longer-accepts-a-getkey-function]
 
 Agora, se você passar uma função para o `mutate` global, ela será usada como um [filtro](/blog/swr-v2##modificando-múltiplos-items). Anteriormente, você podia passar uma função que retornasse uma chave para o `mutate` global:
 
@@ -345,7 +345,7 @@ Agora, se você passar uma função para o `mutate` global, ela será usada como
 + mutate('/api/item')       // para modificar a chave, passe-a diretamente
 ```
 
-### Nova propriedade obrigatória `keys()` para a interface Cache
+### Nova propriedade obrigatória `keys()` para a interface Cache [#new-required-property-keys-for-cache-interface]
 
 Quando você usar sua própria implementação de cache, a interface Cache agora requer um método `keys()` que retorna todas as chaves no objeto cache, similar às instâncias Map do JavaScript.
 
@@ -358,7 +358,7 @@ interface Cache<Data> {
 }
 ```
 
-### Estrutura interna do Cache alterada
+### Estrutura interna do Cache alterada [#changed-cache-internal-structure]
 
 A estrutura interna dos dados do cache será um objeto que contém todos os estados atuais.
 
@@ -379,7 +379,7 @@ A estrutura interna dos dados do cache será um objeto que contém todos os esta
   Você não deveria escrever no cache diretamente, isso pode causar comportamento indefinido.
 </Callout>
 
-### `SWRConfig.default` Foi Renomeado para `SWRConfig.defaultValue`
+### `SWRConfig.default` Foi Renomeado para `SWRConfig.defaultValue` [#swrconfigdefault-is-renamed-as-swrconfigdefaultvalue]
 
 O `SWRConfig.defaultValue` é a propriedade para acessar a configuração padrão do SWR.
 
@@ -388,28 +388,28 @@ O `SWRConfig.defaultValue` é a propriedade para acessar a configuração padrã
 + SWRConfig.defaultValue
 ```
 
-### O tipo `InfiniteFetcher` foi renomeado para `SWRInfiniteFetcher`
+### O tipo `InfiniteFetcher` foi renomeado para `SWRInfiniteFetcher` [#type-infinitefetcher-is-renamed-as-swrinfinitefetcher]
 
 ```diff
 - import type { InfiniteFetcher } from 'swr/infinite'
 + import type { SWRInfiniteFetcher } from 'swr/infinite'
 ```
 
-### Evitando Suspense no Servidor
+### Evitando Suspense no Servidor [#avoid-suspense-on-server]
 
 Se você quer usar `suspense: true` com o SWR no lado do servidor, incluindo pré-renderização no Next.js, então você deve fornecer dados iniciais via [`fallbackData` ou `fallback`](/docs/with-nextjs#pré-renderizando-com-dados-padrão).
 
 Hoje, isso significa que você não pode usar Suspense para buscar dados no lado do servidor. Suas outras duas opções são fazer a busca de dados totalmente no lado do cliente ou obter seu framework para buscar os dados para você (como getStaticProps faz no Next.js).
 
-### ES2018 como alvo de compilação
+### ES2018 como alvo de compilação [#es2018-as-the-build-target]
 
 Se você quiser dar suporte ao IE 11, você deve definir o ES5 como alvo de compilação em seu framework ou bundler. Essa mudança fez uma melhoria de desempenho no SSR e mantém o tamanho do pacote pequeno.
 
-## Changelog
+## Changelog [#changelog]
 
 Leia o Changelog completo [no GitHub](https://github.com/vercel/swr/releases).
 
-## O futuro e Obrigado!
+## O futuro e Obrigado! [#the-future--thank-you]
 
 Com o novo lançamento do [Next.js 13](https://nextjs.org/blog/next-13), vemos muitas coisas novas e emocionantes, além de mudanças de paradigma no ecossistema React: [React Server Components](https://beta.nextjs.org/docs/rendering/server-and-client-components), streaming SSR, [async components](https://beta.nextjs.org/docs/data-fetching/fetching#asyncawait-in-server-components), e o [hook `use`](https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md#usepromise). Muitos deles estão relacionados ao data-fetching, e alguns deles têm casos de uso semelhantes com o SWR.
 

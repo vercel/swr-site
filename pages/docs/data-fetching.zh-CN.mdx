@@ -15,7 +15,7 @@ const { data, error } = useSWR(key, fetcher)
   注意：如果 <code>fetcher</code> 是<Link href="/docs/global-configuration">全局配置</Link>提供的，可以从参数中忽略。
 </Callout>
 
-## Fetch
+## Fetch [#fetch]
 
 你可以使用任何库来处理数据请求，比如一个 `fetch` polyfill [developit/unfetch](https://github.com/developit/unfetch)：
 
@@ -35,7 +35,7 @@ function App () {
   <a target="_blank" rel="noopener" href="https://nextjs.org/blog/next-9-1-7#new-built-in-polyfills-fetch-url-and-objectassign">新的内置 Polyfills： fetch()、URL、和Object.assign</a>
 </Callout>
 
-## Axios
+## Axios [#axios]
 
 ```js
 import axios from 'axios'
@@ -48,7 +48,7 @@ function App () {
 }
 ```
 
-## GraphQL
+## GraphQL [#graphql]
 
 或者配合类似 [graphql-request](https://github.com/prisma-labs/graphql-request) 的库使用 GraphQL：
 

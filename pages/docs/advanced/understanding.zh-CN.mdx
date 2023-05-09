@@ -3,47 +3,47 @@ import Video from 'components/video'
 
 # 理解 SWR
 
-## 状态机制
+## 状态机制 [#state-machine]
 
 `useSWR` 会根据 `fetcher` 函数的状态返回 `data`，`error`，`isLoading` 和 `isValidating`。以下这些图片描述了 SWR 在不同情况下是如何返回值的。
 
-### 请求与重新请求
+### 请求与重新请求 [#fetch-and-revalidate]
 
 这种模式表示请求数据，并在之后重新请求的场景。
 
 ![A pattern for fetch and revalidate](/img/understanding/fetch-and-revalidate.svg)
 
-### Key 的变化
+### Key 的变化 [#key-change]
 
 这种模式表示在请求数据，再改变 key 值，并在之后重新请求的场景。
 
 ![A pattern for key change](/img/understanding/key-change.svg)
 
-### Key 的变化 + 保留之前的数据
+### Key 的变化 + 保留之前的数据 [#key-change--previous-data]
 
 这种模式表示在开启 `keepPreviousData` 选项时，请求数据，再改变 key 值，并在之后重新请求的场景。
 
 ![A pattern for key change + previous data](/img/understanding/key-change-previous-data.svg)
 
-### 设置预设数据
+### 设置预设数据 [#fallback]
 
 这种模式表示设置了预设数据时，请求数据，并在之后进行重新请求的场景。
 
 ![A pattern for fallback](/img/understanding/fallback.svg)
 
-### Key 的变化 + 设置预设数据
+### Key 的变化 + 设置预设数据 [#key-change--fallback]
 
 这种模式表示在设置预设数据时，请求数据，再改变 key 值，并在之后进行重新请求的场景。
 
 ![A pattern for key change + fallback](/img/understanding/key-change-fallback.svg)
 
-### Key 的变化 + 保留之前的数据 + 设置预设数据
+### Key 的变化 + 保留之前的数据 + 设置预设数据 [#key-change--previous-data--fallback]
 
 这种模式表示在开启 `keepPreviousData` 选项并设置预设数据时，请求数据，再改变 key 值，并在之后进行重新请求的场景。
 
 ![A pattern for key change + previous data + fallback](/img/understanding/key-change-previous-data-fallback.svg)
 
-## 结合 `isLoading` 和 `isValidating` 以获得更好的用户体验
+## 结合 `isLoading` 和 `isValidating` 以获得更好的用户体验 [#combining-with-isloading-and-isvalidating-for-better-ux]
 
 相比于现有的 `isValidating` ，`isLoading` 是一个新的属性，它可以帮助我们应对更加普遍的用户加载场景。
 
@@ -83,7 +83,7 @@ function Stock() {
 点击 [这里](https://codesandbox.io/s/swr-isloading-jtopow) 查看完整代码示例。
 
 
-## 返回之前的数据以获得更好的用户体验
+## 返回之前的数据以获得更好的用户体验 [#return-previous-data-for-better-ux]
 
 在用户连续操作的情况下进行数据请时，例如输入时实时搜索，保留之前的数据可以极大提升用户体验，`keepPreviousData` 选项可以用于启用该行为。下例是一个简单的用户搜索界面:
 
@@ -122,6 +122,6 @@ function Search() {
 
 在这里查看完整代码示例：https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m。
 
-## 性能依赖关系收集
+## 性能依赖关系收集 [#dependency-collection-for-performance]
 
 SWR 只会在组件中所使用的状态被更新时，触发重新渲染。如果只在组件中使用 `data`，SWR 将忽略其他属性（如 `isValidating` 和 `isLoading`）的更新。这大大减少了渲染次数。点击 [这里](/docs/advanced/performance#dependency-collection) 查看更多信息。

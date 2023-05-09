@@ -2,7 +2,7 @@ import { Callout } from 'nextra-theme-docs'
 
 # Next.js での利用
 
-## クライアント側のデータフェッチ
+## クライアント側のデータフェッチ [#client-side-data-fetching]
 
 ページに頻繁に更新されるデータがあり、データを事前にレンダリングする必要がない場合、 SWR は特別な設定が必要ないほどピッタリです：
 `useSWR` をインポートして、データを使用するコンポーネント内でフックを使用するだけです。
@@ -15,7 +15,7 @@ import { Callout } from 'nextra-theme-docs'
 このアプローチは、たとえばユーザーのダッシュボードページなどで有効です。ダッシュボードは、ユーザー専用のプライベートなページであるため SEO は関係なく、
 ページを事前にレンダリングする必要もありません。データは頻繁に更新されるため、リクエスト時のデータ取得処理が必要です。
 
-## デフォルトデータで事前レンダリング
+## デフォルトデータで事前レンダリング [#pre-rendering-with-default-data]
 
 もしページを事前レンダリングする必要がある場合、 Next.js は二つの形式の事前レンダリングの方法をサポートしています：
 **Static Generation (SSG)** と **Server-side Rendering (SSR)** 。
@@ -60,7 +60,7 @@ export default function Page({ fallback }) {
   `Article` コンポーネントは、事前に生成されたデータを最初にレンダリングし、ページがハイドレイトされた後、最新のデータを再取得して更新を維持します。
 </Callout>
 
-### 複雑なキー
+### 複雑なキー [#complex-keys]
 
 `useSWR` は `array` と `function` 型のキーで使用することができます。これらのキーでプリフェッチデータを使用するには、 `fallback` キーを `unstable_serialize` でシリアライズする必要があります。
 

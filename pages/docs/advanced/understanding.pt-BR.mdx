@@ -3,47 +3,47 @@ import Video from 'components/video'
 
 # Entendendo o SWR
 
-## Máquina de Estado
+## Máquina de Estado [#state-machine]
 
 `useSWR` retorna `data`, `error`, `isLoading` e `isValidating` dependendo do estado da função `fetcher`. Esses diagramas descrevem como o SWR retorna valores em alguns cenários.
 
-### Obter e Revalidar
+### Obter e Revalidar [#fetch-and-revalidate]
 
 Esse padrão é para obter dados e revalidar depois.
 
 ![Um padrão para obter e revalidar](/img/understanding/fetch-and-revalidate.svg)
 
-### Mudança de Chave
+### Mudança de Chave [#key-change]
 
 Esse padrão é para obter dados, mudar a chave, e revalidar depois.
 
 ![Um padrão para mudança de chave.](/img/understanding/key-change.svg)i
 
-### Mudança de Chave + Dados Antigos
+### Mudança de Chave + Dados Antigos [#key-change--previous-data]
 
 Esse padrão é para obter dados, mudar a chave e revalidar depois usando a opção `keepPreviousData`.
 
 ![Um padrão para mudança de chave + dados antigos](/img/understanding/key-change-previous-data.svg)
 
-### Fallback
+### Fallback [#fallback]
 
 Esse padrão é para obter dados e revalidar depois usando dados de fallback.
 
 ![Um padrão para fallback](/img/understanding/fallback.svg)
 
-### Mudança de Chave + Fallback
+### Mudança de Chave + Fallback [#key-change--fallback]
 
 Esse padrão é para obter dados, mudar a chave e revalidar depois com dados de fallback.
 
 ![Um padrão para mudança de chave + fallback](/img/understanding/key-change-fallback.svg)
 
-### Mudança de Chave + Dados Antigos + Fallback
+### Mudança de Chave + Dados Antigos + Fallback [#key-change--previous-data--fallback]
 
 Esse padrão é para obter dados, mudar a chave, revalidar depois usando a opção `keepPreviousData` e com dados de fallback.
 
 ![Um padrão para mudança de chave + dados antigos + fallback](/img/understanding/key-change-previous-data-fallback.svg)
 
-## Combinando com isLoading e isValidating para melhorar a UX
+## Combinando com isLoading e isValidating para melhorar a UX [#combining-with-isloading-and-isvalidating-for-better-ux]
 
 Comparado com o valor existente de `isValidating`, `isLoading` é uma nova propriedade que pode te ajudar para os casos de carregamento mais gerais para UX.
 
@@ -81,7 +81,7 @@ function Stock() {
 
 Você pode achar o código de exemplo [aqui](https://codesandbox.io/s/swr-isloading-jtopow)
 
-## Retorne dados antigos para melhorar a UX
+## Retorne dados antigos para melhorar a UX [#return-previous-data-for-better-ux]
 
 Quando estiver obtendo dados baseado em ações contínuas do usuário, como por exemplo, pesquisa em tempo real enquanto digita, manter os últimos dados obtidos pode melhorar bastante a UX. `keepPreviousData` é uma opção para habilitar esse comportamento. Aqui está uma UI de pesquisa simples:
 
@@ -120,6 +120,6 @@ Com o `keepPreviousData` habilitado, você ainda obterá os dados antigos mesmo 
 
 Você pode achar o código completo para esse exemplo aqui: (https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m).
 
-## Coleção de Dependência para performance
+## Coleção de Dependência para performance [#dependency-collection-for-performance]
 
 SWR apenas aciona a nova renderização quando os estados usados no componente forem atualizados. Se você apenas usar `data` no componente, o SWR irá ignorar as atualizações das outras propriedades como `isValidating` e `isLoading`. Isso reduz bastante o número de renderizações. Mais informações podem ser encontradas [aqui](/docs/advanced/performance#dependency-collection).

@@ -15,7 +15,7 @@ SWR asegura que su aplicación tiene:
 
 sin ningún cambio de código por su parte.
 
-## Deduplicación
+## Deduplicación [#deduplication]
 
 Es muy común reutilizar los hooks SWR en tu aplicación. Por ejemplo, una aplicación que muestra el avatar del usuario
 actual 5 veces:
@@ -54,7 +54,7 @@ o las peticiones duplicadas.
 
 También existe la [opción `dedupingInterval`](/docs/api) para anular el intervalo de deduplicación por defecto.
 
-## Comparación profunda
+## Comparación profunda [#deep-comparison]
 
 SWR por defecto tiene  **deep compares** al cambio de datos. Si el valor de `data` no ha cambiado, no se
 activará una nueva renderización.
@@ -62,7 +62,7 @@ activará una nueva renderización.
 También puede personalizar la función de comparación mediante la [opción `compare`](/docs/api) si quieres cambiar el comportamiento.
 Por ejemplo, algunas respuestas de la API devuelven una marca de tiempo del servidor que tal vez quiera excluir de la difusión de datos.
 
-## Colección de dependencias
+## Colección de dependencias [#dependency-collection]
 
 `useSWR` devuelve 4 valores de **estado**: `data`, `error`, `isLoading` y `isValidating` cada uno de ellos puede actualizarse de forma independientemente.
 Por ejemplo, si imprimimos esos valores dentro de un ciclo de vida completo de obtención de datos, será algo como esto:
@@ -115,7 +115,7 @@ Sin embargo, **SWR sólo actualiza los estados que utiliza el componente**, que 
 Si no se utilizan siempre estos 3 estados, ya se está beneficiando de esta función. En [Vercel](https://vercel.com), esta optimización se
 traduce en un 60% menos de repeticiones.
 
-## Tree Shaking
+## Tree Shaking [#tree-shaking]
 
 El paquete SWR es [tree-shakeable](https://webpack.js.org/guides/tree-shaking) y no tiene efectos secundarios.
 Esto significa que si sólo se importa `useSWR` core API, las APIs no utilizadas, como `useSWRInfinite`, no se incluirán en la aplicación.

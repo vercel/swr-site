@@ -8,9 +8,9 @@ import { Callout } from 'nextra-theme-docs'
 
 SWR は、**ページネーション**や**無限ローディング**などの一般的な UI パターンをサポートするための専用 API である useSWRInfinite を提供しています。
 
-## いつ `useSWR` を使用するか
+## いつ `useSWR` を使用するか [#when-to-use-useswr]
 
-### ページネーション
+### ページネーション [#pagination]
 
 まず第一に、`useSWRInfinite` は必要**ない**かもしれませんが、次のようなものを構築しようとするときには `useSWR` を使用できます：
 
@@ -81,7 +81,7 @@ function App () {
 たった 1 行のコードで、とても優れた UX を実現できます。`useSWR` フックは非常に強力で、
 ほとんどのシナリオをカバーしています。
 
-### 無限ローディング
+### 無限ローディング [#infinite-loading]
 
 「さらに読み込む」ボタンを使用して（またはスクロールすると自動的に実行されて）リストにデータを
 追加する**無限ローディング** UI を構築したい場合があります：
@@ -134,7 +134,7 @@ function App () {
 }
 ```
 
-### 高度なケース
+### 高度なケース [#advanced-cases]
 
 しかし、一部の高度なユースケースでは、上記のソリューションが機能しません。
 
@@ -164,7 +164,7 @@ function App () {
 
 ここで新しい `useSWRInfinite` フックが役立ちます。
 
-## useSWRInfinite
+## useSWRInfinite [#useswrinfinite]
 
 `useSWRInfinite` は、一つのフックで多数のリクエストを開始する機能を提供します。このような形になります：
 
@@ -187,9 +187,9 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   `import { useSWRInfinite } from 'swr'`
 </Callout>
 
-### API
+### API [#api]
 
-#### 引数
+#### 引数 [#parameters]
 
 - `getKey`: インデックスと前ページのデータを受け取る関数であり、ページのキーを返します
 - `fetcher`: `useSWR` の[フェッチャー関数](/docs/data-fetching)と同じ
@@ -204,7 +204,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   `initialSize` オプションはライフサイクルで変更できないことに注意してください。
 </Callout>
 
-#### 返り値
+#### 返り値 [#return-values]
 
 - `data`: 各ページのフェッチしたレスポンス値の配列
 - `error`: `useSWR` の `error` と同じ
@@ -214,7 +214,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
 - `size`: フェッチして返される*だろう*ページ数
 - `setSize`: フェッチする必要のあるページ数を設定します
 
-### 例 1： インデックスにもとづいたページネーション API
+### 例 1： インデックスにもとづいたページネーション API [#example-1-index-based-paginated-api]
 
 通常のインデックスにもとづいた API の場合：
 
@@ -283,7 +283,7 @@ function App () {
 ]
 ```
 
-### 例 2： カーソルまたはオフセットにもとづいたページネーション API
+### 例 2： カーソルまたはオフセットにもとづいたページネーション API [#example-2-cursor-or-offset-based-paginated-api]
 
 API がカーソルを必要とし、データと一緒に次のカーソルを返すとしましょう：
 
@@ -315,7 +315,7 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
-### Parallel Fetching Mode
+### Parallel Fetching Mode [#parallel-fetching-mode]
 
 <Callout emoji="✅">
   この API を利用するには最新バージョン (≥ 2.1.0) に更新してください。
@@ -346,7 +346,7 @@ function App () {
     `parallel` オプションを有効にした場合、`getKey` 関数の `previousPageData` 引数は `null` になります。
 </Callout>
 
-### Global Mutate with `useSWRInfinite`
+### Global Mutate with `useSWRInfinite` [#global-mutate-with-useswrinfinite]
 
 `useSWRInfinite` は各ページのデータに加え、全てのページデータを特別な形式のキーでキャッシュに保存するため、グローバルなミューテートを使い再検証するためには、`swr/infinite` にある `unstable_serialize` を使う必要があります。
 
@@ -364,7 +364,7 @@ function App() {
     名前が示す通り、`unstable_serialize` は安定した API ではなく、将来的に変更される可能性があります。
 </Callout>
 
-### 高度な機能
+### 高度な機能 [#advanced-features]
 
 `useSWRInfinite` を使って次の機能を実装する方法は、[こちらに例があります](/examples/infinite-loading)：
 

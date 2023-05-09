@@ -9,7 +9,7 @@ import { Bleed } from 'nextra-theme-docs'
 
 import Authors, { Author } from 'components/authors'
 
-# Представляем SWR 1.0
+# Представляем SWR 1.0 [#announcing-swr-10]
 
 <Authors date="27 августа 2021 г." by="под авторством">
   <Author name="Shu Ding" link="https://twitter.com/shuding_" />
@@ -18,9 +18,9 @@ import Authors, { Author } from 'components/authors'
 
 Почти 2 года назад мы сделали SWR — крошечную React библиотеку с [открытым исходным кодом](https://twitter.com/vercel/status/1188911002626097157) для выборки данных, которую люди полюбили. Сегодня мы приближаемся к еще одной вехе: версии 1.0 SWR!
 
-## Что нового
+## Что нового [#whats-new]
 
-### Уменьшенный размер
+### Уменьшенный размер [#smaller-size]
 
 [Производительность](/docs/advanced/performance) — одна из важнейших характеристик SWR. В версии 1.0 мы значительно уменьшили размер библиотеки, при этом **не удалив никаких существующих функций**:
 
@@ -39,7 +39,7 @@ import useSWRInfinite from 'swr/infinite'
 
 Если вы не используете `useSWRInfinite`, он не будет включен в ваше приложение.
 
-### Резервные данные
+### Резервные данные [#fallback-data]
 
 В версии 1.0 появилась новая опция `fallback`, которой вы можете предоставить любые предварительно выбранные данные в качестве начального значения всех хуков SWR с определенными ключами:
 
@@ -59,7 +59,7 @@ import useSWRInfinite from 'swr/infinite'
 
 Для большей согласованности и во избежание путаницы старый `initialData` теперь переименован в `fallbackData`, который по-прежнему предоставляет единое резервное значение для заданного хука.
 
-### Неизменяемый режим
+### Неизменяемый режим [#immutable-mode]
 
 Иногда вы хотите пометить ресурс как **неизменный**, если он никогда не изменится. Лучше отключить для него автоматическую ревалидацию и сделать запрос только один раз. Теперь есть вспомогательный хук, чтобы упростить эту задачу:
 
@@ -73,7 +73,7 @@ useSWRImmutable(key, fetcher, options)
 
 Он имеет тот же API, что и хук `useSWR`, но он никогда не будет ревалидировать при фокусировке вкладки или восстановлении сети. Также есть новая опция `revalidateIfStale`, которую можно использовать для точного управления поведением. Более подробную информацию можно найти [здесь](/docs/revalidation#отключение-автоматических-ревалидаций).
 
-### Пользовательский поставщик кеша
+### Пользовательский поставщик кеша [#custom-cache-provider]
 
 По умолчанию SWR использует единый глобальный кеш для хранения всех данных. В версии 1.0 вы можете настроить его с помощью новой опции `provider`:
 
@@ -91,7 +91,7 @@ useSWRImmutable(key, fetcher, options)
 
 Вы можете прочитать документацию [Cache Provider](/docs/advanced/cache) для более подробной информации.
 
-### useSWRConfig()
+### useSWRConfig() [#useswrconfig]
 
 Появился новый Hook API для возврата всех глобальных конфигураций, включая текущего поставщика кеша и глобальной функции `mutate`:
 
@@ -107,7 +107,7 @@ function Foo () {
 
 Более подробно можно почитать [здесь](/docs/global-configuration#доступ-к-глобальным-конфигурациям).
 
-### Промежуточное программное обеспечение (ППО) (Middleware)
+### Промежуточное программное обеспечение (ППО) (Middleware) [#middleware]
 
 SWR промежуточное ПО предоставляет вам новый способ создания и повторного использования абстракций поверх хуков SWR:
 
@@ -122,11 +122,11 @@ useSWR(key, fetcher, { use: [...middleware] })
 
 Смотрите [ППО API](/docs/middleware) для более подробной информации.
 
-### Улучшения и лучший охват тестов
+### Улучшения и лучший охват тестов [#improvements-and-better-test-coverage]
 
 Начиная с версии 0.x мы внесли сотни небольших улучшений и исправлений. SWR теперь имеет 157 тестов, которые охватывают большинство крайних случаев при выборке данных. Прочтите [журнал изменений](https://github.com/vercel/swr/releases) для более подробной информации.
 
-### Перевод документации
+### Перевод документации [#docs-translations]
 
 Благодаря нашим [контрибютерам](https://github.com/vercel/swr-site/graphs/contributors) и [функции i18n](https://nextra.vercel.app/features/i18n) от Nextra, теперь мы предлагаем документацию по SWR на шести разных языках:
 
@@ -137,9 +137,9 @@ useSWR(key, fetcher, { use: [...middleware] })
 - [Корейский](https://swr.vercel.app/ko)
 - [Русский](https://swr.vercel.app/ru)
 
-## Руководство по миграции
+## Руководство по миграции [#migration-guide]
 
-### Обновите импорты `useSWRInfinite`
+### Обновите импорты `useSWRInfinite` [#update-useswrinfinite-imports]
 
 `useSWRInfinite` должен быть импортирован из `swr/infinite`:
 
@@ -155,7 +155,7 @@ useSWR(key, fetcher, { use: [...middleware] })
 + import { SWRInfiniteConfiguration, SWRInfiniteResponse } from 'swr/infinite'
 ```
 
-### Измените `revalidate` на `mutate`
+### Измените `revalidate` на `mutate` [#change-revalidate-to-mutate]
 
 `useSWR` больше не возвращает метод `revalidate`, вместо этого измените его на `mutate`:
 
@@ -171,14 +171,14 @@ useSWR(key, fetcher, { use: [...middleware] })
 + mutate()
 ```
 
-### Переименуйте `initialData` на `fallbackData`
+### Переименуйте `initialData` на `fallbackData` [#rename-initialdata-to-fallbackdata]
 
 ```diff
 - useSWR(key, fetcher, { initialData: ... })
 + useSWR(key, fetcher, { fallbackData: ... })
 ```
 
-### Больше нет Fetcher'a по умолчанию
+### Больше нет Fetcher'a по умолчанию [#no-more-default-fetcher]
 
 SWR больше не предоставляет fetcher по умолчанию (вызов `fetch`, который анализирует данные как JSON). Самый простой способ перенести изменение — использовать компонент `<SWRConfig>`:
 
@@ -191,7 +191,7 @@ SWR больше не предоставляет fetcher по умолчанию
 useSWR(key, (url) => fetch(url).then(res => res.json()))
 ```
 
-### Рекомендуем использовать `mutate` возвращаемый хуком
+### Рекомендуем использовать `mutate` возвращаемый хуком [#recommend-to-use-the-hook-returned-mutate]
 
 Это **не** критическое изменение, но теперь мы _рекомендуем_ всегда использовать `mutate`, возвращаемый хуком `useSWRConfig`:
 
@@ -211,7 +211,7 @@ useSWR(key, (url) => fetch(url).then(res => res.json()))
 
 Если вы не используете кеш-провайдер, текущий глобальный импорт `import { mutate } from 'swr'` по-прежнему работает.
 
-### Переименованные типы
+### Переименованные типы [#renamed-types]
 
 Если вы используете TypeScript, следующие имена типов были изменены для согласованности:
 
@@ -225,7 +225,7 @@ useSWR(key, (url) => fetch(url).then(res => res.json()))
 | `SWRInfiniteResponseInterface` | `SWRInfiniteResponse`      | перенесён в `swr/infinite` |
 | `SWRInfiniteConfigInterface`   | `SWRInfiniteConfiguration` | перенесён в `swr/infinite` |
 
-### Пользователям бета-версии и неофициальных функций
+### Пользователям бета-версии и неофициальных функций [#beta-and-unofficial-feature-users]
 
 Если вы используете бета-версию SWR или какие-либо недокументированные API, обратите внимание на следующие изменения:
 
@@ -234,17 +234,17 @@ useSWR(key, (url) => fetch(url).then(res => res.json()))
 - `revalidateWhenStale` переименовано в `revalidateIfStale`.
 - `middlewares` переименовано в `use`.
 
-### Журнал изменений
+### Журнал изменений [#changelog]
 
 Прочитайте весь журнал изменений [на GitHub](https://github.com/vercel/swr/releases).
 
-## Что дальше
+## Что дальше [#whats-next]
 
 В будущих релизах мы продолжим улучшать библиотеку, сохраняя при этом стабильность. Мы также стремимся охватить будущие версии React, поскольку для этого уже готовятся несколько новых функций и улучшений в 1.0. Кроме того, мы также работаем над новыми функциями, чтобы улучшить получение данных в React и удобство использования этой библиотеки.
 
 Если у вас есть какие-либо отзывы об этом выпуске, пожалуйста, [сообщите нам об этом](https://github.com/vercel/swr/discussions).
 
-## Спасибо!
+## Спасибо! [#thank-you]
 
 Особая благодарность [Toru Kobayashi](https://twitter.com/koba04) и [Yixuan Xu](https://twitter.com/yixuanxu94) за их вклад в библиотеку, и [Paco Coursey](https://twitter.com/pacocoursey), [uttk](https://github.com/uttk), [Tomohiro SHIOYA](https://github.com/shioyang), [Markoz Peña](https://github.com/markozxuu), [SeulGi Choi](https://github.com/cs09g), [Fang Lu](https://github.com/huzhengen), [Валентину Политову](https://github.com/valentinpolitov) за их труд над переводом документации. Этот релиз не состоялся бы без них.
 

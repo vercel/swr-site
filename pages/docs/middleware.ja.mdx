@@ -8,11 +8,11 @@ import { Callout } from 'nextra-theme-docs'
 
 ミドルウェア機能は SWR 1.0 に新しく追加されたもので、 SWR の前後にロジックを実行できます。
 
-## 使い方
+## 使い方 [#usage]
 
 ミドルウェアは SWR フックを受け取り、実行の前後にロジックを実行できます。複数のミドルウェアがある場合、各ミドルウェアは次のミドルウェアをラップします。リストの最後のミドルウェアは、元の SWR フックである `useSWR` を受け取ります。
 
-### API
+### API [#api]
 
 _注意： 関数名は大文字にしないでください（たとえば `myMiddleware` の代わりに `MyMiddleware` を使うなど）。そうしないと、 React lint のルールが `Rules of Hook` エラーを投げます。_
 
@@ -42,7 +42,7 @@ function myMiddleware (useSWRNext) {
 useSWR(key, fetcher, { use: [myMiddleware] })
 ```
 
-### 拡張
+### 拡張 [#extend]
 
 ミドルウェアは通常のオプションのように拡張されます。たとえば：
 
@@ -69,7 +69,7 @@ function Foo() {
 useSWR(key, fetcher, { use: [a, b, c] })
 ```
 
-### 複数のミドルウェア
+### 複数のミドルウェア [#multiple-middleware]
 
 各ミドルウェアは次のミドルウェアをラップし、最後のミドルウェアは SWR フックをラップするだけです。例として：
 
@@ -89,9 +89,9 @@ enter a
 exit  a
 ```
 
-## 例
+## 例 [#examples]
 
-### リクエストを記録する
+### リクエストを記録する [#request-logger]
 
 例として、リクエストを記録する簡単なミドルウェアを作成してみましょう。この SWR フックから送信されたすべての取得リクエストを出力します。このミドルウェアを `SWRConfig` に追加することで、すべての SWR フックに使用することもできます。
 
@@ -120,7 +120,7 @@ SWR Request: /api/user1
 SWR Request: /api/user2
 ```
 
-### 以前の結果を保持する
+### 以前の結果を保持する [#keep-previous-result]
 
 `useSWR` によって返されるデータを"遅延"させたい場合があります。
 キーが変わっても新しいデータがロードされるまで、以前の結果を返すようにします。
@@ -173,7 +173,7 @@ SWR フックを遅らせる必要がある場合は、次のミドルウェア�
 const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 ```
 
-### オブジェクトキーをシリアライズする
+### オブジェクトキーをシリアライズする [#serialize-object-keys]
 
 <Callout>
   SWR 1.1.0 からは、オブジェクトのようなキーは内部で自動的にシリアライズされます。

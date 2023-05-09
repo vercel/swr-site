@@ -14,7 +14,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 El objeto `error` será definido si la promise de fetch es rechazada.
 
-## Código de estado y objeto de error
+## Código de estado y objeto de error [#status-code-and-error-object]
 
 A veces queremos que una API devuelva un objeto de error junto con el status code.
 Ambos son útiles para el cliente.
@@ -56,7 +56,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 [Aquí](/examples/error-handling) tenemos un ejemplo.
 
-## Reintento de error
+## Reintento de error [#error-retry]
 
 SWR utiliza el [exponential backoff algorithm](https://en.wikipedia.org/wiki/Exponential_backoff) para reintentar la solicitud en el error.
 El algoritmo permite que la aplicación se recupere de los errores rápidamente, pero si malgastar recursos reintentando con demasiada frecuencia.
@@ -85,7 +85,7 @@ Este callback le da flexibilidad de reintentar basado en varias condiciones. Tam
 
 También es posible propocionar a través del [Global Configuration](/docs/global-configuration) context.
 
-## Informe global de errores
+## Informe global de errores [#global-error-report]
 
 Siempre puedes obtener el objeto de `error` dentro del componente de forma reactiva. Pero en caso de que quieras manejar el error de forma global,
 para notificar a la UI que muestre un [toast](https://vercel.com/design/toast) o un [snackbar](https://material.io/components/snackbars), o reportarlo

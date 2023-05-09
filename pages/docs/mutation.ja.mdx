@@ -2,11 +2,11 @@
 
 SWR はリモートデータとキャッシュデータのミューテーションのために、[`mutate`](/docs/mutation#mutate) と [`useSWRMutation`](/docs/mutation#useswrmutation) の API を提供しています。
 
-## `mutate`
+## `mutate` [#mutate]
 
 `mutate` API を使いデータをミューテートするには 2 つの方法があります。どんなキーに対してもミューテートできるグローバルのミューテート API と対応する SWR フックのデータのみミューテートできるバウンドミューテート API です。
 
-#### グローバルミューテート
+#### グローバルミューテート [#global-mutate]
 
 グローバルなミューテートを取得するオススメの方法は [`useSWRConfig`](/docs/global-configuration#access-to-global-configurations) フックを使うことです。
 
@@ -33,7 +33,7 @@ function App() {
   Using global mutator only with the `key` parameter will ***not update the cache or trigger revalidation*** unless there is a mounted SWR hook using the same key.
 </Callout>
 
-#### バウンドミューテート
+#### バウンドミューテート [#bound-mutate]
 
 バウンドミューテートは現在のキーのデータをミューテートする最も簡単な方法です。`useSWR` に渡された `key` に対して対応付けられ、`data` を第一引数として受け取ります。
 
@@ -61,7 +61,7 @@ function Profile () {
 }
 ```
 
-#### 再検証
+#### 再検証 [#revalidation]
 
 `mutate(key)` (または単にバウンドミューテートの `mutate()`) をデータの指定なしに呼んだ場合、そのリソースに対して再検証を発行 (データを期限切れとしてマークして再フェッチを発行する) します。
 この例は、ユーザーが "Logout"　ボタンをクリックした場合に、
@@ -97,9 +97,9 @@ import { Callout } from 'nextra-theme-docs'
 </Callout>
 
 
-### API
+### API [#api]
 
-#### パラメータ
+#### パラメータ [#parameters]
 
 - `key`: `useSWR` の `key` と同じです。しかしながら、関数は [フィルタ関数](/docs/mutation#mutate-multiple-items) として振る舞います
 - `data`: クライアントキャッシュを更新するためのデータ、またはリモートミューテーションのための非同期関数
@@ -110,7 +110,7 @@ import { Callout } from 'nextra-theme-docs'
   - `rollbackOnError = true`: リモートミューテーションがエラーだった場合にキャッシュをロールバックするかどうか、または発生したエラーを引数として受け取りロールバックするかどうかの真偽値を返す関数
   - `throwOnError = true`: ミューテートの呼び出しが失敗した場合にエラーを投げるかどうか
 
-#### 返り値
+#### 返り値 [#return-values]
 
 `mutate` は `data` パラメータとして扱われる結果を返します。`mutate` に渡された関数は対応するキャッシュの値としても使われる更新後のデータを返します。
 もし、関数の実行中にエラーが発生した場合、そのエラーはスローされるので適切に処理できます。
@@ -123,7 +123,7 @@ try {
 }
 ```
 
-## `useSWRMutation`
+## `useSWRMutation` [#useswrmutation]
 
 加えて SWR はリモートミューテーションのために `useSWRMutation` というフックも提供しています。このリモートミューテーションは、自動的にミューテーションを行う `useSWR` などとは異なり手動でのみ発行されます。
 
@@ -155,9 +155,9 @@ function Profile() {
 }
 ```
 
-### API
+### API [#api]
 
-#### パラメータ
+#### パラメータ [#parameters]
 
 - `key`: [`mutate`](/docs/mutation#mutate) の `key` と同様
 - `fetcher(key, { arg })`: リモートミューテーションのための非同期関数
@@ -170,7 +170,7 @@ function Profile() {
   - `onSuccess(data, key, config)`:　リモートミューテーションが成功した場合に呼ばれるコールバック関数
   - `onError(err, key, config)`: リモートミューテーションがエラーになった場合に呼ばれるコールバック関数
 
-#### 返り値
+#### 返り値 [#return-values]
 
 - `data`: `fetcher` から返された渡されたキーに対応するデータ
 - `error`: `fetcher` で発生したエラー (または undefined)
@@ -178,7 +178,7 @@ function Profile() {
 - `reset`: 状態 (`data`, `error`, `isMutating`) をリセットするための関数
 - `isMutating`: 実行中のリモートミューテーションがあるかどうか
 
-### 基本的な使い方
+### 基本的な使い方 [#basic-usage]
 
 ```tsx
 import useSWRMutation from 'swr/mutation'
@@ -230,7 +230,7 @@ trigger(newName, {
 })
 ```
 
-### 必要になるまでデータの読み込みを遅延させる
+### 必要になるまでデータの読み込みを遅延させる [#defer-loading-data-until-needed]
 
 `useSWRMutation` をデータのローディングのために使うこともできます。`useSWRMutation` は `trigger` が呼ばれるまでリクエストを開始しません。そのため、データが実際に必要になるまでデータの読み込みを遅延することができます。
 
@@ -257,7 +257,7 @@ const Page = () => {
 }
 ```
 
-## 楽観的更新
+## 楽観的更新 [#optimistic-updates]
 
 多くの場合、ローカルミューテーションをデータに対して適用することは、変更を速く感じさせるための良い方法です。
 リモートデータが更新されるまで待つ必要はありません。
@@ -346,14 +346,14 @@ function Profile () {
 }
 ```
 
-## エラー時のロールバック
+## エラー時のロールバック [#rollback-on-errors]
 
 `optimisticData` を持っている場合でリモートミューテーションが失敗した場合、
 楽観的な更新によるデータがユーザーに表示されます。
 この場合、ユーザーが正しいデータを見ていることを保証するために、
 `rollbackOnError` を有効にしてローカルキャッシュに対する変更を取り消して以前のデータに戻すことができます。
 
-## ミューテーション後にキャッシュを更新する
+## ミューテーション後にキャッシュを更新する [#update-cache-after-mutation]
 
 リモートミューテーションのリクエストが更新後のデータを直接返す場合もあります。この場合、データをロードするための余計なフェッチが必要ありません。
 `populateCache` オプションを有効にすることで、ミューテーションのレスポンスで `useSWR` のキャッシュを更新できます！
@@ -393,7 +393,7 @@ useSWRMutation('/api/todos', updateTodo, {
 
 `optimisticData` と `rollbackOnError` を組み合わせることで、完璧な楽観的 UI 更新の体験を得ることができます。
 
-## レースコンディションを避ける
+## レースコンディションを避ける [#avoid-race-conditions]
 
 `mutate` と `useSWRMutation` は `useSWR` とのレースコンディションを避けることができます。例えば、
 
@@ -416,7 +416,7 @@ function Profile() {
 幸いにも、`useSWRMutation` はこれを自動的に処理してくれます。ミューテーションの後、`useSWR` に実行中のリクエストを再検証を破棄するように伝えます。
 その結果、古いデータは決して表示されません。
 
-## 現在のデータをもとにミューテートする
+## 現在のデータをもとにミューテートする [#mutate-based-on-current-data]
 
 現在のデータに基づいてデータを更新したい場合もあります。
 
@@ -439,7 +439,7 @@ mutate('/api/todos', async todos => {
 }, { revalidate: false })
 ```
 
-## 複数のアイテムをミューテートする
+## 複数のアイテムをミューテートする [#mutate-multiple-items]
 
 グローバルの `mutate` API はフィルタ関数を受け取ります。この関数は `key` を引数として受け取り再検証するかどうかを返します。フィルタ関数は全ての存在するキャッシュキーに対して適用されます。
 

@@ -6,13 +6,13 @@ import { Callout } from 'nextra-theme-docs'
 const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
-## Параметры
+## Параметры [#parameters]
 
 - `key`: уникальный строчный ключ для запроса (или функция / массив / null) [(подробнее)](/docs/arguments), [(продвинутое использование)](/docs/conditional-fetching)
 - `fetcher`: (_опционально_) Promise возвращающий функцию для выборки данных [(подробнее)](/docs/data-fetching)
 - `options`: (_опционально_) объект опций для этого SWR хука
 
-## Возвращаемые значения
+## Возвращаемые значения [#return-values]
 
 - `data`: данные для данного ключа, разрешенные `fetcher` (или undefined, если не загружено)
 - `error`: ошибка, выброшенная `fetcher`-ом (или undefined)
@@ -22,7 +22,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 
 Более подробно можно почитать [здесь](/docs/advanced/understanding).
 
-## Опции
+## Опции [#options]
 
 - `suspense = false`: включить режим задержки React Suspense [(подробнее)](/docs/suspense)
 - `fetcher(args)`: функция-fetcher

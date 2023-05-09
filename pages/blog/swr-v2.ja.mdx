@@ -10,7 +10,7 @@ import { Bleed } from 'nextra-theme-docs'
 import Authors, { Author } from 'components/authors'
 import Video from 'components/video'
 
-# SWR 2.0 の発表
+# SWR 2.0 の発表 [#announcing-swr-20]
 
 <Authors date="December 9th, 2022">
   <Author name="Shu Ding" link="https://twitter.com/shuding_" />
@@ -21,9 +21,9 @@ import Video from 'components/video'
 
 本日、SWR 2.0 のリリースを発表できることに興奮しています！この新しいバージョンには、新しいミューテーション API や楽観的更新パターンに対する改善、DevTools、React の並行処理機能のサポートといった多くの改善と新しい機能が含まれています。このリリースを可能にしてくれた全てのコントリビュータとメンテナに感謝しています。
 
-## ミューテーションと楽観的 UI 更新
+## ミューテーションと楽観的 UI 更新 [#mutation-and-optimistic-ui]
 
-### useSWRMutation
+### useSWRMutation [#useswrmutation]
 
 ミューテーションはデータフェッチングの重要な要素の一つです。ミューテーションはローカルとリモートのデータそれぞれの更新を可能にします。既存の `mutate` API は、リソースの再検証及び手動による更新をサポートしています。SWR 2.0 では、`useSWRMutation` という新しいフックは宣言的な API でよりシンプルにリモートのデータ更新を可能にします。このフックを使いミューテーションをセットアップし、その後利用できます。
 
@@ -65,7 +65,7 @@ function App() {
 
 この API に対する詳細な参照や例は [ドキュメント](/docs/mutation#useswrmutation) または以降のセクションまでスクロールすることで確認できます。
 
-### 楽観的 UI 更新
+### 楽観的 UI 更新 [#optimistic-ui]
 
 楽観的 UI 更新は速く反応がいいウェブサイトを作るための素晴らしいモデルです。しかしながら正しく実装することは難しいです。SWR 2.0 ではこれを簡単にするためのオプションを追加しました。
 
@@ -180,7 +180,7 @@ return <>
   ratio={223/584}
 />
 
-### 複数キーのミューテーション
+### 複数キーのミューテーション [#mutate-multiple-keys]
 
 グローバルの `mutate` API がフィルター関数を受け取るようになり、特定のキーに対するミューテーションが可能になります。これは全てのキャッシュデータを無効化するようなユースケースで便利です。詳細はドキュメントの [複数のキーをミューテーションする](/docs/mutation#mutate-multiple-items) で確認できます。
 
@@ -200,13 +200,13 @@ mutate(
 )
 ```
 
-## SWR DevTools
+## SWR DevTools [#swr-devtools]
 
 [SWRDevTools](https://swr-devtools.vercel.app) はブラウザ拡張で SWR のキャッシュやフェッチの結果をデバッグするのに役に立ちます。アプリケーションでの使い方は [開発者ツール](/docs/advanced/devtools) セクションを確認ください。
 
 ![](/img/devtools/cache-view.jpg)
 
-## データのプリロード
+## データのプリロード [#preloading-data]
 
 データのプリロードはユーザー体験を劇的に改善します。もしリソースが後ほど使われることがわかっている場合、`preload` API を使うことでフェッチの開始を事前に行うことができます。
 
@@ -234,7 +234,7 @@ export function Page () {
 
 `preload` API は後に表示されそうなページのデータをプリロードするためにも利用できます。SWR を使ったプリフェッチに関する更なる情報は [こちら](/docs/prefetching) より確認できます。
 
-## `isLoading`
+## `isLoading` [#isloading]
 
 `isLoading` は `useSWR` から返される新しい状態で、**リクエストが実行中で、ロードされたデータがない** ことを示します。これまでは、`isValidating` は初期ローディングと再検証の状態のどちらも表していたため、初期ローディングかどうかを知るためには `data` と `error` が `undefined` であるかどうかをチェックする必要がありました。
 
@@ -257,7 +257,7 @@ function Profile() {
   今回、SWR がどのように値を返すかを示した新しい [SWR を理解する](/docs/advanced/understanding) ページを追加しました。このページでは `isValidating` と `isLoading` の違いやこれらを組み合わせてどのようにユーザー体験を向上させるかが解説されています。
 </Callout>
 
-## 以前の状態を保持する
+## 以前の状態を保持する [#preserving-previous-state]
 
 `keepPreviousData` は新しく追加されたオプションで、以前にフェッチされたデータを保持します。これは、リアルタイム検索のようにリソースの `key` が変化し続けユーザーアクションに応じて都度データのフェッチが発生するようなケースで UX を劇的に向上させます。
 
@@ -294,7 +294,7 @@ function Search() {
 
 詳しくは [CodeSandbox](https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m) のコードと [ドキュメント](/docs/advanced/understanding#return-previous-data-for-better-ux) を確認ください。
 
-## 設定の拡張
+## 設定の拡張 [#extending-configurations]
 
 `SWRConfig` は関数を値として受け取るようになりました。複数レベルの `<SWRConfig>` を持っている場合、内部のコンポーネントは親の設定を受け取り、新しい設定を返します。これは、大規模なコードベースにおいて柔軟な SWR の設定を可能にします。詳細は [ドキュメント](/docs/global-configuration) を確認ください。
 
@@ -309,15 +309,15 @@ function Search() {
 </SWRConfig>
 ```
 
-## React 18 サポートの改善
+## React 18 サポートの改善 [#improved-react-18-support]
 
 SWR は内部実装において `useSyncExternalStore` や `startTransition` といった React 18 で追加された API を使うようになりました。これらは UI のレンダリングが並行処理になった場合においても一貫性を保証してくれます。これにより利用者の実装を変更する必要はなく、全ての開発者が恩恵を受けることができます。React 17 や古いバージョンのための実装も含まれています。
 
 SWR 2.0 と全ての新しい機能は引き続き、React 16 や 17 に対して互換性があります。
 
-## 移行ガイド
+## 移行ガイド [#migration-guide]
 
-### フェッチャーが引数を複数の引数として受け取らなくなります
+### フェッチャーが引数を複数の引数として受け取らなくなります [#fetcher-no-longer-accepts-multiple-arguments]
 
 `key` は単一の引数として渡されるようになります。
 
@@ -330,7 +330,7 @@ SWR 2.0 と全ての新しい機能は引き続き、React 16 や 17 に対し�
 })
 ```
 
-### グローバルのミューテーション API が `getKey` 関数を受け取らなくなります
+### グローバルのミューテーション API が `getKey` 関数を受け取らなくなります [#global-mutate-no-longer-accepts-a-getkey-function]
 
 もしグローバルな `mutate` に対して関数を渡した場合、それは [フィルター関数](/blog/swr-v2#mutate-multiple-keys) として使われます。これまでは、グローバルの `mutate` に対してキーを返す関数を渡すことができました。
 
@@ -340,7 +340,7 @@ SWR 2.0 と全ての新しい機能は引き続き、React 16 や 17 に対し�
 + mutate('/api/item')       // 直接キーを渡すようにする
 ```
 
-### キャッシュのインターフェイスで `keys()` が必須になりました
+### キャッシュのインターフェイスで `keys()` が必須になりました [#new-required-property-keys-for-cache-interface]
 
 独自のキャッシュ実装を使っている場合、キャッシュのインターフェイスとして JavaScript の Map のようにキャッシュの全てのキーを返す `keys()` メソッドが必須になりました。
 
@@ -353,7 +353,7 @@ interface Cache<Data> {
 }
 ```
 
-### キャッシュの内部構造を変更しました
+### キャッシュの内部構造を変更しました [#changed-cache-internal-structure]
 
 キャッシュの内部構造が、全ての状態を保持する単一のオブジェクトになりました。
 
@@ -374,7 +374,7 @@ interface Cache<Data> {
   キャッシュに対して直接データを書き込むことはすべきではありません。予期せぬ挙動を引き起こす可能性があります。
 </Callout>
 
-### `SWRConfig.default` が `SWRConfig.defaultValue` に変更されました
+### `SWRConfig.default` が `SWRConfig.defaultValue` に変更されました [#swrconfigdefault-is-renamed-as-swrconfigdefaultvalue]
 
 `SWRConfig.defaultValue` はデフォルトの SWR の設定にアクセスするためのプロパティです。
 
@@ -383,26 +383,26 @@ interface Cache<Data> {
 + SWRConfig.defaultValue
 ```
 
-### `InfiniteFetcher` の型が `SWRInfiniteFetcher` に変更されました
+### `InfiniteFetcher` の型が `SWRInfiniteFetcher` に変更されました [#type-infinitefetcher-is-renamed-as-swrinfinitefetcher]
 
 ```diff
 - import type { InfiniteFetcher } from 'swr/infinite'
 + import type { SWRInfiniteFetcher } from 'swr/infinite'
 ```
 
-### サーバサイドでのサスペンスを用いたデータフェッチを避ける
+### サーバサイドでのサスペンスを用いたデータフェッチを避ける [#avoid-suspense-on-server]
 
 SWR を `suspense: true` と一緒にサーバーサイドで使いたい場合には (Next.js によるプリレンダリングも含みます)、[`fallbackData` or `fallback`](/docs/with-nextjs#pre-rendering-with-default-data) により初期データが必ず提供されている必要があります。これは現時点でサスペンスを使ったデータ取得をサーバーサイドで行えないことを意味します。その他の 2 つのオプションは完全にクライアントサイドでデータ取得を行うかフレームワークを用いたデータの取得 (Next.js が getStaticProps でやっているような) を行うかです。
 
-### ES2018 がビルドターゲットに
+### ES2018 がビルドターゲットに [#es2018-as-the-build-target]
 
 IE 11 をサポートしたい場合、フレームワークやバンドラで ES5 をビルドターゲットにする必要があります。この変更により SSR 時のパフォーマンス改善やバンドルサイズ削減を実現しました。
 
-## 変更ログ
+## 変更ログ [#changelog]
 
 完全な変更ログを [GitHub 上で](https://github.com/vercel/swr/releases) 確認できます。
 
-## 今後と感謝
+## 今後と感謝 [#the-future--thank-you]
 
 新しい [Next.js 13](https://nextjs.org/blog/next-13) のリリースにおいては、多くのエキサイティングな新機能だけでなく、[React Server Components](https://beta.nextjs.org/docs/rendering/server-and-client-components) やストリーミング SSR、[非同期コンポーネント](https://beta.nextjs.org/docs/data-fetching/fetching#asyncawait-in-server-components)、[`use` フック](https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md#usepromise) といった React のエコシステムにおけるパラダイムシフトがありました。それらの多くはデータ取得に関するものであり、いくつかは SWR のユースケースとも被るものです。
 

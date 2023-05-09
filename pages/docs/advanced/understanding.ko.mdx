@@ -3,47 +3,47 @@ import Video from 'components/video'
 
 # Understanding SWR
 
-## State Machine
+## State Machine [#state-machine]
 
 `useSWR` returns `data`, `error`, `isLoading`, and `isValidating` depending on the state of the `fetcher` function. This diagrams describe how SWR returns values in some scenarios.
 
-### Fetch and Revalidate
+### Fetch and Revalidate [#fetch-and-revalidate]
 
 This pattern is to fetch data and revalidate it later.
 
 ![A pattern for fetch and revalidate](/img/understanding/fetch-and-revalidate.svg)
 
-### Key Change
+### Key Change [#key-change]
 
 This pattern is to fetch data and change the key and revalidate it later.
 
 ![A pattern for key change](/img/understanding/key-change.svg)
 
-### Key Change + Previous Data
+### Key Change + Previous Data [#key-change--previous-data]
 
 This pattern is to fetch data and change the key and revalidate it later with the `keepPreviousData` option.
 
 ![A pattern for key change + previous data](/img/understanding/key-change-previous-data.svg)
 
-### Fallback
+### Fallback [#fallback]
 
 This pattern is to fetch data and revalidate it later with fallback data.
 
 ![A pattern for fallback](/img/understanding/fallback.svg)
 
-### Key Change + Fallback
+### Key Change + Fallback [#key-change--fallback]
 
 This pattern is to fetch data and change the key and revalidate it later with fallback data.
 
 ![A pattern for key change + fallback](/img/understanding/key-change-fallback.svg)
 
-### Key Change + Previous Data + Fallback
+### Key Change + Previous Data + Fallback [#key-change--previous-data--fallback]
 
 This pattern is to fetch data and change the key and revalidate it later with the `keepPreviousData` option and fallback data.
 
 ![A pattern for key change + previous data + fallback](/img/understanding/key-change-previous-data-fallback.svg)
 
-## Combining with isLoading and isValidating for better UX
+## Combining with isLoading and isValidating for better UX [#combining-with-isloading-and-isvalidating-for-better-ux]
 
 Comparing to the existing `isValidating` value, `isLoading` is a new property that can help you for the more general loading cases for UX.
 
@@ -81,7 +81,7 @@ function Stock() {
 
 You can find the code example [here](https://codesandbox.io/s/swr-isloading-jtopow)
 
-## Return previous data for better UX
+## Return previous data for better UX [#return-previous-data-for-better-ux]
 
 When doing data fetching based on continuous user actions, e.g. real-time search when typing, keeping the previous fetched data can improve the UX a lot. `keepPreviousData` is an option to enable that behavior. Here's a simple search UI:
 
@@ -120,6 +120,6 @@ With `keepPreviousData` enabled, you will still get the previous data even if yo
 
 You can find the full code for this example here: https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m.
 
-## Dependency Collection for performance
+## Dependency Collection for performance [#dependency-collection-for-performance]
 
 SWR only triggers re-rendering when the states used in the component have been updated. If you only use `data` in the component, SWR ignores the updates of other properties like `isValidating`, and `isLoading`. This reduces rendering counts a lot. More information can be found [here](/docs/advanced/performance#dependency-collection).

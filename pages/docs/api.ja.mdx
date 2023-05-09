@@ -6,13 +6,13 @@ import { Callout } from 'nextra-theme-docs'
 const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
-## パラメーター
+## パラメーター [#parameters]
 
 - `key`: このリクエストのためのユニークなキー文字列（または関数、配列、null） [(詳細)](/docs/arguments), [（高度な使用法）](/docs/conditional-fetching)
 - `fetcher`: （_任意_） データをフェッチするための Promise を返す関数 [（ 詳細 ）](/docs/data-fetching)
 - `options`: （_任意_） この SWR フックのオプションオブジェクト
 
-## 返り値
+## 返り値 [#return-values]
 
 - `data`: `fetcher` によって解決された、指定されたキーのデータ（もしくは、ロードされていない場合は undefined）
 - `error`: `fetcher` によって投げられたエラー （もしくは undefined）
@@ -22,7 +22,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 
 詳細は[こちら](/docs/advanced/understanding)をご覧ください。
 
-## オプション
+## オプション [#options]
 
 - `suspense = false`: React Suspense モードを有効にする [（ 詳細 ）](/docs/suspense)
 - `fetcher(args)`: フェッチャー関数

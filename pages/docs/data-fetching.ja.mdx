@@ -17,7 +17,7 @@ const { data, error } = useSWR(key, fetcher)
   場合は、パラメーターから省略できることに注意してください。
 </Callout>
 
-## Fetch
+## Fetch [#fetch]
 
 fetch ポリフィル [developit/unfetch](https://github.com/developit/unfetch) など、任意のライブラリを使用してデータのフェッチを処理できます：
 
@@ -37,7 +37,7 @@ function App () {
   <a target="_blank" rel="noopener" href="https://nextjs.org/blog/next-9-1-7#new-built-in-polyfills-fetch-url-and-objectassign">New Built-In Polyfills: fetch(), URL, and Object.assign</a>
 </Callout>
 
-## Axios
+## Axios [#axios]
 
 ```js
 import axios from 'axios'
@@ -50,7 +50,7 @@ function App () {
 }
 ```
 
-## GraphQL
+## GraphQL [#graphql]
 
 または、[graphql-request](https://github.com/prisma-labs/graphql-request) のようなライブラリで GraphQL を使う場合：
 

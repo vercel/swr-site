@@ -8,7 +8,7 @@ useSWR('/api/user', url => fetcher(url))
 useSWR('/api/user', fetcher)
 ```
 
-## 複数の引数
+## 複数の引数 [#multiple-arguments]
 
 一部のシナリオでは、`fetcher` 関数に複数の引数（任意の値またはオブジェクト）を渡すと便利です。
 たとえば、認証されたフェッチリクエスト：
@@ -32,7 +32,7 @@ const { data: user } = useSWR(['/api/user', token], ([url, token]) => fetchWithT
   In older versions (< 2), The `fetcher` function accepts the `key` parameter as arguments separately
 </Callout>
 
-## オブジェクトの受け渡し
+## オブジェクトの受け渡し [#passing-objects]
 
 import { Callout } from 'nextra-theme-docs'
 

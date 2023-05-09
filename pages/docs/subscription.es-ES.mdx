@@ -6,7 +6,7 @@ import { Callout } from 'nextra-theme-docs'
   Please update to the latest version (≥ 2.1.0) to use this API.
 </Callout>
 
-## `useSWRSubscription`
+## `useSWRSubscription` [#useswrsubscription]
 
 `useSWRSubscription` is a React hook that allows subscribing to real-time data sources with SWR.
 
@@ -14,11 +14,11 @@ import { Callout } from 'nextra-theme-docs'
 useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next: (error?: Error | null, data: Data) => void }) => () => void): { data?: Data, error?: Error }
 ```
 
-### API
+### API [#api]
 
 This hook subscribes to a real-time data source using the subscribe function provided, and returns the latest data received and any errors encountered. The hook automatically updates the returned data as new events are received.
 
-#### Parameters
+#### Parameters [#parameters]
 
 - `key`: A unique key that identifies the data being subscribed to, same key as `useSWR` key.
 - `subscribe`: A function that subscribes to the real-time data source. It receives the following arguments:
@@ -45,7 +45,7 @@ function subscribe(key, { next }) {
 }
 ```
 
-#### Return Values
+#### Return Values [#return-values]
 
 - `state`: An object with the following properties:
   - `data`: The latest data received from the real-time data source.
@@ -54,7 +54,7 @@ function subscribe(key, { next }) {
 
 When new data is received, the `error` will be reset to `undefined`.
 
-### Usage
+### Usage [#usage]
 
 Using `useSWRSubscription` to subscribe to a Firestore data source:
 
@@ -96,7 +96,7 @@ function App() {
 
 You could also check TypeScript examples of `useSWRSubscription` at [this page](/docs/typescript#useswrsubscription)
 
-### Deduplication
+### Deduplication [#deduplication]
 
 `useSWRSubscription` deduplicates the subscription requests with the same key. 
 If there are multiple components using the same key, they will share the same subscription. 

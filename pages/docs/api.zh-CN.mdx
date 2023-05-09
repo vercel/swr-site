@@ -6,13 +6,13 @@ import { Callout } from 'nextra-theme-docs'
 const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
-## 参数
+## 参数 [#parameters]
 
 - `key`: 请求的唯一 key string（或者是 function / array / null） [(详情)](/docs/arguments), [（高级用法）](/docs/conditional-fetching)
 - `fetcher`:（_可选_）一个请求数据的 Promise 返回函数 [（详情）](/docs/data-fetching)
 - `options`:（_可选_）该 SWR hook 的选项对象
 
-## 返回值
+## 返回值 [#return-values]
 
 - `data`: 通过 `fetcher` 用给定的 key 获取的数据（如未完全加载，返回 undefined）
 - `error`: `fetcher` 抛出的错误（或者是 undefined）
@@ -22,7 +22,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 
 更多信息可以参考[这里](/docs/advanced/understanding).
 
-## 选项
+## 选项 [#options]
 
 - `suspense = false`: 启用 React Suspense 模式 [（详情）](/docs/suspense)
 - `fetcher(args)`: fetcher 函数

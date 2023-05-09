@@ -47,7 +47,7 @@ function App () {
 
 ---
 
-### 注：条件付きフェッチを使用する場合
+### 注：条件付きフェッチを使用する場合 [#note-with-conditional-fetching]
 
 通常、`suspense` を有効にすると、レンダリング時に `data` が常に準備ができていることが保証されます：
 
@@ -73,6 +73,6 @@ function Profile () {
 
 この制限に関する技術的な詳細を読みたい場合は、[こちらの議論](https://github.com/vercel/swr/pull/357#issuecomment-627089889)を確認してください。
 
-### サーバサイドレンダリング
+### サーバサイドレンダリング [#server-side-rendering]
 
 サスペンスモードをサーバサイド（Next.js によるプリレンダリングを含む）で使う場合、[fallbackData や fallback](/docs/with-nextjs#pre-rendering-with-default-data) により初期データが提供されている**必要があります**。これはサスペンスをサーバサイドでのデータ取得に使うことができないことを意味しており、クライアントサイドでのデータ取得を行うか、フレームワークを通じたデータ取得（Next.js の getStaticProps のような）のどちらかを行う必要があります。これについての議論は[こちら](https://github.com/vercel/swr/issues/1906)です。

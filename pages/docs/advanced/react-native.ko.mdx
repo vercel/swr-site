@@ -10,10 +10,10 @@ import { Callout } from 'nextra-theme-docs'
 이러한 동작을 커스터마이징 하려면 기본 브라우저 `focus`와 `online` 이벤트 리스너를 React Native의 앱 상태 감지와 네이티브에서 이식된 다른 API로 교체하고, SWR이 사용하도록 설정해야 합니다.
 
 
-## 예시
+## 예시 [#example]
 
 
-### 전역 설치
+### 전역 설치 [#global-setup]
 
 `SWRConfig` 아래의 앱을 감싸고 모든 설정을 미리 구성할 수 있습니다.
 
@@ -27,7 +27,7 @@ import { Callout } from 'nextra-theme-docs'
 </SWRConfig>
 ```
 
-### `focus` 및 `reconnect` 이벤트 커스터마이징 하기
+### `focus` 및 `reconnect` 이벤트 커스터마이징 하기 [#customize-focus-and-reconnect-events]
 
 신경 써야 할 설정은 `isOnline`, `isVisible`, `initFocus` 및 `initReconnect`로 많지 않습니다.
 
