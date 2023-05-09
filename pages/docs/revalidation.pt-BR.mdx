@@ -9,7 +9,7 @@ import Link from 'next/link'
   Se você quer validar manualmente os dados, verifique <Link href="/docs/mutation">Mutação</Link>.
 </Callout>
 
-## Revalidar ao Focar
+## Revalidar ao Focar [#revalidate-on-focus]
 
 Quando você focar novamente ou trocar de aba, SWR revalidará automaticamente os dados.
 
@@ -26,7 +26,7 @@ Isso pode ser útil para sincronizar imediatamente para o último estado. Isso �
 
 Essa funcionalidade é habilitada por padrão. Você pode desabilitá-la pela opção [`revalidateOnFocus`](/docs/api).
 
-## Revalidar em Intervalos
+## Revalidar em Intervalos [#revalidate-on-interval]
 
 Em vários casos, os dados mudam graças a diversos dispositivos, diversos usuários, diversas abas. Como podemos atualizar o estado de forma dinâmica?
 
@@ -49,7 +49,7 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 Existem também opções como `refreshWhenHidden` e `refreshWhenOffline`. Ambas são desabilitados por padrão, então SWR não fará fetch quando a página não estiver na tela, ou não houver conexão com a internet.
 
-## Revalidar ao Reconectar
+## Revalidar ao Reconectar [#revalidate-on-reconnect]
 
 É útil também revalidar quando o usuário volta a ter uma conexão. Esse cenário acontece muitas vezes quando o usuário desbloqueia o computador, mas a internet ainda não está conectada no momento.
 
@@ -57,7 +57,7 @@ Para ter certeza que os dados estão sempre atualizados, SWR revalidará automat
 
 Essa funcionalidade é habilitada por padrão. Você pode desabilitá-la pela opção [`revalidateOnReconnect`](/docs/api).
 
-## Desabilitar Revalidações Automáticas
+## Desabilitar Revalidações Automáticas [#disable-automatic-revalidations]
 
 Se o recurso é **imutável**, que nunca mudará se revalidarmos novamente, podemos desabilitar todas as revalidações automáticas para ele.
 

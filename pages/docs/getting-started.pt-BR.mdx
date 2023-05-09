@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 # Comece a Usar
 
-## Instalação
+## Instalação [#installation]
 
 Dentro do diretório do seu projeto React, execute o seguinte:
 
@@ -25,7 +25,7 @@ Dentro do diretório do seu projeto React, execute o seguinte:
   </Tab>
 </Tabs>
 
-## Início Rápido
+## Início Rápido [#quick-start]
 
 Para APIs RESTful normais com dados JSON, primeiro você precisa criar uma função `fetcher`, que é apenas um wrapper do nativo `fetch`:
 
@@ -57,7 +57,7 @@ function Profile () {
 Normalmente, existem 3 possíveis estados de uma requisição: "loading", "ready", ou "error". Você pode usar o valor de `data`, `error` e `isLoading`
 para determinar o estado atual da requisição, e retornar a interface correspondente.
 
-## Torne-o Reutilizável
+## Torne-o Reutilizável [#make-it-reusable]
 
 Quando construir uma aplicação web, você pode precisar reutilizar os dados em vários lugares da interface do usuário. É muito fácil criar
 reutilizações de dados em cima do SWR:
@@ -89,7 +89,7 @@ function Avatar ({ id }) {
 Adotando esse padrão, você pode esquecer sobre o **fetching** de dados no modo imperativo: inicie a requisição, atualize o estado de carregamento e retorne o resultado final.
 Ao invés, seu código é mais declarativo: você só precisa especificar o que dados é usado pelo componente.
 
-## Exemplo
+## Exemplo [#example]
 
 Num exemplo real, o nosso site mostra uma barra de navegação e o conteúdo, ambos dependem de `user`:
 

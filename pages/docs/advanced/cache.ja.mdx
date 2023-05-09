@@ -15,7 +15,7 @@ import { Callout } from 'nextra-theme-docs'
 
 キャッシュプロバイダーは、よりカスタマイズされたストレージで SWR を実現することを目的としています。
 
-## キャッシュプロバイダー
+## キャッシュプロバイダー [#cache-provider]
 
 キャッシュプロバイダーは、次の TypeScript 定義（ `swr` からインポート可能 ）に一致する Map のようなオブジェクトです：
 
@@ -30,7 +30,7 @@ interface Cache<Data> {
 
 たとえば、[JavaScript Map](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Map) インスタンスを SWR のキャッシュプロバイダーとして直接使用できます。
 
-## キャッシュプロバイダーの作成
+## キャッシュプロバイダーの作成 [#create-cache-provider]
 
 `SWRConfig` の `provider` オプションは、 [キャッシュプロバイダー](#キャッシュプロバイダー)を返す関数を受け取ります。受け取ったプロバイダーは、その `SWRConfig` の範囲内のすべての SWR フックで使用されます。例：
 
@@ -64,7 +64,7 @@ import { Cache } from 'components/diagrams/cache'
   キャッシュプロバイダーを使用している場合、グローバルな `mutate` は `<SWRConfig />` 以下の SWR フックでは**機能しません**。代わりに [こちら](#現在のキャッシュプロバイダーにアクセスする) を使用してください。
 </Callout>
 
-## 現在のキャッシュプロバイダーにアクセスする
+## 現在のキャッシュプロバイダーにアクセスする [#access-current-cache-provider]
 
 React コンポーネント内では、 `mutate` を含む他の設定と同様に、現在のキャッシュプロバイダーへアクセスするために、 [useSWRConfig](/docs/global-configuration#グローバル設定へアクセス) フックを使用する必要があります。
 
@@ -79,7 +79,7 @@ function Avatar() {
 
 `<SWRConfig>` 以下でない場合は、デフォルトの設定を返します。
 
-## 実験的：キャッシュプロバイダーの拡張
+## 実験的：キャッシュプロバイダーの拡張 [#experimental-extend-cache-provider]
 
 <Callout emoji="🧪">
   これは実験的な機能であり、将来のアップグレードで動作が変更される可能性があります。
@@ -95,9 +95,9 @@ function Avatar() {
 </SWRConfig>
 ```
 
-## 例
+## 例 [#examples]
 
-### LocalStorage を使った永続キャッシュ
+### LocalStorage を使った永続キャッシュ [#localstorage-based-persistent-cache]
 
 キャッシュを `localStorage` で同期しても良いかもしれません。実装例は次の通りです：
 
@@ -129,7 +129,7 @@ function localStorageProvider() {
   改善点として、メモリキャッシュをバッファとして使用し、定期的に `localStorage` に書き込むこともできます。 IndexedDB または WebSQL を使用して同様の階層化キャッシュを実装することもできます。
 </Callout>
 
-### テストケース間のキャッシュのリセット
+### テストケース間のキャッシュのリセット [#reset-cache-between-test-cases]
 
 アプリケーションをテストするときは、テストケース間で SWR キャッシュをリセットすることをオススメします。空のキャッシュプロバイダーでアプリケーションをラップするだけです。 Jest の例を次に示します：
 
@@ -145,7 +145,7 @@ describe('test suite', async () => {
 })
 ```
 
-### キャッシュを更新する
+### キャッシュを更新する [#modify-the-cache-data]
 
 ```jsx
 const { cache } = useSWRConfig()

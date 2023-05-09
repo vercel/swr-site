@@ -1,6 +1,6 @@
 # 프리패칭 데이터
 
-## 최상위 레벨 페이지 데이터
+## 최상위 레벨 페이지 데이터 [#top-level-page-data]
 
 SWR을 위한 데이터 프리패칭 방법은 다양합니다. 최상위 요청에 대해서는 [`rel="preload"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content)를 적극적으로 권장합니다.
 
@@ -12,7 +12,7 @@ HTML `<head>` 안에 넣기만 하면 됩니다. 쉽고 빠르며 네이티브�
 
 심지어 JavaScript가 다운로드 되기 전에 HTML을 로드할 때 데이터를 프리패칭 합니다. 동일한 URL로의 모든 가져오기 요청은 결과를 재사용합니다(물론 SWR도 포함).
 
-## 프로그래밍 방식으로 프리패치
+## 프로그래밍 방식으로 프리패치 [#programmatically-prefetch]
 
 SWR은 프로그래밍 방식으로 리소스를 프리페치하고 결과를 캐시에 저장하기 위한 `preload` API를 제공합니다. `preload`는 `key`와 `fetcher`를 인수로 받습니다.
 
@@ -97,7 +97,7 @@ const Page = () => {
 }
 ```
 
-## 데이터 프리필
+## 데이터 프리필 [#pre-fill-data]
 
 이미 존재하는 데이터를 SWR 캐시에 미리 채우길 원한다면, `fallbackData` 옵션을 사용할 수 있습니다. 예를 들면:
 

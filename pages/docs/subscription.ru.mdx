@@ -6,7 +6,7 @@ import { Callout } from 'nextra-theme-docs'
   Пожалуйста, обновитесь до последней версии (≥ 2.1.0), чтобы использовать этот API.
 </Callout>
 
-## `useSWRSubscription`
+## `useSWRSubscription` [#useswrsubscription]
 
 `useSWRSubscription` это хук React, который позволяет подписываться на реальные источники данных в реальном времени с помощью SWR.
 
@@ -14,11 +14,11 @@ import { Callout } from 'nextra-theme-docs'
 useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next: (error?: Error | null, data: Data) => void }) => () => void): { data?: Data, error?: Error }
 ```
 
-### API
+### API [#api]
 
 Этот хук подписывается на реальный источник данных с помощью предоставленной функции подписки, и возвращает последние полученные данные и любые возникшие ошибки. Хук автоматически обновляет возвращаемые данные по мере получения новых событий.
 
-#### Параметры
+#### Параметры [#parameters]
 
 - `key`: уникальный ключ, который идентифицирует данные, на которые подписывается, тот же ключ, что и ключ `useSWR`.
 - `subscribe`: Функция, которая подписывается на источник данных в реальном времени. Она получает следующие аргументы:
@@ -44,7 +44,7 @@ function subscribe(key, { next }) {
 }
 ```
 
-#### Возвращаемые значения
+#### Возвращаемые значения [#return-values]
 
 - `state`: Объект со следующими свойствами:
   - `data`: Последние полученные данные от реального источника данных.
@@ -52,7 +52,7 @@ function subscribe(key, { next }) {
 
 Когда получены новые данные, `error` будет сброшен на `undefined`.
 
-### Применение
+### Применение [#usage]
 
 Использование `useSWRSubscription` для подписки на источник данных Firestore:
 
@@ -94,7 +94,7 @@ function App() {
 
 You could also check TypeScript examples of `useSWRSubscription` at [this page](/docs/typescript#useswrsubscription)
 
-### Дедупликация
+### Дедупликация [#deduplication]
 
 `useSWRSubscription` дедуплицирует запросы подписки с одинаковым ключом.
 Если есть несколько компонентов, использующих один и тот же ключ, они будут использовать одну и ту же подписку.

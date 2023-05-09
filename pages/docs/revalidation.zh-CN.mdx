@@ -9,7 +9,7 @@ import Link from 'next/link'
   如果你想手动重新请求数据，请查看 <Link href="/docs/mutation">mutation</Link>。
 </Callout>
 
-## 聚焦时重新请求
+## 聚焦时重新请求 [#revalidate-on-focus]
 
 当你重新聚焦一个页面或在标签页之间切换时，SWR 会自动重新请求数据。
 
@@ -26,7 +26,7 @@ import Link from 'next/link'
 
 该特性默认是启用的。你可以通过 [`revalidateOnFocus`](/docs/api) 选项禁用它。
 
-## 定期重新请求
+## 定期重新请求 [#revalidate-on-interval]
 
 在很多情况下，数据会因为多个设备、多个用户、多个选项卡而发生改变。那么我们如何随着时间的推移更新屏幕上的数据呢？
 
@@ -49,7 +49,7 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 还有其他选项，例如 `refreshWhenHidden` 和 `refreshWhenOffline`。这两项默认都是禁用的，所以当网页不在屏幕上或没有网络连接时，SWR 不会请求。
 
-## 重新连接时重新请求
+## 重新连接时重新请求 [#revalidate-on-reconnect]
 
 当用户重新联机时重新请求非常有用。这种情况经常发生在用户解锁了他们的计算机但网络还没有连上时。
 
@@ -57,7 +57,7 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 该特性默认是启用的。你可以通过 [`revalidateOnReconnect`](/docs/api) 选项禁用它。
 
-## 禁用自动重新请求
+## 禁用自动重新请求 [#disable-automatic-revalidations]
 
 如果资源是**不可变的**，即使我们再怎么重新请求也永远不会发生任何改变，那么我们可以禁用它的所有的自动重新请求。
 

@@ -2,11 +2,11 @@
 
 SWR 对于使用 TypeScript 编写的 app 是友好的，开箱即用，类型安全。
 
-## 基本用法
+## 基本用法 [#basic-usage]
 
 默认情况下，SWR 会从 `key` 推断出 `fetcher` 的参数类型，因此你可以自动获得首选类型。
 
-### useSWR
+### useSWR [#useswr]
 
 ```typescript
 // `key` 被推断为 `string`
@@ -42,7 +42,7 @@ const { data, error } = useSWR<User, Error>(uid, fetcher);
 // `error` 将会是 `Error | undefined`.
 ```
 
-### useSWRInfinite
+### useSWRInfinite [#useswrinfinite]
 
 同样适用于 `swr/infinite`，你可以依靠自动类型推断或自己显式地指定类型。
 
@@ -56,7 +56,7 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
-### useSWRSubscription
+### useSWRSubscription [#useswrsubscription]
 
 * 内联的 `subscribe` 函数，手动指定 `next` 类型为 `SWRSubscriptionOptions` 的示例代码：
 
@@ -95,7 +95,7 @@ const sub: SWRSubscription<string, number, Error> = (key, { next }) => {
 const { data, error } = useSWRSubscription('key', sub)
 ```
 
-## 泛型
+## 泛型 [#generics]
 
 指定 `data` 的类型很容易。默认情况下，它将使用 `fetcher` 的返回类型（未就绪状态为 `undefined`）作为 `data` 的类型，但你也可以将其作为参数传递：
 
@@ -124,7 +124,7 @@ const config: SWRConfiguration = {
 const { data } = useSWR<string[]>('/api/data', fetcher, config)
 ```
 
-## 中间件类型
+## 中间件类型 [#middleware-types]
 
 你可以导入一些额外的类型定义，以帮助你向自定义的中间件添加类型。
 

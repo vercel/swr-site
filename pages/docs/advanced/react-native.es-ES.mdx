@@ -9,9 +9,9 @@ import { Callout }  from 'nextra-theme-docs'
 A diferencia de React funcionando dentro de los navegadores, React Native tiene una experiencia de usuario muy distinta. Por ejemplo, no hay un “enfoque de pestaña”, cambiar del fondo a la aplicación se considera como un “enfoque” en su lugar.
 Para personalizar estos comportamientos, puedes reemplazar los eventos `focus` y `online` por defecto del navegador con la detección de estado de la aplicación de React Native y otras API que tiene de forma nativa, y configura SWR para usarlas.
 
-## Ejemplo
+## Ejemplo [#example]
 
-### Configuración global
+### Configuración global [#global-setup]
 
 Puedes envolver tu aplicación con `SWRConfig` y preconfigurar todas las configuraciones ahí.
 
@@ -25,7 +25,7 @@ Puedes envolver tu aplicación con `SWRConfig` y preconfigurar todas las configu
 </SWRConfig>
 ```
 
-### Personaliza los eventos `focus` y `reconnect`
+### Personaliza los eventos `focus` y `reconnect` [#customize-focus-and-reconnect-events]
 
 Existen algunas configuraciones que tienes que tener en cuenta como `isOnline`, `isVisible`, `initFocus` y `initReconnect`.
 

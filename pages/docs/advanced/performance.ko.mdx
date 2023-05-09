@@ -12,7 +12,7 @@ SWR은 앱에서 다음을 보장합니다:
 
 어떠한 코드 수정도 필요 없습니다.
 
-## 중복 제거
+## 중복 제거 [#deduplication]
 
 앱에서 SWR hook을 재사용하는 것은 아주 일반적입니다. 예를 들어, 앱이 현재 사용자의 아바타를 다섯 번 렌더링한다면:
 
@@ -47,14 +47,14 @@ function App () {
 
 기본 중복 제거 인터벌을 오버라이딩할 수 있는 [`dedupingInterval` 옵션](/docs/api)도 있습니다.
 
-## 깊은 비교
+## 깊은 비교 [#deep-comparison]
 
 SWR은 기본적으로 데이터 변경을 **깊게 비교**합니다. `data` 값이 변경되지 않았다면 리렌더링을 트리거 하지 않습니다.
 
 이 동작을 변경하길 원한다면 [`compare` 옵션](/docs/api)을 통해 비교 함수를 커스터마이징할 수도 있습니다.
 예를 들면, 일부 API의 응답이 데이터 diff에서 제외하길 원하는 서버의 타임 스탬프를 반환합니다.
 
-## 의존성 수집
+## 의존성 수집 [#dependency-collection]
 
 `useSWR` returns 4 **stateful** values: `data`, `error`, `isLoading` and `isValidating`, each one can be updated independently.
 예를 들어, 전체 데이터 가져오기 생명 주기에서 이 값들을 출력한다면 뭔가 다음과 같은 것입니다.
@@ -103,7 +103,7 @@ Data      // => 재시도 종료, 데이터 얻음
 이 모든 세 가지 상태를 항상 사용하고 있지 않다면, 이미 이 기능의 이점을 누리고 있는 것입니다.
 [Vercel](https://vercel.com)에서, 이 최적화의 결과 ~60% 더 적은 리렌더링의 결과를 얻었습니다.
 
-## 트리 쉐이킹
+## 트리 쉐이킹 [#tree-shaking]
 
 SWR 패키지는 [트리 쉐이킹이 가능](https://webpack.js.org/guides/tree-shaking)하며 부작용도 없습니다.
 이는 코어 `useSWR` API만을 임포팅한다면 `useSWRInfinite`와 같은 사용하지 않는 API는 애플리케이션에 번들링되지 않는다는 것을 의미합니다.

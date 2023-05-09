@@ -1,6 +1,6 @@
 # データのプリフェッチ
 
-## トップレベルのページデータ
+## トップレベルのページデータ [#top-level-page-data]
 
 SWR のデータをプリフェッチする方法はたくさんあります。トップレベルのリクエストでは、 [`rel="preload"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content) を強く推奨します。
 
@@ -12,7 +12,7 @@ HTMLの `<head>` の中に入れるだけです。簡単、速い、そしてネ
 
 JavaScriptのダウンロードが開始される前であっても、HTMLの読み込み時にデータをプリフェッチします。同じ URL で受信したすべてのフェッチリクエストは、その結果を再利用します（もちろん、 SWR を含む）。
 
-## プログラムによるプリフェッチ
+## プログラムによるプリフェッチ [#programmatically-prefetch]
 
 SWR は `preload` というデータをプログラマブルにプリフェッチして結果をキャッシュに保存する API を提供しています。`preload` は `key` と `fetcher` を引数として受け取ります。
 
@@ -96,7 +96,7 @@ const Page = () => {
 }
 ```
 
-## 事前データ
+## 事前データ [#pre-fill-data]
 
 もし既に存在しているデータを SWR にキャッシュしたい場合は、 `fallbackData` オプションを使うことができます。たとえば：
 

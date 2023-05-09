@@ -8,9 +8,9 @@ import { Callout } from 'nextra-theme-docs'
 
 SWR은 **페이지네이션**과 **인피니트 로딩**과 같은 일반적인 UI 패턴을 지원하는 전용 API `useSWRInfinite`를 제공합니다.
 
-## `useSWR`을 사용하는 시점
+## `useSWR`을 사용하는 시점 [#when-to-use-useswr]
 
-### 페이지네이션
+### 페이지네이션 [#pagination]
 
 다음과 같은 무언가를 구축한다면 우선 `useSWRInfinite`은 필요하지 **않고** `useSWR`만 사용하면 됩니다.
 
@@ -81,7 +81,7 @@ function App () {
 단 한 줄의 코드로 훨씬 더 나은 UX를 얻었습니다. `useSWR` hook은 아주 강력하며,
 대부분의 시나리오를 다룰 수 있습니다.
 
-### 인피니트 로딩
+### 인피니트 로딩 [#infinite-loading]
 
 리스트에 데이터를 이어 붙이는 "더 보기" 버튼(또는 스크롤할 때 자동으로 완료)으로
 **인피니트 로딩** UI를 구축하길 원하는 경우가 있습니다.
@@ -134,7 +134,7 @@ function App () {
 }
 ```
 
-### 고급 사례
+### 고급 사례 [#advanced-cases]
 
 하지만 일부 고급 사례에서는 위 해결책이 동작하지 않습니다.
 
@@ -164,7 +164,7 @@ function App () {
 
 이것이 새로운 `useSWRInfinite` Hook이 도움이 되는 방법입니다.
 
-## useSWRInfinite
+## useSWRInfinite [#useswrinfinite]
 
 `useSWRInfinite`는 하나의 Hook으로 많은 요청을 트리거할 수 있습니다. 이렇게 생겼습니다.
 
@@ -187,9 +187,9 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   `import { useSWRInfinite } from 'swr'`
 </Callout>
 
-### API
+### API [#api]
 
-#### 파라미터
+#### 파라미터 [#parameters]
 
 - `getKey`: 인덱스와 이전 페이지 데이터를 받고 페이지의 키를 반환하는 함수
 - `fetcher`: `useSWR`의 [fetcher 함수](/docs/data-fetching)와 동일
@@ -204,7 +204,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   `initialSize` 옵션은 생명 주기 내의 변경을 허용하지 않습니다.
 </Callout>
 
-#### 반환 값
+#### 반환 값 [#return-values]
 
 - `data`: 각 페이지의 응답 값의 배열
 - `error`: `useSWR`의 `error`와 동일
@@ -214,7 +214,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
 - `size`: 가져*올* 페이지 및 반환*될* 페이지의 수
 - `setSize`: 가져와야 하는 페이지의 수를 설정
 
-### 예시 1: 페이지네이션 API 기반 인덱스
+### 예시 1: 페이지네이션 API 기반 인덱스 [#example-1-index-based-paginated-api]
 
 API 기반 일반 인덱스:
 
@@ -283,7 +283,7 @@ function App () {
 ]
 ```
 
-### 예시 2: 커서 또는 오프셋 기반 페이지네이션 API
+### 예시 2: 커서 또는 오프셋 기반 페이지네이션 API [#example-2-cursor-or-offset-based-paginated-api]
 
 이제 API가 커서를 요구하고 데이터와 함께 다음 커서를 반환한다고 해봅시다.
 
@@ -315,7 +315,7 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
-### 병렬 데이터 요청
+### 병렬 데이터 요청 [#parallel-fetching-mode]
 
 <Callout emoji="✅">
   이 API를 사용하려면 최신 버전(≥ 2.1.0)으로 업데이트하세요.
@@ -346,7 +346,7 @@ function App () {
     The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
 </Callout>
 
-### `useSWRInfinite`를 사용한 Global Mutate
+### `useSWRInfinite`를 사용한 Global Mutate [#global-mutate-with-useswrinfinite]
 
 `useSWRInfinite`는 모든 페이지 데이터를 각 페이지 데이터와 함께 특수 캐시 키로 저장하므로 global mutate로 데이터를 다시 감증하려면 `swr/infinite`에서 `unstable_serialize`를 사용해야 합니다.
 
@@ -364,7 +364,7 @@ function App() {
     이름에서 알 수 있듯이 `unstable_serialize`는 안정적인 API가 아니기 때문에 앞으로 변경될 수도 있습니다.
 </Callout>
 
-### 고급 기능
+### 고급 기능 [#advanced-features]
 
 `useSWRInfinite`로 다음 기능들을 구현하는 방법을 보여주는 [예시](/examples/infinite-loading)입니다.
 

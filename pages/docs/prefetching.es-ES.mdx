@@ -1,6 +1,6 @@
 # Prefetching Data
 
-## Top-Level Page Data
+## Top-Level Page Data [#top-level-page-data]
 
 Hay muchas formas de precargar los datos para SWR. Para las solicitudes de nivel superior, [`rel="preload"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content) es muy recomendable:
 
@@ -12,7 +12,7 @@ Sólo tienes que ponerlo dentro de tu HTML `<head>`. Es fácil, rápido y nativo
 
 Se precargarán los datos cuando se cargue el HTML, incluso antes de que el JavaScript comience a descargarse. Todas las solicitudes de fetch entrantes con la misma URL reutilizarán el resultado (incluyendSWR, por supuesto).
 
-## Programmatically Prefetch
+## Programmatically Prefetch [#programmatically-prefetch]
 
 SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments.
 
@@ -96,7 +96,7 @@ const Page = () => {
 }
 ```
 
-## Pre-fill Data
+## Pre-fill Data [#pre-fill-data]
 
 If you want to pre-fill existing data into the SWR cache, you can use the `fallbackData` option. For example:
 

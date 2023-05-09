@@ -6,8 +6,8 @@ specifiers:
   focus-visible: ^5.2.0
   intersection-observer: ^0.12.2
   next: ^13.2.4
-  nextra: ^2.2.19
-  nextra-theme-docs: ^2.2.19
+  nextra: ^2.4.2
+  nextra-theme-docs: ^2.4.2
   postcss: ^8.4.21
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -19,8 +19,8 @@ dependencies:
   focus-visible: 5.2.0
   intersection-observer: 0.12.2
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
-  nextra: 2.2.19_ld2jel3hspngo3u5lti2kgl2sq
-  nextra-theme-docs: 2.2.19_i765vautotixoofbdi6dinfkwe
+  nextra: 2.4.2_ld2jel3hspngo3u5lti2kgl2sq
+  nextra-theme-docs: 2.4.2_iuhhokgcn6aivbo4f4oyzqn4yi
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-intersection-observer: 9.4.3_react@18.2.0
@@ -1775,8 +1775,8 @@ packages:
       - supports-color
     dev: false
 
-  /next-seo/5.15.0_ld2jel3hspngo3u5lti2kgl2sq:
-    resolution: {integrity: sha512-LGbcY91yDKGMb7YI+28n3g+RuChUkt6pXNpa8FkfKkEmNiJkeRDEXTnnjVtwT9FmMhG6NH8qwHTelGrlYm9rgg==}
+  /next-seo/6.0.0_ld2jel3hspngo3u5lti2kgl2sq:
+    resolution: {integrity: sha512-jKKt1p1z4otMA28AyeoAONixVjdYmgFCWwpEFtu+DwRHQDllVX3RjtyXbuCQiUZEfQ9rFPBpAI90vDeLZlMBdg==}
     peerDependencies:
       next: ^8.1.1-canary.54 || >=9.0.0
       react: '>=16.0.0'
@@ -1846,11 +1846,11 @@ packages:
       - babel-plugin-macros
     dev: false
 
-  /nextra-theme-docs/2.2.19_i765vautotixoofbdi6dinfkwe:
-    resolution: {integrity: sha512-+5PcNgHwxwSAmQZlbV2cbjbvxj7CPYnN44OtWNxHQ8L3dzlw6fUyIJtyCUcGbDHpFC3sHmwYgB3OCWH8m4P35Q==}
+  /nextra-theme-docs/2.4.2_iuhhokgcn6aivbo4f4oyzqn4yi:
+    resolution: {integrity: sha512-5H6NJ38TlbgetNx9HjMmQcNpsp6GFH26TfjLVC0RWxhEPuoutSFpJ8RjWKXv6WEaWaL500CoErW0/DeXzuQGUg==}
     peerDependencies:
       next: '>=9.5.3'
-      nextra: 2.2.19
+      nextra: 2.4.2
       react: '>=16.13.1'
       react-dom: '>=16.13.1'
     dependencies:
@@ -1863,17 +1863,18 @@ packages:
       intersection-observer: 0.12.2
       match-sorter: 6.3.1
       next: 13.2.4_biqbaboplfbrettd7655fr4n2y
-      next-seo: 5.15.0_ld2jel3hspngo3u5lti2kgl2sq
+      next-seo: 6.0.0_ld2jel3hspngo3u5lti2kgl2sq
       next-themes: 0.2.1_ld2jel3hspngo3u5lti2kgl2sq
-      nextra: 2.2.19_ld2jel3hspngo3u5lti2kgl2sq
+      nextra: 2.4.2_ld2jel3hspngo3u5lti2kgl2sq
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       scroll-into-view-if-needed: 3.0.3
       zod: 3.20.2
     dev: false
 
-  /nextra/2.2.19_ld2jel3hspngo3u5lti2kgl2sq:
-    resolution: {integrity: sha512-QmgbJvT1lfmFCM8n5gfGTA5p8efw20N/oZP9ojBhWhmatq/PwAp7VoSeTan6TT9Yspv6PmnrgpqKhYGzPSkFVw==}
+  /nextra/2.4.2_ld2jel3hspngo3u5lti2kgl2sq:
+    resolution: {integrity: sha512-FH2BTCF8q3aBtc1w1pj1N6LMFyiMP5KL+w6Ph4s2M5FwTtv150dSNWWw5Hy2GgxLTi391B/CRkO31OCjp9trkA==}
+    engines: {node: '>=16'}
     peerDependencies:
       next: '>=9.5.3'
       react: '>=16.13.1'
@@ -1893,7 +1894,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       rehype-katex: 6.0.2
-      rehype-pretty-code: 0.9.3_shiki@0.14.1
+      rehype-pretty-code: 0.9.4_shiki@0.14.1
       remark-gfm: 3.0.1
       remark-math: 5.1.1
       remark-reading-time: 2.0.1
@@ -1902,6 +1903,7 @@ packages:
       title: 3.5.3
       unist-util-remove: 3.1.1
       unist-util-visit: 4.1.1
+      zod: 3.20.2
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -2174,8 +2176,8 @@ packages:
       unified: 10.1.1
     dev: false
 
-  /rehype-pretty-code/0.9.3_shiki@0.14.1:
-    resolution: {integrity: sha512-57i+ifrttqpeQxub0NZ2pRw0aiUPYeBpr234NLWfZ4BfbEaP+29+iCXB1rUMkzoPi6IBC4w4I93mUPgw36IajQ==}
+  /rehype-pretty-code/0.9.4_shiki@0.14.1:
+    resolution: {integrity: sha512-3m4aQT15n8C+UizcZL0enaahoZwCDm5K1qKQ3DGgHE7U8l/DEEEJ/hm+uDe9yyK4sxVOSfZcRIMHrpJwLQi+Rg==}
     engines: {node: ^12.16.0 || >=13.2.0}
     peerDependencies:
       shiki: '*'

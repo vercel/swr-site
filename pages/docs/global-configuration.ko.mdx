@@ -35,11 +35,11 @@ function App () {
 }
 ```
 
-## 중첩 설정
+## 중첩 설정 [#nesting-configurations]
 
 `SWRConfig`는 상위 컨텍스트의 설정을 병합합니다. Object나 Function을 받을 수 있습니다. Function은 상위 설정을 파라미터로 받고 직접 정의할 수 있는 새 설정을 반환합니다.
 
-### Object 설정 예시
+### Object 설정 예시 [#object-configuration-example]
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -75,7 +75,7 @@ function Page() {
 }
 ```
 
-### Function 설정 예시
+### Function 설정 예시 [#functional-configuration-example]
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -110,9 +110,9 @@ function Page() {
 }
 ```
 
-## 부가적인 APIs
+## 부가적인 APIs [#extra-apis]
 
-### 캐시 공급자
+### 캐시 공급자 [#cache-provider]
 
 나열된 모든 [옵션](/docs/api) 외에도, `SWRConfig`는 선택적으로 `provider` 함수도 받습니다. 더 자세한 내용은 [캐시](/docs/advanced/cache) 섹션을 참고해 주세요.
 
@@ -122,7 +122,7 @@ function Page() {
 </SWRConfig>
 ```
 
-### 전역 설정에 접근하기
+### 전역 설정에 접근하기 [#access-to-global-configurations]
 
 `useSWRConfig` hook을 사용해 전역 설정과 [`mutate`](/docs/mutation) 및 [`cache`](/docs/advanced/cache)를 얻을 수 있습니다.
 

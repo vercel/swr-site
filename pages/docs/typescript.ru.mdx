@@ -2,11 +2,11 @@
 
 SWR дружелюбен к приложениям, написанным на TypeScript, с предустановленной типизацией.
 
-## Основное использование
+## Основное использование [#basic-usage]
 
 По умолчанию SWR также выводит типы аргументов `fetcher` из `key`, так чтобы вам были доступны предпочтительные типы автоматически.
 
-### useSWR
+### useSWR [#useswr]
 
 ```typescript
 // `key` подразумевается как `string`
@@ -42,7 +42,7 @@ const { data, error } = useSWR<User, Error>(uid, fetcher);
 // `error` будет `Error | undefined`.
 ```
 
-### useSWRInfinite
+### useSWRInfinite [#useswrinfinite]
 
 То же самое для `swr/infinite`, вы можете либо полагаться на автоматический вывод типа, либо явно указывать типы самостоятельно.
 
@@ -56,7 +56,7 @@ const getKey: SWRInfiniteKeyLoader = (index, previousPageData) => {
 const { data } = useSWRInfinite(getKey, fetcher)
 ```
 
-### useSWRSubscription
+### useSWRSubscription [#useswrsubscription]
 
 * Inline subscribe function and mamually specify the type of `next`  using `SWRSubscriptionOptions`.
 
@@ -95,7 +95,7 @@ const sub: SWRSubscription<string, number, Error> = (key, { next }) => {
 const { data, error } = useSWRSubscription('key', sub)
 ```
 
-## Обобщения (Generics)
+## Обобщения (Generics) [#generics]
 
 Указывать тип `data` легко. По умолчанию он будет использовать возвращаемый тип `fetcher` (с `undefined` для неготового состояния) в качестве типа `data`, но вы также можете передать его в качестве параметра:
 
@@ -124,7 +124,7 @@ const config: SWRConfiguration = {
 const { data } = useSWR<string[]>('/api/data', fetcher, config)
 ```
 
-## Типы промежуточного ПО
+## Типы промежуточного ПО [#middleware-types]
 
 Есть несколько дополнительных определений типов, которые вы можете импортировать, чтобы упростить добавление типов в ваше пользовательское промежуточное ПО.
 

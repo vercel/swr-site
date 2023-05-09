@@ -14,7 +14,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 fetch 프로미스가 거부되면 `error` 객체가 정의됩니다.
 
-## 상태 코드와 에러 객체
+## 상태 코드와 에러 객체 [#status-code-and-error-object]
 
 때로는 API가 상태 코드와 함께 에러 객체를 반환하기를 원합니다.
 모두 클라이언트에게 유용합니다.
@@ -55,7 +55,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 [여기](/examples/error-handling)에 예시가 있습니다.
 
-## 에러 재시도
+## 에러 재시도 [#error-retry]
 
 SWR은 [지수 백오프 알고리즘](https://en.wikipedia.org/wiki/Exponential_backoff)를 사용해 에러 시 요청을 재시도합니다.
 이 알고리즘을 사용하면 에러로부터 앱을 빠르게 복구할 수 있으며 너무 자주 재시도하여 리소스를 낭비하지도 않습니다.
@@ -84,7 +84,7 @@ useSWR('/api/user', fetcher, {
 
 [전역 설정](/docs/global-configuration) 컨텍스트를 통해 제공하는 것도 가능합니다.
 
-## 전역 에러 기록
+## 전역 에러 기록 [#global-error-report]
 
 항상 컴포넌트 내에서 반응적으로 `error` 객체를 얻을 수 있습니다.
 하지만 UI에 [토스트](https://vercel.com/design/toast) 또는 [스낵바](https://material.io/components/snackbars)를 보여주거나 [Sentry](https://sentry.io)와 같은 어딘가에 기록하기 위해 에러를 전역으로 처리하길 원할 경우,

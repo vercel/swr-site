@@ -35,11 +35,11 @@ function App () {
 }
 ```
 
-## 嵌套配置
+## 嵌套配置 [#nesting-configurations]
 
 `SWRConfig` 会合并来自父层上下文的配置。它可以接收一个对象式或函数式配置。函数式配置可以从参数中得到父层的配置信息，并返回一个你自定义定制的配置。
 
-### 对象式配置示例
+### 对象式配置示例 [#object-configuration-example]
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -75,7 +75,7 @@ function Page() {
 }
 ```
 
-### 函数式配置示例
+### 函数式配置示例 [#functional-configuration-example]
 
 ```jsx
 import { SWRConfig, useSWRConfig } from 'swr'
@@ -110,9 +110,9 @@ function Page() {
 }
 ```
 
-## 额外的 API
+## 额外的 API [#extra-apis]
 
-### 缓存 Provider
+### 缓存 Provider [#cache-provider]
 
 除去以上所列的 [选项](/docs/api)，`SWRConfig` 还接受一个可选的 `provider` 函数。详细信息请参考 [缓存](/docs/advanced/cache) 这一节。
 
@@ -122,7 +122,7 @@ function Page() {
 </SWRConfig>
 ```
 
-### 访问全局配置
+### 访问全局配置 [#access-to-global-configurations]
 
 你可以使用 `useSWRConfig` hook 来获取全局配置，以及[`数据更改`](/docs/mutation)和[`缓存`](/docs/advanced/cache)：
 

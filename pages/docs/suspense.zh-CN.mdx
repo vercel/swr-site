@@ -46,7 +46,7 @@ Suspense 模式会在数据准备就绪前暂停渲染，这意味着它很容�
 
 ---
 
-### 注意：使用条件请求
+### 注意：使用条件请求 [#note-with-conditional-fetching]
 
 通常，当启用 `suspense` 时，可以确保 `data` 在渲染时始终是准备就绪的：
 
@@ -72,6 +72,6 @@ function Profile () {
 
 如果你想阅读有关该限制的更多技术细节，请查看[这里的讨论](https://github.com/vercel/swr/pull/357#issuecomment-627089889)。
 
-### 服务端渲染
+### 服务端渲染 [#server-side-rendering]
 
 当在服务端渲染（包括 Next.js 中的预渲染功能）中使用 suspense 模式时，**必须**通过 [fallbackData 或 fallback](/docs/with-nextjs#pre-rendering-with-default-data) 提供初始数据，这意味着你不能使用 `Suspense` 在服务器端获取数据，而是完全使用客户端的数据请求，或者通过框架级的数据获取方法（例如 Next.js 中的 getStaticProps）获取数据，更多的讨论可以在[这里](https://github.com/vercel/swr/issues/1906)找到。

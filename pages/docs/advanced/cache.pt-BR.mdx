@@ -18,7 +18,7 @@ Por padrão, SWR usa um cache global para armazenar e compartilhar dados entre t
 
 Cache Providers são destinados a permitir SWR com armazenamentos mais personalizados.
 
-## Cache Provider
+## Cache Provider [#cache-provider]
 
 Um cache provider é um objeto (parecido com um Map) que corresponde à definição de tipo TypeScript da seguinte definição (que pode ser importado de `swr`):
 
@@ -33,7 +33,7 @@ interface Cache<Data> {
 
 Por exemplo, um [Map do JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) pode ser usado diretamente como cache provider para SWR.
 
-## Criar Cache Provider
+## Criar Cache Provider [#create-cache-provider]
 
 A opção `provider` do `SWRConfig` recebe uma função que retorna um [cache provider](#cache-provider). O provider será usado por todos os hooks SWR dentro dos limites de configuração do `SWRConfig`. Por exemplo:
 
@@ -67,7 +67,7 @@ Quando aninhado, hooks SWR irão usar o cache provider mais alto. Se não houver
     Se um cache provider é usado, o `mutate` global **não** funcionará para os hooks SWR dentro do limite de configuração `<SWRConfig>`. Por favor, use [isto](#acessar-cache-provider-atual) em vez disso.
 </Callout>
 
-## Acessar Cache Provider Atual
+## Acessar Cache Provider Atual [#access-current-cache-provider]
 
 Quando dentro de um Componente React, você precisa usar o hook [`useSWRConfig`](/docs/global-configuration#acesso-às-configurações-globais) para obter acesso ao cache provider atual e outras configurações, incluindo `mutate`:
 
@@ -82,7 +82,7 @@ function Avatar() {
 
 Se não estiver sob nenhum `<SWRConfig>`, será retornado as configurações padrão.
 
-## Experimental: Estender o Cache Provider
+## Experimental: Estender o Cache Provider [#experimental-extend-cache-provider]
 
 <Callout emoji="🧪">
    Este é um recurso experimental, o comportamento pode mudar em futuras atualizações.
@@ -98,9 +98,9 @@ O primeiro argumento para a função `provider` é o cache provider do nível su
 </SWRConfig>
 ```
 
-## Exemplos
+## Exemplos [#examples]
 
-### Cache Persistente Baseado em LocalStorage
+### Cache Persistente Baseado em LocalStorage [#localstorage-based-persistent-cache]
 
 Você pode querer sincronizar seu cache com `localStorage`. Aqui está um exemplo de implementação:
 
@@ -132,7 +132,7 @@ Em seguida, use-o como provider:
   Como melhoria, você também pode usar o cache de memória como um buffer e gravar em `localStorage` periodicamente. Você também pode implementar um cache em camadas semelhante ao IndexedDB ou WebSQL.
 </Callout>
 
-### Redefinir Cache Entre Casos de Teste
+### Redefinir Cache Entre Casos de Teste [#reset-cache-between-test-cases]
 
 Ao testar seu aplicativo, talvez você queira redefinir o cache SWR entre os casos de teste. Você pode simplesmente envolver seu aplicativo com um cache provider vazio. Aqui está um exemplo com Jest:
 
@@ -148,7 +148,7 @@ describe('test suite', async () => {
 })
 ```
 
-### Modificar os Dados do Cache
+### Modificar os Dados do Cache [#modify-the-cache-data]
 
 ```jsx
 const { cache } = useSWRConfig()

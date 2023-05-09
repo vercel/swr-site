@@ -8,9 +8,9 @@ import { Callout } from 'nextra-theme-docs'
 
 SWR provê uma API `useSWRInfinite` dedicada para lidar com padrões de interface comuns como **paginação** e **carregamento infinito**.
 
-## Quando Usar `useSWR`
+## Quando Usar `useSWR` [#when-to-use-useswr]
 
-### Paginação
+### Paginação [#pagination]
 
 Antes de tudo, nós podemos **NÃO** precisar de `useSWRInfinite` mas podemos usar apenas `useSWR` se estamos construindo algo como isso:
 
@@ -79,7 +79,7 @@ function App () {
 
 Com apenas 1 linha de código, obtemos uma UX muito melhor. O hook `useSWR` é tão poderoso que a maioria dos cenários são cobertos por ele.
 
-### Carregamento Infinito
+### Carregamento Infinito [#infinite-loading]
 
 Às vezes, queremos criar uma UI de **carregamento infinito**, com um botão "Carregar mais" que anexa dados
 para a lista (ou feito automaticamente quando você rola):
@@ -132,7 +132,7 @@ function App () {
 }
 ```
 
-### Casos Avançados
+### Casos Avançados [#advanced-cases]
 
 Entretanto, em alguns casos avançados, a solução acima não funciona.
 
@@ -162,7 +162,7 @@ precisa dos dados da página interior, elas não são isoladas.
 
 É assim que esse novo hook `useSWRInfinite` pode ajudar.
 
-## useSWRInfinite
+## useSWRInfinite [#useswrinfinite]
 
 `useSWRInfinite` nos dá a habilidade de disparar uma quantidade de solicitações com um Hook. Isso é como se fosse:
 
@@ -185,9 +185,9 @@ No carregamento infinito, uma _página_ é uma requisição, e nosso objetivo é
   `import { useSWRInfinite } from 'swr'`
 </Callout>
 
-### API
+### API [#api]
 
-#### Parâmetros
+#### Parâmetros [#parameters]
 
 - `getKey`: uma função que aceita o índice e os dados da página anterior, retorna a chave de uma página
 - `fetcher`: mesma função que a [função fetcher](/docs/data-fetching) do `useSWR`.
@@ -202,7 +202,7 @@ No carregamento infinito, uma _página_ é uma requisição, e nosso objetivo é
   Note que a opção `initialSize` não é permitida a mudar no ciclo de vida.
 </Callout>
 
-#### Valores de Retorno
+#### Valores de Retorno [#return-values]
 
 - `data`: um array de respostas de fetch para cada página
 - `error`: mesma que o objeto `error` do `useSWR`.
@@ -212,7 +212,7 @@ No carregamento infinito, uma _página_ é uma requisição, e nosso objetivo é
 - `size`: o número de páginas que _vão_ ser carregadas e retornadas
 - `setSize`: define o número de páginas que precisam ser carregadas
 
-### Exemplo 1: API de Paginação Baseada em Índice
+### Exemplo 1: API de Paginação Baseada em Índice [#example-1-index-based-paginated-api]
 
 Para APIs baseadas em índice:
 
@@ -281,7 +281,7 @@ Também, `data` não é mais apenas uma resposta da API. É um array de resposta
 ]
 ```
 
-### Exemplo 2: API de Paginação Baseada em Cursor ou Offset
+### Exemplo 2: API de Paginação Baseada em Cursor ou Offset [#example-2-cursor-or-offset-based-paginated-api]
 
 Vamos dizer que a API agora requer um cursor e retorna o próximo cursor junto com os dados:
 
@@ -313,7 +313,7 @@ const getKey = (pageIndex, previousPageData) => {
 }
 ```
 
-### Modo de Carregamento Paralelo
+### Modo de Carregamento Paralelo [#parallel-fetching-mode]
 
 <Callout emoji="✅">
   Por favor atualize para a última versão (≥ 2.1.0) para usar essa API.
@@ -347,7 +347,7 @@ function App () {
     O argumento `previousPageData` da função `getKey` se torna `null` quando você habilita a opção `parallel`.
 </Callout>
 
-### Mutação Global com `useSWRInfinite`
+### Mutação Global com `useSWRInfinite` [#global-mutate-with-useswrinfinite]
 
 `useSWRInfinite` armazena todos os dados da página com uma chave de cache especial junto com cada dado da página. Você deve usar `unstable_serialize` em `swr/infinite` para revalidar os dados com a mutação global.
 
@@ -365,7 +365,7 @@ function App() {
     Como o nome indica, `unstable_serialize` não é uma API estável, então podemos mudá-la no futuro.
 </Callout>
 
-### Funcionalidades Avançadas
+### Funcionalidades Avançadas [#advanced-features]
 
 [Aqui tem um exemplo](/examples/infinite-loading) mostrando como você pode implementar as seguintes funcionalidades com `useSWRInfinite`:
 

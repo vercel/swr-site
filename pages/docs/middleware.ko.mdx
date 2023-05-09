@@ -8,12 +8,12 @@ import { Callout } from 'nextra-theme-docs'
 
 미들웨어 기능은 SWR 1.0에 새롭게 추가되었으며 SWR hook의 전후에 로직을 실행할 수 있도록 해줍니다.
 
-## 사용법
+## 사용법 [#usage]
 
 미들웨어는 SWR hook을 받고 hook의 실행 전후에 로직을 실행할 수 있습니다. 여러 미들웨어가 존재한다면, 각 미들웨어는 다음 미들웨어를 감쌉니다.
 리스트의 마지막 미들웨어가 원본 SWR hook `useSWR`을 받습니다.
 
-### API
+### API [#api]
 
 _노트: 함수 이름을 대문자로 시작하면 안됩니다(예, `MyMiddleware` 대신에 `myMiddleware`). 그렇지 않으면 React lint 규칙이 `Rules of Hook` 에러를 던집니다_
 
@@ -43,7 +43,7 @@ function myMiddleware (useSWRNext) {
 useSWR(key, fetcher, { use: [myMiddleware] })
 ```
 
-### 확장하기
+### 확장하기 [#extend]
 
 일반 옵션과 마찬가지로 미들웨어를 확장할 수 있습니다. 예를 들면:
 
@@ -70,7 +70,7 @@ function Foo() {
 useSWR(key, fetcher, { use: [a, b, c] })
 ```
 
-### 다중 미들웨어
+### 다중 미들웨어 [#multiple-middleware]
 
 각 미들웨어는 다음 미들웨어를 감싸며, 마지막 미들웨어는 SWR hook을 감쌉니다. 예를 들면:
 
@@ -90,9 +90,9 @@ enter a
 exit  a
 ```
 
-## 예시
+## 예시 [#examples]
 
-### Request Logger
+### Request Logger [#request-logger]
 
 예시로 간단한 request logger 미들웨어를 만들어봅시다. 이 SWR hook으로부터 전송된 모든 가져오기 요청을 출력합니다. 이 미들웨어를 `SWRConfig`에 추가하여 모든 SWR hook에 대해 사용할 수도 있습니다.
 
@@ -122,7 +122,7 @@ SWR Request: /api/user1
 SWR Request: /api/user2
 ```
 
-### 이전 결과 유지하기
+### 이전 결과 유지하기 [#keep-previous-result]
 
 때때로 `useSWR`이 반환한 데이터가 "지연"되길 원합니다. 키가 변경되었더라도,
 새로운 데이터가 로드되기 전까지는 여전히 이전 결과를 반환하길 원합니다.
@@ -176,7 +176,7 @@ SWR hook이 지연될 필요가 있을 때, 이 미들웨어를 사용하면 됩
 const { data, isLagging, resetLaggy } = useSWR(key, fetcher, { use: [laggy] })
 ```
 
-### 객체 키 직렬화하기
+### 객체 키 직렬화하기 [#serialize-object-keys]
 
 <Callout>
   SWR 1.1.0부터, 유사 객체 키들은 내부에서 자동으로 직렬화됩니다.

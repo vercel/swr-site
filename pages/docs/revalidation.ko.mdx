@@ -9,7 +9,7 @@ import Link from 'next/link'
   수동으로 데이터를 갱신하려면 <Link href="/docs/mutation">뮤테이션</Link>을 확인하세요.
 </Callout>
 
-## 포커스 시에 갱신하기
+## 포커스 시에 갱신하기 [#revalidate-on-focus]
 
 페이지에 다시 포커스하거나 탭을 전환할 때, SWR은 자동으로 데이터를 갱신합니다.
 
@@ -26,7 +26,7 @@ import Link from 'next/link'
 
 이 기능은 기본적으로 활성화되어 있습니다. [`revalidateOnFocus`](/docs/api) 옵션을 통해 이를 비활성화할 수 있습니다.
 
-## 인터벌 시에 갱신하기
+## 인터벌 시에 갱신하기 [#revalidate-on-interval]
 
 많은 경우에 데이터는 다중 기기, 다중 사용자, 다중 탭으로 인해 변경됩니다. 시간이 지남에 따라 화면상의 데이터를 어떻게 업데이트할 수 있을까요?
 
@@ -49,7 +49,7 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 `refreshWhenHidden`, `refreshWhenOffline`과 같은 옵션도 있습니다. 둘은 기본적으로 비활성이므로 SWR은 웹 페이지가 화면상에 있지 않거나 네트워크 연결이 없으면 가져오기를 하지 않습니다.
 
-## 재연결 시에 갱신하기
+## 재연결 시에 갱신하기 [#revalidate-on-reconnect]
 
 사용자가 온라인으로 돌아올 때 갱신하는 것 또한 유용합니다. 이는 사용자가 컴퓨터를 잠금 해제하고 동시에 인터넷이 아직 연결되지 않았을 때 많이 발생하는 시나리오입니다.
 
@@ -57,7 +57,7 @@ useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
 이 기능은 기본적으로 활성화되어 있습니다. [`revalidateOnReconnect`](/docs/api) 옵션을 통해 비활성화할 수 있습니다.
 
-## 자동 갱신 비활성화하기
+## 자동 갱신 비활성화하기 [#disable-automatic-revalidations]
 
 리소스가 **불변**할 경우, 다시 갱신해도 변경되지 않습니다. 이런 경우를 대비해 모든 종류의 자동 갱신을 비활성화 할 수 있습니다.
 

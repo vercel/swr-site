@@ -8,7 +8,7 @@ useSWR('/api/user', url => fetcher(url))
 useSWR('/api/user', fetcher)
 ```
 
-## Multiple Arguments
+## Multiple Arguments [#multiple-arguments]
 
 In some scenarios, it's useful to pass multiple arguments (can be any value or object) to the `fetcher` function. 
 For example an authorized fetch request:
@@ -33,7 +33,7 @@ The `fetcher` function accepts the `key` parameter as is, and the cache key will
 </Callout>
 
 
-## Passing Objects
+## Passing Objects [#passing-objects]
 
 import { Callout } from 'nextra-theme-docs'
 

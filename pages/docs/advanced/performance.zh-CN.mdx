@@ -11,7 +11,7 @@ SWR 确保你的应用具有：
 
 而无需你更改任何代码。
 
-## 重复数据删除
+## 重复数据删除 [#deduplication]
 
 在应用中重用 SWR hooks 非常常见。例如，一个应用渲染 5 次当前用户的头像：
 
@@ -46,13 +46,13 @@ function App () {
 
 还有一个 [`dedupingInterval` 选项](/docs/api) 用于覆盖默认的重复数据删除间隔。
 
-## 深度比较
+## 深度比较 [#deep-comparison]
 
 SWR 默认 **深度比较** 数据更改。如果 `data` 值没有改变，则不会触发重新渲染。
 
 如果你还想更改的话，可以通过 [`compare` 选项](/docs/api) 自定义比较函数。比如，某些 API 响应返回一个服务器时间戳，你可能想从数据 diff 中排除它。
 
-## 依赖收集
+## 依赖收集 [#dependency-collection]
 
 `useSWR` 返回 4 个 **有状态的** 值：`data`、`error`、`isLoading`和 `isValidating`，每个都可以独立更新。例如，如果我们在一个完整的数据请求生命周期中打印这些值，则将如下所示：
 
@@ -98,6 +98,6 @@ Data      // => 重试结束，得到数据
 
 如果你不是总使用这3种状态，那么你已经从这个特性中获益了。在 [Vercel](https://vercel.com) 的实际应用中，这个优化减少了约 60% 的重新渲染。
 
-## Tree Shaking
+## Tree Shaking [#tree-shaking]
 
 SWR 满足 [tree-shakeable](https://webpack.js.org/guides/tree-shaking) 且没有副作用。这意味着如果你只导入核心的 `useSWR` API，像 `useSWRInfinite` 这样的未使用的 API 将不会绑定到你的应用中。

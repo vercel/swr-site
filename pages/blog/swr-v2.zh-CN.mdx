@@ -10,7 +10,7 @@ import { Bleed } from 'nextra-theme-docs'
 import Authors, { Author } from 'components/authors'
 import Video from 'components/video'
 
-# SWR 2.0 发布
+# SWR 2.0 发布 [#announcing-swr-20]
 
 <Authors date="December 9th, 2022">
   <Author name="Shu Ding" link="https://twitter.com/shuding_" />
@@ -23,9 +23,9 @@ import Video from 'components/video'
 
 在新版本中包含了很多优化和新功能，例如新的数据更改 API、经过优化的乐观 UI 功能、新的 DevTools、以及对并发渲染的更好支持。衷心感谢所有使这个版本成为可能的贡献者和维护者。
 
-## 数据更改和乐观 UI
+## 数据更改和乐观 UI [#mutation-and-optimistic-ui]
 
-### useSWRMutation
+### useSWRMutation [#useswrmutation]
 
 数据更改（Mutation）是数据请求过程中非常重要的一部分，它使你可以修改本地或者远程的数据。我们目前使用的 `mutate` API 允许你手动重新验证或更新资源。在 SWR 2.0 中，新的 hook `useSWRMutation` 使用了声明式的 API ，使更改远程数据更加简单。你可以使用 hook 设置一个数据更改，并在随后触发它。
 
@@ -67,7 +67,7 @@ function App() {
 
 通过阅读 [文档](/docs/mutation#useswrmutation) 或阅读接下来的几节，你可以找到更加深入的 API 参考和示例。
 
-### 乐观 UI
+### 乐观 UI [#optimistic-ui]
 
 乐观 UI 是一种优秀的模型，用于创建让人感觉快速和敏捷的网站；然而，它可能很难正确的去实现。SWR 2.0 增加了一些强大的新选项，使乐观 UI 的实现更加容易。
 
@@ -183,7 +183,7 @@ return <>
   ratio={223/584}
 />
 
-### 多个 key 数据更改
+### 多个 key 数据更改 [#mutate-multiple-keys]
 
 全局 `mutate` API 现在接受一个 `filter` 函数，您可以在其中进行特定 key 的数据更改或重新验证。这对于”使所有缓存的数据失效”之类的用例非常有帮助。要了解更多信息，可以阅读文档中的 [更改多项数据](/docs/mutation#更改多项数据)。
 
@@ -203,14 +203,14 @@ mutate(
 )
 ```
 
-## SWR 开发者工具
+## SWR 开发者工具 [#swr-devtools]
 
 [SWRDevTools](https://swr-devtools.vercel.app) 是一个用于帮助你调试你的 SWR 缓存及请求结果的浏览器拓展程序。请查看我们的 [devtools](/docs/advanced/devtools) 查结，了解如何在你的应用程序中使用 devtools。
 
 
 ![](/img/devtools/cache-view.jpg)
 
-## 预加载数据
+## 预加载数据 [#preloading-data]
 
 预加载数据可以极大地改善用户体验。如果你知道某个资源稍后将在应用程序被使用，那么你可以使用新的 `preload` API 提前开始请求它：
 
@@ -238,7 +238,7 @@ export function Page () {
 
 `preload` API 也可以用在为另一个可能被渲染的页面预加载数据的情况。关于使用 SWR 预取数据的更多信息可以在[这里](/docs/refetching)找到。
 
-## `isLoading`
+## `isLoading` [#isloading]
 
 `isLoading` 是 `useSWR` 返回的一个新的状态，它表示**请求仍在进行中，并且还没有加载数据**。在之前，`isValidating` 状态同时代表初始加载状态和重新验证状态，所以我们必须检查 `data` 和 `error` 是否都为 `undefined`，以确定它是否为初始加载状态。
 
@@ -261,7 +261,7 @@ function Profile() {
   我们增加了新的 [理解 SWR](/docs/advanced/understanding) 页面来描述 SWR 如何返回值，其中包括 `isValidating` 和 `isLoading` 的区别，以及如何结合它们来改善用户体验。
 </Callout>
 
-## 保存以前的状态
+## 保存以前的状态 [#preserving-previous-state]
 
 新增加了 `keepPreviousData` 选项，它允许你保留之前获取的数据。当你根据实时的用户操作获取数据时可以极大地改善用户体验。例如在实时搜索功能中，资源的 `key' 会不断变化：
 
@@ -298,7 +298,7 @@ function Search() {
 
 你可以在 [CodeSandbox](https://codesandbox.io/s/swr-keeppreviousdata-fsjz3m) 上查看完整代码，在[这里](/docs/advanced/understanding#返回之前的数据以获得更好的用户体验)了解更多信息。
 
-## 扩展配置
+## 扩展配置 [#extending-configurations]
 
 `SWRConfig` 现在可以接受一个函数值。当你有多级的 `<SWRConfig>` 时，内部会接收父级配置并返回一个新的配置。这一变化使得在大型代码库中配置 SWR 更加灵活。更多信息可以在[这里](/docs/global-configuration)找到。
 
@@ -313,15 +313,15 @@ function Search() {
 </SWRConfig>
 ```
 
-## 优化了对 React 18 的支持
+## 优化了对 React 18 的支持 [#improved-react-18-support]
 
 SWR 已经更新了其内部代码，以便在 React 18 中使用 `useSyncExternalStore` 和 `startTransition` 这两个 API。这确保了在并发渲染 UI 时的强一致性。这一变化不需要修改任何用户代码，所有开发者都可以直接受益。
 
 SWR 2.0 所有的新功能仍然可以与 React 16 和 17 兼容。
 
-## 迁移指南
+## 迁移指南 [#migration-guide]
 
-### Fetcher 不再接受多个参数
+### Fetcher 不再接受多个参数 [#fetcher-no-longer-accepts-multiple-arguments]
 
 `key` 现在作为一个单独的参数传递
 
@@ -334,7 +334,7 @@ SWR 2.0 所有的新功能仍然可以与 React 16 和 17 兼容。
 })
 ```
 
-### 全局数据更改不再接受 `getKey` 函数
+### 全局数据更改不再接受 `getKey` 函数 [#global-mutate-no-longer-accepts-a-getkey-function]
 
 在之前，你可以向全局的 `mutate` 传递一个返回 key 的函数。而现在，如果你向全局 `mutate` 传入一个函数，它会被当作一个[过滤函数](/blog/swr-v2#多个key数据更改)。
 
@@ -343,7 +343,7 @@ SWR 2.0 所有的新功能仍然可以与 React 16 和 17 兼容。
 + mutate('/api/item')       // 直接传入 key 以更改数据
 ```
 
-### Cache Interface 新增必选属性 `keys()`
+### Cache Interface 新增必选属性 `keys()` [#new-required-property-keys-for-cache-interface]
 
 当你使用自己的缓存实现时，Cache 接口新增了一个 `keys()` 方法来返回缓存对象中的所有 key，类似于 JavaScript 的 Map 实例。
 
@@ -356,7 +356,7 @@ interface Cache<Data> {
 }
 ```
 
-### 改变了缓存的内部结构
+### 改变了缓存的内部结构 [#changed-cache-internal-structure]
 
 缓存数据的内部结构将变为一个持有所有当前状态的对象。
 
@@ -377,7 +377,7 @@ interface Cache<Data> {
   你不应该直接写入缓存，这可能会导致未定义行为。
 </Callout>
 
-### `SWRConfig.default` 重命名为 `SWRConfig.defaultValue`
+### `SWRConfig.default` 重命名为 `SWRConfig.defaultValue` [#swrconfigdefault-is-renamed-as-swrconfigdefaultvalue]
 
 `SWRConfig.defaultValue` 是一个用于获取默认 SWR 配置的属性
 
@@ -386,27 +386,27 @@ interface Cache<Data> {
 + SWRConfig.defaultValue
 ```
 
-### Type `InfiniteFetcher` 重命名为 `SWRInfiniteFetcher`
+### Type `InfiniteFetcher` 重命名为 `SWRInfiniteFetcher` [#type-infinitefetcher-is-renamed-as-swrinfinitefetcher]
 
 ```diff
 - import type { InfiniteFetcher } from 'swr/infinite'
 + import type { SWRInfiniteFetcher } from 'swr/infinite'
 ```
 
-### 避免在服务端使用 Suspense
+### 避免在服务端使用 Suspense [#avoid-suspense-on-server]
 
 如果你想要在服务端使用 SWR `suspense: true`，包括 Next.js 的预渲染，那么你必须通过 [`fallbackData` 或 `fallback`](/docs/with-nextjs#pre-rendering-with-default-data) 提供初始数据。今天这意味着你不能在服务端使用 Susense 获取数据了。你的另外两种选则是完全在客户端获取数据，或者使用框架获取数据(就像 Next.js 中的 getStaticProps 那样)。
 
-### 以 ES2018 为构建目标
+### 以 ES2018 为构建目标 [#es2018-as-the-build-target]
 
 如果你想支持 IE 11，你必须在你的框架或 bundler 指定构建目标为 ES5。这一变化使 SSR 的性能得到了优化，并使构建产物的体积变小。
 
 
-## 更新日志
+## 更新日志 [#changelog]
 
 在 [GitHub](https://github.com/vercel/swr/releases) 查看完整日志。
 
-## 展望未来 & 致谢！
+## 展望未来 & 致谢！ [#the-future--thank-you]
 
 随着 [Next.js 13](https://nextjs.org/blog/next-13) 的新发布 ，我们看到了很多令人兴奋的新特性和 React 生态系统中的范式转变：[React Server Components](https://beta.nextjs.org/docs/rendering/server-and-client-components)，streaming SSR，[async components](https://beta.nextjs.org/docs/data-fetching/fetching#asyncawait-in-server-components)，以及 [`use` hook](https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md#usepromise) 。其中许多都与数据获取有关，有一部分与 SWR 有着相同的使用场景。
 

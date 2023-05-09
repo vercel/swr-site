@@ -8,9 +8,9 @@ import { Callout } from 'nextra-theme-docs'
 
 与在浏览器中运行的 React 不同，React Native 有着非常不同的使用体验。比如没有“标签聚焦”，而从后台切换到 app 则被视为“聚焦”。要想自定义这些行为，你可以使用 React Native 的 app 状态检测和其他原生移植 API 替换默认的 `focus` 和 `online`，并配置 SWR 来使用。
 
-## 示例
+## 示例 [#example]
 
-### 全局设置
+### 全局设置 [#global-setup]
 
 你可以将 app 包装在 `SWRConfig` 下并预设置所有配置
 
@@ -24,7 +24,7 @@ import { Callout } from 'nextra-theme-docs'
 </SWRConfig>
 ```
 
-### 自定义 `focus` 和 `reconnect` 事件
+### 自定义 `focus` 和 `reconnect` 事件 [#customize-focus-and-reconnect-events]
 
 只有很少的的配置需要你来处理，诸如 `isOnline`、`isVisible`、`initFocus` 以及 `initReconnect`。
 

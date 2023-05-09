@@ -3,7 +3,7 @@ import Link from "next/link";
 
 # 入门
 
-## 安装
+## 安装 [#installation]
 
 在 React 项目目录运行以下命令：
 
@@ -25,7 +25,7 @@ import Link from "next/link";
   </Tab>
 </Tabs>
 
-## 快速开始
+## 快速开始 [#quick-start]
 
 对于返回 JSON 数据的普通 RESTful APIs，首先需要创建一个 `fetcher` 函数，这个函数只是原生 `fetch` 的包装：
 
@@ -55,7 +55,7 @@ function Profile() {
 
 通常，一个请求有 3 种可能的状态：“loading”、“ready”或“error”。你可以使用 `data`、`error` 和 `isLoading` 的值来确定当前的请求状态，并返回相应的 UI。
 
-## 可复用组件
+## 可复用组件 [#make-it-reusable]
 
 在构建 web 应用时，你可能需要在 UI 的很多地方重用数据。在 SWR 上创建可重用的数据 hooks 非常容易：
 
@@ -85,7 +85,7 @@ function Avatar({ id }) {
 
 通过采用这种模式，你可以不必以命令的方式**请求**数据：开始请求、更新加载状态并返回最终结果。 相反，你的代码更具有声明性：你只需要指定组件使用什么数据即可。
 
-## 示例
+## 示例 [#example]
 
 在一个真实的示例中，我们的网站显示一个导航条和内容，都取决于 `user`：
 
