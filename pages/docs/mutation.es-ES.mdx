@@ -145,7 +145,7 @@ async function updateUser(url, { arg }: { arg: string }) {
 
 function Profile() {
   // A useSWR + mutate like API, but it will not start the request automatically.
-  const { trigger } = useSWRMutation('/api/user', updateUser, options?)
+  const { trigger } = useSWRMutation('/api/user', updateUser, options)
 
   return <button onClick={() => {
     // Trigger `updateUser` with a specific argument.

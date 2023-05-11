@@ -146,7 +146,7 @@ async function updateUser(url, { arg }: { arg: string }) {
 
 function Profile() {
   // useSWR と mutate を組み合わせたような API ですが、リクエストを自動的に開始しません
-  const { trigger } = useSWRMutation('/api/user', updateUser, options?)
+  const { trigger } = useSWRMutation('/api/user', updateUser, options)
 
   return <button onClick={() => {
     // `updateUser` を指定した引数と一緒に実行します
