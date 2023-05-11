@@ -78,7 +78,7 @@ function App () {
         // 设置 cookie 为已过期
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
 
-        // 通知所有拥有这个 key SWR 重新验证 
+        // 通知所有拥有这个 key SWR 重新验证
         mutate('/api/user')
       }}>
         Logout
@@ -142,7 +142,7 @@ async function updateUser(url, { arg }: { arg: string }) {
 
 function Profile() {
   // 一个类似 useSWR + mutate 的 API，但是它不会自动发送请求
-  const { trigger } = useSWRMutation('/api/user', updateUser, options?)
+  const { trigger } = useSWRMutation('/api/user', updateUser, options)
 
   return <button onClick={() => {
     // 以特定参数触发 `updateUser` 函数
@@ -238,7 +238,7 @@ const fetcher = url => fetch(url).then(res => res.json())
 
 const Page = () => {
   const [show, setShow] = useState(false)
-  // 直到 trigger 被调用前，data 都为 undefined 
+  // 直到 trigger 被调用前，data 都为 undefined
   const { data: user, trigger } = useSWRMutation('/api/user', fetcher);
 
   return (

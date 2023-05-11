@@ -63,7 +63,7 @@ function Profile () {
 
 #### 재검증 [#revalidation]
 
-데이터 없이 `mutate(key)` (또는 바인딩된 mutate API로 `mutate()`)를 호출하면, 리소스에 대한 재검증(데이터를 만료된 것으로 표시하고 refetch를 트리거) 합니다.  
+데이터 없이 `mutate(key)` (또는 바인딩된 mutate API로 `mutate()`)를 호출하면, 리소스에 대한 재검증(데이터를 만료된 것으로 표시하고 refetch를 트리거) 합니다.
 이 예제는 사용자가 "로그아웃" 버튼을 클릭할 때 로그인 정보(예: `<Profile />` 내부)를 자동으로 다시 가져오는 방법을 보여줍니다.
 
 ```jsx {14}
@@ -144,7 +144,7 @@ async function updateUser(url, { arg }: { arg: string }) {
 
 function Profile() {
   // useSWR + mutate 같은 API를 사용하지만, 자동으로 요청을 시작하지는 않습니다.
-  const { trigger } = useSWRMutation('/api/user', updateUser, options?)
+  const { trigger } = useSWRMutation('/api/user', updateUser, options)
 
   return <button onClick={() => {
     // 특정 인수를 사용하여 `updateUser`를 트리거 합니다.
@@ -347,7 +347,7 @@ function Profile () {
 
 ## 오류 시 롤백 [#rollback-on-errors]
 
-`optimisticData`가 설정되어 있는 경우, optimistic data가 사용자에게 표시되지만 remote mutation이 실패할 수 있습니다.  
+`optimisticData`가 설정되어 있는 경우, optimistic data가 사용자에게 표시되지만 remote mutation이 실패할 수 있습니다.
 이 경우, `rollbackOnError`를 활용하여 로컬 캐시를 이전 상태로 되돌리면 사용자에게 올바른 데이터가 표시되는지 확인할 수 있습니다.
 
 ## 변경 후 캐시 업데이트 [#update-cache-after-mutation]
