@@ -392,6 +392,62 @@ useSWRMutation('/api/todos', updateTodo, {
 
 When combined with `optimisticData` and `rollbackOnError`, you’ll get a perfect optimistic UI experience.
 
+## Handle Mutation Errors [#handle-mutation-errors]
+
+`mutate` and `trigger` of `useSWRMutation` throws an error so you can handle the error appropriately.
+
+```tsx
+// with mutate
+try {
+  const user = await mutate('/api/user', updateUser(newUser))
+} catch (error) {
+  // Handle an error while updating the user here
+}
+
+// with useSWRMutation
+const { trigger } = useSWRMutation("/api/user", updateUser);
+try {
+  const user = await trigger({ username: "johndoe" });
+} catch (error) {
+  // Handle an error while updating the username here
+}
+```
+
+`mutate` and `useSWRMutation` have the `throwOnError` option to stop throwing an error when fails.
+`useSWRMutation` also provides a way to handle errors declaratively.
+
+```tsx
+import useSWRMutation from 'swr/mutation'
+
+// Fetcher implementation.
+// The extra argument will be passed via the `arg` property of the 2nd parameter.
+// In the example below, `arg` will be `'my_token'`
+async function updateUser(url, { arg }: { arg: string }) {
+  await fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${arg}`
+    }
+  })
+}
+
+function Profile() {
+  // A useSWR + mutate like API, but it will not start the request automatically.
+  const { error, trigger } = useSWRMutation('/api/user', updateUser, { throwOnError: false })
+
+  return <>
+    {error && <p>{error.message</p>}}
+    <button onClick={() => {
+      trigger('my_token')
+    }}>Update User</button>
+  </>
+}
+```
+
+<Callout>
+Since v2, mutation errros are not shared with fetcher's error, so you can't get the mutation error as `error` returned from `useSWR`.
+</Callout>
+
 ## Avoid Race Conditions [#avoid-race-conditions]
 
 Both `mutate` and `useSWRMutation` can avoid race conditions between `useSWR`. For example,
