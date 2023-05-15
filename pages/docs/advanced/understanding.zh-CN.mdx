@@ -50,7 +50,7 @@ import Video from 'components/video'
 - 无论数据是否已加载，只要有一个正在进行中的请求，`isValidating` 都会变为 `true` 。
 - 当数据尚未加载并且有一个正在进行的请求时，`isLoading` 会变为 `true` 。
 
-简而言之，我们可以使用 `isValidating` 来表示每次正在进行的重新请求；使用 `isLoding` 来表示 SWR 正在重新请求中，但目前还没有数据可以展示。
+简而言之，我们可以使用 `isValidating` 来表示每次正在进行的重新请求；使用 `isLoading` 来表示 SWR 正在重新请求中，但目前还没有数据可以展示。
 
 <Callout emoji="📝">
   预设数据（Fallback Data）和之前的数据（Previous Data）不会被认为是“已加载的数据”，因此在设置了预设数据或启用 `keepPreviousData` 选项时，你可能有数据要展示。
