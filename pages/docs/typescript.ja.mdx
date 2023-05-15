@@ -15,7 +15,7 @@ useSWR(() => '/api/user', key => {})
 
 // `key` は { a: string; b: { c: string; d: number } } として推測されます。
 useSWR({ a: '1', b: { c: '3', d: 2 } }, key => {})
-useSWR(() => { a: '1', b: { c: '3', d: 2 } }, key => {})
+useSWR(() => ({ a: '1', b: { c: '3', d: 2 } }), key => {})
 
 // `arg0` は文字列として推測されます。 `arg1` は数値として推測されます。
 useSWR(['user', 8], ([arg0, arg1]) => {})
