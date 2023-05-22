@@ -97,7 +97,7 @@ const { data, error } = useSWRSubscription('key', sub)
 
 ## ジェネリクス [#generics]
 
-`data` の型定義は簡単です。デフォルトでは、`fetcher` の戻り値の型（準備ができていない場合は `undefined`）を `date` 型として使用しますが、パラメーターとして渡すこともできます：
+`data` の型定義は簡単です。デフォルトでは、`fetcher` の戻り値の型（準備ができていない場合は `undefined`）を `data` の型として使用しますが、パラメーターとして渡すこともできます：
 
 ```typescript
 // 🔹 A. 型付きの fetcher を使う：
