@@ -27,7 +27,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `suspense = false`: включить режим задержки React Suspense [(подробнее)](/docs/suspense)
 - `fetcher(args)`: функция-fetcher
 - `revalidateIfStale = true`: автоматически ревалидировать, даже если есть устаревшие данные [(подробнее)](/docs/revalidation#отключение-автоматических-ревалидаций)
-- `revalidateOnMount`: включить или отключить автоматическую ревалидацию при монтировании компонента
+- `revalidateOnMount`: включить или отключить автоматическую ревалидацию при монтировании компонента [(details)](/docs/revalidation#revalidate-on-mount)
 - `revalidateOnFocus = true`: автоматически ревалидировать, когда окно фокусируется [(подробнее)](/docs/revalidation)
 - `revalidateOnReconnect = true`: автоматически ревалидировать, когда браузер восстанавливает сетевое подключение (через `navigator.onLine`) [(подробнее)](/docs/revalidation)
 - `refreshInterval` [(подробнее)](/docs/revalidation):
