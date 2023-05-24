@@ -27,7 +27,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `suspense = false`: React Suspense 모드를 활성화 [(상세내용)](/docs/suspense)
 - `fetcher(args)`: fetcher 함수
 - `revalidateIfStale = true`: 오래된 데이터가 있더라도 자동으로 다시 확인 [(상세내용)](/docs/revalidation#disable-automatic-revalidations)
-- `revalidateOnMount`: 컴포넌트가 마운트되었을 때 자동 갱신 활성화 또는 비활성화
+- `revalidateOnMount`: 컴포넌트가 마운트되었을 때 자동 갱신 활성화 또는 비활성화 [(details)](/docs/revalidation#revalidate-on-mount)
 - `revalidateOnFocus = true`: 창이 포커싱되었을 때 자동 갱신 [(상세내용)](/docs/revalidation)
 - `revalidateOnReconnect = true`: 브라우저가 네트워크 연결을 다시 얻었을 때 자동으로 갱신(`navigator.onLine`을 통해) [(상세내용)](/docs/revalidation)
 - `refreshInterval` [(상세내용)](/docs/revalidation):
