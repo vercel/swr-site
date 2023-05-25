@@ -1,12 +1,13 @@
 /**
  * @typedef {"en-US"} DefaultLocale
- * @typedef {DefaultLocale | "zh-CN" | "es-ES" | "pt-BR" | "ja" | "ko" | "ru"} Locale
+ * @typedef {DefaultLocale | "zh-CN" | "es-ES" | "fr-FR" | "pt-BR" | "ja" | "ko" | "ru"} Locale
  */
 
 /** @type {Readonly<Record<Locale, string>>} */
 export const languageMap = {
   "en-US": "English",
   "es-ES": "Español",
+  "fr-FR": "Français",
   "pt-BR": "Português Brasileiro",
   "zh-CN": "简体中文",
   ja: "日本語",
@@ -18,6 +19,7 @@ export const languageMap = {
 export const titleMap = {
   "en-US": "React Hooks for Data Fetching",
   "es-ES": "Biblioteca React Hooks para la obtención de datos",
+  "fr-FR": "Bibliothèque de React Hooks pour la récupération de données",
   "pt-BR": "React Hooks para Data Fetching",
   "zh-CN": "用于数据请求的 React Hooks 库",
   ja: "データ取得のための React Hooks ライブラリ",
@@ -36,6 +38,11 @@ export const featuresMap = {
     renderingStrategies: "SSR / SSG Ready",
     typescript: "TypeScript Ready",
     remoteLocal: "Remote + Local",
+  },
+  "fr-FR": {
+    lightweight: "Léger",
+    realtime: "Temps réel",
+    backendAgnostic: "Indépendant du Backend",
   },
   "pt-BR": {
     lightweight: "Leve",
@@ -61,15 +68,16 @@ export const featuresMap = {
 
 /** @type {Readonly<Record<Locale, string>>} */
 export const headDescriptionMap = {
-  "en-US":
-    "SWR is a React Hooks library for data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again.",
-    "pt-BR": "SWR é uma biblioteca React Hooks para data fetching. SWR primeiro retorna os dados do cache (stale), então envia a requisição de busca (revalidate), e finalmente vem com os dados atualizados novamente.",
+  "en-US": "SWR is a React Hooks library for data fetching. SWR first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again.",
+  "fr-FR": "SWR est une libraire de React Hooks pour récupérer des données. SWR retourne d'abord les données en cache (stale), puis envoie la requête (revalidate), et enfin retourne les données à jour.",
+  "pt-BR": "SWR é uma biblioteca React Hooks para data fetching. SWR primeiro retorna os dados do cache (stale), então envia a requisição de busca (revalidate), e finalmente vem com os dados atualizados novamente.",
   ru: "SWR — это библиотека React хуков для получения данных. SWR сначала возвращает данные из кеша (устаревшие), затем отправляет запрос на выборку (ревалидация) и, наконец, снова получает актуальные данные.",
 };
 
 /** @type {Readonly<Record<Locale, string>>} */
 export const feedbackLinkMap = {
   "en-US": "Question? Give us feedback →",
+  "fr-FR": "Question? Donnez-nous votre avis →",
   "es-ES": "¿Dudas? Danos tu feedback →",
   "pt-BR": "Dúvidas? Nos dê feedback →",
   "zh-CN": "有疑问？给我们反馈 →",
@@ -80,6 +88,7 @@ export const feedbackLinkMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const editTextMap = {
   "en-US": "Edit this page on GitHub →",
+  "fr-FR": "Modifier cette page sur GitHub →",
   "es-ES": "Edite esta página en GitHub →",
   "pt-BR": "Edite essa página no GitHub →",
   "zh-CN": "在 GitHub 上编辑本页 →",
@@ -91,6 +100,7 @@ export const editTextMap = {
 /** @type {Readonly<Record<Locale, { utmSource: string; text: string; suffix?: string | undefined }>>} */
 export const footerTextMap = {
   "en-US": { utmSource: "swr", text: "Powered by" },
+  "fr-FR": { utmSource: "swr_fr-fr", text: "Propulsé par" },
   "es-ES": { utmSource: "swr_es-es", text: "Desarrollado por" },
   "pt-BR": { utmSource: "swr_pt-br", text: "Desenvolvido por" },
   "zh-CN": { utmSource: "swr_zh-cn", text: "由", suffix: "驱动" },
@@ -102,6 +112,7 @@ export const footerTextMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const tableOfContentsTitleMap = {
   "en-US": "On This Page",
+  "fr-FR": "Sur cette page",
   "es-ES": "En esta página",
   "pt-BR": "Nessa página",
   ru: "На этой странице",
@@ -110,6 +121,7 @@ export const tableOfContentsTitleMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const searchPlaceholderMap = {
   "en-US": "Search documentation...",
+  "fr-FR": "Rechercher dans la doc...",
   "es-ES": "Buscar documento...",
   "pt-BR": "Buscar documentação...",
   ko: "문서 검색...",
@@ -119,5 +131,6 @@ export const searchPlaceholderMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const gitTimestampMap = {
   "en-US": "Last updated on",
+  "fr-FR": "Dernière mise à jour le",
   ru: "Последнее обновление",
 };
