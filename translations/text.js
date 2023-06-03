@@ -77,8 +77,8 @@ export const headDescriptionMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const feedbackLinkMap = {
   "en-US": "Question? Give us feedback →",
-  "fr-FR": "Question? Donnez-nous votre avis →",
   "es-ES": "¿Dudas? Danos tu feedback →",
+  "fr-FR": "Question? Donnez-nous votre avis →",
   "pt-BR": "Dúvidas? Nos dê feedback →",
   "zh-CN": "有疑问？给我们反馈 →",
   ko: "질문이 있으신가요? 피드백을 남겨주세요 →",
@@ -88,8 +88,8 @@ export const feedbackLinkMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const editTextMap = {
   "en-US": "Edit this page on GitHub →",
-  "fr-FR": "Modifier cette page sur GitHub →",
   "es-ES": "Edite esta página en GitHub →",
+  "fr-FR": "Modifier cette page sur GitHub →",
   "pt-BR": "Edite essa página no GitHub →",
   "zh-CN": "在 GitHub 上编辑本页 →",
   ja: "Github で編集する →",
@@ -100,8 +100,8 @@ export const editTextMap = {
 /** @type {Readonly<Record<Locale, { utmSource: string; text: string; suffix?: string | undefined }>>} */
 export const footerTextMap = {
   "en-US": { utmSource: "swr", text: "Powered by" },
-  "fr-FR": { utmSource: "swr_fr-fr", text: "Propulsé par" },
   "es-ES": { utmSource: "swr_es-es", text: "Desarrollado por" },
+  "fr-FR": { utmSource: "swr_fr-fr", text: "Propulsé par" },
   "pt-BR": { utmSource: "swr_pt-br", text: "Desenvolvido por" },
   "zh-CN": { utmSource: "swr_zh-cn", text: "由", suffix: "驱动" },
   ja: { utmSource: "swr_ja", text: "提供" },
@@ -112,8 +112,8 @@ export const footerTextMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const tableOfContentsTitleMap = {
   "en-US": "On This Page",
-  "fr-FR": "Sur cette page",
   "es-ES": "En esta página",
+  "fr-FR": "Sur cette page",
   "pt-BR": "Nessa página",
   ru: "На этой странице",
 };
@@ -121,8 +121,8 @@ export const tableOfContentsTitleMap = {
 /** @type {Readonly<Record<Locale, string>>} */
 export const searchPlaceholderMap = {
   "en-US": "Search documentation...",
-  "fr-FR": "Rechercher dans la doc...",
   "es-ES": "Buscar documento...",
+  "fr-FR": "Rechercher dans la doc...",
   "pt-BR": "Buscar documentação...",
   ko: "문서 검색...",
   ru: "Искать в документации...",
