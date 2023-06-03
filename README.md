@@ -24,3 +24,4 @@ When making a change, or creating a new page, please make sure to edit all langu
 - Korean translation done by SeulGi Choi ([@cs09g](https://github.com/cs09g))
 - Russian translation done by Valentin Politov ([@valentinpolitov](https://github.com/valentinpolitov))
 - Brazilian Portuguese translation done by Guilherme Sousa ([@guilherssousa](https://github.com/guilherssousa))
+- French translation done by [@Olafr9500](https://github.com/Olafr9500)
