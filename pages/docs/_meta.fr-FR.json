@@ -2,7 +2,7 @@
   "getting-started": "Démarrage rapide",
   "api": "API",
   "global-configuration": "Configuration Globale",
-  "data-fetching": "Récupération de données",
+  "data-fetching": "Récupération des données",
   "revalidation": "Auto Revalidation",
   "arguments": "Arguments",
   "mutation": "Mutation & Revalidation",
