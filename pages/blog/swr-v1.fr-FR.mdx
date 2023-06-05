@@ -74,7 +74,7 @@ useSWRImmutable(key, fetcher, options)
 
 C’est la même API que `useSWR`, mais la revalidation ne se fera pas sur un changement d’onglet ou sur une reconnexion. Il y a aussi une nouvelle option, `revalidateIfStale`, que vous pouvez utiliser pour contrôler le comportement précisément. Plus d’informations [ici](/docs/revalidation#disable-automatic-revalidations).
 
-### Cache Provider Personnalisable [#custom-cache-provider]
+### Fournisseur de Cache Personnalisable [#custom-cache-provider]
 
 Par défaut, SWR utilise un cache global et unique pour stocker l’ensemble des données. En 1.0, vous pouvez le personnalisé avec la nouvelle option `provider` :
 
@@ -88,13 +88,13 @@ Par défaut, SWR utilise un cache global et unique pour stocker l’ensemble des
 
 Vous pouvez utiliser cette nouvelle fonctionnalité pour faire beaucoup de choses. Nous avons quelques exemples ici : [_Mutate Multiples Clés avec RegEx_](/docs/advanced/cache#mutate-multiple-keys-from-regex), [_Cache Persistant avec LocalStorage_](/docs/advanced/cache#localstorage-based-persistent-cache), [_Réinitialisation Cache entre les Testes_](/docs/advanced/cache#reset-cache-between-test-cases).
 
-Cette nouvelle API est aussi plus compatible avec le rendu concurrent de React 18. Si vous ajoutez un cache provider, assurez-vous d’utiliser la fonction `mutate` globale retournée par `useSWRConfig()`.
+Cette nouvelle API est aussi plus compatible avec le rendu concurrent de React 18. Si vous ajoutez un fournisseur de cache, assurez-vous d’utiliser la fonction `mutate` globale retournée par `useSWRConfig()`.
 
-Vous pouvez lire la documentation [Cache Provider](/docs/advanced/cache) pour plus de détails.
+Vous pouvez lire la documentation [Fournisseur de Cache](/docs/advanced/cache) pour plus de détails.
 
 ### useSWRConfig() [#useswrconfig]
 
-Il y a un nouveau Hook API pour retourner toutes les configurations globales, incluant le cache provider actuel et la fonction `mutate` globale :
+Il y a un nouveau Hook API pour retourner toutes les configurations globales, incluant le fournisseur de cache actuel et la fonction `mutate` globale :
 
 ```jsx
 import { useSWRConfig } from 'swr'
@@ -231,7 +231,7 @@ Si vous utilisez TypeScript, les noms de types suivants ont été changés pour 
 Si vous utilisez une version beta de SWR, ou utilisez des APIs non documentées, veuillez prendre en compte les changements suivants :
 
 - `import { cache } from ’swr’` est supprimé; utilisez plutôt la nouvelle [API `useSWRConfig`](#useswrconfig).
-- `import { createCache } from ’swr’` est supprimé; utilisez plutôt la nouvelle [API Cache Provider](/docs/advanced/cache).
+- `import { createCache } from ’swr’` est supprimé; utilisez plutôt la nouvelle [API fournisseur de cache](/docs/advanced/cache).
 - `revalidateWhenStale` est renommé par `revalidateIfStale`.
 - `middlewares` est renommé par `use`.
 
