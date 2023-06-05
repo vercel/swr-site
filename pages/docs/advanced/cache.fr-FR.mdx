@@ -103,21 +103,21 @@ Vous pouvez synchroniser votre cache avec `localStorage`. Voici un exemple d'imp
 
 ```jsx
 function localStorageProvider() {
-  // When initializing, we restore the data from `localStorage` into a map.
+  // Pendant l'initialisation, nous restaurons les données de `localStorage` dans une map.
   const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
 
-  // Before unloading the app, we write back all the data into `localStorage`.
+  // Abant de décharger l'application, nous réécrivons toutes les données dans `localStorage`.
   window.addEventListener('beforeunload', () => {
     const appCache = JSON.stringify(Array.from(map.entries()))
     localStorage.setItem('app-cache', appCache)
   })
 
-  // We still use the map for write & read for performance.
+  // Nous utilisons la map comme cache pour écrire et lire pour des raisons de performance.
   return map
 }
 ```
 
-Then use it as a provider:
+Enfin utilisez-le comme fournisseur:
 
 ```jsx
 <SWRConfig value={{ provider: localStorageProvider }}>
@@ -126,12 +126,12 @@ Then use it as a provider:
 ```
 
 <Callout>
-  As an improvement, you can also use the memory cache as a buffer, and write to `localStorage` periodically. You can also implement a similar layered cache with IndexedDB or WebSQL.
+  Comme amélioration, vous pouvez également utiliser le cache mémoire comme tampon, et écrire dans `localStorage` périodiquement. Vous pouvez également implémenter un cache en couches similaire avec IndexedDB ou WebSQL.
 </Callout>
 
-### Reset Cache Between Test Cases [#reset-cache-between-test-cases]
+### Réinitialisation du Cache entre les tests [#reset-cache-between-test-cases]
 
-When testing your application, you might want to reset the SWR cache between test cases. You can simply wrap your application with an empty cache provider. Here's an example with Jest:
+Lorsque vous testez votre application, vous voudrez peut-être réinitialiser le cache SWR entre les cas de test. Vous pouvez simplement envelopper votre application avec un fournisseur de cache vide. Voici un exemple avec Jest:
 
 ```jsx
 describe('test suite', async () => {
@@ -145,22 +145,22 @@ describe('test suite', async () => {
 })
 ```
 
-### Modify the Cache Data [#modify-the-cache-data]
+### Modifier les Données du Cache [#modify-the-cache-data]
 
 <Callout emoji="🚨" type="error">
-  You should not write to the cache directly, it might cause undefined behavior.
+  Vous ne devriez pas écrire directement dans le cache, cela peut entraîner des comportements indéfinis.
 </Callout>
 
-You can use [`mutate`](/docs/mutation) to modify the cache. For example, you can clear all cache data like the following.
+Vous pouvez utiliser [`mutate`](/docs/mutation) pour modifier le cache. Par exemple, vous pouvez effacer toutes les données du cache comme suit.
 
 ```jsx
 const { mutate } = useSWRConfig()
 
 mutate(
-  key => true, // which cache keys are updated
-  undefined, // update cache data to `undefined`
-  { revalidate: false } // do not revalidate
+  key => true, // quelles clés de cache sont mises à jour
+  undefined, // mettre à jour les données du cache avec `undefined`
+  { revalidate: false } // ne pas revalider les données
 )
 ```
 
-More information can be found [here](/docs/arguments#multiple-arguments).
+Plus d'informations peuvent être trouvées [ici](/docs/arguments#multiple-arguments).
