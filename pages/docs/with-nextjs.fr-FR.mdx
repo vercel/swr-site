@@ -1,0 +1,93 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Utilisation avec Next.js
+
+## Récupération de données côté client [#client-side-data-fetching]
+
+Si votre page contient des données qui sont mises à jour fréquemment, et que vous n'avez pas besoin de pré-rendre les données, SWR correspond et ne nécessite aucune configuration spéciale : importez simplement `useSWR` et utilisez le hook dans n'importe quelle composant qui utilise les données.
+
+Voila comment ça marche :
+
+- Premièrement, affichez immédiatement la page sans données. Vous pouvez afficher des états de chargement pour les données manquantes.
+- Ensuite, récupérez les données côté client et affichez-les quand elles sont prêtes.
+
+Cette approche fonctionne bien pour, par exemple, les pages de tableau de bord utilisateur. Parce qu'un tableau de bord est une page privée et spécifique à l'utilisateur, le SEO n'est pas pertinent et la page n'a pas besoin d'être pré-rendue. Les données sont mises à jour fréquemment, ce qui nécessite une récupération de données au moment de la requête.
+
+## Pré-rendu avec des données par défaut [#pre-rendering-with-default-data]
+
+Si la page doit être pré-rendue, Next.js prend en charge [2 formes de pré-rendu](https://nextjs.org/docs/basic-features/data-fetching) :
+**Génération statique (SSG)** et **Rendu côté serveur (SSR)**.
+
+Ensemble avec SWR, vous pouvez pré-rendre la page pour le SEO, et aussi avoir des fonctionnalités telles que le cache, la révalidation, le suivi du focus, le rechargement sur intervalle côté client.
+
+Vous pouvez utiliser l'option `fallback` de [`SWRConfig`](/docs/global-configuration) pour passer les données préchargées comme valeur initiale de tous les hooks SWR.
+Comme exemple avec `getStaticProps`:
+
+```jsx
+ export async function getStaticProps () {
+  // `getStaticProps` est exécuté côté serveur.
+  const article = await getArticleFromAPI()
+  return {
+    props: {
+      fallback: {
+        '/api/article': article
+      }
+    }
+  }
+}
+
+function Article() {
+  // `data` sera toujours disponible car il est dans `fallback`.
+  const { data } = useSWR('/api/article', fetcher)
+  return <h1>{data.title}</h1>
+}
+
+export default function Page({ fallback }) {
+  // Les hooks SWR à l'intérieur de la balise `SWRConfig` utiliseront ces valeurs.
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
+}
+```
+
+La page est toujours pré-rendue. C'est SEO friendly, rapide à répondre, mais aussi entièrement alimenté par SWR côté client. Les données peuvent être dynamiques et se mettre à jour d'elles-mêmes au fil du temps.
+
+<Callout emoji="💡">
+  Le composant `Article` rendra d'abord les données pré-générées, et après que la page soit hydratée, il récupérera à nouveau les dernières données pour les garder à jour.
+</Callout>
+
+### Clé Complexes [#complex-keys]
+
+`useSWR` peut être utilisé avec des clés de type `array` et `function`. L'utilisation de données préchargées avec ces types de clés nécessite la sérialisation des clés `fallback` avec `unstable_serialize`.
+
+```jsx
+import useSWR, { unstable_serialize } from 'swr'
+
+export async function getStaticProps () {
+  const article = await getArticleFromAPI(1)
+  return {
+    props: {
+      fallback: {
+        // unstable_serialize() du tableau de clés
+        [unstable_serialize(['api', 'article', 1])]: article,
+      }
+    }
+  }
+}
+
+function Article() {
+  // utilisation un tableau pour la clé
+  const { data } = useSWR(['api', 'article', 1], fetcher)
+  return <h1>{data.title}</h1>
+}
+
+export default function Page({ fallback }) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
+}
+```
