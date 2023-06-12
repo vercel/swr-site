@@ -91,3 +91,15 @@ useSWRImmutable(key, fetcher)
 El `revalidateIfStale` controla si SWR debe revalidar cuando se monta y hay datos obsoletos.
 
 Estos dos hooks hacen exactamente lo mismo. Una vez que los datos se almacenan en caché, no volverán a solicitarlos.
+
+## Revalidate on Mount[#revalidate-on-mount]
+
+It's useful to force override SWR revalidation on mounting. By default, the value of `revalidateOnMount` is set to undefined.
+
+A SWR hook mounts as:
+
+- First it checks if `revalidateOnMount` is defined. It starts request if it's true, stop if it's false.
+
+`revalidateIfStale` useful to control the mount behaviour. By default `revalidateIfStale` is set to true.
+
+If `revalidateIfStale` is set to true it only refetches if there's any cache data else it will not refetch.
