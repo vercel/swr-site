@@ -1,6 +1,6 @@
 import { Callout } from 'nextra-theme-docs'
 
-# Uso con Next.js
+# Usage with Next.js
 
 ## App Router [#app-dir]
 
@@ -11,22 +11,21 @@ import { Callout } from 'nextra-theme-docs'
 </Callout>
 
 ```tsx filename="app/page.tsx" copy
-import { unstable_serialize } from 'swr' // ✅ works 
-import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ works 
+import { unstable_serialize } from 'swr' // ✅ Available in server components
+import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ Available in server components
 ```
-
 
 <Callout type="error">
    You could not import any other APIs from SWR since they are not available in RSC.
 </Callout>
 
 ```tsx filename="app/page.tsx" highlight={1}
-import useSWR from 'swr' // ❌ it will throw an error
+import useSWR from 'swr' // ❌ This is not available in server components
 ```
 
 ### Client Components
 
-You need to mark your components with `'use client'` directive so that SWR could work properly.
+You can mark your components with `'use client'` directive or import SWR from client components, both ways will allow you to use the SWR client data fetching hooks.
 
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
@@ -37,7 +36,7 @@ export default Page() {
 }
 ```
 
-If you need to use `SWRConfig` to do some global setup in your `layout` or `page` component, but you also don't want to make them client components. You could create a separate provider component.
+If you need to use `SWRConfig` to confifgure global settings in server components `layout` or `page`, creating a separate provider client component to setup the provider and configuration then use it in the server component pages.
 
 ```tsx filename="app/swr-provider.tsx" copy
 'use client';
@@ -59,28 +58,28 @@ export default Page() {
 }
 ```
 
-## Obtención de datos del lado del cliente [#client-side-data-fetching]
 
-Si su página contiene datos que son actualizados frecuentemente y no necesita renderizar previamente los datos, SWR se adapta perfectamente y no se necesita una configuración especial: solo importe `useSWR` y use el hook dentro de cualquier componente que use los datos.
+## Client Side Data Fetching [#client-side-data-fetching]
 
-Así es como funciona:
+If your page contains frequently updating data, and you don’t need to pre-render the data, SWR is a perfect fit and no special setup needed: just import `useSWR` and use the hook inside any components that use the data.
 
-- En primer lugar, muestre inmediatamente la página sin datos. Puede mostrar un loading state para los datos que faltan.
+Here’s how it works:
 
-- A continuación, se obtienen los datos en el lado del cliente y se muestran cuando están listos.
+- First, immediately show the page without data. You can show loading states for missing data.
+- Then, fetch the data on the client side and display it when ready.
 
-Este enfoque funciona bien, por ejemplo, para páginas que son dashboard. Dado que un dashboard es una página privada y específica del usuario, el SEO no es relevante y la página no necesita ser pre-renderizado. Los datos se actualizan con frecuencia, lo que requiere la obtención de datos en el momento de la solicitud.
+This approach works well for user dashboard pages, for example. Because a dashboard is a private, user-specific page, SEO is not relevant and the page doesn’t need to be pre-rendered. The data is frequently updated, which requires request-time data fetching.
 
 ## Pre-rendering with Default Data [#pre-rendering-with-default-data]
 
-If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
+If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):
 **Static Generation (SSG)** and **Server-side Rendering (SSR)**.
 
 Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
-You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks. 
-For example with `getStaticProps`:
+You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks.
 
+For example with `getStaticProps`:
 ```jsx
  export async function getStaticProps () {
   // `getStaticProps` is executed on the server side.
