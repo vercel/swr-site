@@ -11,8 +11,8 @@ import { Callout } from 'nextra-theme-docs'
 </Callout>
 
 ```tsx filename="app/page.tsx" copy
-import { unstable_serialize } from 'swr' // ✅ works 
-import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ works 
+import { unstable_serialize } from 'swr' // ✅ Available in server components
+import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ Available in server components
 ```
 
 <Callout type="error">
@@ -20,12 +20,12 @@ import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite'
 </Callout>
 
 ```tsx filename="app/page.tsx" highlight={1}
-import useSWR from 'swr' // ❌ it will throw an error
+import useSWR from 'swr' // ❌ This is not available in server components
 ```
 
 ### Client Components
 
-You need to mark your components with `'use client'` directive so that SWR could work properly.
+You can mark your components with `'use client'` directive or import SWR from client components, both ways will allow you to use the SWR client data fetching hooks.
 
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
@@ -36,7 +36,7 @@ export default Page() {
 }
 ```
 
-If you need to use `SWRConfig` to do some global setup in your `layout` or `page` component, but you also don't want to make them client components. You could create a separate provider component.
+If you need to use `SWRConfig` to confifgure global settings in server components `layout` or `page`, creating a separate provider client component to setup the provider and configuration then use it in the server component pages.
 
 ```tsx filename="app/swr-provider.tsx" copy
 'use client';
@@ -72,14 +72,14 @@ This approach works well for user dashboard pages, for example. Because a dashbo
 
 ## Pre-rendering with Default Data [#pre-rendering-with-default-data]
 
-If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):  
+If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):
 **Static Generation (SSG)** and **Server-side Rendering (SSR)**.
 
 Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
 You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks.
-For example with `getStaticProps`:
 
+For example with `getStaticProps`:
 ```jsx
  export async function getStaticProps () {
   // `getStaticProps` is executed on the server side.

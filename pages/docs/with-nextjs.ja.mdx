@@ -1,6 +1,6 @@
 import { Callout } from 'nextra-theme-docs'
 
-# Next.js での利用
+# Usage with Next.js
 
 ## App Router [#app-dir]
 
@@ -11,22 +11,21 @@ import { Callout } from 'nextra-theme-docs'
 </Callout>
 
 ```tsx filename="app/page.tsx" copy
-import { unstable_serialize } from 'swr' // ✅ works 
-import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ works 
+import { unstable_serialize } from 'swr' // ✅ Available in server components
+import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ Available in server components
 ```
-
 
 <Callout type="error">
    You could not import any other APIs from SWR since they are not available in RSC.
 </Callout>
 
 ```tsx filename="app/page.tsx" highlight={1}
-import useSWR from 'swr' // ❌ it will throw an error
+import useSWR from 'swr' // ❌ This is not available in server components
 ```
 
 ### Client Components
 
-You need to mark your components with `'use client'` directive so that SWR could work properly.
+You can mark your components with `'use client'` directive or import SWR from client components, both ways will allow you to use the SWR client data fetching hooks.
 
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
@@ -37,7 +36,7 @@ export default Page() {
 }
 ```
 
-If you need to use `SWRConfig` to do some global setup in your `layout` or `page` component, but you also don't want to make them client components. You could create a separate provider component.
+If you need to use `SWRConfig` to confifgure global settings in server components `layout` or `page`, creating a separate provider client component to setup the provider and configuration then use it in the server component pages.
 
 ```tsx filename="app/swr-provider.tsx" copy
 'use client';
@@ -59,32 +58,31 @@ export default Page() {
 }
 ```
 
-## クライアント側のデータフェッチ [#client-side-data-fetching]
 
-ページに頻繁に更新されるデータがあり、データを事前にレンダリングする必要がない場合、 SWR は特別な設定が必要ないほどピッタリです：
-`useSWR` をインポートして、データを使用するコンポーネント内でフックを使用するだけです。
+## Client Side Data Fetching [#client-side-data-fetching]
 
-方法は以下の通りです：
+If your page contains frequently updating data, and you don’t need to pre-render the data, SWR is a perfect fit and no special setup needed: just import `useSWR` and use the hook inside any components that use the data.
 
-- まず、データのないページをすぐに表示します。データがないときはローディング状態を表示することができます。
-- 続いて、クライアント側でデータを取得し、準備ができたら表示します。
+Here’s how it works:
 
-このアプローチは、たとえばユーザーのダッシュボードページなどで有効です。ダッシュボードは、ユーザー専用のプライベートなページであるため SEO は関係なく、
-ページを事前にレンダリングする必要もありません。データは頻繁に更新されるため、リクエスト時のデータ取得処理が必要です。
+- First, immediately show the page without data. You can show loading states for missing data.
+- Then, fetch the data on the client side and display it when ready.
 
-## デフォルトデータで事前レンダリング [#pre-rendering-with-default-data]
+This approach works well for user dashboard pages, for example. Because a dashboard is a private, user-specific page, SEO is not relevant and the page doesn’t need to be pre-rendered. The data is frequently updated, which requires request-time data fetching.
 
-もしページを事前レンダリングする必要がある場合、 Next.js は二つの形式の事前レンダリングの方法をサポートしています：
-**Static Generation (SSG)** と **Server-side Rendering (SSR)** 。
+## Pre-rendering with Default Data [#pre-rendering-with-default-data]
 
-SWR と一緒に使えば、SEO 用にページを事前レンダリングしたり、クライアント側でのキャッシュ、再検証、フォーカストラッキング、定期的な再取得などの機能を実行する事ができます。
+If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](https://nextjs.org/docs/basic-features/data-fetching):
+**Static Generation (SSG)** and **Server-side Rendering (SSR)**.
 
-[`SWRConfig`](/docs/global-configuration) の `fallback` オプションを使うと、事前に取得したデータをすべての SWR フックの初期値として渡すことができます。
-たとえば、 `getStaticProps` の場合：
+Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
+You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks.
+
+For example with `getStaticProps`:
 ```jsx
  export async function getStaticProps () {
-  // `getStaticProps` はサーバー側で実行されます
+  // `getStaticProps` is executed on the server side.
   const article = await getArticleFromAPI()
   return {
     props: {
@@ -96,13 +94,13 @@ SWR と一緒に使えば、SEO 用にページを事前レンダリングした
 }
 
 function Article() {
-  // `data` は `fallback` を利用して常に利用可能です。
+  // `data` will always be available as it's in `fallback`.
   const { data } = useSWR('/api/article', fetcher)
   return <h1>{data.title}</h1>
 }
 
 export default function Page({ fallback }) {
-  // `SWRConfig` の範囲内の SWR フックは、設定の値を使用します。
+  // SWR hooks inside the `SWRConfig` boundary will use those values.
   return (
     <SWRConfig value={{ fallback }}>
       <Article />
@@ -111,15 +109,15 @@ export default function Page({ fallback }) {
 }
 ```
 
-ページはまだ事前レンダリングされています。 SEO に対応し、レスポンスが速いだけでなく、クライアント側の SWR によって完全に機能します。データは動的であり、時間の経過とともに自己更新されます。
+The page is still pre-rendered. It's SEO friendly, fast to response, but also fully powered by SWR on the client side. The data can be dynamic and self-updated over time.
 
 <Callout emoji="💡">
-  `Article` コンポーネントは、事前に生成されたデータを最初にレンダリングし、ページがハイドレイトされた後、最新のデータを再取得して更新を維持します。
+  The `Article` component will render the pre-generated data first, and after the page is hydrated, it will fetch the latest data again to keep it refresh.
 </Callout>
 
-### 複雑なキー [#complex-keys]
+### Complex Keys [#complex-keys]
 
-`useSWR` は `array` と `function` 型のキーで使用することができます。これらのキーでプリフェッチデータを使用するには、 `fallback` キーを `unstable_serialize` でシリアライズする必要があります。
+`useSWR` can be used with keys that are `array` and `function` types. Utilizing pre-fetched data with these kinds of keys requires serializing the `fallback` keys with `unstable_serialize`.
 
 ```jsx
 import useSWR, { unstable_serialize } from 'swr'
@@ -129,7 +127,7 @@ export async function getStaticProps () {
   return {
     props: {
       fallback: {
-        // unstable_serialize() に array 形式のキーを渡す
+        // unstable_serialize() array style key
         [unstable_serialize(['api', 'article', 1])]: article,
       }
     }
@@ -137,7 +135,7 @@ export async function getStaticProps () {
 }
 
 function Article() {
-  // array 形式のキーを使用する。
+  // using an array style key.
   const { data } = useSWR(['api', 'article', 1], fetcher)
   return <h1>{data.title}</h1>
 }
