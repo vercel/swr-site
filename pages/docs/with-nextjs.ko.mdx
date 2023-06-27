@@ -2,6 +2,63 @@ import { Callout } from 'nextra-theme-docs'
 
 # Next.js와 함께 사용하는 방법
 
+## App Router [#app-dir]
+
+### Server Components [#rsc]
+
+<Callout type="default" emoji="✅">
+   In Next.js App Router, all components are React Server Components (RSC) by default. **You could only import the key serialization APIs from SWR in RSC.**
+</Callout>
+
+```tsx filename="app/page.tsx" copy
+import { unstable_serialize } from 'swr' // ✅ works 
+import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ works 
+```
+
+
+<Callout type="error">
+   You could not import any other APIs from SWR since they are not available in RSC.
+</Callout>
+
+```tsx filename="app/page.tsx" highlight={1}
+import useSWR from 'swr' // ❌ it will throw an error
+```
+
+### Client Components
+
+You need to mark your components with `'use client'` directive so that SWR could work properly.
+
+```tsx filename="app/page.tsx" highlight={1} copy
+'use client'
+import useSWR from 'swr'
+export default Page() {
+  const { data } = useSWR('/api/user', fetcher)
+  return <h1>{data.name}</h1>
+}
+```
+
+If you need to use `SWRConfig` to do some global setup in your `layout` or `page` component, but you also don't want to make them as client components. You could create a separate provider component
+
+```tsx filename="app/swr-provider.tsx" copy
+'use client';
+import { SWRConfig } from 'swr'
+export const SWRProvider = ({ children }) => {
+  return <SWRConfig>{children}</SWRConfig>
+};
+```
+
+```tsx filename="app/page.tsx" copy
+// This is still a server component
+import { SWRProvider } from './swr-provider'
+export default Page() {
+  return (
+    <SWRProvider>
+      <h1>hello SWR</h1>
+    </SWRProvider>
+  )
+}
+```
+
 ## 클라이언트 사이드 데이터 가져오기 [#client-side-data-fetching]
 
 페이지가 빈번하게 업데이트하는 데이터를 포함하고 이를 프리렌더링할 필요가 없다면, SWR은 완벽하게 적합하며 어떠한 특별한 설정도 필요하지 않습니다. `useSWR`을 임포트하고 데이터를 사용하는 컴포넌트 내에서 이 hook을 사용하기만 하면 됩니다.

@@ -2,6 +2,63 @@ import { Callout } from 'nextra-theme-docs'
 
 # Usage with Next.js
 
+## App Router [#app-dir]
+
+### Server Components [#rsc]
+
+<Callout type="default" emoji="✅">
+   In Next.js App Router, all components are React Server Components (RSC) by default. **You could only import the key serialization APIs from SWR in RSC.**
+</Callout>
+
+```tsx filename="app/page.tsx" copy
+import { unstable_serialize } from 'swr' // ✅ works 
+import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ works 
+```
+
+<Callout type="error">
+   You could not import any other APIs from SWR since they are not available in RSC.
+</Callout>
+
+```tsx filename="app/page.tsx" highlight={1}
+import useSWR from 'swr' // ❌ it will throw an error
+```
+
+### Client Components
+
+You need to mark your components with `'use client'` directive so that SWR could work properly.
+
+```tsx filename="app/page.tsx" highlight={1} copy
+'use client'
+import useSWR from 'swr'
+export default Page() {
+  const { data } = useSWR('/api/user', fetcher)
+  return <h1>{data.name}</h1>
+}
+```
+
+If you need to use `SWRConfig` to do some global setup in your `layout` or `page` component, but you also don't want to make them as client components. You could create a separate provider component
+
+```tsx filename="app/swr-provider.tsx" copy
+'use client';
+import { SWRConfig } from 'swr'
+export const SWRProvider = ({ children }) => {
+  return <SWRConfig>{children}</SWRConfig>
+};
+```
+
+```tsx filename="app/page.tsx" copy
+// This is still a server component
+import { SWRProvider } from './swr-provider'
+export default Page() {
+  return (
+    <SWRProvider>
+      <h1>hello SWR</h1>
+    </SWRProvider>
+  )
+}
+```
+
+
 ## Client Side Data Fetching [#client-side-data-fetching]
 
 If your page contains frequently updating data, and you don’t need to pre-render the data, SWR is a perfect fit and no special setup needed: just import `useSWR` and use the hook inside any components that use the data.
@@ -20,7 +77,7 @@ If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](ht
 
 Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
-You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks. 
+You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks.
 For example with `getStaticProps`:
 
 ```jsx
