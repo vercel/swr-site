@@ -14,7 +14,7 @@ import { Bleed } from 'nextra-theme-docs'
 <Bleed><Features/></Bleed>
 
 "SWR"이라는 이름은 [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861)에 의해 알려진 HTTP 캐시 무효 전략인 `stale-while-revalidate`에서 유래되었습니다.
-SWR은 먼저 캐시(스태일)로부터 데이터를 반환한 후, fetch 요청(재검증)을 하고, 최종적으로 최신화된 데이터를 가져오는 전략입니다.
+SWR은 먼저 캐시(stale)로부터 데이터를 반환한 후, fetch 요청(revalidate)을 하고, 최종적으로 최신화된 데이터를 가져오는 전략입니다.
 
 <Callout emoji="✅">
   SWR을 사용하면 컴포넌트는 <strong>지속적</strong>이며 <strong>자동으로</strong> 데이터 업데이트 스트림을 받게 됩니다.<br/>
@@ -52,8 +52,8 @@ hook은 두 개의 값을 반환합니다: 요청의 상태에 기반한 `data`�
 - 내장된 **캐시** 및 요청 중복 제거
 - **실시간** 경험
 - 전송 및 프로토콜에 구애받지 않음
-- SSR / ISR / SSG support
-- TypeScript 준비
+- SSR / ISR / SSG 지원
+- TypeScript 지원
 - React Native
 
 SWR은 더 나은 경험을 구축할 수 있도록 속도, 정확성, 안정성의 모든 측면을 다룹니다.
