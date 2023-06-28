@@ -42,7 +42,7 @@ function Profile() {
 이 예시에서, `useSWR` hook은 `key` 문자열과 `fetcher` 함수를 받습니다. `key`는 데이터의 고유한 식별자이며(일반적으로 API URL)
 `fetcher`로 전달될 것입니다. `fetcher`는 데이터를 반환하는 어떠한 비동기 함수도 될 수 있습니다. 네이티브 fetch 또는 Axios와 같은 도구를 사용할 수 있습니다.
 
-hook은 두 개의 값을 반환합니다: 요청의 상태에 기반한 `data`와 `error`.
+hook은 세 개의 값을 반환합니다: 요청의 상태에 기반한 `data`, `isLoading` 그리고 `error`.
 
 ## 기능 [#features]
 
