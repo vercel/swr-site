@@ -30,7 +30,7 @@ function App() {
 ```
 
 <Callout emoji="⚠️">
-  如果在调用全局 mutator 函数式只提供了 key 参数，那么除非有一个使用相同 key 的 SWR hook 被挂载，否则缓存不会被更新，也不会触发重新验证。
+  如果在调用全局 mutator 函数时只提供了 key 参数，那么除非有一个使用相同 key 的 SWR hook 被挂载，否则缓存不会被更新，也不会触发重新验证。
 </Callout>
 
 #### 绑定数据更改 [#bound-mutate]
