@@ -155,9 +155,9 @@ function Profile() {
 }
 ```
 
-### API [#api]
+### API [#useswrmutation-api]
 
-#### パラメータ [#parameters]
+#### パラメータ [#useswrmutation-parameters]
 
 - `key`: [`mutate`](/docs/mutation#mutate) の `key` と同様
 - `fetcher(key, { arg })`: リモートミューテーションのための非同期関数
@@ -170,7 +170,7 @@ function Profile() {
   - `onSuccess(data, key, config)`:　リモートミューテーションが成功した場合に呼ばれるコールバック関数
   - `onError(err, key, config)`: リモートミューテーションがエラーになった場合に呼ばれるコールバック関数
 
-#### 返り値 [#return-values]
+#### 返り値 [#useswrmutation-return-values]
 
 - `data`: `fetcher` から返された渡されたキーに対応するデータ
 - `error`: `fetcher` で発生したエラー (または undefined)
@@ -178,7 +178,7 @@ function Profile() {
 - `reset`: 状態 (`data`, `error`, `isMutating`) をリセットするための関数
 - `isMutating`: 実行中のリモートミューテーションがあるかどうか
 
-### 基本的な使い方 [#basic-usage]
+### 基本的な使い方 [#useswrmutation-basic-usage]
 
 ```tsx
 import useSWRMutation from 'swr/mutation'

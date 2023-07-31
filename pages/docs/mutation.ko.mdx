@@ -153,9 +153,9 @@ function Profile() {
 }
 ```
 
-### API [#api]
+### API [#useswrmutation-api]
 
-#### 매개변수 [#parameters]
+#### 매개변수 [#useswrmutation-parameters]
 
 - `key`: [`mutate`](/docs/mutation#mutate)의 `key`와 동일
 - `fetcher(key, { arg })`: remote mutation을 위한 비동기 함수
@@ -168,7 +168,7 @@ function Profile() {
   - `onSuccess(data, key, config)`: remote mutation이 성공적으로 완료 되었을 때 사용되는 콜백 함수
   - `onError(err, key, config)`: remote mutation이 오류를 반환한 경우 사용되는 콜백 함수
 
-#### 반환 값 [#return-values]
+#### 반환 값 [#useswrmutation-return-values]
 
 - `data`: `fetcher` 에서 반환된 지정된 키에 대한 데이터
 - `error`: `fetcher`에서 발생한 오류 (또는 undefined)
@@ -176,7 +176,7 @@ function Profile() {
 - `reset`: 상태(`data`, `error`, `isMutating`)를 초기화하는 함수
 - `isMutating`: remote mutation이 진행 중인 상태
 
-### 기본 사용법 [#basic-usage]
+### 기본 사용법 [#useswrmutation-basic-usage]
 
 ```tsx
 import useSWRMutation from 'swr/mutation'
