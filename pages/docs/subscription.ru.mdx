@@ -26,7 +26,7 @@ useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next:
   - `options`: Объект со следующими свойствами:
     - `next`: Функция, которая принимает ошибку и данные и обновляет состояние последними данными, полученными от источника данных в реальном времени.
 
-Наприер:
+Например:
 
 ```tsx
 function subscribe(key, { next }) {
@@ -35,7 +35,7 @@ function subscribe(key, { next }) {
 }
 ```
 
-You could also pass a updater function as `data` to `next`, which will receive the previous data as the first argument and return the new data.
+Можно также передать функцию обновления в качестве `data` в `next`, которая получит предыдущие данные в качестве первого аргумента и вернет новые данные.
 
 ```tsx
 function subscribe(key, { next }) {
@@ -92,7 +92,7 @@ function App() {
 }
 ```
 
-You could also check TypeScript examples of `useSWRSubscription` at [this page](/docs/typescript#useswrsubscription)
+Вы также можете посмотреть TypeScript-примеры `useSWRSubscription` на [этой](/docs/typescript#useswrsubscription) странице.
 
 ### Дедупликация [#deduplication]
 
