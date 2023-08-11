@@ -154,9 +154,9 @@ function Profile() {
 }
 ```
 
-### API [#api]
+### API [#useswrmutation-api]
 
-#### Параметры [#parameters]
+#### Параметры [#useswrmutation-parameters]
 
 - `key`: то же, что и `key` у [`mutate`](/docs/mutation#mutate)
 - `fetcher(key, { arg })`: асинхронная функция для удаленной мутации
@@ -169,7 +169,7 @@ function Profile() {
   - `onSuccess(data, key, config)`:　колбэк-функция, когда удаленная мутация была успешно завершена
   - `onError(err, key, config)`: колбэк-функция, когда удаленная мутация вернула ошибку
 
-#### Возвращаемые значения [#return-values]
+#### Возвращаемые значения [#useswrmutation-return-values]
 
 - `data`: данные для заданного ключа, возвращаемые из `fetcher`
 - `error`: ошибка, выданная `fetcher` (или undefined)
@@ -177,7 +177,7 @@ function Profile() {
 - `reset`: функция для сброса состояния (`data`, `error`, `isMutating`)
 - `isMutating`: если есть текущая удаленная мутация
 
-### Базовое использование [#basic-usage]
+### Базовое использование [#useswrmutation-basic-usage]
 
 ```tsx
 import useSWRMutation from 'swr/mutation'

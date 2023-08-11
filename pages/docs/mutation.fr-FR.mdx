@@ -151,9 +151,9 @@ function Profile() {
 }
 ```
 
-### API [#api]
+### API [#useswrmutation-api]
 
-#### Paramètres [#parameters]
+#### Paramètres [#useswrmutation-parameters]
 
 - `key`: identique à `key` de [`mutate`](/docs/mutation#mutate)
 - `fetcher(key, { arg })`: une fonction asynchrone pour la mutation distante
@@ -166,7 +166,7 @@ function Profile() {
   - `onSuccess(data, key, config)`: fonction de rappel quand une mutation distante a été terminée avec succès
   - `onError(err, key, config)`: fonction de rappel quand une mutation distante a renvoyé une erreur
 
-#### Valeurs Renvoyées [#return-values]
+#### Valeurs Renvoyées [#useswrmutation-return-values]
 
 - `data`: données pour la clé donnée renvoyée par `fetcher`
 - `error`: erreur renvoyée par `fetcher` (ou undefined)
@@ -174,7 +174,7 @@ function Profile() {
 - `reset`: une fonction pour réinitialiser l'état (`data`, `error`, `isMutating`)
 - `isMutating`: si une mutation distante est en cours
 
-### Utilisation de Base [#basic-usage]
+### Utilisation de Base [#useswrmutation-basic-usage]
 
 ```tsx
 import useSWRMutation from 'swr/mutation'

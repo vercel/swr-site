@@ -151,9 +151,9 @@ function Profile() {
 }
 ```
 
-### API [#api]
+### API [#useswrmutation-api]
 
-#### Parâmetros [#parameters]
+#### Parâmetros [#useswrmutation-parameters]
 
 - `key`: mesmo que `key` do [`mutate`](/docs/mutation#mutate)
 - `fetcher(key, { arg })`: uma função assíncrona para mutação remota
@@ -166,7 +166,7 @@ function Profile() {
   - `onSuccess(data, key, config)`: função callback quando a mutação remota for finalizada com sucesso
   - `onError(err, key, config)`: função callback quando a mutação remota retornar um erro
 
-#### Valores de Retorno [#return-values]
+#### Valores de Retorno [#useswrmutation-return-values]
 
 - `data`: dados para a chave fornecida retornada de `fetcher`
 - `error`: erro lançado pelo `fetcher` (ou undefined)
@@ -174,7 +174,7 @@ function Profile() {
 - `reset`: uma função para redefinir o estado (`data`, `error`, `isMutating`)
 - `isMutating`: se houver uma mutação remota em andamento
 
-### Uso Básico [#basic-usage]
+### Uso Básico [#useswrmutation-basic-usage]
 
 ```jsx
 import useSWRMutation from 'swr/mutation'

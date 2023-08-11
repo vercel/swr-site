@@ -151,9 +151,9 @@ function Profile() {
 }
 ```
 
-### API [#api]
+### API [#useswrmutation-api]
 
-#### 参数 [#parameters]
+#### 参数 [#useswrmutation-parameters]
 
 - `key`: 与 [`mutate`](/docs/mutation#mutate) 的 `key` 相同
 - `fetcher(key, { arg })`：一个用于远程数据更改的异步函数
@@ -166,7 +166,7 @@ function Profile() {
   - `onSuccess(data, key, config)`:　远程数据更改完成时的回调函数
   - `onError(err, key, config)`: 远程数据更改返回错误时的回调函数
 
-#### 返回值 [#return-values]
+#### 返回值 [#useswrmutation-return-values]
 
 - `data`：从 `fetcher` 返回给定 key 的数据
 - `error`：`fetcher` 中抛出的错误（或 undefined）
@@ -174,7 +174,7 @@ function Profile() {
 - `reset`：一个用于重置状态的函数（ `data`, `error`, `isMutating` ）
 - `isMutating`：有一个正在进行中的远程数据变更
 
-### 基本用法 [#basic-usage]
+### 基本用法 [#useswrmutation-basic-usage]
 
 ```tsx
 import useSWRMutation from 'swr/mutation'
