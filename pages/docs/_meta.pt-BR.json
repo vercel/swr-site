@@ -10,7 +10,7 @@
   "mutation": "Mutação",
   "pagination": "Paginação",
   "subscription": "Inscrição",
-  "prefetching": "Prefetching",
+  "prefetching": "Pre-obtendo Dados",
   "with-nextjs": "SSG e SSR com Next.js",
   "typescript": "TypeScript",
   "suspense": "Suspense",

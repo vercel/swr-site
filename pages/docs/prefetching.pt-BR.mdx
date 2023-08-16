@@ -1,6 +1,6 @@
 # Pre-obtendo Dados
 
-## Dados de Página Top-Level [#top-level-page-data]
+## Dados de Página _Top-Level_ [#top-level-page-data]
 
 Existem muitos jeitos de pre-obter os dados para SWR. Para requisições de página top-level, [`rel="preload"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content) é altamente recomendado:
 
@@ -12,11 +12,11 @@ Basta apenas colocá-lo dentro do seu `<head>` do HTML. É fácil, rápido e nat
 
 Irá pré-obter os dados quando o HTML carregar, antes mesmo de iniciar a baixar o JavaScript. Todos os seus pedidos de obtenção de dados com o mesmo URL vão usar o resultado (inclusive SWR, de modo que você pode usar o SWR para obter os dados de página top-level).
 
-## Prefetching Programático [#programmatically-prefetch]
+## Pré-obtenção Programática [#programmatically-prefetch]
 
-SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments.
+SWR fornece a API `preload` para pré-obter os recursos programáticamente e armazenar os resultados em cache. `preload` aceita `key` e `fetcher` como argumentos.
 
-You can call `preload` even outside of React.
+Você pode chamar a função `preload` até fora do React.
 
 ```jsx
 import { useState } from 'react'
@@ -24,9 +24,9 @@ import useSWR, { preload } from 'swr'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
-// Preload the resource before rendering the User component below,
-// this prevents potential waterfalls in your application.
-// You can also start preloading when hovering the button or link, too.
+// Pré-obtenha o recurso antes de renderizar o componente User abaixo,
+// isso previne potenciais cascatas de requisição na sua aplicação.
+// Você pode também começar a pré-obter quando passar o mouse sobre o botão ou link, também.
 preload('/api/user', fetcher)
 
 function User() {
@@ -45,13 +45,13 @@ export default function App() {
 }
 ```
 
-Within React rendering tree, `preload` is also available to use in event handlers or effects.
+Dentro da árvore de renderização do React, `preload` também está disponível para usar em manipuladores de eventos ou efeitos.
 
 ```jsx
 function App({ userId }) {
   const [show, setShow] = useState(false)
 
-  // preload in effects
+  // pre-obtenha em efeitos
   useEffect(() => {
     preload('/api/user?id=' + userId, fetcher)
   }, [userId])
@@ -60,7 +60,7 @@ function App({ userId }) {
     <div>
       <button
         onClick={() => setShow(true)}
-        {/* preload in event callbacks */}
+        {/* pre-obtenha em callbacks */}
         onHover={() => preload('/api/user?id=' + userId, fetcher)}
       >
         Show User
@@ -73,7 +73,7 @@ function App({ userId }) {
 
 Junto com técnicas como [page prefetching](https://nextjs.org/docs/api-reference/next/router#routerprefetch) no Next.js, você vai ser capaz de carregar ambos a próxima página e os dados instantaneamente.
 
-In Suspense mode, you should utilize `preload` to avoid waterfall problems.
+No Modo Suspense, você deve utilizar `preload` para evitar problemas de cascata.
 
 ```jsx
 import useSWR, { preload } from 'swr'
@@ -83,8 +83,8 @@ preload('/api/user', fetcher);
 preload('/api/movies', fetcher);
 
 const Page = () => {
-  // The below useSWR hooks will suspend the rendering, but the requests to `/api/user` and `/api/movies` have started by `preload` already,
-  // so the waterfall problem doesn't happen.
+  // Os hooks useSWR abaixo vão suspender a renderização, mas as requisições para `/api/user` e `/api/movies` já começaram por `preload`,
+  // então o problema de cascata não acontece.
   const { data: user } = useSWR('/api/user', fetcher, { suspense: true });
   const { data: movies } = useSWR('/api/movies', fetcher, { suspense: true });
   return (

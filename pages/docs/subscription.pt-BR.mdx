@@ -1,6 +1,6 @@
 import { Callout } from 'nextra-theme-docs'
 
-# Subscription
+# Inscrição
 
 <Callout emoji="✅">
   Por favor atualize para a última versão (≥ 2.1.0) para usar essa API.
@@ -20,11 +20,11 @@ Esse hook se inscreve em uma fonte de dados em tempo real usando a função de i
 
 #### Parâmetros [#parameters]
 
-- `key`: A unique key that identifies the data being subscribed to, same key as `useSWR` key.
-- `subscribe`: A function that subscribes to the real-time data source. It receives the following arguments:
-  - `key`: same key as above
-  - `options`: an object with the following properties:
-    - `next`: A function that accepts an error and data, and updates the state with the latest data received from the real-time data source.
+- `key`: Uma chave única que identifica os dados sendo inscritos, mesma chave que a do `useSWR`.
+- `subscribe`: Função que se inscreve na fonte de dados em tempo real. Ela recebe os seguintes argumentos:
+  - `key`: mesma chave que acima
+  - `options`: um objeto com as seguintes propriedades:
+    - `next`: Uma função que aceita um erro e dados, e atualiza o estado com os dados mais recentes recebidos da fonte de dados em tempo real.
 
 
 Por exemplo,
@@ -36,7 +36,7 @@ function subscribe(key, { next }) {
 }
 ```
 
-You could also pass a updater function as `data` to `next`, which will receive the previous data as the first argument and return the new data.
+Você também pode passar uma função para atualizar como `data` para `next`, que receberá os dados anteriores como primeiro argumento e retornará os novos dados.
 
 ```tsx
 function subscribe(key, { next }) {
@@ -94,7 +94,7 @@ function App() {
 }
 ```
 
-You could also check TypeScript examples of `useSWRSubscription` at [this page](/docs/typescript#useswrsubscription)
+Você também pode checar exemplos do `useSWRSubscription` com TypeScript [nessa página](/docs/typescript#useswrsubscription)
 
 ### Deduplicação [#deduplication]
 
