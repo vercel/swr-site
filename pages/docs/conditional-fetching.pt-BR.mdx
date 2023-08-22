@@ -29,7 +29,7 @@ function MyProjects () {
   // SWR saberá que algumas dependências não estão prontas.
   // No caso, `user.id` lança quando `user` não está carregado.
 
-  if (!projects) return 'loading...'
-  return 'You have ' + projects.length + ' projects'
+  if (!projects) return 'carregando...'
+  return 'Você possui ' + projects.length + ' projetos'
 }
 ```

@@ -87,14 +87,14 @@ O `revalidateIfStale` controla se SWR deve revalidar quando ele é montado e há
 
 Esses 2 hooks acima fazem o **mesma** coisa. Uma vez que os dados são armazenados, eles nunca mais pedirão para obtê-los novamente.
 
-## Revalidate on Mount[#revalidate-on-mount]
+## Revalidando durante a Montagem [#revalidate-on-mount]
 
-It's useful to force override SWR revalidation on mounting. By default, the value of `revalidateOnMount` is set to undefined.
+É útil sobrescrever a revalidação do SWR durante a montagem. Por padrão, o valor de `revalidateOnMount` é definido como indefinido.
 
-A SWR hook mounts as:
+O hook SWR monta seguindo:
 
-- First it checks if `revalidateOnMount` is defined. It starts request if it's true, stop if it's false.
+- Primeiro, ele checa se `revalidateOnMount` está definido. Ele inicia a requisição se for verdadeiro e para se for falso.
 
-`revalidateIfStale` useful to control the mount behaviour. By default `revalidateIfStale` is set to true.
+`revalidateIfStale` é útil para controlar o comportamento de montagem. Por padrão, `revalidateIfStale` é definido como `true`.
 
-If `revalidateIfStale` is set to true it only refetches if there's any cache data else it will not refetch.
+Se `revalidateIfStale` estiver definido como verdadeiro, ele só fará o refetch se houver algum dado em cache, caso contrário, não fará o refetch.

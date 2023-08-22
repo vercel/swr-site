@@ -30,14 +30,14 @@ function App() {
 ```
 
 <Callout emoji="⚠️">
-  Using global mutator only with the `key` parameter will ***not update the cache or trigger revalidation*** unless there is a mounted SWR hook using the same key.
+  Usar o modificador global apenas com o parâmetro `key` ***não irá atualizar o cache ou disparar uma revalidação*** a menos que haja um hook SWR montado usando a mesma chave.
 </Callout>
 
 #### Mutação vinculada [#bound-mutate]
 
 Mutação vinculada é o caminho curto para modificar a chave atual com dados. Onde `key` é vinculada a `key` repassada para `useSWR` e recebe `data` como primeiro argumento.
 
-It is functionally equivalent to the global `mutate` function in the previous section but does not require the `key` parameter:
+É funcionalmente equivalente a função global `mutate` da seção anterior, mas não requer o parâmetro `key`:
 
 ```jsx
 import useSWR from 'swr'
@@ -284,7 +284,7 @@ function Profile () {
         // envia um request para atualizar os dados
         // aciona uma revalidação (nova busca) para garantir que nossos dados locais estejam corretos
         mutate('/api/user', updateFn(user), options);
-      }}>Uppercase my name!</button>
+      }}>Deixe meu nome em caixa alta!</button>
     </div>
   )
 }
@@ -334,7 +334,7 @@ function Profile () {
           optimisticData: user => ({ ...user, name: newName }),
           rollbackOnError: true
         })
-      }}>Uppercase my name!</button>
+      }}>Deixe meu nome em caixa alta!</button>
     </div>
   )
 }
