@@ -87,14 +87,14 @@ useSWRImmutable(key, fetcher)
 
 上記の二つのフックは、**まったく同じ**処理を行います。データがキャッシュされると、二度とリクエストされなくなります。
 
-## Revalidate on Mount[#revalidate-on-mount]
+## マウント時の再検証[#revalidate-on-mount]
 
-It's useful to force override SWR revalidation on mounting. By default, the value of `revalidateOnMount` is set to undefined.
+マウント時に SWR の再検証を強制的にオーバライドするのに役立ちます。デフォルトでは、 `revalidateOnMount` の値は未定義に設定されています。
 
-A SWR hook mounts as:
+SWR フックは以下のようにマウントします。
 
-- First it checks if `revalidateOnMount` is defined. It starts request if it's true, stop if it's false.
+- まず、 `revalidateOnMount` が定義されているかどうかを確認します。定義されているならリクエストを開始し、定義されていないなら停止します。
 
-`revalidateIfStale` useful to control the mount behaviour. By default `revalidateIfStale` is set to true.
+`revalidateIfStale` はマウントの動作を制御するのに役立ちます。デフォルトでは `revalidateIfStale` は true に設定されています。
 
-If `revalidateIfStale` is set to true it only refetches if there's any cache data else it will not refetch.
+`revalidateIfStale` を true に設定すると、キャッシュデータがある時のみ再フェッチし、ない場合は再フェッチしません。
