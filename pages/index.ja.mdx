@@ -44,7 +44,7 @@ function Profile() {
 この例では、`useSWR` フックは `key` 文字列と `fetcher` 関数を受け取ります。 `key` はデータの一意な識別子（通常は API の URL）で、`fetcher` に渡されます。
 `fetcher` はデータを返す任意の非同期関数で、ネイティブの fetch や Axios のようなツールを使うことができます。
 
-このフックは、リクエストの状態にもとづいて `data` と `error` の二つの値を返します。
+このフックは、リクエストの状態にもとづいて `data` と `isLoading`, `error` の三つの値を返します。
 
 ## 特徴 [#features]
 
