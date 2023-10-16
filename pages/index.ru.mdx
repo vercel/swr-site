@@ -43,7 +43,7 @@ function Profile() {
 В этом примере, хук `useSWR` принимает строку `key` и функцию `fetcher`. `key` — это уникальный идентификатор данных (обычно URL-адрес API),
 который будет передан в `fetcher`. `fetcher` может быть любая асинхронная функция, которая возвращает данные, будь то нативный fetch или такие инструменты как Axios.
 
-Хук возвращает 2 значения: `data` и `error`, основанные на статусе запроса.
+The hook returns 3 values: `data`, `isLoading` and `error`, based on the status of the request.
 
 ## Особенности [#features]
 
