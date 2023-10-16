@@ -93,7 +93,7 @@ useSWRImmutable(key, fetcher)
 
 SWR フックは以下のようにマウントします。
 
-- まず、 `revalidateOnMount` が定義されているかどうかを確認します。定義されているならリクエストを開始し、定義されていないなら停止します。
+- まず、 `revalidateOnMount` が定義されているかどうかを確認します。値が true ならリクエストを開始し、false なら停止します。
 
 `revalidateIfStale` はマウントの動作を制御するのに役立ちます。デフォルトでは `revalidateIfStale` は true に設定されています。
 
