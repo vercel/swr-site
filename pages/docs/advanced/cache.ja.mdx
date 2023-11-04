@@ -32,14 +32,19 @@ interface Cache<Data> {
 
 ## キャッシュプロバイダーの作成 [#create-cache-provider]
 
+`initCache` を使用して SWR のキャッシュを作成できます。provider を設定した `SWRConfig` 以下でグローバルミューテートを使用したい場合は `initCache` の戻り値の `mutate` を使用します。
+
 `SWRConfig` の `provider` オプションは、 [キャッシュプロバイダー](#キャッシュプロバイダー)を返す関数を受け取ります。受け取ったプロバイダーは、その `SWRConfig` の範囲内のすべての SWR フックで使用されます。例：
 
 ```jsx
 import useSWR, { SWRConfig } from 'swr'
+import { initCache } from 'swr/_internal'
+import type { ScopedMutator, Cache } from 'swr/_internal'
+const [cache, mutate] = initCache(new Map()) as [Cache<unknown>, ScopedMutator]
 
 function App() {
   return (
-    <SWRConfig value={{ provider: () => new Map() }}>
+    <SWRConfig value={{ provider: () => cache }}>
       <Page/>
     </SWRConfig>
   )
@@ -59,10 +64,6 @@ import { Cache } from 'components/diagrams/cache'
 </div>
 
 ネストされている場合、 SWR フックは上位レベルのキャッシュプロバイダーを使用します。もし上位レベルのキャッシュプロバイダーが無い場合は、空の `Map` をデフォルトのキャッシュプロバイダーとして使用します。
-
-<Callout emoji="⚠️">
-  キャッシュプロバイダーを使用している場合、グローバルな `mutate` は `<SWRConfig />` 以下の SWR フックでは**機能しません**。代わりに [こちら](#現在のキャッシュプロバイダーにアクセスする) を使用してください。
-</Callout>
 
 ## 現在のキャッシュプロバイダーにアクセスする [#access-current-cache-provider]
 
