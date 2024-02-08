@@ -117,7 +117,7 @@ export default function Page({ fallback }) {
 
 ### 复杂关键字 [#complex-keys]
 
-`useSWR` 可以与 `array` 和 `function` 类型的关键字一同使用. 若要通过这些类型的关键字使用预先获取的数据，需要用 `unstable_serialize` 序列化 `fallback` 关键字.
+`useSWR` 可以与 `array` 和 `function` 类型的 key 一同使用. 若要通过这些类型的 key 使用预先获取的数据，需要用 `unstable_serialize` 序列化 `fallback` key.
 
 ```jsx
 import useSWR, { unstable_serialize } from 'swr'
