@@ -130,21 +130,17 @@ SWR은 remote mutation을 위한 hook으로 `useSWRMutation`을 제공합니다.
 ```tsx
 import useSWRMutation from 'swr/mutation'
 
-// Fetcher 구현.
-// 추가 인수는 두 번째 매개변수의 `arg` 속성을 통해 전달됩니다.
-// 아래 예제에서 `arg`는 `'my_token'`이 됩니다.
-async function updateUser(url, { arg }: { arg: string }) {
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${arg}`
-    }
-  })
-}
-
 function Profile() {
   // useSWR + mutate 같은 API를 사용하지만, 자동으로 요청을 시작하지는 않습니다.
-  const { trigger } = useSWRMutation('/api/user', updateUser, options)
+  const { trigger } = useSWRMutation(
+    '/api/user',
+    (url, { arg }: { arg: string }) =>
+      // Fetcher 구현.
+      // 추가 인수는 두 번째 매개변수의 `arg` 속성을 통해 전달됩니다.
+      // 아래 예제에서 `arg`는 `'my_token'`이 됩니다.
+      fetch(url, { headers: { Authorization: `Bearer ${arg}` }}),
+    options
+  )
 
   return <button onClick={() => {
     // 특정 인수를 사용하여 `updateUser`를 트리거 합니다.
@@ -181,22 +177,18 @@ function Profile() {
 ```tsx
 import useSWRMutation from 'swr/mutation'
 
-async function sendRequest(url, { arg }: { arg: { username: string } }) {
-  return fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(arg)
-  }).then(res => res.json())
-}
-
 function App() {
-  const { trigger, isMutating } = useSWRMutation('/api/user', sendRequest, /* options */)
+  const { trigger, isMutating } = useSWRMutation(
+    '/api/user', 
+    () => fetch(url, { method: 'POST', body: JSON.stringify(arg) }).then(res => res.json())
+  )
 
   return (
     <button
       disabled={isMutating}
       onClick={async () => {
         try {
-          const result = await trigger({ username: 'johndoe' }, /* options */)
+          await trigger({ username: 'johndoe' }, /* options */)
         } catch (e) {
           // 에러 핸들링
         }
