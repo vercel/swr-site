@@ -42,8 +42,8 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json())
 ```jsx
 import useSWR from "swr";
 
-function Profile() {
-  const { data, error, isLoading } = useSWR("/api/user/123", fetcher)
+function Profile ({ userId }) {
+  const { data, error, isLoading } = useSWR(`/api/user/${userId}`, fetcher)
 
   if (error) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
@@ -100,15 +100,15 @@ import { Welcome } from 'components/diagrams/welcome'
 ```jsx {7-11,17,18,27}
 // 页面组件
 
-function Page() {
+function Page ({ userId }) {
   const [user, setUser] = useState(null)
 
   // 请求数据
   useEffect(() => {
-    fetch("/api/user")
-      .then((res) => res.json())
-      .then((data) => setUser(data))
-  }, [])
+    fetch(`/api/user/${userId}`)
+      .then(res => res.json())
+      .then(data => setUser(data))
+  }, [userId])
 
   // 全局加载状态
   if (!user) return <Spinner />
@@ -146,30 +146,30 @@ SWR 完美地解决了这个问题。使用我们刚刚创建的 `useUser` hook�
 ```jsx {20,26}
 // 页面组件
 
-function Page() {
+function Page ({ userId }) {
   return <div>
-    <Navbar />
-    <Content />
+    <Navbar userId={userId} />
+    <Content userId={userId} />
   </div>
 }
 
 // 子组件
 
-function Navbar() {
+function Navbar ({ userId }) {
   return <div>
     ...
-    <Avatar />
+    <Avatar userId={userId} />
   </div>
 }
 
-function Content() {
-  const { user, isLoading } = useUser()
+function Content ({ userId }) {
+  const { user, isLoading } = useUser(userId)
   if (isLoading) return <Spinner />
   return <h1>Welcome back, {user.name}</h1>
 }
 
-function Avatar() {
-  const { user, isLoading } = useUser()
+function Avatar ({ userId }) {
+  const { user, isLoading } = useUser(userId)
   if (isLoading) return <Spinner />
   return <img src={user.avatar} alt={user.name} />
 }
