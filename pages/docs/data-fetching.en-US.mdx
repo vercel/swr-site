@@ -75,3 +75,39 @@ function App () {
 ```
 
 _If you want to pass variables to a GraphQL query, check out [Multiple Arguments](/docs/arguments)._
+
+**End-to-end type safety with GraphQL Code Generator**
+
+Using SWR and `graphql-request` along with [GraphQL Code Generator](https://www.the-guild.dev/graphql/codegen) will get end-to-end TypeScript types, inferred from the given GraphQL Query:
+
+```ts
+import request from 'graphql-request';
+import { graphql } from '../gql/gql';
+
+
+const getMovieQueryDocument = graphql(/* GraphQL */ `
+  query getMovie($title: String!) {
+    Movie(title: $title) {
+      releaseDate
+      actors {
+        name
+      }
+    }
+  }
+`);
+
+function App () {
+  // `data` is typed
+  const { data } = useSWR(
+    // `variables` are typed too
+    ['movie', { title: "Inception" }],
+    async (_key, variables) =>
+      request('/api/graphql', getMovieQueryDocument, variables)
+  );
+
+  // ...
+};
+```
+[_Complete example is available in the GraphQL Code Generator repository_](https://github.com/dotansimha/graphql-code-generator/tree/master/examples/front-end/react/swr)
+
+Visit GraphQL Code Generator's dedicated guide to get started: https://www.the-guild.dev/graphql/codegen/docs/guides/react-vue.
