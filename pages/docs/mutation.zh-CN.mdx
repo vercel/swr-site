@@ -102,7 +102,7 @@ import { Callout } from 'nextra-theme-docs'
 - `data`：用于更新客户端缓存的数据，或者是一个用于进行远程数据更改的异步函数。
 - `options`：接受下列选项
   - `optimisticData`：用于立即更新客户端缓存的数据，或是一个接受当前数据并返回新的客户端缓存数据的函数，通常用于乐观 UI。
-  - `revalidate = true`：一旦异步更新完成，重新验证缓存。
+  - `revalidate = true`: should the cache revalidate once the asynchronous update resolves. If set to a function, the function receives `data` and `key`.
   - `populateCache = true`：将远程数据更改的结果写入缓存，或者将接收新结果和当前结果作为参数并返回数据更改结果的函数。
   - `rollbackOnError = true`：如果远程数据更改失败，缓存会回滚。或者接受一个函数，它接收从 fetcher 抛出的错误作为参数，并返回一个布尔值判断是否应该回滚。
   - `throwOnError = true`：数据更改失败时抛出错误。

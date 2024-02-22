@@ -102,7 +102,7 @@ function App () {
 - `data`: données pour mettre à jour le cache client, ou une fonction asynchrone pour la mutation distante
 - `options`: accepte les options suivantes
   - `optimisticData`: données pour mettre à jour immédiatement le cache client, ou une fonction qui reçoit les données actuelles et renvoie les nouvelles données du cache client, généralement utilisée dans l'UI optimiste.
-  - `revalidate = true`: est-ce que le cache doit se révalider une fois que la mise à jour asynchrone est résolue.
+  - `revalidate = true`: should the cache revalidate once the asynchronous update resolves. If set to a function, the function receives `data` and `key`.
   - `populateCache = true`: est-ce que le résultat de la mutation distante doit être écrit dans le cache, ou une fonction qui reçoit le nouveau résultat et le résultat actuel comme arguments et renvoie le résultat de la mutation.
   - `rollbackOnError = true`: est-ce que le cache doit revenir à l'état précédent si la mutation distante échoue, ou une fonction qui reçoit l'erreur renvoyée par la fonction de récupération comme arguments et renvoie un booléen pour savoir si le cache doit revenir à l'état précédent ou non.
   - `throwOnError = true`: est-ce que l'appel à la mutation doit renvoyer l'erreur quand elle échoue.
