@@ -347,6 +347,30 @@ function App () {
     O argumento `previousPageData` da função `getKey` se torna `null` quando você habilita a opção `parallel`.
 </Callout>
 
+### Revalidate Specific Pages [#revalidate-specific-pages]
+
+<Callout emoji="✅">
+  Please update to the latest version (≥ 2.2.5) to use this API.
+</Callout>
+
+The default behavior of the mutation of `useSWRInfinite` is to revalidate all pages that have been loaded. But you might want to revalidate only the specific pages that have been changed. You can revalidate only specific pages by passing a function to the `revalidate` option.
+
+The `revalidate` function is called for each page.
+
+```jsx
+function App() {
+  const { mutate, size } = useSWRInfinite(
+    (index) => [`/api/?page=${index + 1}`, index + 1],
+    fetcher
+  );
+
+  mutate({
+    // only revalidate the last page
+    revalidate: (data, [url, page]) => page === size
+  });
+}
+```
+
 ### Mutação Global com `useSWRInfinite` [#global-mutate-with-useswrinfinite]
 
 `useSWRInfinite` armazena todos os dados da página com uma chave de cache especial junto com cada dado da página. Você deve usar `unstable_serialize` em `swr/infinite` para revalidar os dados com a mutação global.

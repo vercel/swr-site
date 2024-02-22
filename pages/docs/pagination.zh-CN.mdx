@@ -336,6 +336,30 @@ function App () {
     当你启用了 `parallel` 选项，`getKey` 函数的参数 `previousPageData` 会变为 `null`。
 </Callout>
 
+### Revalidate Specific Pages [#revalidate-specific-pages]
+
+<Callout emoji="✅">
+  Please update to the latest version (≥ 2.2.5) to use this API.
+</Callout>
+
+The default behavior of the mutation of `useSWRInfinite` is to revalidate all pages that have been loaded. But you might want to revalidate only the specific pages that have been changed. You can revalidate only specific pages by passing a function to the `revalidate` option.
+
+The `revalidate` function is called for each page.
+
+```jsx
+function App() {
+  const { mutate, size } = useSWRInfinite(
+    (index) => [`/api/?page=${index + 1}`, index + 1],
+    fetcher
+  );
+
+  mutate({
+    // only revalidate the last page
+    revalidate: (data, [url, page]) => page === size
+  });
+}
+```
+
 ### 全局变更 `useSWRInfinite` 数据 [#global-mutate-with-useswrinfinite]
 
 

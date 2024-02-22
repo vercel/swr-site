@@ -346,6 +346,30 @@ function App () {
     `parallel` オプションを有効にした場合、`getKey` 関数の `previousPageData` 引数は `null` になります。
 </Callout>
 
+### 特定のページのみ再検証する [#revalidate-specific-pages]
+
+<Callout emoji="✅">
+  この API を利用するには最新バージョン (≥ 2.2.5) に更新してください。
+</Callout>
+
+`useSWRInfinite` のミューテーションのデフォルトの挙動はすでにロードされた全てのページを再検証することです。しかし、変更されたページのみを再検証したいこともあります。`revalidate` オプションに関数を渡すことで特定のページのみを再検証できます。
+
+`useSWRInfinite` の `revadalite` オプションに関数を渡した場合、この関数はページ毎に呼ばれます。
+
+```jsx
+function App() {
+  const { mutate, size } = useSWRInfinite(
+    (index) => [`/api/?page=${index + 1}`, index + 1],
+    fetcher
+  );
+
+  mutate({
+    // 最後のページのみを再検証する
+    revalidate: (data, [url, page]) => page === size
+  });
+}
+```
+
 ### Global Mutate with `useSWRInfinite` [#global-mutate-with-useswrinfinite]
 
 `useSWRInfinite` は各ページのデータに加え、全てのページデータを特別な形式のキーでキャッシュに保存するため、グローバルなミューテートを使い再検証するためには、`swr/infinite` にある `unstable_serialize` を使う必要があります。
