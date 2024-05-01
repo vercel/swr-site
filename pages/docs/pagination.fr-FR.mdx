@@ -347,14 +347,14 @@ The `revalidate` function is called for each page.
 
 ```jsx
 function App() {
-  const { mutate, size } = useSWRInfinite(
+  const { data, mutate, size } = useSWRInfinite(
     (index) => [`/api/?page=${index + 1}`, index + 1],
     fetcher
   );
 
-  mutate({
+  mutate(data, {
     // only revalidate the last page
-    revalidate: (data, [url, page]) => page === size
+    revalidate: (pageData, [url, page]) => page === size
   });
 }
 ```
