@@ -102,7 +102,7 @@ O hook transmite para todos os hooks SWR sob o mesmo escopo de [provedor de cach
 - `data`: dados para atualizar o cache do cliente, ou uma função assíncrona para mutação remota
 - `options`: aceita as seguintes opções
   - `optimisticData`: dados para imediatamente atualizar o cache do cliente, ou uma função que recebe os dados atuais e retorna os novos dados do cache do cliente, normalmente usado para UI otimista.
-  - `revalidate = true`: o cache deve revalidar uma vez que a atualização assíncrona resolve.
+  - `revalidate = true`: should the cache revalidate once the asynchronous update resolves. If set to a function, the function receives `data` and `key`.
   - `populateCache = true`: o resultado da mutação remota será escrita no cache, ou uma função que recebe o novo resultado e o resultado atual como argumentos e retorna o resultado da mutação.
   - `rollbackOnError = true`: o cache deve reverter se a mutação remota der erro, ou uma função que recebe o erro lançado pelo fetcher como argumentos e retorna um boolean se deve reverter ou não.
   - `throwOnError = true`: a chamada de mutação deve lançar um erro quando falhar
