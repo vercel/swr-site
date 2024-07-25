@@ -30,13 +30,13 @@ import useSWR from 'swr' // ❌ 在 Server components 中不可用
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
 import useSWR from 'swr'
-export default Page() {
+export default function Page() {
   const { data } = useSWR('/api/user', fetcher)
   return <h1>{data.name}</h1>
 }
 ```
 
-如果您需要在 Server Components `layout` 或者 `page` 中使用 `SWRConfig` 配置公共设置，请创建一个独立的 Provider Client Component 以初始化 Provider 和配置，然后在Server Component Pages中使用它。
+如果您需要在 Server Components `layout` 或者 `page` 中使用 `SWRConfig` 配置公共设置，请创建一个独立的 Provider Client Component 以初始化 Provider 和配置，然后在 Server Component Pages 中使用它。
 
 ```tsx filename="app/swr-provider.tsx" copy
 'use client';
@@ -49,7 +49,7 @@ export const SWRProvider = ({ children }) => {
 ```tsx filename="app/page.tsx" copy
 // 这仍然是一个 Server Component
 import { SWRProvider } from './swr-provider'
-export default Page() {
+export default function Page() {
   return (
     <SWRProvider>
       <h1>hello SWR</h1>
@@ -57,7 +57,6 @@ export default Page() {
   )
 }
 ```
-
 
 ## 客户端数据获取 [#client-side-data-fetching]
 
@@ -80,6 +79,7 @@ export default Page() {
 您可以使用 [`SWRConfig`](/docs/global-configuration) 的 `fallback` 选项来将预获取的数据作为所有 SWR Hook 的初始值。
 
 使用 `getStaticProps` 的例子：
+
 ```jsx
  export async function getStaticProps () {
   // `getStaticProps` 在服务端执行
