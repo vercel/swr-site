@@ -30,7 +30,7 @@ import useSWR from 'swr' // ❌ Недоступно в серверных ко�
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
 import useSWR from 'swr'
-export default Page() {
+export default function Page() {
   const { data } = useSWR('/api/user', fetcher)
   return <h1>{data.name}</h1>
 }
@@ -49,7 +49,7 @@ export const SWRProvider = ({ children }) => {
 ```tsx filename="app/page.tsx" copy
 // Это всё ещё серверный компонент
 import { SWRProvider } from './swr-provider'
-export default Page() {
+export default function Page() {
   return (
     <SWRProvider>
       <h1>hello SWR</h1>
@@ -79,6 +79,7 @@ export default Page() {
 Вы можете использовать параметр `fallback` в [`SWRConfig`](/docs/global-configuration), чтобы передать предварительно полученные данные в качестве начального значения для всех хуков SWR.
 
 Например, с использованием `getStaticProps`:
+
 ```jsx
  export async function getStaticProps () {
   // `getStaticProps` выполняется на стороне сервера.

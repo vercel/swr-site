@@ -30,7 +30,7 @@ import useSWR from 'swr' // ❌ これはサーバーコンポーネントでは
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
 import useSWR from 'swr'
-export default Page() {
+export default function Page() {
   const { data } = useSWR('/api/user', fetcher)
   return <h1>{data.name}</h1>
 }
@@ -49,7 +49,7 @@ export const SWRProvider = ({ children }) => {
 ```tsx filename="app/page.tsx" copy
 // これはサーバーコンポーネントです
 import { SWRProvider } from './swr-provider'
-export default Page() {
+export default function Page() {
   return (
     <SWRProvider>
       <h1>hello SWR</h1>
@@ -57,7 +57,6 @@ export default Page() {
   )
 }
 ```
-
 
 ## クライアントサイドでのデータフェッチ [#client-side-data-fetching]
 
@@ -80,6 +79,7 @@ SWR と組み合わせることで、SEO のためにページをプリレンダ
 [`SWRConfig`](/docs/global-configuration) の `fallback` オプションを使用して、事前に取得したデータをすべての SWR フックの初期値として渡すことができます。
 
 `getStaticProps` の例:
+
 ```jsx
  export async function getStaticProps () {
   // `getStaticProps` はサーバーサイドで実行されます

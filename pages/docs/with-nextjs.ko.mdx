@@ -30,7 +30,7 @@ You can mark your components with `'use client'` directive or import SWR from cl
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
 import useSWR from 'swr'
-export default Page() {
+export default function Page() {
   const { data } = useSWR('/api/user', fetcher)
   return <h1>{data.name}</h1>
 }
@@ -49,7 +49,7 @@ export const SWRProvider = ({ children }) => {
 ```tsx filename="app/page.tsx" copy
 // This is still a server component
 import { SWRProvider } from './swr-provider'
-export default Page() {
+export default function Page() {
   return (
     <SWRProvider>
       <h1>hello SWR</h1>
@@ -57,7 +57,6 @@ export default Page() {
   )
 }
 ```
-
 
 ## Client Side Data Fetching [#client-side-data-fetching]
 
@@ -80,6 +79,7 @@ Together with SWR, you can pre-render the page for SEO, and also have features s
 You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks.
 
 For example with `getStaticProps`:
+
 ```jsx
  export async function getStaticProps () {
   // `getStaticProps` is executed on the server side.
