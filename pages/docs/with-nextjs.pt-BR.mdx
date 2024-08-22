@@ -31,7 +31,7 @@ Você pode marcar seus componentes com a diretiva `'use client'` ou importar o S
 'use client'
 import useSWR from 'swr'
 
-export default Page() {
+export default function Page() {
   const { data } = useSWR('/api/user', fetcher)
   return <h1>{data.name}</h1>
 }
@@ -52,7 +52,7 @@ export const SWRProvider = ({ children }) => {
 ```tsx filename="app/page.tsx" copy
 // This is still a server component
 import { SWRProvider } from './swr-provider'
-export default Page() {
+export default function Page() {
   return (
     <SWRProvider>
       <h1>ola SWR</h1>
@@ -60,7 +60,6 @@ export default Page() {
   )
 }
 ```
-
 
 ## Obtendo dados em Client-side [#client-side-data-fetching]
 
@@ -72,7 +71,7 @@ Funciona assim:
 - Então, busque os dados no lado do cliente e exiba-os quando estiver pronto.
 
 Essa estratégia funciona bem para páginas de dashboard de usuário, por exemplo. Como a página do dashboard é uma página privada e específica do usuário, o SEO não é relevante e a página não precisa ser pré-renderizada.
-Os dados são atualizados com frequência, o que requer a busca de dados no momento da solicitação. 
+Os dados são atualizados com frequência, o que requer a busca de dados no momento da solicitação.
 
 ## Pré-rendedrizando com dados padrão [#pre-rendering-with-default-data]
 
@@ -84,6 +83,7 @@ Junto com o SWR, você pode pré-renderizar a página para SEO e também ter rec
 Você pode usar a opção `fallback` de [`SWRConfig`](/docs/global-configuration) para passar os dados pré-buscados como o valor inicial de todos os hooks SWR.
 
 Por exemplo, com o `getStaticProps`:
+
 ```jsx
  export async function getStaticProps () {
   // `getStaticProps` é executado no lado do servidor.
