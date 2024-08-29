@@ -32,14 +32,19 @@ For example, a [JavaScript Map](https://developer.mozilla.org/en-US/docs/Web/Jav
 
 ## Create Cache Provider [#create-cache-provider]
 
+Use `initCache` to create a cache for SWR, or use `mutate` in the return value of `initCache` if you want to use global mutate under `SWRConfig` with `provider` set.
+
 The `provider` option of `SWRConfig` receives a function that returns a [cache provider](#cache-provider). The provider will then be used by all SWR hooks inside that `SWRConfig` boundary. For example:
 
 ```jsx
 import useSWR, { SWRConfig } from 'swr'
+import { initCache } from 'swr/_internal'
+import type { ScopedMutator, Cache } from 'swr/_internal'
+const [cache, mutate] = initCache(new Map()) as [Cache<unknown>, ScopedMutator]
 
 function App() {
   return (
-    <SWRConfig value={{ provider: () => new Map() }}>
+    <SWRConfig value={{ provider: () => cache }}>
       <Page/>
     </SWRConfig>
   )
@@ -59,10 +64,6 @@ import { Cache } from 'components/diagrams/cache'
 </div>
 
 When nested, SWR hooks will use the upper-level cache provider. If there is no upper-level cache provider, it fallbacks to the default cache provider, which is an empty `Map`.
-
-<Callout emoji="⚠️">
-   If a cache provider is used, the global `mutate` will **not** work for SWR hooks under that `<SWRConfig>` boundary. Please use [this](#access-current-cache-provider) instead.
-</Callout>
 
 ## Access Current Cache Provider [#access-current-cache-provider]
 
