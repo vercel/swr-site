@@ -25,7 +25,6 @@ Inside your React project directory, run the following:
   </Tab>
 </Tabs>
 
-
 ## Quick Start [#quick-start]
 
 For normal RESTful APIs with JSON data, first you need to create a `fetcher` function, which is just a wrapper of the native `fetch`:
@@ -145,7 +144,7 @@ function Avatar ({ user }) {
 Usually, we need to keep all the data fetching in the top level component and add props to every component deep down the tree.
 The code will become harder to maintain if we add more data dependency to the page.
 
-Although we can avoid passing props using [Context](https://reactjs.org/docs/context.html), there's still the dynamic content problem:
+Although we can avoid passing props using [Context](https://react.dev/learn/passing-data-deeply-with-context), there's still the dynamic content problem:
 components inside the page content can be dynamic, and the top level component might not know what data will be needed by its child components.
 
 SWR solves the problem perfectly. With the `useUser` hook we just created, the code can be refactored to:
