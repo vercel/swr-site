@@ -42,7 +42,8 @@ export const featuresMap = {
   "fr-FR": {
     lightweight: "Léger",
     realtime: "Temps réel",
-    backendAgnostic: "Indépendant du Backend",
+    backendAgnostic: "Backend Indépendant",
+    remoteLocal: "Distant + Locale"
   },
   "pt-BR": {
     lightweight: "Leve",
@@ -78,7 +79,7 @@ export const headDescriptionMap = {
 export const feedbackLinkMap = {
   "en-US": "Question? Give us feedback →",
   "es-ES": "¿Dudas? Danos tu feedback →",
-  "fr-FR": "Question? Donnez-nous votre avis →",
+  "fr-FR": "Question? Donnez-nous des retours →",
   "pt-BR": "Dúvidas? Nos dê feedback →",
   "zh-CN": "有疑问？给我们反馈 →",
   ko: "질문이 있으신가요? 피드백을 남겨주세요 →",
