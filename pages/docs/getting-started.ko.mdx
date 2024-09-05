@@ -144,7 +144,7 @@ function Avatar ({ user }) {
 보통 최상위 레벨 컴포넌트에서 가져온 모든 데이터를 유지하고 트리 아래의 모든 자식 컴포넌트의 props로 추가해야 합니다.
 페이지에 더 많은 데이터 의존성을 추가한다면 코드는 점점 유지하기가 힘들어집니다.
 
-[Context](https://reactjs.org/docs/context.html)를 사용하여 props 전달을 피할 수 있습니다만 동적 콘텐츠 문제가 여전히 존재합니다:
+[Context](https://react.dev/learn/passing-data-deeply-with-context)를 사용하여 props 전달을 피할 수 있습니다만 동적 콘텐츠 문제가 여전히 존재합니다:
 페이지 콘텐츠 내 컴포넌트들은 동적일 수 있으며, 최상위 레벨 컴포넌트는 그 자식 컴포넌트가 필요로하는 데이터가 무엇인지 알 수 없을 수도 있습니다.
 
 SWR은 이 문제를 완벽하게 해결합니다. 우리가 막 생성한 `useUser` hook을 사용해 다음과 같이 리팩토링할 수 있습니다.

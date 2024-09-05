@@ -157,7 +157,7 @@ Por lo general, necesitamos mantener todos los datos que se obtienen en el compo
 añadir las props a cada componente dentro del árbol. El código será más difícil de mantener si añadimos más
 dependencia de datos a la página.
 
-Aunque podamos evitar pasar props usando [Context](https://reactjs.org/docs/context.html), sigue existiendo problema con el contenido dinámico:
+Aunque podamos evitar pasar props usando [Context](https://react.dev/learn/passing-data-deeply-with-context), sigue existiendo problema con el contenido dinámico:
 Los componentes dentro del contenido de la página pueden ser dinámicos, y componente de nivel superiror puede no saber qué datos necesitarán sus componentes hijos.
 
 SWR resuelve el problema perfectamente, Con el hook `useUser` que acabamos de crear, el código puede ser refactorizado a:

@@ -142,7 +142,7 @@ function Avatar ({ user }) {
 Normalement, on doit garder toutes les données dans le composant primaire et ajouter des props à chaque composant dans l'arborescence.
 Le code devient plus difficile à maintenir si on ajoute plus de données à la page.
 
-Bien que l'on puisse éviter de passer les données via les props en utilisant [Context](https://reactjs.org/docs/context.html), il y a toujours le problème du contenu dynamique :
+Bien que l'on puisse éviter de passer les données via les props en utilisant [Context](https://react.dev/learn/passing-data-deeply-with-context), il y a toujours le problème du contenu dynamique :
 Les composants à l'intérieur des pages peuvent être dynamiques, et le composant de niveau supérieur ne sait peut-être pas quelles données seront nécessaires par ses composants enfants.
 
 SWR résout parfaitement le problème. Avec le hook `useUser` que nous venons de créer, le code peut être refactorisé en :
