@@ -14,9 +14,9 @@
 
 ## 手动预请求 [#programmatically-prefetch]
 
-SWR provides the `preload` API to prefetch the resources programmatically and store the results in the cache. `preload` accepts `key` and `fetcher` as the arguments.
+SWR 提供 `preload` API 来以编程方式预加载资源并将结果存储在缓存中。`preload` 接受 `key` 和 `fetcher` 作为参数。   
 
-You can call `preload` even outside of React.
+你甚至可以在React之外调用 `preload`。
 
 ```jsx
 import { useState } from 'react'
@@ -24,9 +24,9 @@ import useSWR, { preload } from 'swr'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
-// Preload the resource before rendering the User component below,
-// this prevents potential waterfalls in your application.
-// You can also start preloading when hovering the button or link, too.
+// 在渲染下面的用户组件之前预加载资源，
+// 这可以防止应用程序中出现潜在的网络请求瀑布。
+// 您也可以在鼠标悬停在按钮或链接上时开始预加载。
 preload('/api/user', fetcher)
 
 function User() {
@@ -45,13 +45,13 @@ export default function App() {
 }
 ```
 
-Within React rendering tree, `preload` is also available to use in event handlers or effects.
+在 React 渲染树中，`preload`也可以在事件处理或 effects 中使用。
 
 ```jsx
 function App({ userId }) {
   const [show, setShow] = useState(false)
 
-  // preload in effects
+  // 在 effects 中预加载
   useEffect(() => {
     preload('/api/user?id=' + userId, fetcher)
   }, [userId])
@@ -60,7 +60,7 @@ function App({ userId }) {
     <div>
       <button
         onClick={() => setShow(true)}
-        {/* preload in event callbacks */}
+        {/* 在事件回调中预加载 */}
         onHover={() => preload('/api/user?id=' + userId, fetcher)}
       >
         Show User
@@ -73,18 +73,18 @@ function App({ userId }) {
 
 配合 Next.js 的 [页面预加载](https://nextjs.org/docs/api-reference/next/router#routerprefetch)，你将能立即加载下一页和数据。
 
-In Suspense mode, you should utilize `preload` to avoid waterfall problems.
+在 Suspense 模式下，你应该利用`preload`来避免网络请求瀑布问题。
 
 ```jsx
 import useSWR, { preload } from 'swr'
 
-// should call before rendering
+// 在渲染前执行
 preload('/api/user', fetcher);
 preload('/api/movies', fetcher);
 
 const Page = () => {
-  // The below useSWR hooks will suspend the rendering, but the requests to `/api/user` and `/api/movies` have started by `preload` already,
-  // so the waterfall problem doesn't happen.
+  // 下面的 useSWR 钩子会暂停渲染，但是对 `/api/user` 和 `/api/movies` 的请求已经由 `preload` 启动，
+  // 因此不会出现网络请求瀑布。
   const { data: user } = useSWR('/api/user', fetcher, { suspense: true });
   const { data: movies } = useSWR('/api/movies', fetcher, { suspense: true });
   return (
