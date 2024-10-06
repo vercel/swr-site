@@ -87,14 +87,14 @@ useSWRImmutable(key, fetcher)
 
 上面这两个 hook 做**完全相同的**事情。一旦数据被缓存，他们将永远不会再次请求它。
 
-## Revalidate on Mount[#revalidate-on-mount]
+## 挂载时重新请求[#revalidate-on-mount]
 
-It's useful to force override SWR revalidation on mounting. By default, the value of `revalidateOnMount` is set to undefined.
+在组件挂载时，强制覆盖 SWR 的重新请求，这非常有用。默认情况下，`revalidateOnMount`的值为`undefined`。
 
-A SWR hook mounts as:
+SWR hook 挂载过程如下:
 
-- First it checks if `revalidateOnMount` is defined. It starts request if it's true, stop if it's false.
+- 首先，它检查是否定义了 `revalidateOnMount`。如果为 `true`，则开始请求，如果为 `false`，则停止请求。
 
-`revalidateIfStale` useful to control the mount behaviour. By default `revalidateIfStale` is set to true.
+`revalidateIfStale` 有助于控制挂载行为。默认情况下，`revalidateIfStale` 设置为 `true`。
 
-If `revalidateIfStale` is set to true it only refetches if there's any cache data else it will not refetch.
+如果 `revalidateIfStale` 设置为 `true`，则只有存在缓存数据时才会重新获取数据，否则不会重新获取。
