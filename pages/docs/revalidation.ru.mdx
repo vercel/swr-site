@@ -84,18 +84,18 @@ useSWR(key, fetcher, {
 useSWRImmutable(key, fetcher)
 ```
 
-`revalidateIfStale`контролирует, должен ли SWR ревалидировать при монтировании и есть ли устаревшие данные.
+`revalidateIfStale` контролирует, должен ли SWR ревалидировать при монтировании и есть ли устаревшие данные.
 
 Эти 2 хука делают **то же самое**. После кеширования данных они больше никогда не будут запрашивать их.
 
-## Revalidate on Mount[#revalidate-on-mount]
+## Ревалидация при монтировании[#revalidate-on-mount]
 
-It's useful to force override SWR revalidation on mounting. By default, the value of `revalidateOnMount` is set to undefined.
+Эта опция полезна для принудительного запуска ревалидации в SWR при монтировании. По умолчанию значение `revalidateOnMount` установлено в undefined.
 
-A SWR hook mounts as:
+Монтирование хука SWR происходит следующим образом:
 
-- First it checks if `revalidateOnMount` is defined. It starts request if it's true, stop if it's false.
+- Сначала проверяется, задано ли значение `revalidateOnMount`. Если оно равно true, выполняется запрос, если false — запрос не выполняется.
 
-`revalidateIfStale` useful to control the mount behaviour. By default `revalidateIfStale` is set to true.
+`revalidateIfStale` используется для управления поведением при монтировании. По умолчанию `revalidateIfStale` равно true.
 
-If `revalidateIfStale` is set to true it only refetches if there's any cache data else it will not refetch.
+Если `revalidateIfStale` установлен в true, повторная выборка данных происходит только если в кэше есть какие-либо данные, иначе повторная выборка не будет происходить.
