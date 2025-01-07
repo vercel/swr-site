@@ -43,8 +43,8 @@ Então você pode importar `useSWR` e começar a usá-lo em qualquer componente 
 ```jsx
 import useSWR from 'swr'
 
-function Profile () {
-  const { data, error, isLoading } = useSWR('/api/user/123', fetcher)
+function Profile ({ userId }) {
+  const { data, error, isLoading } = useSWR(`/api/user/${userId}`, fetcher)
 
   if (error) return <div>falhou ao carregar</div>
   if (isLoading) return <div>carregando...</div>
@@ -105,15 +105,15 @@ filhos via props (note que nós não tratamos o estado de erro por agora).
 ```jsx {7-11,17,18,27}
 // componente da página
 
-function Page () {
+function Page ({ userId }) {
   const [user, setUser] = useState(null)
 
   // obtendo os dados data
   useEffect(() => {
-    fetch('/api/user')
+    fetch(`/api/user/${userId}`)
       .then(res => res.json())
       .then(data => setUser(data))
-  }, [])
+  }, [userId])
 
   // estado de carregamento (loading) global
   if (!user) return <Spinner/>
@@ -153,30 +153,30 @@ SWR resolve o problema perfeitamente. Com o hook `useUser`, o código pode ser r
 ```jsx {20,26}
 // componente page
 
-function Page () {
+function Page ({ userId }) {
   return <div>
-    <Navbar />
-    <Content />
+    <Navbar userId={userId} />
+    <Content userId={userId} />
   </div>
 }
 
 // componentes filho
 
-function Navbar () {
+function Navbar ({ userId }) {
   return <div>
     ...
-    <Avatar />
+    <Avatar userId={userId} />
   </div>
 }
 
-function Content () {
-  const { user, isLoading } = useUser()
+function Content ({ userId }) {
+  const { user, isLoading } = useUser(userId)
   if (isLoading) return <Spinner />
-  return <h1>Bem-vindo de volta, {user.name}</h1>
+  return <h1>Welcome back, {user.name}</h1>
 }
 
-function Avatar () {
-  const { user, isLoading } = useUser()
+function Avatar ({ userId }) {
+  const { user, isLoading } = useUser(userId)
   if (isLoading) return <Spinner />
   return <img src={user.avatar} alt={user.name} />
 }

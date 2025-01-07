@@ -45,8 +45,8 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 ```jsx
 import useSWR from 'swr'
 
-function Profile () {
-  const { data, error, isLoading } = useSWR('/api/user/123', fetcher)
+function Profile ({ userId }) {
+  const { data, error, isLoading } = useSWR(`/api/user/${userId}`, fetcher)
 
   if (error) return <div>ошибка загрузки</div>
   if (isLoading) return <div>загрузка...</div>
@@ -109,15 +109,15 @@ import { Welcome } from 'components/diagrams/welcome'
 ```jsx {7-11,17,18,27}
 // компонент страницы
 
-function Page () {
+function Page ({ userId }) {
   const [user, setUser] = useState(null)
 
   // выборка данных
   useEffect(() => {
-    fetch('/api/user')
+    fetch(`/api/user/${userId}`)
       .then(res => res.json())
       .then(data => setUser(data))
-  }, [])
+  }, [userId])
 
   // глобальное состояние загрузки
   if (!user) return <Spinner/>
@@ -159,30 +159,30 @@ SWR отлично решает проблему. С помощью только
 ```jsx {20,26}
 // компонент страницы
 
-function Page () {
+function Page ({ userId }) {
   return <div>
-    <Navbar />
-    <Content />
+    <Navbar userId={userId} />
+    <Content userId={userId} />
   </div>
 }
 
 // дочерний компонент
 
-function Navbar () {
+function Navbar ({ userId }) {
   return <div>
     ...
-    <Avatar />
+    <Avatar userId={userId} />
   </div>
 }
 
-function Content () {
-  const { user, isLoading } = useUser()
+function Content ({ userId }) {
+  const { user, isLoading } = useUser(userId)
   if (isLoading) return <Spinner />
-  return <h1>С возвращением, {user.name}</h1>
+  return <h1>Welcome back, {user.name}</h1>
 }
 
-function Avatar () {
-  const { user, isLoading } = useUser()
+function Avatar ({ userId }) {
+  const { user, isLoading } = useUser(userId)
   if (isLoading) return <Spinner />
   return <img src={user.avatar} alt={user.name} />
 }

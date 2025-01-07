@@ -43,8 +43,8 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 ```jsx
 import useSWR from 'swr'
 
-function Profile () {
-  const { data, error, isLoading } = useSWR('/api/user/123', fetcher)
+function Profile ({ userId }) {
+  const { data, error, isLoading } = useSWR(`/api/user/${userId}`, fetcher)
 
   if (error) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
@@ -104,15 +104,15 @@ import { Welcome } from 'components/diagrams/welcome'
 ```jsx {7-11,17,18,27}
 // 페이지 컴포넌트
 
-function Page () {
+function Page ({ userId }) {
   const [user, setUser] = useState(null)
 
   // 데이터 가져오기
   useEffect(() => {
-    fetch('/api/user')
+    fetch(`/api/user/${userId}`)
       .then(res => res.json())
       .then(data => setUser(data))
-  }, [])
+  }, [userId])
 
   // 전역 로딩 상태
   if (!user) return <Spinner/>
@@ -152,30 +152,30 @@ SWR은 이 문제를 완벽하게 해결합니다. 우리가 막 생성한 `useU
 ```jsx {20,26}
 // 페이지 컴포넌트
 
-function Page () {
+function Page ({ userId }) {
   return <div>
-    <Navbar />
-    <Content />
+    <Navbar userId={userId} />
+    <Content userId={userId} />
   </div>
 }
 
 // 자식 컴포넌트
 
-function Navbar () {
+function Navbar ({ userId }) {
   return <div>
     ...
-    <Avatar />
+    <Avatar userId={userId} />
   </div>
 }
 
-function Content () {
-  const { user, isLoading } = useUser()
+function Content ({ userId }) {
+  const { user, isLoading } = useUser(userId)
   if (isLoading) return <Spinner />
   return <h1>Welcome back, {user.name}</h1>
 }
 
-function Avatar () {
-  const { user, isLoading } = useUser()
+function Avatar ({ userId }) {
+  const { user, isLoading } = useUser(userId)
   if (isLoading) return <Spinner />
   return <img src={user.avatar} alt={user.name} />
 }
