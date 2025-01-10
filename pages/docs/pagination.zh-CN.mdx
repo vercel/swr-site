@@ -336,15 +336,15 @@ function App () {
     当你启用了 `parallel` 选项，`getKey` 函数的参数 `previousPageData` 会变为 `null`。
 </Callout>
 
-### Revalidate Specific Pages [#revalidate-specific-pages]
+### 重新验证特定页面 [#revalidate-specific-pages]
 
 <Callout emoji="✅">
-  Please update to the latest version (≥ 2.2.5) to use this API.
+  请升级至最新版本（≥ 2.2.5）以使用此 API
 </Callout>
 
-The default behavior of the mutation of `useSWRInfinite` is to revalidate all pages that have been loaded. But you might want to revalidate only the specific pages that have been changed. You can revalidate only specific pages by passing a function to the `revalidate` option.
+`useSWRInfinite` 默认行为是重新验证所有已加载的页面，但你可能只想重新验证已更改的特定页面，你可以通过给 `revalidate` 选项传递一个函数来限定需要重新验证的页面。
 
-The `revalidate` function is called for each page.
+每个页面都会调用 `revalidate` 函数。
 
 ```jsx
 function App() {
@@ -354,16 +354,13 @@ function App() {
   );
 
   mutate(data, {
-    // only revalidate the last page
+    // 只重新验证最后一页
     revalidate: (pageData, [url, page]) => page === size
   });
 }
 ```
 
 ### 全局变更 `useSWRInfinite` 数据 [#global-mutate-with-useswrinfinite]
-
-
-`useSWRInfinite` stores all page data into the cache with a special cache key along with each page data, so you have to use `unstable_serialize` in `swr/infinite` to revalidate the data with the global mutate.
 
 `useSWRInfinite` 会将所有页面数据存储在缓存中，并使用特殊的缓存 key 来存储每个页面的数据。因此，您需要在 `swr/infinite` 中使用 `unstable_serialize` 对数据进行序列化，才能使用全局的 `mutate` 方法重新验证数据。
 
