@@ -145,7 +145,7 @@ function Avatar ({ user }) {
 Normalmente, nós precisamos manter todos os dados de carregamento no componente principal e adicionar props para todos os componentes.
 O código fica mais difícil de manter se adicionarmos mais dependências de dados à página.
 
-Apesar que possamos evitar passar props para componentes filhos, isto é, usar [Context](https://reactjs.org/docs/context.html), ainda há o problema do conteúdo dinâmico:
+Apesar que possamos evitar passar props para componentes filhos, isto é, usar [Context](https://react.dev/learn/passing-data-deeply-with-context), ainda há o problema do conteúdo dinâmico:
 componentes dentro da página podem ser dinâmicos, e o componente principal pode não saber quais dados serão necessários por seus componentes filhos.
 
 SWR resolve o problema perfeitamente. Com o hook `useUser`, o código pode ser refatorado para:
