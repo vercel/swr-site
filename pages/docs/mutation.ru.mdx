@@ -131,21 +131,17 @@ SWR также предоставляет `useSWRMutation` в качестве �
 ```tsx
 import useSWRMutation from 'swr/mutation'
 
-// Реализация fetcher-а.
-// Дополнительный аргумент будет передан через свойство `arg` второго параметра.
-// В приведенном ниже примере `arg` будет `'my_token'`
-async function updateUser(url, { arg }: { arg: string }) {
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${arg}`
-    }
-  })
-}
-
 function Profile() {
   // useSWR + мутация-подобное API, но запрос не запускается автоматически.
-  const { trigger } = useSWRMutation('/api/user', updateUser, options)
+  const { trigger } = useSWRMutation(
+    '/api/user',
+    (url, { arg }: { arg: string }) =>
+      // Реализация fetcher-а.
+      // Дополнительный аргумент будет передан через свойство `arg` второго параметра.
+      // В приведенном ниже примере `arg` будет `'my_token'`
+      fetch(url, { headers: { Authorization: `Bearer ${arg}` }}),
+    options
+  )
 
   return <button onClick={() => {
     // Запустите `updateUser` с определенным аргументом.
@@ -182,22 +178,18 @@ function Profile() {
 ```tsx
 import useSWRMutation from 'swr/mutation'
 
-async function sendRequest(url, { arg }: { arg: { username: string } }) {
-  return fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(arg)
-  }).then(res => res.json())
-}
-
 function App() {
-  const { trigger, isMutating } = useSWRMutation('/api/user', sendRequest, /* опции */)
+  const { trigger, isMutating } = useSWRMutation(
+    '/api/user', 
+    () => fetch(url, { method: 'POST', body: JSON.stringify(arg) }).then(res => res.json())
+  )
 
   return (
     <button
       disabled={isMutating}
       onClick={async () => {
         try {
-          const result = await trigger({ username: 'johndoe' }, /* опции */)
+          await trigger({ username: 'johndoe' }, /* options */)
         } catch (e) {
           // обработка ошибки
         }
