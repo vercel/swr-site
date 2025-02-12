@@ -343,16 +343,16 @@ function App () {
 ```
 
 <Callout emoji="⚠️">
-    The `previousPageData` argument of the `getKey` function becomes `null` when you enable the `parallel` option.
+  `parallel` 옵션을 활성화하면 `getKey` 함수의 `previousPageData` 인수가 `null`이 됩니다.
 </Callout>
 
-### Revalidate Specific Pages [#revalidate-specific-pages]
+### 특정 페이지 재검증 [#revalidate-specific-pages]
 
 <Callout emoji="✅">
-  Please update to the latest version (≥ 2.2.5) to use this API.
+  이 API를 사용하려면 최신 버전(≥ 2.2.5)으로 업데이트하세요.
 </Callout>
 
-The default behavior of the mutation of `useSWRInfinite` is to revalidate all pages that have been loaded. But you might want to revalidate only the specific pages that have been changed. You can revalidate only specific pages by passing a function to the `revalidate` option.
+`useSWRInfinite`의 기본 동작은 로드된 모든 페이지를 재검증하는 것입니다. 하지만 변경된 특정 페이지만 재검증하고 싶을 수도 있습니다. 이 경우, `revalidate` 옵션에 함수를 전달하여 특정 페이지만 재검증할 수 있습니다.
 
 ```jsx
 function App() {
@@ -362,7 +362,7 @@ function App() {
   );
 
   mutate(data, {
-    // only revalidate the last page
+    // 마지막 페이지에 대해서만 재검증을 수행
     revalidate: (pageData, [url, page]) => page === size
   });
 }
