@@ -16,7 +16,7 @@
     "focus-visible": "^5.2.0",
     "intersection-observer": "^0.12.2",
     "next": "14.2.24",
-    "nextra": "^2.4.2",
+    "nextra": "^2.13.4",
     "nextra-theme-docs": "^2.4.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -31,5 +31,5 @@
     "embeddedLanguageFormatting": "off",
     "htmlWhitespaceSensitivity": "strict"
   },
-  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+  "packageManager": "pnpm@9.15.4"
 }
