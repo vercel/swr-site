@@ -104,12 +104,12 @@ Traditionally, we fetch data once using `useEffect` in the top level component, 
 ```jsx {7-11,17,18,27}
 // page component
 
-function Page () {
+function Page ({ id }) {
   const [user, setUser] = useState(null)
 
   // fetch data
   useEffect(() => {
-    fetch('/api/user')
+    fetch(`/api/user/${id}`)
       .then(res => res.json())
       .then(data => setUser(data))
   }, [])
@@ -169,13 +169,13 @@ function Navbar () {
 }
 
 function Content () {
-  const { user, isLoading } = useUser()
+  const { user, isLoading } = useUser(123)
   if (isLoading) return <Spinner />
   return <h1>Welcome back, {user.name}</h1>
 }
 
 function Avatar () {
-  const { user, isLoading } = useUser()
+  const { user, isLoading } = useUser(123)
   if (isLoading) return <Spinner />
   return <img src={user.avatar} alt={user.name} />
 }
