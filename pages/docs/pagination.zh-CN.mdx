@@ -88,7 +88,7 @@ import { Infinite } from 'components/diagrams/infinite'
   <Infinite/>
 </div>
 
-要实现这个功能，我们需要在该页面上进行**动态的数据请求**。React Hooks 中存在这 [两个规则](https://reactjs.org/docs/hooks-rules.html)，所以我们 **不能** 这么写：
+要实现这个功能，我们需要在该页面上进行**动态的数据请求**。React Hooks 中存在这 [两个规则](https://react.dev/reference/rules/rules-of-hooks)，所以我们 **不能** 这么写：
 
 ```jsx {5,6,7,8,9}
 function App () {
@@ -152,7 +152,7 @@ function App () {
 }
 ```
 
-此外，如果分页的API是 **基于游标（cursor）**的，那么这个解决方案也不适用。因为每个页面都需要前一页的数据，它们不是隔离的。
+此外，如果分页的 API 是 **基于游标（cursor）**的，那么这个解决方案也不适用。因为每个页面都需要前一页的数据，它们不是隔离的。
 
 这意味着我们需要一个更高级的解决方案来解决这个问题，因此，我们引入了一个新的 `useSWRInfinite` Hook。。
 
@@ -305,7 +305,6 @@ const getKey = (pageIndex, previousPageData) => {
 ```
 
 ### 并行请求模式 [#parallel-fetching-mode]
-
 
 <Callout emoji="✅">
   请升级至最新版本（≥ 2.1.0）以使用此 API
