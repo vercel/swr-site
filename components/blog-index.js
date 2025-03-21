@@ -30,7 +30,11 @@ export default function BlogIndex({ more = "Read more" }) {
         </p>
         {page.frontMatter?.date ? (
           <p className="opacity-50 text-sm mt-6 leading-7">
-            {page.frontMatter.date}
+            {new Intl.DateTimeFormat(locale, {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }).format(new Date(page.frontMatter.date))}
           </p>
         ) : null}
       </div>
