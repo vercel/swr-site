@@ -189,7 +189,7 @@ const { data, error, isLoading, isValidating, mutate, size, setSize } = useSWRIn
   - `revalidateAll = false`: 始终尝试重新验证所有页面
   - `revalidateFirstPage = true`: 始终尝试重新验证第一页
   - `persistSize = false`: 当第一页的 key 发生变化时，不将 page size（或者 `initialSize` 如果设置了该参数）重置为 1
-  - `parallel = false`: fetches multiple pages in parallel
+  - `parallel = false`: 并行加载多页
 
 <Callout>
   请注意，`initialSize` 选项不允许在运行时更改。
