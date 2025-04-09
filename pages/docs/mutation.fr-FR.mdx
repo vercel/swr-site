@@ -323,6 +323,7 @@ import useSWRMutation from 'swr/mutation'
 
 function Profile () {
   const { trigger } = useSWRMutation('/api/user', updateUserName)
+  const { data } = useSWR('/api/user', fetcher)
 
   return (
     <div>
@@ -339,6 +340,8 @@ function Profile () {
   )
 }
 ```
+Note that the value provided for `optimisticData` should be based on the data
+returned from `useSWR` as opposed to `useSWRMutation`'s data.
 
 ## Revenir en arrière sur les erreurs [#rollback-on-errors]
 
