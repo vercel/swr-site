@@ -32,14 +32,19 @@ Par exemple, une instance de [JavaScript Map](https://developer.mozilla.org/en-U
 
 ## Creation du Fournisseur de Cache [#create-cache-provider]
 
+Utilisez `initCache` pour créer un cache pour SWR, ou utilisez `mutate` dans la valeur de retour de `initCache` si vous voulez utiliser le mutate global sous `SWRConfig` avec `provider` défini.
+
 L'option `provider` de `SWRConfig` reçoit une fonction qui renvoie un [fournisseur de cache](#cache-provider). Le fournisseur sera ensuite utilisé par tous les hooks SWR à l'intérieur de cette limite `SWRConfig`. Par exemple:
 
 ```jsx
 import useSWR, { SWRConfig } from 'swr'
+import { initCache } from 'swr/_internal'
+import type { ScopedMutator, Cache } from 'swr/_internal'
+const [cache, mutate] = initCache(new Map()) as [Cache<unknown>, ScopedMutator]
 
 function App() {
   return (
-    <SWRConfig value={{ provider: () => new Map() }}>
+    <SWRConfig value={{ provider: () => cache }}>
       <Page/>
     </SWRConfig>
   )
@@ -59,10 +64,6 @@ import { Cache } from 'components/diagrams/cache'
 </div>
 
 Lorsqu'ils sont imbriqués, les hooks SWR utiliseront le fournisseur de cache de niveau supérieur. S'il n'y a pas de fournisseur de cache de niveau supérieur, il se replie sur le fournisseur de cache par défaut, qui est une `Map` vide.
-
-<Callout emoji="⚠️">
-  Si un fournisseur de cache est utilisé, le `mutate` global ne fonctionnera **pas** pour les hooks SWR sous cette limite `<SWRConfig>`. Veuillez utiliser [celui-ci](#access-current-cache-provider) à la place.
-</Callout>
 
 ## Accès au Fournisseur de Cache Actuel [#access-current-cache-provider]
 
