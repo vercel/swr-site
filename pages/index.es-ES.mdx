@@ -44,7 +44,7 @@ function Profile() {
 En este ejemplo, el hook `useSWR` acepta una `key` que es un cadena y una función `fetcher`. `key` es un indentificador único de los datos (normalmente la URL de la API)
 y pasará al `fetcher`. El `fetcher` puede ser cualquier función asíncrona que devuelve datos, puedes utilizar el fetch nativo o herramientas como Axios.
 
-El hook devuelve 2 valores: `data` y `error`, basados en el estado de la solicitud.
+The hook returns 3 values: `data`, `isLoading` and `error`, based on the status of the request.
 
 ## Características [#features]
 
