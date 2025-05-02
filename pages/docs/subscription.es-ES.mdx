@@ -1,14 +1,14 @@
 import { Callout } from 'nextra-theme-docs'
 
-# Subscription
+# Suscripción
 
 <Callout emoji="✅">
-  Please update to the latest version (≥ 2.1.0) to use this API.
+  Por favor, actualiza a la última versión (≥ 2.1.0) para usar esta API.
 </Callout>
 
 ## `useSWRSubscription` [#useswrsubscription]
 
-`useSWRSubscription` is a React hook that allows subscribing to real-time data sources with SWR.
+`useSWRSubscription` es un hook de React que permite suscribirse a fuentes de datos en tiempo real con SWR.
 
 ```tsx
 useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next: (error?: Error | null, data: Data) => void }) => () => void): { data?: Data, error?: Error }
@@ -16,18 +16,17 @@ useSWRSubscription<Data, Error>(key: Key, subscribe: (key: Key, options: { next:
 
 ### API [#api]
 
-This hook subscribes to a real-time data source using the subscribe function provided, and returns the latest data received and any errors encountered. The hook automatically updates the returned data as new events are received.
+Este hook se suscribe a una fuente de datos en tiempo real utilizando la función de suscripción proporcionada, y devuelve los últimos datos recibidos y cualquier error encontrado. El hook actualiza automáticamente los datos retornados a medida que se reciben nuevos eventos.
 
-#### Parameters [#parameters]
+#### Parámetros [#parameters]
 
-- `key`: A unique key that identifies the data being subscribed to, same key as `useSWR` key.
-- `subscribe`: A function that subscribes to the real-time data source. It receives the following arguments:
-  - `key`: same key as above
-  - `options`: an object with the following properties:
-    - `next`: A function that accepts an error and data, and updates the state with the latest data received from the real-time data source.
+- `key`: Una clave única que identifica los datos a los que se está suscribiendo, la misma clave que se usa en `useSWR`.
+- `subscribe`: Una función que se suscribe a la fuente de datos en tiempo real. Recibe los siguientes argumentos:
+  - `key`: la misma clave mencionada anteriormente
+  - `options`: un objeto con las siguientes propiedades:
+    - `next`: Una función que acepta un error y datos, y actualiza el estado con los últimos datos recibidos de la fuente de datos en tiempo real.
 
-
-For instance
+Por ejemplo:
 
 ```tsx
 function subscribe(key, { next }) {
@@ -36,7 +35,7 @@ function subscribe(key, { next }) {
 }
 ```
 
-You could also pass a updater function as `data` to `next`, which will receive the previous data as the first argument and return the new data.
+También podrías pasar una función de actualización como `data` a `next`, que recibirá los datos anteriores como primer argumento y devolverá los nuevos datos.
 
 ```tsx
 function subscribe(key, { next }) {
@@ -45,18 +44,17 @@ function subscribe(key, { next }) {
 }
 ```
 
-#### Return Values [#return-values]
+#### Valores de retorno [#return-values]
 
-- `state`: An object with the following properties:
-  - `data`: The latest data received from the real-time data source.
-  - `error`: An Error object if an error occurred while subscribing to the real-time data source, otherwise undefined.
+- `state`: Un objeto con las siguientes propiedades:
+  - `data`: Los últimos datos recibidos de la fuente de datos en tiempo real.
+  - `error`: Un objeto Error si ocurrió un error al suscribirse a la fuente de datos en tiempo real, de lo contrario undefined.
 
+Cuando se reciben nuevos datos, el `error` se restablecerá a `undefined`.
 
-When new data is received, the `error` will be reset to `undefined`.
+### Uso [#usage]
 
-### Usage [#usage]
-
-Using `useSWRSubscription` to subscribe to a Firestore data source:
+Usando `useSWRSubscription` para suscribirse a una fuente de datos de Firestore:
 
 ```tsx
 import useSWRSubscription from 'swr/subscription'
@@ -71,11 +69,11 @@ function Post({ id }) {
     return () => ref.off()
   })
 
-  return <span>Your post has {data} views!</span>
+  return <span>Tu publicación tiene {data} visitas!</span>
 }
 ```
 
-Using `useSWRSubscription` to subscribe to a WebSocket data source:
+Usando `useSWRSubscription` para suscribirse a una fuente de datos WebSocket:
 
 ```tsx
 import useSWRSubscription from 'swr/subscription'
@@ -88,19 +86,19 @@ function App() {
     return () => socket.close()
   })
   
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  return <div>hello {data}!</div>
+  if (error) return <div>error al cargar</div>
+  if (!data) return <div>cargando...</div>
+  return <div>hola {data}!</div>
 }
 ```
 
-You could also check TypeScript examples of `useSWRSubscription` at [this page](/docs/typescript#useswrsubscription)
+También puedes consultar ejemplos de TypeScript de `useSWRSubscription` en [esta página](/docs/typescript#useswrsubscription)
 
-### Deduplication [#deduplication]
+### Deduplicación [#deduplication]
 
-`useSWRSubscription` deduplicates the subscription requests with the same key. 
-If there are multiple components using the same key, they will share the same subscription. 
-When the last component using the key unmounts, the subscription will be closed.
+`useSWRSubscription` deduplica las solicitudes de suscripción con la misma clave.
+Si hay varios componentes utilizando la misma clave, compartirán la misma suscripción.
+Cuando el último componente que utiliza la clave se desmonta, la suscripción se cerrará.
 
-This means that if you have multiple components using the same key, they will all receive the same data. 
-And there's only one subscription to the real-time data source per key.
+Esto significa que si tienes múltiples componentes utilizando la misma clave, todos recibirán los mismos datos.
+Y solo habrá una suscripción a la fuente de datos en tiempo real por clave.
