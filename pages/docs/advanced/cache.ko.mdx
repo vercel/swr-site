@@ -32,14 +32,19 @@ interface Cache<Data> {
 
 ## 캐시 공급자 생성하기 [#create-cache-provider]
 
+SWR에 대한 캐시를 생성하려면 `initCache`를 사용하거나, `provider`가 설정된 `SWRConfig`에서 전역 돌연변이를 사용하려면 `initCache`의 반환 값에 `mutate`를 사용합니다.
+
 `SWRConfig`의 `provider` 옵션은 [캐시 공급자](#cache-provider)를 반환하는 함수를 받습니다. 그러면 공급자를 `SWRConfig` 경계 내의 모든 SWR hook에서 사용할 수 있습니다.
 
 ```jsx
 import useSWR, { SWRConfig } from 'swr'
+import { initCache } from 'swr/_internal'
+import type { ScopedMutator, Cache } from 'swr/_internal'
+const [cache, mutate] = initCache(new Map()) as [Cache<unknown>, ScopedMutator]
 
 function App() {
   return (
-    <SWRConfig value={{ provider: () => new Map() }}>
+    <SWRConfig value={{ provider: () => cache }}>
       <Page/>
     </SWRConfig>
   )
@@ -59,10 +64,6 @@ import { Cache } from 'components/diagrams/cache'
 </div>
 
 중첩된 경우, SWR hook은 상위 레벨의 캐시 공급자를 사용합니다. 상위 레벨의 캐시 공급자가 존재하지 않을 경우, 빈 `Map`인 기본 캐시 공급자로 대체됩니다.
-
-<Callout emoji="⚠️">
-  캐시 공급자가 사용되는 경우, 전역 `mutate`는 `<SWRConfig>` 경계 내의 SWR hook에서 작동하지 **않습니다**. 대신에 [이것](#access-current-cache-provider)을 사용하세요.
-</Callout>
 
 ## 현재 캐시 공급자에 접근하기 [#access-current-cache-provider]
 
