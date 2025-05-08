@@ -93,3 +93,64 @@ import { AppState } from 'react-native'
 ```
 
 For `initReconnect`, it requires some 3rd party libraries such as [NetInfo](https://github.com/react-native-netinfo/react-native-netinfo) to subscribe to the network status. The implementation will be similar to the example above: receiving a `callback` function and trigger it when the network recovers from offline, so SWR can start a revalidation to keep your data up-to-date.
+
+
+### AsyncStorage Based Persistent Cache
+
+You might want to sync your cache to `AsyncStorage`. Here's an example implementation:
+
+```jsx
+const useAsyncStorage = () => {
+  const [cache, setCache] = useState(null)
+
+  useEffect(() => {
+    // When initializing, we restore the data from `AsyncStorage` into a map.
+    const getCache = async () => {
+      const appCache = await AsyncStorage.getItem('app-cache') || '[]'
+      // We still use the map for write & read for performance.
+      setCache(new Map(JSON.parse(appCache)))
+    }
+
+    getCache()
+  }, [])
+
+  useEffect(() => {
+    // Before closing the application, we write all the data to `AsyncStorage`
+    // and keep your cache up to date.
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState.match(/inactive|background/)) {
+        const appCache = JSON.stringify(Array.from(cache.entries()))
+        AsyncStorage.setItem('app-cache', appCache)
+      }
+    })
+
+    return () => {
+      subscription.remove()
+    }
+  }, [cache])
+
+  return cache
+}
+
+const App = () => {
+  const cache = useAsyncStorage()
+
+  if (cache) {
+    return (
+      <SWRConfig
+        value={{ provider: () => cache }}
+      >
+        <NavigationContainer>
+          <HomeStack />
+        </NavigationContainer>
+      </SWRConfig>
+    )
+  }
+
+  return null
+}
+```
+
+<Callout>
+  Note that this example requires the cache provider to be a Map instance.
+</Callout>
