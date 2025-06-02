@@ -56,7 +56,9 @@ Or using GraphQL with libs like [graphql-request](https://github.com/prisma-labs
 ```js
 import { request } from 'graphql-request'
 
-const fetcher = query => request('/api/graphql', query)
+const endpoint = 'https://example.com/graphql';
+
+const fetcher = query => request(endpoint, query)
 
 function App () {
   const { data, error } = useSWR(
