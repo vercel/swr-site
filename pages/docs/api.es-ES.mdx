@@ -47,7 +47,7 @@ Puede encontrar más información [aquí](/docs/advanced/understanding).
 - `fallbackData`: datos iniciales a devolver (nota: Esto es por un hook)
 - `keepPreviousData = false`: devuelve la data anterior de la key hasta que se hayan cargado los nuevos datos [(detalles)](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: función callback cuando una petición tarda demasiado en cargase (véase: `loadingTimeout`)
-- `onSuccess(data, key, config)`: función callback cuando una petición termina con éxito
+- `onSuccess(data, key, config)`: función callback cuando una petición termina con éxito [(details)](/docs/advanced/understanding#on-success-callback)
 - `onError(err, key, config)`: función callback cuando una petición devuelve un error
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: manejador para el reintento de error
 - `onDiscarded(key)`: funciòn callback cuando una solicitud es ignorada debido a condiciones de carrera(race conditions)

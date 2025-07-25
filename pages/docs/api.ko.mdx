@@ -46,7 +46,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `fallbackData`: 반환될 초기 데이터(노트: hook 별로 존재)
 - `keepPreviousData = false`: 새 데이터가 로드될 때까지 이전 키의 데이터를 반환 [(상세내용)](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: 요청을 로드하는 데 너무 오래 걸리는 경우의 콜백 함수(`loadingTimeout`을 보세요)
-- `onSuccess(data, key, config)`: 요청이 성공적으로 종료되었을 경우의 콜백 함수
+- `onSuccess(data, key, config)`: 요청이 성공적으로 종료되었을 경우의 콜백 함수 [(details)](/docs/advanced/understanding#on-success-callback)
 - `onError(err, key, config)`: 요청이 에러를 반환했을 경우의 콜백 함수
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: 에러 재시도 핸들러
 - `onDiscarded(key)`: 경합 상태(race condition)로 인해 요청이 무시될 경우 실행되는 콜백 함수

@@ -46,7 +46,7 @@ Plus d'informations [ici](/docs/advanced/understanding).
 - `fallbackData`: données initiales à renvoyer (note : ceci est per-hook)
 - `keepPreviousData = false`: renvoyer les données de la clé précédente jusqu'à ce que les nouvelles données soient chargées [(détails)](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: fonction de rappel lorsqu'une requête prend trop de temps à charger (voir `loadingTimeout`)
-- `onSuccess(data, key, config)`: fonction de rappel lorsqu'une requête se termine avec succès
+- `onSuccess(data, key, config)`: fonction de rappel lorsqu'une requête se termine avec succès [(details)](/docs/advanced/understanding#on-success-callback)
 - `onError(err, key, config)`: fonction de rappel lorsqu'une requête renvoie une erreur
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: gestionnaire des nouvelles tentatives d'erreur
 - `onDiscarded(key)`: fonction de rappel lorsqu'une requête est ignorée en raison de conditions de course
