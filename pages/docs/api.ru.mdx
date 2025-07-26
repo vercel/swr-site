@@ -46,7 +46,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `fallbackData`: исходные данные, которые должны быть возвращены (примечание: это для каждого хука)
 - `keepPreviousData = false`: возвращать данные предыдущего ключа, пока не будут загружены новые данные [(подробнее)](/docs/advanced/understanding#возврат-предыдущих-данных-для-лучшего-ux)
 - `onLoadingSlow(key, config)`: колбэк-функция, когда запрос загружается слишком долго (см. `loadingTimeout`)
-- `onSuccess(data, key, config)`: колбэк-функция при успешном завершении запроса
+- `onSuccess(data, key, config)`: колбэк-функция при успешном завершении запроса [(details)](/docs/advanced/understanding#on-success-callback)
 - `onError(err, key, config)`: колбэк-функция, когда запрос возвращает ошибку
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: обработчик повторной попытки при ошибке
 - `onDiscarded(key)`: колбэк-функция, когда запрос игнорируется из-за состояния гонки

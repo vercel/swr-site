@@ -46,13 +46,13 @@ More information can be found [here](/docs/advanced/understanding).
 - `fallbackData`: dados iniciais para ser retornado (nota: isto é por-hook)
 - `keepPreviousData = false`: return the previous key's data until the new data has been loaded [(detalhes)](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: função callback quando um pedido demora muito tempo a carregar (veja `loadingTimeout`)
-- `onSuccess(data, key, config)`: função callback quando um pedido é bem-sucedido
+- `onSuccess(data, key, config)`: função callback quando um pedido é bem-sucedido [(detalhes)](/docs/advanced/understanding#on-success-callback)
 - `onError(err, key, config)`: função callback quando um pedido retorna um erro
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: função callback quando um pedido retorna um erro
 - `onDiscarded(key)`: callback function when a request is ignored due to race conditions
 - `compare(a, b)`: função de comparação para detectar quando o dado retornado está diferente, para evitar rerenderizações desnecessárias. Por padrão, [stable-hash](https://github.com/shuding/stable-hash) é usado.
 - `isPaused()`: função para detectar quando o revalidador está pausado, e deve ignorar os dados e erros quando retorna `true`. Por padrão, retorna `false`.
-- `use`: array de middleware functions [(details)](/docs/middleware)
+- `use`: array de middleware functions [(detalhes)](/docs/middleware)
 
 <Callout emoji="💡">
 

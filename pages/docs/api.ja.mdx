@@ -46,7 +46,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `fallbackData`: 返される初期データ（注：フックごとに）
 - `keepPreviousData = false`: 新しいキーに対するデータがロードされるまで以前のキーのデータを返すかどうか [（詳細）](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: リクエストの読み込みに時間がかかりすぎる場合のコールバック関数（`loadingTimeout` を参照してください）
-- `onSuccess(data, key, config)`: リクエストが正常に終了したときのコールバック関数
+- `onSuccess(data, key, config)`: リクエストが正常に終了したときのコールバック関数 [(details)](/docs/advanced/understanding#on-success-callback)
 - `onError(err, key, config)`: リクエストがエラーを返したときのコールバック関数
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: エラー再試行のハンドラー
 - `onDiscarded(key)`: レースコンディションによりリクエストが無視されたときのコールバック関数
