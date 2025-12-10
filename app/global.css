@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "./styles/geistdocs.css";
+
+.prose iframe {
+  @apply min-h-[70vh]
+}
