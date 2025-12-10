@@ -31,7 +31,7 @@ const config: NextConfig = {
       },
       {
         source: '/blog',
-        destination: '/blog/swr-1',
+        destination: '/blog/swr-v1',
         permanent: true
       },
       {
