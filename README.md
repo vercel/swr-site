@@ -2,7 +2,7 @@
 
 The official website for [SWR](https://github.com/vercel/swr).
 
-The project uses [pnpm](https://pnpm.io), [Nextra](https://nextra.vercel.app) and deploys via [Vercel](https://vercel.com). To develop it locally, clone this repository and run the following command to start the local dev server:
+The project uses [pnpm](https://pnpm.io), [Geistdocs](https://preview.geistdocs.com) and deploys via [Vercel](https://vercel.com). To develop it locally, clone this repository and run the following command to start the local dev server:
 
 ```bash
 pnpm install
