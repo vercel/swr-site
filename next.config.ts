@@ -30,13 +30,28 @@ const config: NextConfig = {
         permanent: true
       },
       {
+        source: '/:locale/docs',
+        destination: '/:locale/docs/getting-started',
+        permanent: true
+      },
+      {
         source: '/blog',
         destination: '/blog/swr-v1',
         permanent: true
       },
       {
+        source: '/:locale/blog',
+        destination: '/:locale/blog/swr-v1',
+        permanent: true
+      },
+      {
         source: '/examples',
         destination: '/examples/basic',
+        permanent: true
+      },
+      {
+        source: '/:locale/examples',
+        destination: '/:locale/examples/basic',
         permanent: true
       },
 
