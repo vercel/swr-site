@@ -17,6 +17,11 @@ export const github = {
   repo: 'swr'
 }
 
+export const githubSite = {
+  owner: 'vercel',
+  repo: 'swr-site'
+}
+
 export const nav = [
   {
     label: 'Docs',
