@@ -13,14 +13,18 @@ title: 'Next.js の SSG と SSR'
 ```tsx filename="app/page.tsx" copy
 import { unstable_serialize } from 'swr' // ✅ サーバーコンポーネントで利用可能
 import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ サーバーコンポーネントで利用可能
+
+import { SWRConfig } from 'swr' // ✅ サーバーコンポーネントで利用可能
 ```
 
 <Callout type="error">
-    他の SWR の API は RSC では利用できないためインポートすることはできません。
+    SWR の hook API は RSC では利用できないためインポートすることはできません。
 </Callout>
 
 ```tsx filename="app/page.tsx" highlight={1}
 import useSWR from 'swr' // ❌ これはサーバーコンポーネントでは利用できません
+import useSWRInfinite from 'swr/infinite' // ❌ これはサーバーコンポーネントでは利用できません
+import useSWRMutation from 'swr/mutation' // ❌ これはサーバーコンポーネントでは利用できません
 ```
 
 ### クライアントコンポーネント
@@ -29,34 +33,78 @@ import useSWR from 'swr' // ❌ これはサーバーコンポーネントでは
 
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
+
 import useSWR from 'swr'
+
 export default function Page() {
   const { data } = useSWR('/api/user', fetcher)
   return <h1>{data.name}</h1>
 }
 ```
 
-サーバーコンポーネントの `layout` または `page` でグローバル設定を構成するために `SWRConfig` を使用する必要がある場合、設定を行うためのクライアントコンポーネントを別に作成し、そのプロバイダーコンポーネントをサーバーコンポーネントのページ内で使用します。
+### サーバーコンポーネントでデータをプリフェッチする
 
-```tsx filename="app/swr-provider.tsx" copy
-'use client';
+[デフォルトデータを使ったプリレンダリング](#pre-rendering-with-default-data) パターンと同様に、React Server Components (RSC) を使用すればさらに先へ進むことができます。
+
+サーバーサイドでデータのプリフェッチを __開始__ し、`<SWRConfig>` provider の `fallback` オプションを介してクライアントコンポーネントツリーに __promise__ を渡すことができます:
+
+```tsx filename="app/layout.tsx" copy
 import { SWRConfig } from 'swr'
-export const SWRProvider = ({ children }) => {
-  return <SWRConfig>{children}</SWRConfig>
-};
-```
 
-```tsx filename="app/page.tsx" copy
-// これはサーバーコンポーネントです
-import { SWRProvider } from './swr-provider'
-export default function Page() {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  // サーバーサイドでデータフェッチを開始します
+  const userPromise = fetchUserFromAPI()
+  const postsPromise = fetchPostsFromAPI()
+
   return (
-    <SWRProvider>
-      <h1>hello SWR</h1>
-    </SWRProvider>
+    <SWRConfig
+      value={{
+        fallback: {
+          // promise をクライアントコンポーネントに渡します
+          '/api/user': userPromise,
+          '/api/posts': postsPromise,
+        },
+      }}
+    >
+      {children}
+    </SWRConfig>
   )
 }
 ```
+
+<Callout emoji="💡">
+  2つのデータ取得関数呼び出し `fetchUserFromAPI()` と `fetchPostsFromAPI()` は、即座に await しないため、サーバーサイドで並列に実行されます。
+</Callout>
+
+React Server Components では、`"use client"` 境界を越えて promise を渡すことができ、SWR はサーバーサイドレンダリング中にそれらを自動的に解決します:
+
+```tsx filename="app/page.tsx" copy
+'use client'
+
+import useSWR from 'swr'
+
+export default function Page() {
+  // SWR はサーバーコンポーネントから渡された promise を解決します
+  // SSR とクライアント hydration 中に、`user` と `posts` の両方が準備完了します
+  const { data: user } = useSWR('/api/user', fetcher)
+  const { data: posts } = useSWR('/api/posts', fetcher)
+
+  return (
+    <div>
+      <h1>{user.name}'s Posts</h1>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+その後、クライアントサイドでは SWR が引き継ぎ、通常通りの動作を維持します。
+
+サーバーコンポーネントからクライアントコンポーネントに promise を渡すことで、データフェッチをできるだけ早くサーバーサイドで開始できます。そして、データを実際に使用する UI 境界(最も近い `Suspense` 境界または Next.js layout)のみが、ストリーミング SSR 中にブロックされます。
 
 ## クライアントサイドでのデータフェッチ [#client-side-data-fetching]
 

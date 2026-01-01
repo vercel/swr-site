@@ -13,14 +13,18 @@ title: 'Usage with Next.js'
 ```tsx filename="app/page.tsx" copy
 import { unstable_serialize } from 'swr' // ✅ Available in server components
 import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ Available in server components
+
+import { SWRConfig } from 'swr' // ✅ Available in server components
 ```
 
 <Callout type="error">
-   You could not import any other APIs from SWR since they are not available in RSC.
+   You could not import hook APIs from SWR since they are not available in RSC.
 </Callout>
 
 ```tsx filename="app/page.tsx" highlight={1}
 import useSWR from 'swr' // ❌ This is not available in server components
+import useSWRInfinite from 'swr/infinite' // ❌ This is not available in server components
+import useSWRMutation from 'swr/mutation' // ❌ This is not available in server components
 ```
 
 ### Client Components
@@ -29,34 +33,78 @@ You can mark your components with `'use client'` directive or import SWR from cl
 
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
+
 import useSWR from 'swr'
+
 export default function Page() {
   const { data } = useSWR('/api/user', fetcher)
   return <h1>{data.name}</h1>
 }
 ```
 
-If you need to use `SWRConfig` to configure global settings in server components `layout` or `page`, creating a separate provider client component to setup the provider and configuration then use it in the server component pages.
+### Prefetch Data in Server Components
 
-```tsx filename="app/swr-provider.tsx" copy
-'use client';
+Similar to the [pre-rendering with default data](#pre-rendering-with-default-data) pattern, with React Server Components (RSC) you can go even further.
+
+You can __initiate__ the data prefetching on the server side and pass the __promise__ to client component tree via the `<SWRConfig>` provider's `fallback` option:
+
+```tsx filename="app/layout.tsx" copy
 import { SWRConfig } from 'swr'
-export const SWRProvider = ({ children }) => {
-  return <SWRConfig>{children}</SWRConfig>
-};
-```
 
-```tsx filename="app/page.tsx" copy
-// This is still a server component
-import { SWRProvider } from './swr-provider'
-export default function Page() {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  // Initiate the data fetching on the server side.
+  const userPromise = fetchUserFromAPI()
+  const postsPromise = fetchPostsFromAPI()
+
   return (
-    <SWRProvider>
-      <h1>hello SWR</h1>
-    </SWRProvider>
+    <SWRConfig
+      value={{
+        fallback: {
+          // Pass the promises to client components.
+          '/api/user': userPromise,
+          '/api/posts': postsPromise,
+        },
+      }}
+    >
+      {children}
+    </SWRConfig>
   )
 }
 ```
+
+<Callout emoji="💡">
+  The two data fetching function calls `fetchUserFromAPI()` and `fetchPostsFromAPI()` will be executed in parallel on the server side because we don't await them immediately.
+</Callout>
+
+In React Server Components, you can pass promises across the `"use client"` boundary, and SWR will resolve them automatically during Server-Side Rendering:
+
+```tsx filename="app/page.tsx" copy
+'use client'
+
+import useSWR from 'swr'
+
+export default function Page() {
+  // SWR will resolve the promise passed from server components.
+  // Both `user` and `posts` are ready during SSR and client hydration.
+  const { data: user } = useSWR('/api/user', fetcher)
+  const { data: posts } = useSWR('/api/posts', fetcher)
+
+  return (
+    <div>
+      <h1>{user.name}'s Posts</h1>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+Then, on the client-side SWR will take over and keep the behavior as usual.
+
+By passing promises from Server Components to Client Components, the data fetching can be initiated as early as possible on the server side. And only the UI boundaries (closest `Suspense` boundary or Next.js layout) that actually consume the data will be blocked during streaming SSR.
 
 ## Client Side Data Fetching [#client-side-data-fetching]
 

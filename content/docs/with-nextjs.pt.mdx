@@ -13,14 +13,18 @@ title: 'Usando com Next.js'
 ```tsx filename="app/page.tsx" copy
 import { unstable_serialize } from 'swr' // ✅ Disponível em server components
 import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ Disponível em server components
+
+import { SWRConfig } from 'swr' // ✅ Disponível em server components
 ```
 
 <Callout type="error">
-   Você não pode importar nenhuma outra API do SWR, pois elas não estão disponíveis em RSCs.
+   Você não pode importar hook APIs do SWR, pois elas não estão disponíveis em RSCs.
 </Callout>
 
 ```tsx filename="app/page.tsx" highlight={1}
 import useSWR from 'swr' // ❌ Isso não está disponível em components
+import useSWRInfinite from 'swr/infinite' // ❌ Isso não está disponível em components
+import useSWRMutation from 'swr/mutation' // ❌ Isso não está disponível em components
 ```
 
 ### Client Components
@@ -29,6 +33,7 @@ Você pode marcar seus componentes com a diretiva `'use client'` ou importar o S
 
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
+
 import useSWR from 'swr'
 
 export default function Page() {
@@ -37,29 +42,69 @@ export default function Page() {
 }
 ```
 
-If you need to use `SWRConfig` to configure global settings in server components `layout` or `page`, creating a separate provider client component to setup the provider and configuration then use it in the server component pages.
+### Buscar Dados Antecipadamente em Server Components
 
-Se você precisar usar `SWRConfig` para configurar as configurações globais em componentes do servidor `layout` ou `page`, crie um componente de provedor separado para configurar o provedor e a configuração e, em seguida, use-o nas páginas do componente do servidor.
+Similar ao padrão de [pré-renderização com dados padrão](#pre-rendering-with-default-data), com React Server Components (RSC) você pode ir ainda mais longe.
 
-```tsx filename="app/swr-provider.tsx" copy
-'use client';
+Você pode __iniciar__ a busca antecipada de dados no lado do servidor e passar a __promise__ para a árvore de componentes do cliente através da opção `fallback` do provider `<SWRConfig>`:
+
+```tsx filename="app/layout.tsx" copy
 import { SWRConfig } from 'swr'
-export const SWRProvider = ({ children }) => {
-  return <SWRConfig>{children}</SWRConfig>
-};
-```
 
-```tsx filename="app/page.tsx" copy
-// This is still a server component
-import { SWRProvider } from './swr-provider'
-export default function Page() {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  // Inicie a busca de dados no lado do servidor.
+  const userPromise = fetchUserFromAPI()
+  const postsPromise = fetchPostsFromAPI()
+
   return (
-    <SWRProvider>
-      <h1>ola SWR</h1>
-    </SWRProvider>
+    <SWRConfig
+      value={{
+        fallback: {
+          // Passe as promises para os componentes do cliente.
+          '/api/user': userPromise,
+          '/api/posts': postsPromise,
+        },
+      }}
+    >
+      {children}
+    </SWRConfig>
   )
 }
 ```
+
+<Callout emoji="💡">
+  As duas chamadas de função de busca de dados `fetchUserFromAPI()` e `fetchPostsFromAPI()` serão executadas em paralelo no lado do servidor porque não as aguardamos imediatamente.
+</Callout>
+
+Em React Server Components, você pode passar promises através da fronteira `"use client"`, e o SWR irá resolvê-las automaticamente durante o Server-Side Rendering:
+
+```tsx filename="app/page.tsx" copy
+'use client'
+
+import useSWR from 'swr'
+
+export default function Page() {
+  // O SWR resolverá a promise passada dos componentes do servidor.
+  // Tanto `user` quanto `posts` estarão prontos durante SSR e hidratação do cliente.
+  const { data: user } = useSWR('/api/user', fetcher)
+  const { data: posts } = useSWR('/api/posts', fetcher)
+
+  return (
+    <div>
+      <h1>{user.name}'s Posts</h1>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+Então, no lado do cliente, o SWR assumirá o controle e manterá o comportamento normal.
+
+Ao passar promises dos Server Components para Client Components, a busca de dados pode ser iniciada o mais cedo possível no lado do servidor. E apenas os limites de UI (fronteira `Suspense` mais próxima ou layout Next.js) que realmente consomem os dados serão bloqueados durante o SSR de streaming.
 
 ## Obtendo dados em Client-side [#client-side-data-fetching]
 
