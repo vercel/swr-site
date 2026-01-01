@@ -13,14 +13,18 @@ title: 'Usage with Next.js'
 ```tsx filename="app/page.tsx" copy
 import { unstable_serialize } from 'swr' // ✅ 서버 컴포넌트에서 사용 가능합니다.
 import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ 서버 컴포넌트에서 사용 가능합니다.
+
+import { SWRConfig } from 'swr' // ✅ 서버 컴포넌트에서 사용 가능합니다.
 ```
 
 <Callout type="error">
-   다른 API는 RSC에서 사용할 수 없으므로 SWR에서 가져올 수 없습니다.
+   hook API는 RSC에서 사용할 수 없으므로 SWR에서 가져올 수 없습니다.
 </Callout>
 
 ```tsx filename="app/page.tsx" highlight={1}
 import useSWR from 'swr' // ❌ 서버 컴포넌트에서 사용할 수 없습니다.
+import useSWRInfinite from 'swr/infinite' // ❌ 서버 컴포넌트에서 사용할 수 없습니다.
+import useSWRMutation from 'swr/mutation' // ❌ 서버 컴포넌트에서 사용할 수 없습니다.
 ```
 
 ### 클라이언트 컴포넌트
@@ -29,34 +33,78 @@ import useSWR from 'swr' // ❌ 서버 컴포넌트에서 사용할 수 없습�
 
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
+
 import useSWR from 'swr'
+
 export default function Page() {
   const { data } = useSWR('/api/user', fetcher)
   return <h1>{data.name}</h1>
 }
 ```
 
-서버 컴포넌트의 `layout` 또는 `page`에서 `SWRConfig`를 사용해 전역 설정을 구성해야 한다면, 별도의 클라이언트 프로바이더 컴포넌트를 만들어 설정을 적용한 후, 이를 서버 컴포넌트 페이지에서 사용하세요.
+### 서버 컴포넌트에서 데이터 프리페치하기
 
-```tsx filename="app/swr-provider.tsx" copy
-'use client';
+[기본 데이터를 이용한 사전 렌더링](#pre-rendering-with-default-data) 패턴과 유사하게, React Server Components (RSC)를 사용하면 더 나아갈 수 있습니다.
+
+서버 사이드에서 데이터 프리페칭을__시작__하고, `<SWRConfig>` provider의 `fallback` 옵션을 통해 클라이언트 컴포넌트 트리에 __promise__를 전달할 수 있습니다:
+
+```tsx filename="app/layout.tsx" copy
 import { SWRConfig } from 'swr'
-export const SWRProvider = ({ children }) => {
-  return <SWRConfig>{children}</SWRConfig>
-};
-```
 
-```tsx filename="app/page.tsx" copy
-// 이것은 여전히 서버 컴포넌트입니다.
-import { SWRProvider } from './swr-provider'
-export default function Page() {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  // 서버 사이드에서 데이터 페칭을 시작합니다.
+  const userPromise = fetchUserFromAPI()
+  const postsPromise = fetchPostsFromAPI()
+
   return (
-    <SWRProvider>
-      <h1>hello SWR</h1>
-    </SWRProvider>
+    <SWRConfig
+      value={{
+        fallback: {
+          // promise를 클라이언트 컴포넌트에 전달합니다.
+          '/api/user': userPromise,
+          '/api/posts': postsPromise,
+        },
+      }}
+    >
+      {children}
+    </SWRConfig>
   )
 }
 ```
+
+<Callout emoji="💡">
+  두 데이터 페칭 함수 호출 `fetchUserFromAPI()` 와 `fetchPostsFromAPI()` 는 즉시 await 하지 않기 때문에 서버 사이드에서 병렬로 실행됩니다.
+</Callout>
+
+React Server Components에서는 `"use client"` 경계를 넘어 promise를 전달할 수 있으며, SWR은 서버 사이드 렌더링 중에 이를 자동으로 해석합니다:
+
+```tsx filename="app/page.tsx" copy
+'use client'
+
+import useSWR from 'swr'
+
+export default function Page() {
+  // SWR은 서버 컴포넌트에서 전달된 promise를 해석합니다.
+  // SSR과 클라이언트 hydration 중에 `user`와 `posts` 모두 준비됩니다.
+  const { data: user } = useSWR('/api/user', fetcher)
+  const { data: posts } = useSWR('/api/posts', fetcher)
+
+  return (
+    <div>
+      <h1>{user.name}'s Posts</h1>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+그런 다음 클라이언트 측에서 SWR이 제어권을 가져와 평소처럼 동작을 유지합니다.
+
+서버 컴포넌트에서 클라이언트 컴포넌트로 promise를 전달함으로써, 데이터 페칭을 가능한 한 빨리 서버 측에서 시작할 수 있습니다. 그리고 실제로 데이터를 사용하는 UI 경계(가장 가까운 `Suspense` 경계 또는 Next.js layout)만 스트리밍 SSR 중에 차단됩니다.
 
 ## 클라이언트 사이드 데이터 페칭 [#client-side-data-fetching]
 

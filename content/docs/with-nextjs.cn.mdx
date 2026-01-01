@@ -13,14 +13,18 @@ title: '与 Next.js 一同使用'
 ```tsx filename="app/page.tsx" copy
 import { unstable_serialize } from 'swr' // ✅ 在 Server components 中可用
 import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ 在 Server components 中可用
+
+import { SWRConfig } from 'swr' // ✅ 在 Server components 中可用
 ```
 
 <Callout type="error">
-   您不能从 SWR 引入其他 API ，因为它们在 RSC 中不可用。
+   您不能从 SWR 引入 hook API ，因为它们在 RSC 中不可用。
 </Callout>
 
 ```tsx filename="app/page.tsx" highlight={1}
 import useSWR from 'swr' // ❌ 在 Server components 中不可用
+import useSWRInfinite from 'swr/infinite' // ❌ 在 Server components 中不可用
+import useSWRMutation from 'swr/mutation' // ❌ 在 Server components 中不可用
 ```
 
 ### Client Components
@@ -29,34 +33,78 @@ import useSWR from 'swr' // ❌ 在 Server components 中不可用
 
 ```tsx filename="app/page.tsx" highlight={1} copy
 'use client'
+
 import useSWR from 'swr'
+
 export default function Page() {
   const { data } = useSWR('/api/user', fetcher)
   return <h1>{data.name}</h1>
 }
 ```
 
-如果您需要在 Server Components `layout` 或者 `page` 中使用 `SWRConfig` 配置公共设置，请创建一个独立的 Provider Client Component 以初始化 Provider 和配置，然后在 Server Component Pages 中使用它。
+### 在服务器组件中预获取数据
 
-```tsx filename="app/swr-provider.tsx" copy
-'use client';
+类似于 [带有默认数据的预渲染](#pre-rendering-with-default-data) 模式，使用 React Server Components (RSC) 你可以更进一步。
+
+您可以在服务器端 __启动__ 数据预获取，并通过 `<SWRConfig>` provider 的 `fallback` 选项将 __promise__ 传递给客户端组件树:
+
+```tsx filename="app/layout.tsx" copy
 import { SWRConfig } from 'swr'
-export const SWRProvider = ({ children }) => {
-  return <SWRConfig>{children}</SWRConfig>
-};
-```
 
-```tsx filename="app/page.tsx" copy
-// 这仍然是一个 Server Component
-import { SWRProvider } from './swr-provider'
-export default function Page() {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  // 在服务器端启动数据获取
+  const userPromise = fetchUserFromAPI()
+  const postsPromise = fetchPostsFromAPI()
+
   return (
-    <SWRProvider>
-      <h1>hello SWR</h1>
-    </SWRProvider>
+    <SWRConfig
+      value={{
+        fallback: {
+          // 将 promise 传递给客户端组件
+          '/api/user': userPromise,
+          '/api/posts': postsPromise,
+        },
+      }}
+    >
+      {children}
+    </SWRConfig>
   )
 }
 ```
+
+<Callout emoji="💡">
+  这两个数据获取函数调用 `fetchUserFromAPI()` 和 `fetchPostsFromAPI()` 将在服务器端并行执行，因为我们不会立即 await 它们。
+</Callout>
+
+在 React Server Components 中，您可以跨越 `"use client"` 边界传递 promise，SWR 将在服务端渲染期间自动解析它们:
+
+```tsx filename="app/page.tsx" copy
+'use client'
+
+import useSWR from 'swr'
+
+export default function Page() {
+  // SWR 将解析从服务器组件传递的 promise
+  // 在 SSR 和客户端 hydration 期间，'user' 和 'posts' 都已准备就绪
+  const { data: user } = useSWR('/api/user', fetcher)
+  const { data: posts } = useSWR('/api/posts', fetcher)
+
+  return (
+    <div>
+      <h1>{user.name}'s Posts</h1>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+然后，在客户端 SWR 将接管并保持与平常一样的行为。
+
+通过将 promise 从服务器组件传递到客户端组件，数据获取可以尽可能早地在服务器端启动。并且只有实际使用数据的 UI 边界(最近的 `Suspense` 边界或 Next.js layout)才会在流式 SSR 期间被阻塞。
 
 ## 客户端数据获取 [#client-side-data-fetching]
 
