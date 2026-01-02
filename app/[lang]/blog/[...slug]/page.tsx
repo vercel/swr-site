@@ -44,7 +44,7 @@ const Page = async ({ params }: PageProps<'/[lang]/blog/[...slug]'>) => {
         footer: (
           <div className="my-3 space-y-3">
             <Separator />
-            <EditSource path={page.path} />
+            <EditSource type="blog" path={page.path} />
             <ScrollTop />
             <Feedback />
             <CopyPage text={markdown} />
