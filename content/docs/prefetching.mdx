@@ -106,6 +106,12 @@ If you want to pre-fill existing data into the SWR cache, you can use the `fallb
 useSWR('/api/data', fetcher, { fallbackData: prefetchedData })
 ```
 
-If SWR hasn't fetched the data yet, this hook will return `prefetchedData` as a fallback. 
+If SWR hasn't fetched the data yet, this hook will return `prefetchedData` as a fallback.
 
 You can also configure this for all SWR hooks and multiple keys with `<SWRConfig>` and the `fallback` option. Check [Next.js SSG and SSR](/docs/with-nextjs) for more details.
+
+## Pre-fetch in React Server Components (RSC) [#pre-fetch-in-rsc]
+
+When using Next.js App Router with React Server Components, you can prefetch data on the server and pass it to client components via `SWRConfig`. This approach allows you to leverage server-side data fetching while maintaining the benefits of SWR's client-side caching and revalidation.
+
+For detailed information and examples, see the [Usage with Next.js](/docs/with-nextjs#prefetch-data-in-server-components) documentation.

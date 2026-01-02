@@ -44,6 +44,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `errorRetryCount`: 最大エラー再試行回数
 - `fallback`: 初期データの key-value オブジェクト [（ 例 ）](/docs/with-nextjs)
 - `fallbackData`: 返される初期データ（注：フックごとに）
+- `strictServerPrefetchWarning = false`: キーに事前入力されたデータが提供されていない場合、コンソールに警告メッセージを表示します [（ 詳細 ）](/docs/with-nextjs#prefetch-data-in-server-components)
 - `keepPreviousData = false`: 新しいキーに対するデータがロードされるまで以前のキーのデータを返すかどうか [（詳細）](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: リクエストの読み込みに時間がかかりすぎる場合のコールバック関数（`loadingTimeout` を参照してください）
 - `onSuccess(data, key, config)`: リクエストが正常に終了したときのコールバック関数

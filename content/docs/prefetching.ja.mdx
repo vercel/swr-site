@@ -109,3 +109,9 @@ useSWR('/api/data', fetcher, { fallbackData: prefetchedData })
 もし SWR がまだデータを取得していない場合、このフックは初期値として `prefetchedData` を返します。
 
 また `SWRConfig` と `fallback` オプションを使用して、すべての SWR フックと複数のキーに対してこれを構成することもできます。詳しくは、 [Next.js の SSG と SSR](/docs/with-nextjs) をチェックしてください。
+
+## React Server Components (RSC) でのプリフェッチ [#pre-fetch-in-rsc]
+
+Next.js App Router で React Server Components を使用する場合、サーバー上でデータをプリフェッチし、`SWRConfig` を介してクライアントコンポーネントに渡すことができます。このアプローチにより、SWR のクライアント側キャッシングと再検証の利点を維持しながら、サーバー側のデータフェッチを活用できます。
+
+詳細な情報と例については、[Next.js の SSG と SSR](/docs/with-nextjs#prefetch-data-in-server-components) ドキュメントを参照してください。

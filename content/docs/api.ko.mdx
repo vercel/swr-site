@@ -44,6 +44,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `errorRetryCount`: 최대 에러 재시도 수
 - `fallback`: 다중 폴백 데이터의 키-값 객체 [(예시)](/docs/with-nextjs)
 - `fallbackData`: 반환될 초기 데이터(노트: hook 별로 존재)
+- `strictServerPrefetchWarning = false`: 키에 미리 채워진 데이터가 제공되지 않은 경우 콘솔에 경고 메시지 표시 [(상세내용)](/docs/with-nextjs#prefetch-data-in-server-components)
 - `keepPreviousData = false`: 새 데이터가 로드될 때까지 이전 키의 데이터를 반환 [(상세내용)](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: 요청을 로드하는 데 너무 오래 걸리는 경우의 콜백 함수(`loadingTimeout`을 보세요)
 - `onSuccess(data, key, config)`: 요청이 성공적으로 종료되었을 경우의 콜백 함수

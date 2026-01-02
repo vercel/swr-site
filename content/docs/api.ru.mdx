@@ -44,6 +44,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `errorRetryCount`: максимальное количество повторных попыток при ошибке
 - `fallback`: объект типа "ключ-значение" из нескольких резервных данных [(пример)](/docs/with-nextjs)
 - `fallbackData`: исходные данные, которые должны быть возвращены (примечание: это для каждого хука)
+- `strictServerPrefetchWarning = false`: показывать предупреждающее сообщение в консоли, когда для ключа не предоставлены предварительно заполненные данные [(подробнее)](/docs/with-nextjs#prefetch-data-in-server-components)
 - `keepPreviousData = false`: возвращать данные предыдущего ключа, пока не будут загружены новые данные [(подробнее)](/docs/advanced/understanding#возврат-предыдущих-данных-для-лучшего-ux)
 - `onLoadingSlow(key, config)`: колбэк-функция, когда запрос загружается слишком долго (см. `loadingTimeout`)
 - `onSuccess(data, key, config)`: колбэк-функция при успешном завершении запроса

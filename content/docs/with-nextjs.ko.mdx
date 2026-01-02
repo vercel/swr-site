@@ -7,7 +7,7 @@ title: 'Usage with Next.js'
 ### 서버 컴포넌트 [#rsc]
 
 <Callout type="default" emoji="✅">
-   Next.js의 App Router에서는 모든 컴포넌트가 기본적으로 React Server Component(RSC) 입니다. **따라서 RSC에서는 SWR의 키 직렬화(Key Serialization) API만 가져올 수 있습니다.**
+   Next.js의 App Router에서는 모든 컴포넌트가 기본적으로 React Server Component(RSC) 입니다. **따라서 RSC에서는 SWR의 SWRConfig와 키 직렬화(Key Serialization) API를 가져올 수 있습니다.**
 </Callout>
 
 ```tsx filename="app/page.tsx" copy
@@ -105,6 +105,10 @@ export default function Page() {
 그런 다음 클라이언트 측에서 SWR이 제어권을 가져와 평소처럼 동작을 유지합니다.
 
 서버 컴포넌트에서 클라이언트 컴포넌트로 promise를 전달함으로써, 데이터 페칭을 가능한 한 빨리 서버 측에서 시작할 수 있습니다. 그리고 실제로 데이터를 사용하는 UI 경계(가장 가까운 `Suspense` 경계 또는 Next.js layout)만 스트리밍 SSR 중에 차단됩니다.
+
+<Callout type="default">
+  애플리케이션에서 이 프리페치 패턴을 점진적으로 채택하려면 `strictServerPrefetchWarning` 옵션을 활성화할 수 있습니다. 이는 키에 미리 채워진 데이터가 제공되지 않은 경우 콘솔에 경고 메시지를 표시하여 어떤 데이터 페칭 호출이 서버 측 프리페칭의 이점을 얻을 수 있는지 식별하는 데 도움을 줍니다.
+</Callout>
 
 ## 클라이언트 사이드 데이터 페칭 [#client-side-data-fetching]
 

@@ -44,6 +44,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
 - `errorRetryCount`: 错误重试的最大次数
 - `fallback`: 多个回退数据的 key-value 对象[（示例）](/docs/with-nextjs)
 - `fallbackData`: 此 hook 需要返回的初始数据
+- `strictServerPrefetchWarning = false`: 当 key 没有提供预填充数据时，在控制台显示警告消息 [（详情）](/docs/with-nextjs#prefetch-data-in-server-components)
 - `keepPreviousData = false`: 在新数据加载完成之前使用 key 上一次缓存过的数据 [（详情）](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: 请求加载时间过长时的回调函数（参考 `loadingTimeout`）
 - `onSuccess(data, key, config)`: 请求成功完成时的回调函数

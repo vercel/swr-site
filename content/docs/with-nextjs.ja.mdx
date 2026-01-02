@@ -7,7 +7,7 @@ title: 'Next.js の SSG と SSR'
 ### サーバーコンポーネント [#rsc]
 
 <Callout type="default" emoji="✅">
-    Next.js の App Router では、デフォルトですべてのコンポーネントが React Server Components (RSC) です。**RSC では SWR からキーシリアライゼーション API のみをインポートできます。**
+    Next.js の App Router では、デフォルトですべてのコンポーネントが React Server Components (RSC) です。**RSC では SWR から SWRConfig とキーシリアライゼーション API をインポートできます。**
 </Callout>
 
 ```tsx filename="app/page.tsx" copy
@@ -105,6 +105,10 @@ export default function Page() {
 その後、クライアントサイドでは SWR が引き継ぎ、通常通りの動作を維持します。
 
 サーバーコンポーネントからクライアントコンポーネントに promise を渡すことで、データフェッチをできるだけ早くサーバーサイドで開始できます。そして、データを実際に使用する UI 境界(最も近い `Suspense` 境界または Next.js layout)のみが、ストリーミング SSR 中にブロックされます。
+
+<Callout type="default">
+  アプリケーションでこのプリフェッチパターンを段階的に採用するには、`strictServerPrefetchWarning` オプションを有効にすることができます。これにより、キーに事前入力されたデータが提供されていない場合にコンソールに警告メッセージが表示され、どのデータフェッチ呼び出しがサーバーサイドプリフェッチの恩恵を受けられるかを特定するのに役立ちます。
+</Callout>
 
 ## クライアントサイドでのデータフェッチ [#client-side-data-fetching]
 
