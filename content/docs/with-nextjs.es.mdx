@@ -7,7 +7,7 @@ title: 'Usage with Next.js'
 ### Server Components [#rsc]
 
 <Callout type="default" emoji="✅">
-   In Next.js App Router, all components are React Server Components (RSC) by default. **You could only import the key serialization APIs from SWR in RSC.**
+   In Next.js App Router, all components are React Server Components (RSC) by default. **You can import SWRConfig and the key serialization APIs from SWR in RSC.**
 </Callout>
 
 ```tsx filename="app/page.tsx" copy
@@ -105,6 +105,10 @@ export default function Page() {
 Then, on the client-side SWR will take over and keep the behavior as usual.
 
 By passing promises from Server Components to Client Components, the data fetching can be initiated as early as possible on the server side. And only the UI boundaries (closest `Suspense` boundary or Next.js layout) that actually consume the data will be blocked during streaming SSR.
+
+<Callout type="default">
+  Para adoptar incrementalmente este patrón de precarga en su aplicación, puede habilitar la opción `strictServerPrefetchWarning`. Esto mostrará un mensaje de advertencia en la consola cuando una clave no tiene datos prellenados proporcionados, ayudándole a identificar qué llamadas de obtención de datos podrían beneficiarse de la precarga del lado del servidor.
+</Callout>
 
 ## Client Side Data Fetching [#client-side-data-fetching]
 

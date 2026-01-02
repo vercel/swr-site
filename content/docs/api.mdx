@@ -44,6 +44,7 @@ More information can be found [here](/docs/advanced/understanding).
 - `errorRetryCount`: max error retry count
 - `fallback`: a key-value object of multiple fallback data [(example)](/docs/with-nextjs)
 - `fallbackData`: initial data to be returned (note: This is per-hook)
+- `strictServerPrefetchWarning = false`: show a warning message in the console when a key has no pre-filled data provided [(details)](/docs/with-nextjs#prefetch-data-in-server-components)
 - `keepPreviousData = false`: return the previous key's data until the new data has been loaded [(details)](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: callback function when a request takes too long to load (see `loadingTimeout`)
 - `onSuccess(data, key, config)`: callback function when a request finishes successfully

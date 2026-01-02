@@ -7,7 +7,7 @@ title: 'Usando com Next.js'
 ### Server Components [#rsc]
 
 <Callout type="default" emoji="✅">
-   No App Router do Next.js, todos os componentes são React Server Components (RSC) por padrão. **Você só pode importar as APIs de serialização de chave do SWR em RSCs.**
+   No App Router do Next.js, todos os componentes são React Server Components (RSC) por padrão. **Você pode importar SWRConfig e as APIs de serialização de chave do SWR em RSCs.**
 </Callout>
 
 ```tsx filename="app/page.tsx" copy
@@ -105,6 +105,10 @@ export default function Page() {
 Então, no lado do cliente, o SWR assumirá o controle e manterá o comportamento normal.
 
 Ao passar promises dos Server Components para Client Components, a busca de dados pode ser iniciada o mais cedo possível no lado do servidor. E apenas os limites de UI (fronteira `Suspense` mais próxima ou layout Next.js) que realmente consomem os dados serão bloqueados durante o SSR de streaming.
+
+<Callout type="default">
+  Para adotar incrementalmente este padrão de pré-busca em sua aplicação, você pode habilitar a opção `strictServerPrefetchWarning`. Isso mostrará uma mensagem de aviso no console quando uma chave não tem dados pré-preenchidos fornecidos, ajudando você a identificar quais chamadas de busca de dados poderiam se beneficiar da pré-busca do lado do servidor.
+</Callout>
 
 ## Obtendo dados em Client-side [#client-side-data-fetching]
 

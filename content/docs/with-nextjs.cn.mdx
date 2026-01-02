@@ -7,7 +7,7 @@ title: '与 Next.js 一同使用'
 ### Server Components [#rsc]
 
 <Callout type="default" emoji="✅">
-   在 Next.js App Router 中，所有的组件都被默认视为 React Server Components (RSC) 。**在 RSC 中您只能 从SWR 引入序列化 Key API**
+   在 Next.js App Router 中，所有的组件都被默认视为 React Server Components (RSC) 。**在 RSC 中您可以从 SWR 引入 SWRConfig 和序列化 Key API**
 </Callout>
 
 ```tsx filename="app/page.tsx" copy
@@ -105,6 +105,10 @@ export default function Page() {
 然后，在客户端 SWR 将接管并保持与平常一样的行为。
 
 通过将 promise 从服务器组件传递到客户端组件，数据获取可以尽可能早地在服务器端启动。并且只有实际使用数据的 UI 边界(最近的 `Suspense` 边界或 Next.js layout)才会在流式 SSR 期间被阻塞。
+
+<Callout type="default">
+  要在应用程序中逐步采用此预获取模式，您可以启用 `strictServerPrefetchWarning` 选项。这将在控制台中显示警告消息，当某个 key 没有提供预填充数据时，帮助您识别哪些数据获取调用可以从服务器端预获取中受益。
+</Callout>
 
 ## 客户端数据获取 [#client-side-data-fetching]
 

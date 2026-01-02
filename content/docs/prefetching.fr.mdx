@@ -109,3 +109,9 @@ useSWR('/api/data', fetcher, { fallbackData: prefetchedData })
 Si SWR n'a pas encore récupéré les données, ce hook renverra `prefetchedData` comme fallback.
 
 Vous pouvez aussi configurer ceci pour tous les hooks SWR et plusieurs clés avec `<SWRConfig>` et l'option `fallback`. Voir [Next.js SSG and SSR](/docs/with-nextjs) pour plus de détails.
+
+## Pré-chargement dans les React Server Components (RSC) [#pre-fetch-in-rsc]
+
+Lors de l'utilisation de Next.js App Router avec React Server Components, vous pouvez précharger les données sur le serveur et les transmettre aux composants clients via `SWRConfig`. Cette approche vous permet de tirer parti de la récupération de données côté serveur tout en conservant les avantages de la mise en cache et de la revalidation côté client de SWR.
+
+Pour des informations détaillées et des exemples, consultez la documentation [Utilisation avec Next.js](/docs/with-nextjs#prefetch-data-in-server-components).
