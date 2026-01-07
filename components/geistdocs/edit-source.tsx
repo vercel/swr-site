@@ -1,5 +1,5 @@
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { github } from "@/geistdocs";
+import { docsRepo } from "@/geistdocs";
 
 type EditSourceProps = {
   path: string | undefined;
@@ -8,8 +8,8 @@ type EditSourceProps = {
 export const EditSource = ({ path }: EditSourceProps) => {
   let url: string | undefined;
 
-  if (github.owner && github.repo && path) {
-    url = `https://github.com/${github.owner}/${github.repo}/edit/main/docs/content/docs/${path}`;
+  if (docsRepo.owner && docsRepo.repo && path) {
+    url = `https://github.com/${docsRepo.owner}/${docsRepo.repo}/edit/main/content/docs/${path}`;
   }
 
   if (!url) {
