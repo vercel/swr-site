@@ -321,6 +321,9 @@ function Profile () {
 }
 ```
 
+> The function receives `currentData` and `displayedData`. Use `displayedData` when you need
+> to chain optimistic updates on slow networks so the UI stays consistent between mutations.
+
 You can also create the same thing with `useSWRMutation` and `trigger`:
 
 ```jsx
