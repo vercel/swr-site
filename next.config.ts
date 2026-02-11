@@ -8,20 +8,6 @@ const config: NextConfig = {
     turbopackFileSystemCacheForDev: true
   },
 
-  // biome-ignore lint/suspicious/useAwait: rewrite is async
-  async rewrites() {
-    return [
-      {
-        source: '/docs/:path*.mdx',
-        destination: '/llms.mdx/:path*'
-      },
-      {
-        source: '/docs/:path*.md',
-        destination: '/llms.mdx/:path*'
-      }
-    ]
-  },
-
   async redirects() {
     return [
       {
