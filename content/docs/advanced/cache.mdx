@@ -101,6 +101,11 @@ You might want to sync your cache to `localStorage`. Here's an example implement
 
 ```jsx
 function localStorageProvider() {
+  // Guard against SSR where localStorage is not available.
+  if (typeof window === 'undefined') {
+    return new Map()
+  }
+
   // When initializing, we restore the data from `localStorage` into a map.
   const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
 
