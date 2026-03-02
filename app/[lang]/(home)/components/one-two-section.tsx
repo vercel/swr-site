@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
-type OneTwoSectionProps = {
-  title: string;
-  description: string;
+interface OneTwoSectionProps {
   children?: ReactNode;
-};
+  description: string;
+  title: string;
+}
 
 export const OneTwoSection = ({
   title,
@@ -20,6 +20,6 @@ export const OneTwoSection = ({
         {description}
       </p>
     </div>
-    <div className="col-span-2 sm:p-12">{children}</div>
+    <div className="sm:col-span-2 sm:p-12">{children}</div>
   </div>
 );

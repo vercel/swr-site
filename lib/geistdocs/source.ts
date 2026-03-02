@@ -1,67 +1,57 @@
-import { type InferPageType, loader } from 'fumadocs-core/source'
-import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons'
-import { blog, docs, examples } from '@/.source/server'
-import { basePath } from '@/geistdocs'
-import { i18n } from './i18n'
+import { type InferPageType, loader } from "fumadocs-core/source";
+import { lucideIconsPlugin } from "fumadocs-core/source/lucide-icons";
+import { docs } from "@/.source/server";
+import { basePath } from "@/geistdocs";
+import { i18n } from "./i18n";
 
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   i18n,
-  baseUrl: '/docs',
+  baseUrl: "/docs",
   source: docs.toFumadocsSource(),
-  plugins: [lucideIconsPlugin()]
-})
-
-export const examplesSource = loader({
-  i18n,
-  baseUrl: '/examples',
-  source: examples.toFumadocsSource(),
-  plugins: [lucideIconsPlugin()]
-})
-
-export const blogSource = loader({
-  i18n,
-  baseUrl: '/blog',
-  source: blog.toFumadocsSource(),
-  plugins: [lucideIconsPlugin()]
-})
+  plugins: [lucideIconsPlugin()],
+});
 
 export const getPageImage = (page: InferPageType<typeof source>) => {
-  const segments = [...page.slugs, 'image.png']
+  const segments = [...page.slugs, "image.png"];
 
   return {
     segments,
     url: basePath
-      ? `${basePath}/og/${segments.join('/')}`
-      : `/og/${segments.join('/')}`
-  }
-}
+      ? `${basePath}/og/${segments.join("/")}`
+      : `/og/${segments.join("/")}`,
+  };
+};
 
 export const getLLMText = async (page: InferPageType<typeof source>) => {
-  const processed = await page.data.getText('processed')
-
+  const processed = await page.data.getText("processed");
   const { title, description, product, type, summary, prerequisites, related } =
     page.data;
 
   const frontmatter = [
-    '---',
+    "---",
     `title: ${title}`,
     description && `description: ${description}`,
     product && `product: ${product}`,
     type && `type: ${type}`,
     summary && `summary: ${summary}`,
     prerequisites?.length &&
-      `prerequisites:\n${prerequisites.map((p) => `  - ${p}`).join('\n')}`,
-    related?.length &&
-      `related:\n${related.map((r) => `  - ${r}`).join('\n')}`,
-    '---',
+      `prerequisites:\n${prerequisites.map((p) => `  - ${p}`).join("\n")}`,
+    related?.length && `related:\n${related.map((r) => `  - ${r}`).join("\n")}`,
+    "---",
   ]
     .filter(Boolean)
-    .join('\n');
+    .join("\n");
 
   return `${frontmatter}
 
 # ${title}
 
-${processed}`;
-}
+${processed}
+
+---
+
+For a semantic overview of all documentation, see [/sitemap.md](/sitemap.md)
+
+For an index of all available documentation, see [/llms.txt](/llms.txt)`;
+};
