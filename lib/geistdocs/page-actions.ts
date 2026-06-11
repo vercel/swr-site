@@ -19,3 +19,22 @@ export const createSectionPageActions = (dir: string) =>
       },
     },
   });
+
+/**
+ * Disables every table-of-contents action (edit, scroll top, feedback,
+ * copy page, ask AI, open in chat) for sections that don't need them.
+ */
+export const createDisabledPageActions = () =>
+  createPageActions({
+    config: {
+      ...config,
+      feedback: { enabled: false },
+      pageActions: {
+        askAI: false,
+        copyPage: false,
+        editSource: false,
+        openInChat: false,
+        scrollTop: false,
+      },
+    },
+  });

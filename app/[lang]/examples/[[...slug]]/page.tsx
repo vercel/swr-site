@@ -2,7 +2,7 @@ import { MobileDocsBar } from "@vercel/geistdocs/mobile-docs-bar";
 import { createDocsPage } from "@vercel/geistdocs/pages/docs";
 import { getMDXComponents } from "@/components/geistdocs/mdx-components";
 import { config } from "@/lib/geistdocs/config";
-import { createSectionPageActions } from "@/lib/geistdocs/page-actions";
+import { createDisabledPageActions } from "@/lib/geistdocs/page-actions";
 import { examplesSource } from "@/lib/geistdocs/source";
 
 const examplesPage = createDocsPage({
@@ -11,7 +11,7 @@ const examplesPage = createDocsPage({
   openGraph: {
     images: true,
   },
-  pageActions: createSectionPageActions("content/examples"),
+  pageActions: createDisabledPageActions(),
   renderTop: ({ data }) => <MobileDocsBar toc={data.toc} />,
   source: examplesSource,
   tableOfContentPopover: {

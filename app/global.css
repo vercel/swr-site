@@ -3,3 +3,8 @@
 .prose iframe {
   @apply min-h-[70vh];
 }
+
+/* Hide the TOC footer container when all page actions are disabled */
+div:has(> nav[aria-label="Page actions"]:empty) {
+  display: none;
+}
