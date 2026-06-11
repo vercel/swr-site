@@ -3,22 +3,22 @@ import { createDocsPage } from "@vercel/geistdocs/pages/docs";
 import { getMDXComponents } from "@/components/geistdocs/mdx-components";
 import { config } from "@/lib/geistdocs/config";
 import { createSectionPageActions } from "@/lib/geistdocs/page-actions";
-import { examplesSource } from "@/lib/geistdocs/source";
+import { blogSource } from "@/lib/geistdocs/source";
 
-const examplesPage = createDocsPage({
+const blogPage = createDocsPage({
   config,
   mdx: ({ link }) => getMDXComponents({ a: link }),
   openGraph: {
     images: true,
   },
-  pageActions: createSectionPageActions("content/examples"),
+  pageActions: createSectionPageActions("content/blog"),
   renderTop: ({ data }) => <MobileDocsBar toc={data.toc} />,
-  source: examplesSource,
+  source: blogSource,
   tableOfContentPopover: {
     enabled: false,
   },
 });
 
-export default examplesPage.Page;
-export const generateStaticParams = examplesPage.generateStaticParams;
-export const generateMetadata = examplesPage.generateMetadata;
+export default blogPage.Page;
+export const generateStaticParams = blogPage.generateStaticParams;
+export const generateMetadata = blogPage.generateMetadata;

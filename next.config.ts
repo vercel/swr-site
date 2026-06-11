@@ -58,7 +58,12 @@ const config: NextConfig = {
       },
       {
         source: '/zh-CN/:path*',
-        destination: '/zh/:path*',
+        destination: '/cn/:path*',
+        permanent: true
+      },
+      {
+        source: '/zh/:path*',
+        destination: '/cn/:path*',
         permanent: true
       }
     ]

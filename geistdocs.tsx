@@ -1,3 +1,8 @@
+import type {
+  GeistdocsAgentReadinessConfig,
+  GeistdocsConfig,
+} from "@vercel/geistdocs/config";
+
 export const Logo = () => (
   <div className="flex items-center hover:opacity-75 ltr:mr-auto rtl:ml-auto">
     <svg height="12" viewBox="0 0 291 69" fill="none">
@@ -10,76 +15,124 @@ export const Logo = () => (
       SWR
     </span>
   </div>
-)
+);
 
+/** The SWR library repository (used for the GitHub button). */
 export const github = {
-  owner: 'vercel',
-  repo: 'swr'
-}
+  owner: "vercel",
+  repo: "swr",
+};
 
+/** The repository containing this docs site (used for "Edit on GitHub" links). */
 export const docsRepo = {
-  owner: 'vercel',
-  repo: 'swr-site'
-}
+  owner: "vercel",
+  repo: "swr-site",
+  branch: "main",
+};
 
-export const nav = [
+export const nav: NonNullable<GeistdocsConfig["nav"]> = [
   {
-    label: 'Docs',
-    href: '/docs'
+    label: "Docs",
+    href: "/docs",
   },
   {
-    label: 'Blog',
-    href: '/blog'
+    label: "Blog",
+    href: "/blog",
   },
   {
-    label: 'Examples',
-    href: '/examples'
-  }
-]
+    label: "Examples",
+    href: "/examples",
+  },
+];
+
+export const content: NonNullable<GeistdocsConfig["content"]> = [
+  { id: "docs", label: "Docs", dir: "content/docs", route: "/docs" },
+  { id: "blog", label: "Blog", dir: "content/blog", route: "/blog" },
+  {
+    id: "examples",
+    label: "Examples",
+    dir: "content/examples",
+    route: "/examples",
+  },
+];
 
 export const suggestions = [
-  'What is SWR?',
-  'How does SWR work?',
-  'How do I fetch data?',
-  'How do I handle errors?'
-]
+  "What is SWR?",
+  "How does SWR work?",
+  "How do I fetch data?",
+  "How do I handle errors?",
+];
 
-export const title = 'SWR Documentation'
+export const title = "SWR Documentation";
 
 export const prompt =
-  'You are a helpful assistant specializing in answering questions about SWR, a library for data fetching in React.'
+  "You are a helpful assistant specializing in answering questions about SWR, a library for data fetching in React.";
+
+export const agent = {
+  product: {
+    name: "SWR",
+    description:
+      "SWR is a React Hooks library for data fetching. The name comes from stale-while-revalidate: it first returns data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data.",
+    category: "Data fetching",
+    audience: ["React developers", "Next.js developers"],
+    useCases: [
+      "Fetch, cache, and revalidate remote data in React applications",
+      "Build fast, reactive UIs with automatic revalidation",
+      "Handle pagination, mutations, and optimistic UI updates",
+    ],
+  },
+  links: [
+    {
+      label: "SWR source",
+      href: `https://github.com/${github.owner}/${github.repo}`,
+      description: "Source repository for the SWR library",
+    },
+    {
+      label: "SWR docs source",
+      href: `https://github.com/${docsRepo.owner}/${docsRepo.repo}`,
+      description: "Source repository for this documentation site",
+    },
+  ],
+} satisfies GeistdocsAgentReadinessConfig;
 
 export const translations = {
   en: {
-    displayName: 'English',
-    slug: 'english'
+    displayName: "English",
+    slug: "english",
+  },
+  es: {
+    displayName: "Español",
+    slug: "spanish",
   },
   fr: {
-    displayName: 'Français',
-    slug: 'french'
+    displayName: "Français",
+    slug: "french",
   },
   ja: {
-    displayName: '日本語',
-    slug: 'japanese'
+    displayName: "日本語",
+    slug: "japanese",
   },
   ko: {
-    displayName: '한국어',
-    slug: 'korean'
+    displayName: "한국어",
+    slug: "korean",
   },
   pt: {
-    displayName: 'Português',
-    slug: 'portuguese'
+    displayName: "Português",
+    slug: "portuguese",
   },
   ru: {
-    displayName: 'Русский',
-    slug: 'russian'
+    displayName: "Русский",
+    slug: "russian",
   },
   cn: {
-    displayName: '简体中文',
-    slug: 'chinese'
-  }
-}
+    displayName: "简体中文",
+    slug: "chinese",
+  },
+};
 
-export const basePath: string | undefined = undefined
+export const basePath: string | undefined = undefined;
 
+/**
+ * Unique identifier for this site, used in markdown request tracking analytics.
+ */
 export const siteId: string | undefined = "swr";
