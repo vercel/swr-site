@@ -16,7 +16,7 @@ import { unstable_serialize } from 'swr' // ✅ 在 Server components 中可用
 import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ 在 Server components 中可用
 
 import { SWRConfig } from 'swr' // ✅ 在 Server components 中可用
-import { preload } from 'swr' // ✅ Available in server components
+import { preload } from 'swr' // ✅ 在 Server Components 中可用
 ```
 
 <Callout type="error">
@@ -112,13 +112,13 @@ export default function Page() {
   要在应用程序中逐步采用此预获取模式，您可以启用 `strictServerPrefetchWarning` 选项。这将在控制台中显示警告消息，当某个 key 没有提供预填充数据时，帮助您识别哪些数据获取调用可以从服务器端预获取中受益。
 </Callout>
 
-### Preload Data into the Client Cache [#preload-data-into-client-cache]
+### 将数据预加载到客户端缓存 [#preload-data-into-client-cache]
 
 <Callout emoji="🧪">
-  This feature requires SWR 2.5.0-beta.1 or later and is currently experimental.
+  此功能需要 SWR 2.5.0-beta.1 或更高版本，目前仍处于实验阶段。
 </Callout>
 
-In a Server Component, `preload(key, fetcher)` starts the fetch immediately and returns a request-scoped `CacheData` object. Pass that object to the `cacheData` option of `SWRConfig`:
+在 Server Component 中，`preload(key, fetcher)` 会立即开始获取数据，并返回一个请求作用域内的 `CacheData` 对象。请将该对象传给 `SWRConfig` 的 `cacheData` 选项：
 
 ```tsx filename="app/page.tsx" copy
 import { preload, SWRConfig } from 'swr'
@@ -137,7 +137,7 @@ export default function Page() {
 }
 ```
 
-The client component uses the same key with its usual client-side fetcher:
+客户端组件使用相同的 key 和常规的客户端 fetcher：
 
 ```tsx filename="app/user.tsx" copy
 'use client'
@@ -152,9 +152,9 @@ export function User() {
 }
 ```
 
-SWR uses the server-loaded result for the initial render, writes it to the client cache during hydration, and skips the duplicate initial client request. Later revalidations still use the client-side fetcher.
+SWR 会在首次渲染时使用服务器加载的结果，在 hydration 期间将其写入客户端缓存，并跳过重复的首次客户端请求。后续的重新验证仍会使用客户端 fetcher。
 
-Each `preload` call returns a new object. Merge the objects to preload multiple keys without awaiting them:
+每次调用 `preload` 都会返回一个新对象。合并这些对象即可预加载多个 key，无需等待它们完成：
 
 ```tsx
 const cacheData = {
@@ -163,7 +163,7 @@ const cacheData = {
 }
 ```
 
-`preload` serializes complex SWR keys automatically. The `cacheData` option is only supported by `SWRConfig`; it cannot be passed directly to `useSWR`.
+`preload` 会自动序列化复杂的 SWR key。`cacheData` 选项仅由 `SWRConfig` 支持，不能直接传给 `useSWR`。
 
 ## 客户端数据获取 [#client-side-data-fetching]
 

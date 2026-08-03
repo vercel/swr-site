@@ -164,15 +164,15 @@ mutate(
 
 More information can be found [here](/docs/arguments#multiple-arguments).
 
-## Clear the Cache [#clear-the-cache]
+## 清空缓存 [#clear-the-cache]
 
 <Callout>
-  This API requires SWR 2.5.0-beta.1 or later.
+  此 API 需要 SWR 2.5.0-beta.1 或更高版本。
 </Callout>
 
-`unload()` clears every entry in a cache provider and notifies all mounted hooks in that provider scope. It also clears pending preloads and makes SWR ignore the results of requests and mutations that were already in flight. The underlying network operations are not aborted.
+`unload()` 会清空缓存 provider 中的所有条目，并通知该 provider 作用域内所有已挂载的 hook。它还会清除待处理的预加载，并使 SWR 忽略已经在进行中的请求和数据更改结果。底层网络操作不会被中止。
 
-By default, mounted hooks revalidate after the cache is cleared:
+默认情况下，清空缓存后，已挂载的 hook 会重新验证：
 
 ```tsx
 import { unload } from 'swr'
@@ -180,15 +180,15 @@ import { unload } from 'swr'
 unload()
 ```
 
-To clear the cache without immediately refetching, disable revalidation:
+如果要清空缓存而不立即重新获取数据，请禁用重新验证：
 
 ```tsx
 unload({ revalidate: false })
 ```
 
-Those hooks re-render with `data` set to `undefined` and remain empty until another event revalidates them, such as focus, reconnect, or remount. `unload` also drops data retained by `keepPreviousData` and clears internal keys used by APIs such as `useSWRInfinite`, which a `mutate` key filter might not match.
+这些 hook 会以 `data` 为 `undefined` 的状态重新渲染，并保持为空，直到焦点、重新连接或重新挂载等其他事件触发重新验证。`unload` 还会丢弃 `keepPreviousData` 保留的数据，并清除 `useSWRInfinite` 等 API 使用的内部 key；这些 key 可能无法被 `mutate` 的 key 过滤器匹配。
 
-The top-level import is bound to SWR's default cache provider. For a custom provider, get the scoped `unload` function from `useSWRConfig`:
+顶层导入绑定到 SWR 的默认缓存 provider。对于自定义 provider，请从 `useSWRConfig` 获取其作用域内的 `unload` 函数：
 
 ```tsx
 import { useSWRConfig } from 'swr'
@@ -198,7 +198,7 @@ function ClearCacheButton() {
 
   return (
     <button onClick={() => unload({ revalidate: false })}>
-      Clear cache
+      清空缓存
     </button>
   )
 }
@@ -210,4 +210,4 @@ function ClearCacheButton() {
 unload(options?: { revalidate?: boolean }): void
 ```
 
-- `revalidate = true`: revalidate the keys used by mounted hooks after clearing the cache.
+- `revalidate = true`：清空缓存后，重新验证已挂载 hook 使用的 key。

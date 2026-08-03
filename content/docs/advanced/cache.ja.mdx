@@ -170,15 +170,15 @@ mutate(
 
 更なる情報は [こちら](/docs/arguments#multiple-arguments) から確認できます。
 
-## Clear the Cache [#clear-the-cache]
+## キャッシュをクリアする [#clear-the-cache]
 
 <Callout>
-  This API requires SWR 2.5.0-beta.1 or later.
+  この API を利用するには SWR 2.5.0-beta.1 以降が必要です。
 </Callout>
 
-`unload()` clears every entry in a cache provider and notifies all mounted hooks in that provider scope. It also clears pending preloads and makes SWR ignore the results of requests and mutations that were already in flight. The underlying network operations are not aborted.
+`unload()` はキャッシュプロバイダー内のすべてのエントリを削除し、そのプロバイダーのスコープ内でマウントされているすべてのフックに通知します。また、保留中のプリロードを削除し、すでに実行中のリクエストやミューテーションの結果を SWR が無視するようにします。基盤となるネットワーク処理自体は中止されません。
 
-By default, mounted hooks revalidate after the cache is cleared:
+デフォルトでは、キャッシュのクリア後にマウント済みのフックが再検証されます。
 
 ```tsx
 import { unload } from 'swr'
@@ -186,15 +186,15 @@ import { unload } from 'swr'
 unload()
 ```
 
-To clear the cache without immediately refetching, disable revalidation:
+すぐに再取得せずにキャッシュをクリアするには、再検証を無効にします。
 
 ```tsx
 unload({ revalidate: false })
 ```
 
-Those hooks re-render with `data` set to `undefined` and remain empty until another event revalidates them, such as focus, reconnect, or remount. `unload` also drops data retained by `keepPreviousData` and clears internal keys used by APIs such as `useSWRInfinite`, which a `mutate` key filter might not match.
+これらのフックは `data` が `undefined` の状態で再レンダリングされ、フォーカス、再接続、再マウントなどの別のイベントによって再検証されるまで空のままになります。`unload` は `keepPreviousData` が保持しているデータも破棄し、`mutate` のキーフィルターでは一致しない可能性がある `useSWRInfinite` などの API 用内部キーも削除します。
 
-The top-level import is bound to SWR's default cache provider. For a custom provider, get the scoped `unload` function from `useSWRConfig`:
+トップレベルの import は SWR のデフォルトキャッシュプロバイダーに紐づいています。カスタムプロバイダーでは、`useSWRConfig` からそのスコープに対応する `unload` 関数を取得してください。
 
 ```tsx
 import { useSWRConfig } from 'swr'
@@ -204,7 +204,7 @@ function ClearCacheButton() {
 
   return (
     <button onClick={() => unload({ revalidate: false })}>
-      Clear cache
+      キャッシュをクリア
     </button>
   )
 }
@@ -216,4 +216,4 @@ function ClearCacheButton() {
 unload(options?: { revalidate?: boolean }): void
 ```
 
-- `revalidate = true`: revalidate the keys used by mounted hooks after clearing the cache.
+- `revalidate = true`: キャッシュのクリア後に、マウント済みのフックが使用するキーを再検証します。

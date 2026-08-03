@@ -16,7 +16,7 @@ import { unstable_serialize } from 'swr' // ✅ 서버 컴포넌트에서 사용
 import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ 서버 컴포넌트에서 사용 가능합니다.
 
 import { SWRConfig } from 'swr' // ✅ 서버 컴포넌트에서 사용 가능합니다.
-import { preload } from 'swr' // ✅ Available in server components
+import { preload } from 'swr' // ✅ 서버 컴포넌트에서 사용 가능
 ```
 
 <Callout type="error">
@@ -112,13 +112,13 @@ export default function Page() {
   애플리케이션에서 이 프리페치 패턴을 점진적으로 채택하려면 `strictServerPrefetchWarning` 옵션을 활성화할 수 있습니다. 이는 키에 미리 채워진 데이터가 제공되지 않은 경우 콘솔에 경고 메시지를 표시하여 어떤 데이터 페칭 호출이 서버 측 프리페칭의 이점을 얻을 수 있는지 식별하는 데 도움을 줍니다.
 </Callout>
 
-### Preload Data into the Client Cache [#preload-data-into-client-cache]
+### 클라이언트 캐시에 데이터 프리로드하기 [#preload-data-into-client-cache]
 
 <Callout emoji="🧪">
-  This feature requires SWR 2.5.0-beta.1 or later and is currently experimental.
+  이 기능을 사용하려면 SWR 2.5.0-beta.1 이상이 필요하며, 현재 실험 단계입니다.
 </Callout>
 
-In a Server Component, `preload(key, fetcher)` starts the fetch immediately and returns a request-scoped `CacheData` object. Pass that object to the `cacheData` option of `SWRConfig`:
+서버 컴포넌트에서 `preload(key, fetcher)`를 호출하면 데이터 가져오기가 즉시 시작되고 요청 범위의 `CacheData` 객체가 반환됩니다. 이 객체를 `SWRConfig`의 `cacheData` 옵션에 전달하세요.
 
 ```tsx filename="app/page.tsx" copy
 import { preload, SWRConfig } from 'swr'
@@ -137,7 +137,7 @@ export default function Page() {
 }
 ```
 
-The client component uses the same key with its usual client-side fetcher:
+클라이언트 컴포넌트에서는 동일한 키와 일반적인 클라이언트 측 fetcher를 사용합니다.
 
 ```tsx filename="app/user.tsx" copy
 'use client'
@@ -152,9 +152,9 @@ export function User() {
 }
 ```
 
-SWR uses the server-loaded result for the initial render, writes it to the client cache during hydration, and skips the duplicate initial client request. Later revalidations still use the client-side fetcher.
+SWR은 초기 렌더링에 서버에서 불러온 결과를 사용하고, hydration 중에 이를 클라이언트 캐시에 기록하며, 중복되는 초기 클라이언트 요청을 건너뜁니다. 이후 재검증에는 계속 클라이언트 측 fetcher가 사용됩니다.
 
-Each `preload` call returns a new object. Merge the objects to preload multiple keys without awaiting them:
+각 `preload` 호출은 새 객체를 반환합니다. 여러 키를 기다리지 않고 프리로드하려면 이 객체들을 병합하세요.
 
 ```tsx
 const cacheData = {
@@ -163,7 +163,7 @@ const cacheData = {
 }
 ```
 
-`preload` serializes complex SWR keys automatically. The `cacheData` option is only supported by `SWRConfig`; it cannot be passed directly to `useSWR`.
+`preload`는 복잡한 SWR 키를 자동으로 직렬화합니다. `cacheData` 옵션은 `SWRConfig`에서만 지원되며 `useSWR`에 직접 전달할 수 없습니다.
 
 ## 클라이언트 사이드 데이터 페칭 [#client-side-data-fetching]
 

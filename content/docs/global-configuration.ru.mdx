@@ -128,8 +128,8 @@ function Page() {
 
 ### Доступ к глобальным конфигурациям [#access-to-global-configurations]
 
-Вы можете использовать ловушку `useSWRConfig` для получения глобальных конфигураций,
-а также [`mutate`](/docs/mutation) и [`cache`](/docs/advanced/cache):
+Вы можете использовать хук `useSWRConfig` для получения глобальных конфигураций,
+а также [`mutate`](/docs/mutation), [`cache`](/docs/advanced/cache) и привязанной к провайдеру функции [`unload`](/docs/advanced/cache#clear-the-cache):
 
 ```jsx
 import { useSWRConfig } from 'swr'

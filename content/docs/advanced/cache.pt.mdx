@@ -173,15 +173,15 @@ mutate(
 
 Mais informação pode ser encontrada [aqui](/docs/arguments#multiple-arguments).
 
-## Clear the Cache [#clear-the-cache]
+## Limpar o cache [#clear-the-cache]
 
 <Callout>
-  This API requires SWR 2.5.0-beta.1 or later.
+  Esta API requer o SWR 2.5.0-beta.1 ou posterior.
 </Callout>
 
-`unload()` clears every entry in a cache provider and notifies all mounted hooks in that provider scope. It also clears pending preloads and makes SWR ignore the results of requests and mutations that were already in flight. The underlying network operations are not aborted.
+`unload()` remove todas as entradas de um provedor de cache e notifica todos os hooks montados no escopo desse provedor. Ele também remove pré-carregamentos pendentes e faz o SWR ignorar os resultados de requisições e mutações que já estavam em andamento. As operações de rede subjacentes não são interrompidas.
 
-By default, mounted hooks revalidate after the cache is cleared:
+Por padrão, os hooks montados revalidam depois que o cache é limpo:
 
 ```tsx
 import { unload } from 'swr'
@@ -189,15 +189,15 @@ import { unload } from 'swr'
 unload()
 ```
 
-To clear the cache without immediately refetching, disable revalidation:
+Para limpar o cache sem buscar novamente de imediato, desative a revalidação:
 
 ```tsx
 unload({ revalidate: false })
 ```
 
-Those hooks re-render with `data` set to `undefined` and remain empty until another event revalidates them, such as focus, reconnect, or remount. `unload` also drops data retained by `keepPreviousData` and clears internal keys used by APIs such as `useSWRInfinite`, which a `mutate` key filter might not match.
+Esses hooks renderizam novamente com `data` definido como `undefined` e permanecem vazios até que outro evento os revalide, como foco, reconexão ou uma nova montagem. `unload` também descarta os dados mantidos por `keepPreviousData` e remove as chaves internas usadas por APIs como `useSWRInfinite`, que um filtro de chaves do `mutate` talvez não encontre.
 
-The top-level import is bound to SWR's default cache provider. For a custom provider, get the scoped `unload` function from `useSWRConfig`:
+A importação de nível superior está vinculada ao provedor de cache padrão do SWR. Para um provedor personalizado, obtenha a função `unload` do seu escopo com `useSWRConfig`:
 
 ```tsx
 import { useSWRConfig } from 'swr'
@@ -207,7 +207,7 @@ function ClearCacheButton() {
 
   return (
     <button onClick={() => unload({ revalidate: false })}>
-      Clear cache
+      Limpar cache
     </button>
   )
 }
@@ -219,4 +219,4 @@ function ClearCacheButton() {
 unload(options?: { revalidate?: boolean }): void
 ```
 
-- `revalidate = true`: revalidate the keys used by mounted hooks after clearing the cache.
+- `revalidate = true`: revalida as chaves usadas pelos hooks montados depois de limpar o cache.

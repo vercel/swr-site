@@ -127,7 +127,7 @@ function Page() {
 
 ### 访问全局配置 [#access-to-global-configurations]
 
-你可以使用 `useSWRConfig` hook 来获取全局配置，以及[`数据更改`](/docs/mutation)和[`缓存`](/docs/advanced/cache)：
+你可以使用 `useSWRConfig` hook 获取全局配置，以及[`数据更改`](/docs/mutation)、[`缓存`](/docs/advanced/cache)和 provider 作用域内的 [`unload`](/docs/advanced/cache#clear-the-cache) 函数：
 
 ```jsx
 import { useSWRConfig } from 'swr'

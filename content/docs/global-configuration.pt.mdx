@@ -127,7 +127,7 @@ Além de todas as [opções](/docs/api) listadas, `SWRConfig` também aceita uma
 
 ### Acesso às Configurações Globais [#access-to-global-configurations]
 
-Você pode usar o hook `useSWRConfig` para obter as configurações globais, assim como [`mutate`](/docs/mutation) e [`cache`](/docs/advanced/cache):
+Você pode usar o hook `useSWRConfig` para obter as configurações globais, assim como [`mutate`](/docs/mutation), [`cache`](/docs/advanced/cache) e a função [`unload`](/docs/advanced/cache#clear-the-cache) do escopo do provedor:
 
 ```jsx
 import { useSWRConfig } from 'swr'

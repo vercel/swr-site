@@ -16,7 +16,7 @@ import { unstable_serialize } from 'swr' // ✅ Available in server components
 import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ Available in server components
 
 import { SWRConfig } from 'swr' // ✅ Available in server components
-import { preload } from 'swr' // ✅ Available in server components
+import { preload } from 'swr' // ✅ Disponible dans les Server Components
 ```
 
 <Callout type="error">
@@ -112,13 +112,13 @@ By passing promises from Server Components to Client Components, the data fetchi
   Pour adopter progressivement ce modèle de préchargement dans votre application, vous pouvez activer l'option `strictServerPrefetchWarning`. Cela affichera un message d'avertissement dans la console lorsqu'une clé n'a pas de données pré-remplies fournies, vous aidant à identifier quels appels de récupération de données pourraient bénéficier d'un préchargement côté serveur.
 </Callout>
 
-### Preload Data into the Client Cache [#preload-data-into-client-cache]
+### Précharger les données dans le cache client [#preload-data-into-client-cache]
 
 <Callout emoji="🧪">
-  This feature requires SWR 2.5.0-beta.1 or later and is currently experimental.
+  Cette fonctionnalité nécessite SWR 2.5.0-beta.1 ou une version ultérieure et reste expérimentale.
 </Callout>
 
-In a Server Component, `preload(key, fetcher)` starts the fetch immediately and returns a request-scoped `CacheData` object. Pass that object to the `cacheData` option of `SWRConfig`:
+Dans un Server Component, `preload(key, fetcher)` lance immédiatement la récupération des données et renvoie un objet `CacheData` limité à la requête. Transmettez cet objet à l'option `cacheData` de `SWRConfig` :
 
 ```tsx filename="app/page.tsx" copy
 import { preload, SWRConfig } from 'swr'
@@ -137,7 +137,7 @@ export default function Page() {
 }
 ```
 
-The client component uses the same key with its usual client-side fetcher:
+Le composant client utilise la même clé avec son fetcher côté client habituel :
 
 ```tsx filename="app/user.tsx" copy
 'use client'
@@ -152,9 +152,9 @@ export function User() {
 }
 ```
 
-SWR uses the server-loaded result for the initial render, writes it to the client cache during hydration, and skips the duplicate initial client request. Later revalidations still use the client-side fetcher.
+SWR utilise le résultat chargé sur le serveur pour le rendu initial, l'écrit dans le cache client pendant l'hydratation et évite une requête initiale en double côté client. Les revalidations suivantes utilisent toujours le fetcher côté client.
 
-Each `preload` call returns a new object. Merge the objects to preload multiple keys without awaiting them:
+Chaque appel à `preload` renvoie un nouvel objet. Fusionnez ces objets pour précharger plusieurs clés sans les attendre :
 
 ```tsx
 const cacheData = {
@@ -163,7 +163,7 @@ const cacheData = {
 }
 ```
 
-`preload` serializes complex SWR keys automatically. The `cacheData` option is only supported by `SWRConfig`; it cannot be passed directly to `useSWR`.
+`preload` sérialise automatiquement les clés SWR complexes. L'option `cacheData` est uniquement prise en charge par `SWRConfig` ; elle ne peut pas être transmise directement à `useSWR`.
 
 ## Client Side Data Fetching [#client-side-data-fetching]
 
