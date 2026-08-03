@@ -16,6 +16,7 @@ import { unstable_serialize } from 'swr' // ✅ 在 Server components 中可用
 import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ 在 Server components 中可用
 
 import { SWRConfig } from 'swr' // ✅ 在 Server components 中可用
+import { preload } from 'swr' // ✅ Available in server components
 ```
 
 <Callout type="error">
@@ -110,6 +111,59 @@ export default function Page() {
 <Callout type="default">
   要在应用程序中逐步采用此预获取模式，您可以启用 `strictServerPrefetchWarning` 选项。这将在控制台中显示警告消息，当某个 key 没有提供预填充数据时，帮助您识别哪些数据获取调用可以从服务器端预获取中受益。
 </Callout>
+
+### Preload Data into the Client Cache [#preload-data-into-client-cache]
+
+<Callout emoji="🧪">
+  This feature requires SWR 2.5.0-beta.1 or later and is currently experimental.
+</Callout>
+
+In a Server Component, `preload(key, fetcher)` starts the fetch immediately and returns a request-scoped `CacheData` object. Pass that object to the `cacheData` option of `SWRConfig`:
+
+```tsx filename="app/page.tsx" copy
+import { preload, SWRConfig } from 'swr'
+import { User } from './user'
+
+const getUser = () => fetchUserFromDatabase()
+
+export default function Page() {
+  const cacheData = preload('/api/user', getUser)
+
+  return (
+    <SWRConfig value={{ cacheData }}>
+      <User />
+    </SWRConfig>
+  )
+}
+```
+
+The client component uses the same key with its usual client-side fetcher:
+
+```tsx filename="app/user.tsx" copy
+'use client'
+
+import useSWR from 'swr'
+
+const fetcher = (url: string) => fetch(url).then(res => res.json())
+
+export function User() {
+  const { data } = useSWR('/api/user', fetcher)
+  return <h1>{data?.name}</h1>
+}
+```
+
+SWR uses the server-loaded result for the initial render, writes it to the client cache during hydration, and skips the duplicate initial client request. Later revalidations still use the client-side fetcher.
+
+Each `preload` call returns a new object. Merge the objects to preload multiple keys without awaiting them:
+
+```tsx
+const cacheData = {
+  ...preload('/api/user', getUser),
+  ...preload('/api/posts', getPosts),
+}
+```
+
+`preload` serializes complex SWR keys automatically. The `cacheData` option is only supported by `SWRConfig`; it cannot be passed directly to `useSWR`.
 
 ## 客户端数据获取 [#client-side-data-fetching]
 

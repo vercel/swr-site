@@ -163,3 +163,51 @@ mutate(
 ```
 
 More information can be found [here](/docs/arguments#multiple-arguments).
+
+## Clear the Cache [#clear-the-cache]
+
+<Callout>
+  This API requires SWR 2.5.0-beta.1 or later.
+</Callout>
+
+`unload()` clears every entry in a cache provider and notifies all mounted hooks in that provider scope. It also clears pending preloads and makes SWR ignore the results of requests and mutations that were already in flight. The underlying network operations are not aborted.
+
+By default, mounted hooks revalidate after the cache is cleared:
+
+```tsx
+import { unload } from 'swr'
+
+unload()
+```
+
+To clear the cache without immediately refetching, disable revalidation:
+
+```tsx
+unload({ revalidate: false })
+```
+
+Those hooks re-render with `data` set to `undefined` and remain empty until another event revalidates them, such as focus, reconnect, or remount. `unload` also drops data retained by `keepPreviousData` and clears internal keys used by APIs such as `useSWRInfinite`, which a `mutate` key filter might not match.
+
+The top-level import is bound to SWR's default cache provider. For a custom provider, get the scoped `unload` function from `useSWRConfig`:
+
+```tsx
+import { useSWRConfig } from 'swr'
+
+function ClearCacheButton() {
+  const { unload } = useSWRConfig()
+
+  return (
+    <button onClick={() => unload({ revalidate: false })}>
+      Clear cache
+    </button>
+  )
+}
+```
+
+### API [#unload-api]
+
+```ts
+unload(options?: { revalidate?: boolean }): void
+```
+
+- `revalidate = true`: revalidate the keys used by mounted hooks after clearing the cache.

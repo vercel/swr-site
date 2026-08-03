@@ -133,13 +133,13 @@ Besides all the [options](/docs/api) listed, `SWRConfig` also accepts an optiona
 
 ### Access To Global Configurations [#access-to-global-configurations]
 
-You can use the `useSWRConfig` hook to get the global configurations, as well as [`mutate`](/docs/mutation) and [`cache`](/docs/advanced/cache):
+You can use the `useSWRConfig` hook to get the global configurations, as well as [`mutate`](/docs/mutation), [`cache`](/docs/advanced/cache), and the provider-scoped [`unload`](/docs/advanced/cache#clear-the-cache) function:
 
 ```jsx
 import { useSWRConfig } from 'swr'
 
 function Component () {
-  const { refreshInterval, mutate, cache, ...restConfig } = useSWRConfig()
+  const { refreshInterval, mutate, cache, unload, ...restConfig } = useSWRConfig()
 
   // ...
 }

@@ -133,7 +133,7 @@ function Page() {
 import { useSWRConfig } from 'swr'
 
 function Component () {
-  const { refreshInterval, mutate, cache, ...restConfig } = useSWRConfig()
+  const { refreshInterval, mutate, cache, unload, ...restConfig } = useSWRConfig()
 
   // ...
 }
