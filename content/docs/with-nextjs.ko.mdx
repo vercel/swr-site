@@ -46,28 +46,19 @@ export default function Page() {
 
 ### 서버 컴포넌트에서 데이터 프리페치하기
 
-[기본 데이터를 이용한 사전 렌더링](#pre-rendering-with-default-data) 패턴과 유사하게, React Server Components (RSC)를 사용하면 더 나아갈 수 있습니다.
-
-서버 사이드에서 데이터 프리페칭을__시작__하고, `<SWRConfig>` provider의 `fallback` 옵션을 통해 클라이언트 컴포넌트 트리에 __promise__를 전달할 수 있습니다:
+React Server Components (RSC)에서는 `preload`로 데이터 가져오기를 시작하고 반환된 데이터를 `<SWRConfig>`의 `cacheData` 옵션을 통해 클라이언트 컴포넌트 트리에 전달하는 방식을 권장합니다.
 
 ```tsx filename="app/layout.tsx" copy
-import { SWRConfig } from 'swr'
+import { preload, SWRConfig } from 'swr'
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-  // 서버 사이드에서 데이터 페칭을 시작합니다.
-  const userPromise = fetchUserFromAPI()
-  const postsPromise = fetchPostsFromAPI()
+  const cacheData = {
+    ...preload('/api/user', fetchUserFromAPI),
+    ...preload('/api/posts', fetchPostsFromAPI),
+  }
 
   return (
-    <SWRConfig
-      value={{
-        fallback: {
-          // promise를 클라이언트 컴포넌트에 전달합니다.
-          '/api/user': userPromise,
-          '/api/posts': postsPromise,
-        },
-      }}
-    >
+    <SWRConfig value={{ cacheData }}>
       {children}
     </SWRConfig>
   )
@@ -75,10 +66,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
 ```
 
 <Callout emoji="💡">
-  두 데이터 페칭 함수 호출 `fetchUserFromAPI()` 와 `fetchPostsFromAPI()` 는 즉시 await 하지 않기 때문에 서버 사이드에서 병렬로 실행됩니다.
+  두 `preload` 호출 모두 데이터 가져오기를 즉시 시작하므로 layout에서 기다리지 않아도 요청이 병렬로 실행됩니다.
 </Callout>
 
-React Server Components에서는 `"use client"` 경계를 넘어 promise를 전달할 수 있으며, SWR은 서버 사이드 렌더링 중에 이를 자동으로 해석합니다:
+React Server Components에서는 `cacheData` 안의 promise를 `"use client"` 경계를 넘어 전달할 수 있으며, SWR은 서버 사이드 렌더링 중에 이를 자동으로 해석합니다.
 
 ```tsx filename="app/page.tsx" copy
 'use client'
@@ -86,7 +77,7 @@ React Server Components에서는 `"use client"` 경계를 넘어 promise를 전�
 import useSWR from 'swr'
 
 export default function Page() {
-  // SWR은 서버 컴포넌트에서 전달된 promise를 해석합니다.
+  // SWR은 Server Component가 프리로드한 데이터를 해석합니다.
   // SSR과 클라이언트 hydration 중에 `user`와 `posts` 모두 준비됩니다.
   const { data: user } = useSWR('/api/user', fetcher)
   const { data: posts } = useSWR('/api/posts', fetcher)
@@ -104,15 +95,15 @@ export default function Page() {
 }
 ```
 
-그런 다음 클라이언트 측에서 SWR이 제어권을 가져와 평소처럼 동작을 유지합니다.
+SWR은 초기 렌더링에 서버에서 불러온 결과를 사용합니다. 클라이언트에서는 제어권을 이어받아 일반적인 재검증 동작을 계속합니다.
 
-서버 컴포넌트에서 클라이언트 컴포넌트로 promise를 전달함으로써, 데이터 페칭을 가능한 한 빨리 서버 측에서 시작할 수 있습니다. 그리고 실제로 데이터를 사용하는 UI 경계(가장 가까운 `Suspense` 경계 또는 Next.js layout)만 스트리밍 SSR 중에 차단됩니다.
+`preload`와 `cacheData`를 사용하면 서버에서 가능한 한 빨리 데이터 가져오기를 시작할 수 있습니다. 스트리밍 SSR 중에는 가장 가까운 `Suspense` 경계나 Next.js layout처럼 실제로 데이터를 사용하는 UI 경계만 차단됩니다.
 
 <Callout type="default">
   애플리케이션에서 이 프리페치 패턴을 점진적으로 채택하려면 `strictServerPrefetchWarning` 옵션을 활성화할 수 있습니다. 이는 키에 미리 채워진 데이터가 제공되지 않은 경우 콘솔에 경고 메시지를 표시하여 어떤 데이터 페칭 호출이 서버 측 프리페칭의 이점을 얻을 수 있는지 식별하는 데 도움을 줍니다.
 </Callout>
 
-### 클라이언트 캐시에 데이터 프리로드하기 [#preload-data-into-client-cache]
+### `cacheData`의 동작 방식 [#preload-data-into-client-cache]
 
 <Callout emoji="🧪">
   이 기능을 사용하려면 SWR 2.5.0-beta.1 이상이 필요하며, 현재 실험 단계입니다.

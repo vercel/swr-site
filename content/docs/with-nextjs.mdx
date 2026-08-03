@@ -52,28 +52,19 @@ export default function Page() {
 
 ### Prefetch Data in Server Components
 
-Similar to the [pre-rendering with default data](#pre-rendering-with-default-data) pattern, with React Server Components (RSC) you can go even further.
-
-You can __initiate__ the data prefetching on the server side and pass the __promise__ to client component tree via the `<SWRConfig>` provider's `fallback` option:
+The recommended approach in React Server Components (RSC) is to start fetching with `preload` and pass the returned data to the client component tree through the `cacheData` option of `<SWRConfig>`:
 
 ```tsx filename="app/layout.tsx" copy
-import { SWRConfig } from 'swr'
+import { preload, SWRConfig } from 'swr'
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-  // Initiate the data fetching on the server side.
-  const userPromise = fetchUserFromAPI()
-  const postsPromise = fetchPostsFromAPI()
+  const cacheData = {
+    ...preload('/api/user', fetchUserFromAPI),
+    ...preload('/api/posts', fetchPostsFromAPI),
+  }
 
   return (
-    <SWRConfig
-      value={{
-        fallback: {
-          // Pass the promises to client components.
-          '/api/user': userPromise,
-          '/api/posts': postsPromise,
-        },
-      }}
-    >
+    <SWRConfig value={{ cacheData }}>
       {children}
     </SWRConfig>
   )
@@ -81,10 +72,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
 ```
 
 <Callout emoji="💡">
-  The two data fetching function calls `fetchUserFromAPI()` and `fetchPostsFromAPI()` will be executed in parallel on the server side because we don't await them immediately.
+  Both `preload` calls start fetching immediately, so the requests run in parallel without being awaited in the layout.
 </Callout>
 
-In React Server Components, you can pass promises across the `"use client"` boundary, and SWR will resolve them automatically during Server-Side Rendering:
+In React Server Components, the promises inside `cacheData` can cross the `"use client"` boundary, and SWR resolves them automatically during Server-Side Rendering:
 
 ```tsx filename="app/page.tsx" copy
 'use client'
@@ -92,7 +83,7 @@ In React Server Components, you can pass promises across the `"use client"` boun
 import useSWR from 'swr'
 
 export default function Page() {
-  // SWR will resolve the promise passed from server components.
+  // SWR resolves the data preloaded by the Server Component.
   // Both `user` and `posts` are ready during SSR and client hydration.
   const { data: user } = useSWR('/api/user', fetcher)
   const { data: posts } = useSWR('/api/posts', fetcher)
@@ -110,15 +101,15 @@ export default function Page() {
 }
 ```
 
-Then, on the client-side SWR will take over and keep the behavior as usual.
+SWR uses the server-loaded result for the initial render. On the client, it takes over and continues with its usual revalidation behavior.
 
-By passing promises from Server Components to Client Components, the data fetching can be initiated as early as possible on the server side. And only the UI boundaries (closest `Suspense` boundary or Next.js layout) that actually consume the data will be blocked during streaming SSR.
+With `preload` and `cacheData`, fetching starts as early as possible on the server. Only the UI boundaries that consume the data, such as the nearest `Suspense` boundary or Next.js layout, are blocked during streaming SSR.
 
 <Callout type="default">
   To incrementally adopt this prefetch pattern in your application, you can enable the `strictServerPrefetchWarning` option. This will show a warning message in the console when a key has no pre-filled data provided, helping you identify which data fetching calls could benefit from server-side prefetching.
 </Callout>
 
-### Preload Data into the Client Cache [#preload-data-into-client-cache]
+### How `cacheData` Works [#preload-data-into-client-cache]
 
 <Callout emoji="🧪">
   This feature requires SWR 2.5.0-beta.1 or later and is currently experimental.

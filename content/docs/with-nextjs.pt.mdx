@@ -46,28 +46,19 @@ export default function Page() {
 
 ### Buscar Dados Antecipadamente em Server Components
 
-Similar ao padrão de [pré-renderização com dados padrão](#pre-rendering-with-default-data), com React Server Components (RSC) você pode ir ainda mais longe.
-
-Você pode __iniciar__ a busca antecipada de dados no lado do servidor e passar a __promise__ para a árvore de componentes do cliente através da opção `fallback` do provider `<SWRConfig>`:
+A abordagem recomendada em React Server Components (RSC) é iniciar a busca com `preload` e passar os dados retornados para a árvore de componentes do cliente por meio da opção `cacheData` do `<SWRConfig>`:
 
 ```tsx filename="app/layout.tsx" copy
-import { SWRConfig } from 'swr'
+import { preload, SWRConfig } from 'swr'
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-  // Inicie a busca de dados no lado do servidor.
-  const userPromise = fetchUserFromAPI()
-  const postsPromise = fetchPostsFromAPI()
+  const cacheData = {
+    ...preload('/api/user', fetchUserFromAPI),
+    ...preload('/api/posts', fetchPostsFromAPI),
+  }
 
   return (
-    <SWRConfig
-      value={{
-        fallback: {
-          // Passe as promises para os componentes do cliente.
-          '/api/user': userPromise,
-          '/api/posts': postsPromise,
-        },
-      }}
-    >
+    <SWRConfig value={{ cacheData }}>
       {children}
     </SWRConfig>
   )
@@ -75,10 +66,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
 ```
 
 <Callout emoji="💡">
-  As duas chamadas de função de busca de dados `fetchUserFromAPI()` e `fetchPostsFromAPI()` serão executadas em paralelo no lado do servidor porque não as aguardamos imediatamente.
+  As duas chamadas a `preload` iniciam a busca imediatamente, portanto as requisições são executadas em paralelo sem serem aguardadas no layout.
 </Callout>
 
-Em React Server Components, você pode passar promises através da fronteira `"use client"`, e o SWR irá resolvê-las automaticamente durante o Server-Side Rendering:
+Em React Server Components, as promises dentro de `cacheData` podem atravessar a fronteira `"use client"`, e o SWR as resolve automaticamente durante o Server-Side Rendering:
 
 ```tsx filename="app/page.tsx" copy
 'use client'
@@ -86,7 +77,7 @@ Em React Server Components, você pode passar promises através da fronteira `"u
 import useSWR from 'swr'
 
 export default function Page() {
-  // O SWR resolverá a promise passada dos componentes do servidor.
+  // O SWR resolve os dados pré-carregados pelo Server Component.
   // Tanto `user` quanto `posts` estarão prontos durante SSR e hidratação do cliente.
   const { data: user } = useSWR('/api/user', fetcher)
   const { data: posts } = useSWR('/api/posts', fetcher)
@@ -104,15 +95,15 @@ export default function Page() {
 }
 ```
 
-Então, no lado do cliente, o SWR assumirá o controle e manterá o comportamento normal.
+O SWR usa o resultado carregado no servidor para a renderização inicial. No cliente, ele assume o controle e continua com o comportamento normal de revalidação.
 
-Ao passar promises dos Server Components para Client Components, a busca de dados pode ser iniciada o mais cedo possível no lado do servidor. E apenas os limites de UI (fronteira `Suspense` mais próxima ou layout Next.js) que realmente consomem os dados serão bloqueados durante o SSR de streaming.
+Com `preload` e `cacheData`, a busca começa o mais cedo possível no servidor. Apenas os limites de UI que consomem os dados, como a fronteira `Suspense` mais próxima ou o layout do Next.js, são bloqueados durante o SSR de streaming.
 
 <Callout type="default">
   Para adotar incrementalmente este padrão de pré-busca em sua aplicação, você pode habilitar a opção `strictServerPrefetchWarning`. Isso mostrará uma mensagem de aviso no console quando uma chave não tem dados pré-preenchidos fornecidos, ajudando você a identificar quais chamadas de busca de dados poderiam se beneficiar da pré-busca do lado do servidor.
 </Callout>
 
-### Pré-carregar dados no cache do cliente [#preload-data-into-client-cache]
+### Como `cacheData` funciona [#preload-data-into-client-cache]
 
 <Callout emoji="🧪">
   Este recurso requer o SWR 2.5.0-beta.1 ou posterior e atualmente é experimental.
