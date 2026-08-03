@@ -163,3 +163,51 @@ mutate(
 ```
 
 More information can be found [here](/docs/arguments#multiple-arguments).
+
+## 清空缓存 [#clear-the-cache]
+
+<Callout>
+  此 API 需要 SWR 2.5.0-beta.1 或更高版本。
+</Callout>
+
+`unload()` 会清空缓存 provider 中的所有条目，并通知该 provider 作用域内所有已挂载的 hook。它还会清除待处理的预加载，并使 SWR 忽略已经在进行中的请求和数据更改结果。底层网络操作不会被中止。
+
+默认情况下，清空缓存后，已挂载的 hook 会重新验证：
+
+```tsx
+import { unload } from 'swr'
+
+unload()
+```
+
+如果要清空缓存而不立即重新获取数据，请禁用重新验证：
+
+```tsx
+unload({ revalidate: false })
+```
+
+这些 hook 会以 `data` 为 `undefined` 的状态重新渲染，并保持为空，直到焦点、重新连接或重新挂载等其他事件触发重新验证。`unload` 还会丢弃 `keepPreviousData` 保留的数据，并清除 `useSWRInfinite` 等 API 使用的内部 key；这些 key 可能无法被 `mutate` 的 key 过滤器匹配。
+
+顶层导入绑定到 SWR 的默认缓存 provider。对于自定义 provider，请从 `useSWRConfig` 获取其作用域内的 `unload` 函数：
+
+```tsx
+import { useSWRConfig } from 'swr'
+
+function ClearCacheButton() {
+  const { unload } = useSWRConfig()
+
+  return (
+    <button onClick={() => unload({ revalidate: false })}>
+      清空缓存
+    </button>
+  )
+}
+```
+
+### API [#unload-api]
+
+```ts
+unload(options?: { revalidate?: boolean }): void
+```
+
+- `revalidate = true`：清空缓存后，重新验证已挂载 hook 使用的 key。

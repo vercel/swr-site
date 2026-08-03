@@ -127,13 +127,13 @@ function Page() {
 
 ### グローバル設定へアクセス [#access-to-global-configurations]
 
-`useSWRConfig` フックを使ってグローバル設定、および[`ミューテーション`](/docs/mutation)と[`キャッシュ`](/docs/advanced/cache)を取得できます:
+`useSWRConfig` フックを使ってグローバル設定、[`ミューテーション`](/docs/mutation)、[`キャッシュ`](/docs/advanced/cache)、およびプロバイダーのスコープに紐づく [`unload`](/docs/advanced/cache#clear-the-cache) 関数を取得できます。
 
 ```jsx
 import { useSWRConfig } from 'swr'
 
 function Component () {
-  const { refreshInterval, mutate, cache, ...restConfig } = useSWRConfig()
+  const { refreshInterval, mutate, cache, unload, ...restConfig } = useSWRConfig()
 
   // ...
 }

@@ -163,3 +163,51 @@ mutate(
 ```
 
 More information can be found [here](/docs/arguments#multiple-arguments).
+
+## Vaciar la caché [#clear-the-cache]
+
+<Callout>
+  Esta API requiere SWR 2.5.0-beta.1 o una versión posterior.
+</Callout>
+
+`unload()` elimina todas las entradas de un proveedor de caché y notifica a todos los hooks montados dentro del ámbito de ese proveedor. También elimina las precargas pendientes y hace que SWR ignore los resultados de peticiones y mutaciones que ya estaban en curso. Las operaciones de red subyacentes no se cancelan.
+
+Por defecto, los hooks montados revalidan después de vaciar la caché:
+
+```tsx
+import { unload } from 'swr'
+
+unload()
+```
+
+Para vaciar la caché sin volver a obtener los datos inmediatamente, desactiva la revalidación:
+
+```tsx
+unload({ revalidate: false })
+```
+
+Esos hooks se vuelven a renderizar con `data` establecido en `undefined` y permanecen vacíos hasta que otro evento los revalide, como el enfoque de la ventana, la reconexión o un nuevo montaje. `unload` también descarta los datos conservados por `keepPreviousData` y elimina las keys internas utilizadas por APIs como `useSWRInfinite`, que un filtro de keys de `mutate` podría no encontrar.
+
+La importación de nivel superior está vinculada al proveedor de caché predeterminado de SWR. Para un proveedor personalizado, obtén la función `unload` de su ámbito mediante `useSWRConfig`:
+
+```tsx
+import { useSWRConfig } from 'swr'
+
+function ClearCacheButton() {
+  const { unload } = useSWRConfig()
+
+  return (
+    <button onClick={() => unload({ revalidate: false })}>
+      Vaciar caché
+    </button>
+  )
+}
+```
+
+### API [#unload-api]
+
+```ts
+unload(options?: { revalidate?: boolean }): void
+```
+
+- `revalidate = true`: revalida las keys utilizadas por los hooks montados después de vaciar la caché.
