@@ -175,7 +175,7 @@ Se a página precisa ser pré-renderizada, o Next.js suporta [2 formas de pré-r
 
 Junto com o SWR, você pode pré-renderizar a página para SEO e também ter recursos como cache, revalidação, rastreamento de foco, refetching em intervalo no lado do cliente.
 
-Você pode usar a opção `fallback` de [`SWRConfig`](/docs/global-configuration) para passar os dados pré-buscados como o valor inicial de todos os hooks SWR.
+Você pode usar a opção `cacheData` de [`SWRConfig`](/docs/global-configuration) para colocar os dados obtidos no servidor no cache de todos os hooks SWR dentro desse limite.
 
 Por exemplo, com o `getStaticProps`:
 
@@ -185,7 +185,7 @@ Por exemplo, com o `getStaticProps`:
   const article = await getArticleFromAPI()
   return {
     props: {
-      fallback: {
+      cacheData: {
         '/api/article': article
       }
     }
@@ -193,15 +193,15 @@ Por exemplo, com o `getStaticProps`:
 }
 
 function Article() {
-  // `data` estará sempre disponível, pois está em `fallback`.
+  // `data` está disponível por meio do `cacheData` fornecido pelo servidor.
   const { data } = useSWR('/api/article', fetcher)
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallback }) {
+export default function Page({ cacheData }) {
   // Hooks SWR dentro do limites do `SWRConfig` usarão esses valores.
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ cacheData }}>
       <Article />
     </SWRConfig>
   )
@@ -211,12 +211,12 @@ export default function Page({ fallback }) {
 A página ainda é pré-renderizada. É amigável para SEO, rápida para responder, mas também totalmente alimentada pelo SWR no lado do cliente. Os dados podem ser dinâmicos e atualizados automaticamente ao longo do tempo.
 
 <Callout emoji="💡">
-  O componente `Article` irá renderizar os dados pré-gerados primeiro e, após a página ser hidratada, ele buscará novamente os dados mais recentes para mantê-los atualizados.
+  O componente `Article` renderiza os dados pré-gerados e os hidrata no cache do cliente sem duplicar a requisição inicial. Eventos de revalidação posteriores continuam usando o fetcher do cliente.
 </Callout>
 
 ### Chaves Complexas [#complex-keys]
 
-`useSWR` podem ser usadas com chaves que são do tipo `array` ou `function`. Utilizar dados pré-obtidos com esses tipos de chaves requer serializar as chaves `fallback` usando o `unstable_serialize`.
+`useSWR` pode ser usado com chaves dos tipos `array` e `function`. Ao criar `cacheData` manualmente, serialize essas chaves com `unstable_serialize`.
 
 ```jsx
 import useSWR, { unstable_serialize } from 'swr'
@@ -225,7 +225,7 @@ export async function getStaticProps () {
   const article = await getArticleFromAPI(1)
   return {
     props: {
-      fallback: {
+      cacheData: {
         // chave de lista usando unstable_serialize()
         [unstable_serialize(['api', 'article', 1])]: article,
       }
@@ -239,9 +239,9 @@ function Article() {
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallback }) {
+export default function Page({ cacheData }) {
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ cacheData }}>
       <Article />
     </SWRConfig>
   )

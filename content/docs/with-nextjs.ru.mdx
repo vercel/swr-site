@@ -174,7 +174,7 @@ const cacheData = {
 
 Совместно с SWR вы можете предварительно отрендерить страницу для SEO, а также использовать функции, такие как кэширование, ревалидация, отслеживание фокуса, повторное получение данных через интервал на стороне клиента.
 
-Вы можете использовать параметр `fallback` в [`SWRConfig`](/docs/global-configuration), чтобы передать предварительно полученные данные в качестве начального значения для всех хуков SWR.
+Вы можете использовать опцию `cacheData` компонента [`SWRConfig`](/docs/global-configuration), чтобы поместить полученные на сервере данные в кеш всех хуков SWR внутри этой границы.
 
 Например, с использованием `getStaticProps`:
 
@@ -184,7 +184,7 @@ const cacheData = {
   const article = await getArticleFromAPI()
   return {
     props: {
-      fallback: {
+      cacheData: {
         '/api/article': article
       }
     }
@@ -192,15 +192,15 @@ const cacheData = {
 }
 
 function Article() {
-  // `data` всегда будет доступна, так как она находится в `fallback`.
+  // `data` доступна из предоставленного сервером `cacheData`.
   const { data } = useSWR('/api/article', fetcher)
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallback }) {
+export default function Page({ cacheData }) {
   // Хуки SWR внутри области `SWRConfig` будут использовать эти значения.
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ cacheData }}>
       <Article />
     </SWRConfig>
   )
@@ -210,12 +210,12 @@ export default function Page({ fallback }) {
 Страница всё ещё предварительно рендерится. Она дружественна к SEO, быстро реагирует, но также полностью поддерживается SWR на стороне клиента. Данные могут быть динамичными и автоматически обновляться со временем.
 
 <Callout emoji="💡">
-  Компонент `Article` сначала отобразит предварительно сгенерированные данные, после гидратации страницы снова запросит последние данные, чтобы обновить их.
+  Компонент `Article` отображает предварительно сгенерированные данные и гидратирует их в клиентский кеш без повторного первоначального запроса. Последующие события ревалидации по-прежнему используют клиентский fetcher.
 </Callout>
 
 ### Комплексные ключи [#complex-keys]
 
-`useSWR` можно использовать с ключами типов `array` и `function`. Для использования предварительно полученных данных с этими типами ключей необходимо сериализовать ключи `fallback` с помощью `unstable_serialize`.
+`useSWR` можно использовать с ключами типов `array` и `function`. При создании `cacheData` вручную сериализуйте эти ключи с помощью `unstable_serialize`.
 
 ```jsx
 import useSWR, { unstable_serialize } from 'swr'
@@ -224,7 +224,7 @@ export async function getStaticProps () {
   const article = await getArticleFromAPI(1)
   return {
     props: {
-      fallback: {
+      cacheData: {
         // ключ в виде массива с использованием unstable_serialize()
         [unstable_serialize(['api', 'article', 1])]: article,
       }
@@ -238,9 +238,9 @@ function Article() {
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallback }) {
+export default function Page({ cacheData }) {
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ cacheData }}>
       <Article />
     </SWRConfig>
   )

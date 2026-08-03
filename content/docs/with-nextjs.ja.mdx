@@ -174,7 +174,7 @@ const cacheData = {
 
 SWR と組み合わせることで、SEO のためにページをプリレンダリングし、さらにキャッシュ、再検証、フォーカストラッキング、クライアントサイドで行われる一定間隔での再フェッチなどの機能も利用できます。
 
-[`SWRConfig`](/docs/global-configuration) の `fallback` オプションを使用して、事前に取得したデータをすべての SWR フックの初期値として渡すことができます。
+[`SWRConfig`](/docs/global-configuration) の `cacheData` オプションを使用すると、サーバーで取得したデータを境界内のすべての SWR フックのキャッシュに渡せます。
 
 `getStaticProps` の例:
 
@@ -184,7 +184,7 @@ SWR と組み合わせることで、SEO のためにページをプリレンダ
   const article = await getArticleFromAPI()
   return {
     props: {
-      fallback: {
+      cacheData: {
         '/api/article': article
       }
     }
@@ -192,15 +192,15 @@ SWR と組み合わせることで、SEO のためにページをプリレンダ
 }
 
 function Article() {
-  // `data` は `fallback` 内にあるため常に利用可能です
+  // `data` はサーバーから渡された `cacheData` で利用できます
   const { data } = useSWR('/api/article', fetcher)
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallback }) {
+export default function Page({ cacheData }) {
   // `SWRConfig` 内の SWR フックはそれらの値を使用します
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ cacheData }}>
       <Article />
     </SWRConfig>
   )
@@ -210,12 +210,12 @@ export default function Page({ fallback }) {
 このページはプリレンダリングされます。SEO に優れ、迅速に応答しますが、クライアントサイドでは完全に SWR によって駆動されています。データは動的で、時間の経過とともに自動更新されます。
 
 <Callout emoji="💡">
-  `Article` コンポーネントは最初は事前に生成されたデータをレンダリングし、ページがハイドレートされた後、最新のデータを再度フェッチして更新します。
+  `Article` コンポーネントは事前に生成されたデータをレンダリングし、初回リクエストを重複させずにクライアントキャッシュへハイドレーションします。以降の再検証イベントでは引き続きクライアント側の fetcher が使用されます。
 </Callout>
 
 ### 複雑なキー [#complex-keys]
 
-`useSWR` は、`array` 型および `function` 型のキーとともに使用できます。これらの種類のキーで事前にフェッチしたデータを利用するには、`fallback` キーを `unstable_serialize` でシリアライズする必要があります。
+`useSWR` は `array` 型および `function` 型のキーとともに使用できます。`cacheData` を手動で作成する場合は、これらのキーを `unstable_serialize` でシリアライズします。
 
 ```jsx
 import useSWR, { unstable_serialize } from 'swr'
@@ -224,7 +224,7 @@ export async function getStaticProps () {
   const article = await getArticleFromAPI(1)
   return {
     props: {
-      fallback: {
+      cacheData: {
         // unstable_serialize() を使用した配列スタイルのキー
         [unstable_serialize(['api', 'article', 1])]: article,
       }
@@ -238,9 +238,9 @@ function Article() {
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallback }) {
+export default function Page({ cacheData }) {
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ cacheData }}>
       <Article />
     </SWRConfig>
   )

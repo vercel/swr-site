@@ -174,7 +174,7 @@ const cacheData = {
 
 通过使用 SWR, 您可以为了 SEO 预渲染页面, 并同时在客户端享受缓存、重新验证、焦点追踪、定时重新获取等特性。
 
-您可以使用 [`SWRConfig`](/docs/global-configuration) 的 `fallback` 选项来将预获取的数据作为所有 SWR Hook 的初始值。
+您可以使用 [`SWRConfig`](/docs/global-configuration) 的 `cacheData` 选项，将服务器获取的数据写入该边界内所有 SWR hook 的缓存。
 
 使用 `getStaticProps` 的例子：
 
@@ -184,7 +184,7 @@ const cacheData = {
   const article = await getArticleFromAPI()
   return {
     props: {
-      fallback: {
+      cacheData: {
         '/api/article': article
       }
     }
@@ -192,15 +192,15 @@ const cacheData = {
 }
 
 function Article() {
-  // `data` 将始终可用，因为其处于 `fallback` 列表中
+  // `data` 来自服务器提供的 `cacheData`
   const { data } = useSWR('/api/article', fetcher)
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallback }) {
+export default function Page({ cacheData }) {
   // 在 `SWRConfig` 标签内的 SWR hooks 将使用这些值
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ cacheData }}>
       <Article />
     </SWRConfig>
   )
@@ -210,12 +210,12 @@ export default function Page({ fallback }) {
 该页面仍然是预先生成，SEO 友好的，并且能够快速反应。然而该页面在客户端侧仍然完全由 SWR 驱动。数据仍然是动态的，且可以自动更新。
 
 <Callout emoji="💡">
-  `Article` 组件将先渲染预先生成的数据，并且在页面水合完成后将再次获取最新数据以保持数据最新
+  `Article` 组件会渲染预先生成的数据，并将其 hydration 到客户端缓存中，而不会发起重复的首次请求。后续的重新验证事件仍会使用客户端 fetcher。
 </Callout>
 
 ### 复杂关键字 [#complex-keys]
 
-`useSWR` 可以与 `array` 和 `function` 类型的 key 一同使用. 若要通过这些类型的 key 使用预先获取的数据，需要用 `unstable_serialize` 序列化 `fallback` key.
+`useSWR` 可以与 `array` 和 `function` 类型的 key 一同使用。手动创建 `cacheData` 时，需要使用 `unstable_serialize` 序列化这些 key。
 
 ```jsx
 import useSWR, { unstable_serialize } from 'swr'
@@ -224,7 +224,7 @@ export async function getStaticProps () {
   const article = await getArticleFromAPI(1)
   return {
     props: {
-      fallback: {
+      cacheData: {
         // unstable_serialize() array style key
         [unstable_serialize(['api', 'article', 1])]: article,
       }
@@ -238,9 +238,9 @@ function Article() {
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallback }) {
+export default function Page({ cacheData }) {
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ cacheData }}>
       <Article />
     </SWRConfig>
   )
