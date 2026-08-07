@@ -15,7 +15,10 @@ export const Navbar = () => (
           <SiVercel className="size-5" />
         </a>
         <SlashIcon className="size-5 text-border" />
-        <DynamicLink href="/[lang]">
+        {/* The site root now 307s to the vercel.com/oss/swr lander (#652),
+            so the wordmark deep-links into the docs instead of bouncing
+            visitors off the site they are already on. */}
+        <DynamicLink href="/[lang]/docs/getting-started">
           <Logo />
         </DynamicLink>
       </div>
