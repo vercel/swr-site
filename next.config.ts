@@ -11,6 +11,16 @@ const config: NextConfig = {
   async redirects() {
     return [
       {
+        // Launch redirect: the SWR marketing lander lives at
+        // vercel.com/oss/swr; the docs stay here. 307 (permanent: false)
+        // during the launch soak, flip to permanent: true (308) once the
+        // lander has settled. Do not merge before the `lander-oss-swr`
+        // flag is live, or the root will bounce visitors into a 404.
+        source: '/',
+        destination: 'https://vercel.com/oss/swr',
+        permanent: false
+      },
+      {
         source: '/docs',
         destination: '/docs/getting-started',
         permanent: true
