@@ -12,8 +12,8 @@ importers:
         specifier: ^1.6.1
         version: 1.6.1(next@16.2.12(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
       '@vercel/geistdocs':
-        specifier: 1.19.6
-        version: 1.19.6(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.2.12(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)
+        specifier: 1.20.0
+        version: 1.20.0(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.2.12(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)
       '@vercel/speed-insights':
         specifier: ^1.3.1
         version: 1.3.1(next@16.2.12(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
@@ -2003,8 +2003,8 @@ packages:
     resolution: {integrity: sha512-g9XerViJ/paZujufXYcu5XYI2vU2rtB4sgdpjUHde5RnOkdmpu0ngH46LCFGHoPXO/C+qDPSczIHIRN+8Q2YKQ==}
     engines: {node: '>= 18'}
 
-  '@vercel/geistdocs@1.19.6':
-    resolution: {integrity: sha512-R5e5OTnXWTZzYUhuqc0PiLNKmN1FGPeFnin+zzbB83Ca3iGLv9AeZoYKTaf34buwkjpQP/qvKslB3byBy2ct3g==}
+  '@vercel/geistdocs@1.20.0':
+    resolution: {integrity: sha512-xYjZ8fbePdoVzX1jcae4Zmk3isdaWAhVE1yzG4C5xKsrYF0HKbJEKMQWeQfoFOj+JJxiTC75KqsiTI7FfWxg9g==}
     hasBin: true
     peerDependencies:
       next: ^16.2.11
@@ -5591,7 +5591,7 @@ snapshots:
     dependencies:
       execa: 5.1.1
 
-  '@vercel/geistdocs@1.19.6(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.2.12(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)':
+  '@vercel/geistdocs@1.20.0(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.2.12(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)':
     dependencies:
       '@ai-sdk/react': 3.0.200(react@19.2.3)(zod@4.1.13)
       '@clack/prompts': 0.11.0

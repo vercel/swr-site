@@ -17,6 +17,13 @@ export const Logo = () => (
   </div>
 );
 
+/**
+ * The site root 307s to the vercel.com/oss/swr lander, so the navbar
+ * wordmark deep-links into the docs instead of bouncing visitors off the
+ * site they are already on. Locale prefixes are applied automatically.
+ */
+export const logoHref = "/docs/getting-started";
+
 /** The SWR library repository (used for the GitHub button). */
 export const github = {
   owner: "vercel",
