@@ -22,6 +22,7 @@ import { unstable_serialize } from 'swr' // ✅ Available in server components
 import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite' // ✅ Available in server components
 
 import { SWRConfig } from 'swr' // ✅ Available in server components
+import { preload } from 'swr' // ✅ Available in server components
 ```
 
 <Callout type="error">
@@ -51,28 +52,19 @@ export default function Page() {
 
 ### Prefetch Data in Server Components
 
-Similar to the [pre-rendering with default data](#pre-rendering-with-default-data) pattern, with React Server Components (RSC) you can go even further.
-
-You can __initiate__ the data prefetching on the server side and pass the __promise__ to client component tree via the `<SWRConfig>` provider's `fallback` option:
+The recommended approach in React Server Components (RSC) is to start fetching with `preload` and pass the returned data to the client component tree through the `cacheData` option of `<SWRConfig>`:
 
 ```tsx filename="app/layout.tsx" copy
-import { SWRConfig } from 'swr'
+import { preload, SWRConfig } from 'swr'
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-  // Initiate the data fetching on the server side.
-  const userPromise = fetchUserFromAPI()
-  const postsPromise = fetchPostsFromAPI()
+  const cacheData = {
+    ...preload('/api/user', fetchUserFromAPI),
+    ...preload('/api/posts', fetchPostsFromAPI),
+  }
 
   return (
-    <SWRConfig
-      value={{
-        fallback: {
-          // Pass the promises to client components.
-          '/api/user': userPromise,
-          '/api/posts': postsPromise,
-        },
-      }}
-    >
+    <SWRConfig value={{ cacheData }}>
       {children}
     </SWRConfig>
   )
@@ -80,10 +72,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
 ```
 
 <Callout emoji="💡">
-  The two data fetching function calls `fetchUserFromAPI()` and `fetchPostsFromAPI()` will be executed in parallel on the server side because we don't await them immediately.
+  Both `preload` calls start fetching immediately, so the requests run in parallel without being awaited in the layout.
 </Callout>
 
-In React Server Components, you can pass promises across the `"use client"` boundary, and SWR will resolve them automatically during Server-Side Rendering:
+In React Server Components, the promises inside `cacheData` can cross the `"use client"` boundary, and SWR resolves them automatically during Server-Side Rendering:
 
 ```tsx filename="app/page.tsx" copy
 'use client'
@@ -91,7 +83,7 @@ In React Server Components, you can pass promises across the `"use client"` boun
 import useSWR from 'swr'
 
 export default function Page() {
-  // SWR will resolve the promise passed from server components.
+  // SWR resolves the data preloaded by the Server Component.
   // Both `user` and `posts` are ready during SSR and client hydration.
   const { data: user } = useSWR('/api/user', fetcher)
   const { data: posts } = useSWR('/api/posts', fetcher)
@@ -109,13 +101,66 @@ export default function Page() {
 }
 ```
 
-Then, on the client-side SWR will take over and keep the behavior as usual.
+SWR uses the server-loaded result for the initial render. On the client, it takes over and continues with its usual revalidation behavior.
 
-By passing promises from Server Components to Client Components, the data fetching can be initiated as early as possible on the server side. And only the UI boundaries (closest `Suspense` boundary or Next.js layout) that actually consume the data will be blocked during streaming SSR.
+With `preload` and `cacheData`, fetching starts as early as possible on the server. Only the UI boundaries that consume the data, such as the nearest `Suspense` boundary or Next.js layout, are blocked during streaming SSR.
 
 <Callout type="default">
   To incrementally adopt this prefetch pattern in your application, you can enable the `strictServerPrefetchWarning` option. This will show a warning message in the console when a key has no pre-filled data provided, helping you identify which data fetching calls could benefit from server-side prefetching.
 </Callout>
+
+### How `cacheData` Works [#preload-data-into-client-cache]
+
+<Callout emoji="🧪">
+  This feature requires SWR 2.5.0-beta.1 or later and is currently experimental.
+</Callout>
+
+In a Server Component, `preload(key, fetcher)` starts the fetch immediately and returns a request-scoped `CacheData` object. Pass that object to the `cacheData` option of `SWRConfig`:
+
+```tsx filename="app/page.tsx" copy
+import { preload, SWRConfig } from 'swr'
+import { User } from './user'
+
+const getUser = () => fetchUserFromDatabase()
+
+export default function Page() {
+  const cacheData = preload('/api/user', getUser)
+
+  return (
+    <SWRConfig value={{ cacheData }}>
+      <User />
+    </SWRConfig>
+  )
+}
+```
+
+The client component uses the same key with its usual client-side fetcher:
+
+```tsx filename="app/user.tsx" copy
+'use client'
+
+import useSWR from 'swr'
+
+const fetcher = (url: string) => fetch(url).then(res => res.json())
+
+export function User() {
+  const { data } = useSWR('/api/user', fetcher)
+  return <h1>{data?.name}</h1>
+}
+```
+
+SWR uses the server-loaded result for the initial render, writes it to the client cache during hydration, and skips the duplicate initial client request. Later revalidations still use the client-side fetcher.
+
+Each `preload` call returns a new object. Merge the objects to preload multiple keys without awaiting them:
+
+```tsx
+const cacheData = {
+  ...preload('/api/user', getUser),
+  ...preload('/api/posts', getPosts),
+}
+```
+
+`preload` serializes complex SWR keys automatically. The `cacheData` option is only supported by `SWRConfig`; it cannot be passed directly to `useSWR`.
 
 ## Client Side Data Fetching [#client-side-data-fetching]
 
@@ -135,7 +180,7 @@ If the page must be pre-rendered, Next.js supports [2 forms of pre-rendering](ht
 
 Together with SWR, you can pre-render the page for SEO, and also have features such as caching, revalidation, focus tracking, refetching on interval on the client side.
 
-You can use the `fallback` option of [`SWRConfig`](/docs/global-configuration) to pass the pre-fetched data as the initial value of all SWR hooks.
+You can use the `cacheData` option of [`SWRConfig`](/docs/global-configuration) to pass server-fetched data into the cache for all SWR hooks inside the boundary.
 
 For example with `getStaticProps`:
 
@@ -145,7 +190,7 @@ For example with `getStaticProps`:
   const article = await getArticleFromAPI()
   return {
     props: {
-      fallback: {
+      cacheData: {
         '/api/article': article
       }
     }
@@ -153,15 +198,15 @@ For example with `getStaticProps`:
 }
 
 function Article() {
-  // `data` will always be available as it's in `fallback`.
+  // `data` is available from the server-provided `cacheData`.
   const { data } = useSWR('/api/article', fetcher)
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallback }) {
+export default function Page({ cacheData }) {
   // SWR hooks inside the `SWRConfig` boundary will use those values.
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ cacheData }}>
       <Article />
     </SWRConfig>
   )
@@ -171,12 +216,12 @@ export default function Page({ fallback }) {
 The page is still pre-rendered. It's SEO friendly, fast to response, but also fully powered by SWR on the client side. The data can be dynamic and self-updated over time.
 
 <Callout emoji="💡">
-  The `Article` component will render the pre-generated data first, and after the page is hydrated, it will fetch the latest data again to keep it fresh.
+  The `Article` component renders the pre-generated data and hydrates it into the client cache without a duplicate initial request. Later revalidation events still use the client fetcher.
 </Callout>
 
 ### Complex Keys [#complex-keys]
 
-`useSWR` can be used with keys that are `array` and `function` types. Utilizing pre-fetched data with these kinds of keys requires serializing the `fallback` keys with `unstable_serialize`.
+`useSWR` can be used with keys that are `array` and `function` types. When creating `cacheData` manually, serialize these keys with `unstable_serialize`.
 
 ```jsx
 import useSWR, { unstable_serialize } from 'swr'
@@ -185,7 +230,7 @@ export async function getStaticProps () {
   const article = await getArticleFromAPI(1)
   return {
     props: {
-      fallback: {
+      cacheData: {
         // unstable_serialize() array style key
         [unstable_serialize(['api', 'article', 1])]: article,
       }
@@ -199,9 +244,9 @@ function Article() {
   return <h1>{data.title}</h1>
 }
 
-export default function Page({ fallback }) {
+export default function Page({ cacheData }) {
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ cacheData }}>
       <Article />
     </SWRConfig>
   )

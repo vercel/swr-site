@@ -169,3 +169,51 @@ mutate(
 ```
 
 More information can be found [here](/docs/arguments#multiple-arguments).
+
+## 캐시 비우기 [#clear-the-cache]
+
+<Callout>
+  이 API를 사용하려면 SWR 2.5.0-beta.1 이상이 필요합니다.
+</Callout>
+
+`unload()`는 캐시 프로바이더의 모든 항목을 지우고 해당 프로바이더 범위에 마운트된 모든 훅에 알립니다. 또한 대기 중인 프리로드를 지우고 SWR이 이미 진행 중인 요청과 뮤테이션의 결과를 무시하도록 합니다. 기반 네트워크 작업 자체가 중단되지는 않습니다.
+
+기본적으로 캐시를 비운 뒤 마운트된 훅이 재검증됩니다.
+
+```tsx
+import { unload } from 'swr'
+
+unload()
+```
+
+즉시 다시 가져오지 않고 캐시를 비우려면 재검증을 비활성화하세요.
+
+```tsx
+unload({ revalidate: false })
+```
+
+이 훅들은 `data`가 `undefined`인 상태로 다시 렌더링되며 포커스, 재연결, 재마운트 같은 다른 이벤트가 재검증할 때까지 빈 상태를 유지합니다. `unload`는 `keepPreviousData`가 유지한 데이터도 제거하고, `mutate` 키 필터로 찾지 못할 수 있는 `useSWRInfinite` 등의 API가 사용하는 내부 키도 지웁니다.
+
+최상위 import는 SWR의 기본 캐시 프로바이더에 연결됩니다. 사용자 지정 프로바이더에서는 `useSWRConfig`로 해당 범위의 `unload` 함수를 가져오세요.
+
+```tsx
+import { useSWRConfig } from 'swr'
+
+function ClearCacheButton() {
+  const { unload } = useSWRConfig()
+
+  return (
+    <button onClick={() => unload({ revalidate: false })}>
+      캐시 비우기
+    </button>
+  )
+}
+```
+
+### API [#unload-api]
+
+```ts
+unload(options?: { revalidate?: boolean }): void
+```
+
+- `revalidate = true`: 캐시를 비운 뒤 마운트된 훅이 사용하는 키를 재검증합니다.

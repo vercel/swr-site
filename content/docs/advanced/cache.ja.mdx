@@ -169,3 +169,51 @@ mutate(
 ```
 
 更なる情報は [こちら](/docs/arguments#multiple-arguments) から確認できます。
+
+## キャッシュをクリアする [#clear-the-cache]
+
+<Callout>
+  この API を利用するには SWR 2.5.0-beta.1 以降が必要です。
+</Callout>
+
+`unload()` はキャッシュプロバイダー内のすべてのエントリを削除し、そのプロバイダーのスコープ内でマウントされているすべてのフックに通知します。また、保留中のプリロードを削除し、すでに実行中のリクエストやミューテーションの結果を SWR が無視するようにします。基盤となるネットワーク処理自体は中止されません。
+
+デフォルトでは、キャッシュのクリア後にマウント済みのフックが再検証されます。
+
+```tsx
+import { unload } from 'swr'
+
+unload()
+```
+
+すぐに再取得せずにキャッシュをクリアするには、再検証を無効にします。
+
+```tsx
+unload({ revalidate: false })
+```
+
+これらのフックは `data` が `undefined` の状態で再レンダリングされ、フォーカス、再接続、再マウントなどの別のイベントによって再検証されるまで空のままになります。`unload` は `keepPreviousData` が保持しているデータも破棄し、`mutate` のキーフィルターでは一致しない可能性がある `useSWRInfinite` などの API 用内部キーも削除します。
+
+トップレベルの import は SWR のデフォルトキャッシュプロバイダーに紐づいています。カスタムプロバイダーでは、`useSWRConfig` からそのスコープに対応する `unload` 関数を取得してください。
+
+```tsx
+import { useSWRConfig } from 'swr'
+
+function ClearCacheButton() {
+  const { unload } = useSWRConfig()
+
+  return (
+    <button onClick={() => unload({ revalidate: false })}>
+      キャッシュをクリア
+    </button>
+  )
+}
+```
+
+### API [#unload-api]
+
+```ts
+unload(options?: { revalidate?: boolean }): void
+```
+
+- `revalidate = true`: キャッシュのクリア後に、マウント済みのフックが使用するキーを再検証します。
