@@ -3,9 +3,30 @@ import type { NextConfig } from 'next'
 
 const withMDX = createMDX()
 
+// Distinct favicon per environment; production keeps the default (no-op).
+const ENV_FAVICONS = {
+  development: '/favicon.development.ico',
+  preview: '/favicon.preview.ico'
+} as const
+
+const environment = process.env.VERCEL_ENV ?? process.env.NODE_ENV
+const envFavicon = ENV_FAVICONS[environment as keyof typeof ENV_FAVICONS]
+
 const config: NextConfig = {
   experimental: {
     turbopackFileSystemCacheForDev: true
+  },
+
+  async rewrites() {
+    if (!envFavicon) {
+      return []
+    }
+
+    return {
+      beforeFiles: [{ source: '/favicon.ico', destination: envFavicon }],
+      afterFiles: [],
+      fallback: []
+    }
   },
 
   async redirects() {
@@ -68,7 +89,12 @@ const config: NextConfig = {
       },
       {
         source: '/zh-CN/:path*',
-        destination: '/zh/:path*',
+        destination: '/cn/:path*',
+        permanent: true
+      },
+      {
+        source: '/zh/:path*',
+        destination: '/cn/:path*',
         permanent: true
       }
     ]

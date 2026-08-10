@@ -1,61 +1,25 @@
-import { DynamicLink } from "fumadocs-core/dynamic-link";
-import { TypeTable } from "fumadocs-ui/components/type-table";
-import defaultMdxComponents from "fumadocs-ui/mdx";
+import { createMdxComponents } from "@vercel/geistdocs/mdx";
 import type { MDXComponents } from "mdx/types";
-import {
-  Callout,
-  CalloutContainer,
-  CalloutDescription,
-  CalloutTitle,
-} from "./callout";
-import { CodeBlock } from "./code-block";
-import {
-  CodeBlockTab,
-  CodeBlockTabs,
-  CodeBlockTabsList,
-  CodeBlockTabsTrigger,
-} from "./code-block-tabs";
-import { Mermaid } from "./mermaid";
-import { Video } from "./video";
+import Link from "next/link";
+import Authors, { Author } from "@/components/custom/authors";
+import { Bleed } from "@/components/custom/bleed";
+import { Cache } from "@/components/custom/diagrams/cache";
+import { Infinite } from "@/components/custom/diagrams/infinite";
+import { Pagination } from "@/components/custom/diagrams/pagination";
+import { Welcome } from "@/components/custom/diagrams/welcome";
 
-export const getMDXComponents = (
-  components?: MDXComponents
-): MDXComponents => ({
-  ...defaultMdxComponents,
+export const getMDXComponents = (components?: MDXComponents): MDXComponents =>
+  createMdxComponents({
+    // Site-specific components available in all MDX content
+    Link,
+    Bleed,
+    Authors,
+    Author,
+    Welcome,
+    Pagination,
+    Infinite,
+    Cache,
 
-  pre: CodeBlock,
-
-  a: ({ href, ...props }) =>
-    href.startsWith("/") ? (
-      <DynamicLink
-        className="font-normal text-primary no-underline"
-        href={`/[lang]${href}`}
-        {...props}
-      />
-    ) : (
-      <a
-        href={href}
-        {...props}
-        className="font-normal text-primary no-underline"
-      />
-    ),
-
-  CodeBlockTabs,
-  CodeBlockTabsList,
-  CodeBlockTabsTrigger,
-  CodeBlockTab,
-
-  TypeTable,
-
-  Callout,
-  CalloutContainer,
-  CalloutTitle,
-  CalloutDescription,
-
-  Mermaid,
-
-  Video,
-
-  // User components last to allow overwriting defaults
-  ...components,
-});
+    // User components last to allow overwriting defaults
+    ...components,
+  });

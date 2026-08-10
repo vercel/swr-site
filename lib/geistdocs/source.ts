@@ -1,67 +1,32 @@
-import { type InferPageType, loader } from 'fumadocs-core/source'
-import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons'
-import { blog, docs, examples } from '@/.source/server'
-import { basePath } from '@/geistdocs'
-import { i18n } from './i18n'
+import { createSource } from "@vercel/geistdocs/source";
+import { blog, docs, examples } from "@/.source/server";
+import { config } from "./config";
 
-// See https://fumadocs.dev/docs/headless/source-api for more info
-export const source = loader({
-  i18n,
-  baseUrl: '/docs',
-  source: docs.toFumadocsSource(),
-  plugins: [lucideIconsPlugin()]
-})
+export const docsSource = createSource({
+  docs,
+  config,
+  id: "docs",
+  label: "Docs",
+  baseUrl: "/docs",
+});
 
-export const examplesSource = loader({
-  i18n,
-  baseUrl: '/examples',
-  source: examples.toFumadocsSource(),
-  plugins: [lucideIconsPlugin()]
-})
+export const blogSource = createSource({
+  docs: blog,
+  config,
+  id: "blog",
+  label: "Blog",
+  baseUrl: "/blog",
+});
 
-export const blogSource = loader({
-  i18n,
-  baseUrl: '/blog',
-  source: blog.toFumadocsSource(),
-  plugins: [lucideIconsPlugin()]
-})
+export const examplesSource = createSource({
+  docs: examples,
+  config,
+  id: "examples",
+  label: "Examples",
+  baseUrl: "/examples",
+});
 
-export const getPageImage = (page: InferPageType<typeof source>) => {
-  const segments = [...page.slugs, 'image.png']
+export const sources = [docsSource, blogSource, examplesSource];
 
-  return {
-    segments,
-    url: basePath
-      ? `${basePath}/og/${segments.join('/')}`
-      : `/og/${segments.join('/')}`
-  }
-}
-
-export const getLLMText = async (page: InferPageType<typeof source>) => {
-  const processed = await page.data.getText('processed')
-
-  const { title, description, product, type, summary, prerequisites, related } =
-    page.data;
-
-  const frontmatter = [
-    '---',
-    `title: ${title}`,
-    description && `description: ${description}`,
-    product && `product: ${product}`,
-    type && `type: ${type}`,
-    summary && `summary: ${summary}`,
-    prerequisites?.length &&
-      `prerequisites:\n${prerequisites.map((p) => `  - ${p}`).join('\n')}`,
-    related?.length &&
-      `related:\n${related.map((r) => `  - ${r}`).join('\n')}`,
-    '---',
-  ]
-    .filter(Boolean)
-    .join('\n');
-
-  return `${frontmatter}
-
-# ${title}
-
-${processed}`;
-}
+export const source = docsSource.source;
+export const getPageImage = docsSource.getPageImage;
