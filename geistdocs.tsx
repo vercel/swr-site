@@ -4,13 +4,13 @@ import type {
 } from "@vercel/geistdocs/config";
 
 export const Logo = () => (
-  <div className="flex items-center gap-2 hover:opacity-75 ltr:mr-auto rtl:ml-auto">
+  <div className="flex h-8 items-center gap-2 hover:opacity-75 ltr:mr-auto rtl:ml-auto">
     <svg
-      width="67"
-      height="16"
+      width="51"
+      height="12"
       viewBox="0 0 291 69"
       fill="none"
-      className="block h-4 w-[67px] shrink-0"
+      className="block shrink-0"
       aria-hidden="true"
     >
       <path
@@ -18,7 +18,7 @@ export const Logo = () => (
         fill="currentColor"
       />
     </svg>
-    <span className="font-extrabold leading-none hidden md:inline select-none">
+    <span className="hidden select-none font-extrabold leading-none md:inline">
       SWR
     </span>
   </div>
