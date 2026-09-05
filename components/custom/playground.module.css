@@ -45,8 +45,8 @@
 .files ul { list-style: none; margin: 0; padding: 0; }
 .files ul ul { padding-left: 12px; }
 .files span, .files button { display: block; padding: 2px 6px; white-space: nowrap; }
-.files button { width: 100%; text-align: left; border-radius: 4px; cursor: pointer; }
-.files button:hover, .files button[aria-pressed="true"] { background: var(--color-fd-muted, #e5e5e5); }
+.files button { width: 100%; text-align: left; color: var(--color-fd-muted-foreground, #737373); cursor: pointer; }
+.files button:hover, .files button[aria-pressed="true"] { color: var(--color-fd-foreground, #171717); }
 .files button[aria-pressed="true"] { font-weight: 600; }
 
 .editor[data-sh-editor] {
@@ -54,7 +54,8 @@
   min-width: 0;
   height: 560px;
   min-height: 0;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   scrollbar-width: thin;
   line-height: 1.5;
   color-scheme: light;
@@ -65,7 +66,8 @@
   color-scheme: dark;
 }
 
-.editor[data-sh-editor] pre {
+.editor[data-sh-editor] [data-sh-code-content] {
+  overflow: hidden;
   line-height: inherit;
 }
 
