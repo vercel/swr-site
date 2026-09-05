@@ -1,6 +1,8 @@
 "use client";
 
 import { DevJar } from "devjar";
+import { Editor } from "@sugar-high/react";
+import { vercel } from "@sugar-high/react/themes";
 import { useState } from "react";
 import styles from "./playground.module.css";
 
@@ -38,14 +40,24 @@ export function Playground({
         }}>Reset example</button>
       </div>
       <div className={styles.panels}>
-        <textarea
-          aria-label={`Edit ${activeFile}`}
+        <Editor
+          key={`${activeFile}:${revision}`}
           className={styles.editor}
-          spellCheck={false}
-          autoCapitalize="off"
-          autoCorrect="off"
+          controls={false}
+          lineNumbers
+          extension={activeFile.split(".").pop()}
+          theme={vercel}
+          fontSize={13}
+          fontFamily="var(--font-geist-mono, monospace)"
+          padding="16px"
+          textareaProps={{
+            "aria-label": `Edit ${activeFile}`,
+            spellCheck: false,
+            autoCapitalize: "off",
+            autoCorrect: "off",
+          }}
           value={files[activeFile]}
-          onChange={(event) => setFiles({ ...files, [activeFile]: event.target.value })}
+          onChange={(code) => setFiles((current) => ({ ...current, [activeFile]: code }))}
         />
         <div className={styles.preview}>
           <DevJar

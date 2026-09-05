@@ -16,7 +16,9 @@ And visit `localhost:3000` to preview your changes.
 The six browser examples use `devjar@next` (currently pinned to
 `1.0.0-next.2`) and load `swr@latest` from esm.sh. `SWRExample` supplies
 virtual source files to the shared `Playground`; `pages/index.jsx` is the
-entry point. Authentication, pagination, mutations, and subscriptions use
+entry point. The `@sugar-high/react` editor provides syntax highlighting,
+line numbers, and light/dark themes for JavaScript/JSX and CSS files.
+Authentication, pagination, mutations, and subscriptions use
 simulated services so they can run without a backend. The Next.js SSR
 example remains in its existing external CodeSandbox.
 
