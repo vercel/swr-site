@@ -38,12 +38,13 @@
   padding: 12px 4px;
   border-right: 1px solid var(--color-fd-border, #ddd);
   font-size: 12px;
+  line-height: 20px;
   overflow: auto;
 }
 
 .files ul { list-style: none; margin: 0; padding: 0; }
 .files ul ul { padding-left: 12px; }
-.files span, .files button { display: block; padding: 6px; white-space: nowrap; }
+.files span, .files button { display: block; padding: 2px 6px; white-space: nowrap; }
 .files button { width: 100%; text-align: left; border-radius: 4px; cursor: pointer; }
 .files button:hover, .files button[aria-pressed="true"] { background: var(--color-fd-muted, #e5e5e5); }
 .files button[aria-pressed="true"] { font-weight: 600; }
@@ -52,15 +53,34 @@
   width: 100%;
   min-width: 0;
   height: 560px;
-  min-height: 240px;
+  min-height: 0;
   overflow: auto;
-  resize: vertical;
+  scrollbar-width: thin;
+  line-height: 1.5;
   color-scheme: light;
   tab-size: 2;
 }
 
 :global(.dark) .editor {
   color-scheme: dark;
+}
+
+.editor[data-sh-editor] pre {
+  line-height: inherit;
+}
+
+.editor[data-sh-editor] code {
+  display: block;
+}
+
+.editor[data-sh-editor] textarea {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.editor[data-sh-editor] textarea::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
 .editor[data-sh-editor] :global(.sh__line) {
