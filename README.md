@@ -11,6 +11,18 @@ pnpm dev
 
 And visit `localhost:3000` to preview your changes.
 
+## Editable examples
+
+The six browser examples use `devjar@next` (currently pinned to
+`1.0.0-next.2`) and load `swr@latest` from esm.sh. `SWRExample` supplies
+virtual source files to the shared `Playground`; `pages/index.jsx` is the
+entry point. Authentication, pagination, mutations, and subscriptions use
+simulated services so they can run without a backend. The Next.js SSR
+example remains in its existing external CodeSandbox.
+
+Devjar handles its compiler assets and dependency resolution. No asset-copy
+script, package patch, custom CDN resolver, or isolation headers are needed.
+
 ## Contributing
 
 When making a change, or creating a new page, please make sure to edit all language files. You can simply copy the content of the edited English document (or the edited paragraph) and apply it to other language files. And then, volunteers are welcome to help with any untranslated sections.

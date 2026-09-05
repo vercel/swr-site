@@ -7,6 +7,7 @@ import { Cache } from "@/components/custom/diagrams/cache";
 import { Infinite } from "@/components/custom/diagrams/infinite";
 import { Pagination } from "@/components/custom/diagrams/pagination";
 import { Welcome } from "@/components/custom/diagrams/welcome";
+import { SWRExample } from "@/components/custom/swr-example";
 
 export const getMDXComponents = (components?: MDXComponents): MDXComponents =>
   createMdxComponents({
@@ -19,6 +20,7 @@ export const getMDXComponents = (components?: MDXComponents): MDXComponents =>
     Pagination,
     Infinite,
     Cache,
+    SWRExample,
 
     // User components last to allow overwriting defaults
     ...components,
