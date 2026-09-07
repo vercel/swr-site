@@ -123,3 +123,76 @@ Você pode achar o código completo para esse exemplo aqui: (https://codesandbox
 ## Coleção de Dependência para performance [#dependency-collection-for-performance]
 
 SWR apenas aciona a nova renderização quando os estados usados no componente forem atualizados. Se você apenas usar `data` no componente, o SWR irá ignorar as atualizações das outras propriedades como `isValidating` e `isLoading`. Isso reduz bastante o número de renderizações. Mais informações podem ser encontradas [aqui](/docs/advanced/performance#dependency-collection).
+
+## onSuccess Callback [#on-success-callback]
+
+Algumas vezes você pode querer rodar algum side-effect logo após seus dados serem requisitados com sucesso. Você pode usar a opçãp de callback `onSuccess` para fazer isso.
+
+```jsx
+const { data } = useSWR('/api/user', fetcher, {
+  onSuccess: (data, key, config) => {
+    // Registra uma chamada de API com sucesso
+    analytics.track('API Sucesso', {
+      endpoint: key,
+      timestamp: new Date(),
+      data: data
+    });
+  }
+});
+```
+
+SWR vai chamar o callback `onSuccess` com o dado retornado, a chave, e o objeto de configuração. Isso é bastante útil para analytics, logging, ou qualquer outro side effect que você queira rodar depois de uma requisição bem-sucedida.
+
+### `onSuccess` com deduplicação
+
+Uma das features do SWR é a deduplicação, que significa que se a mesma chave estiver sendo usada em multiplos lugares ao mesmo tempo, o SWR vai fazer apenas uma requisisção e compartilhar o dado retornado entre os componentes.
+
+Somente a primeira função de callback `onSuccess` definida vai ser chamada para a primeira requisição feita com sucesso, mesmo se `onSuccess` estiver definido em multiplos lugares.
+
+Exemplo:
+
+```jsx
+const FirstComponent = () => {
+  const { data } = useSWR('/api/user', fetcher, {
+    onSuccess: (data) => {
+      // esse callback onSuccess será chamado
+      console.log('Primeiro component successo:', data);
+    }
+  });
+  return <div>{data?.name}</div>;
+};
+
+const SecondComponent = () => {
+  const { data } = useSWR('/api/user', fetcher, {
+    onSuccess: (data) => {
+      // esse callback onSuccess NÃO será chamado
+      console.log('Segundo componente successo:', data);
+    }
+  });
+  return <div>{data?.email}</div>;
+};
+
+const App = () => (
+  <>
+    <FirstComponent />
+    <SecondComponent />
+  </>
+);
+```
+
+O exemplo acima vai logar apenas a mensagem de sucesso do primeiro componente quando os dados forem retornados com sucesso, mesmo que ambos os componentes tenham seus próprios callbacks `onSuccess`. Isso acontece porque o SWR deduplica as requisições para a mesma chave.
+
+Por essa razão, você deve evitar user `onSuccess` para atualizar estado local, já que isso pode levar a comportamentes inexperados quando multiplos componente estiverem usando a mesma chave.
+
+Também, o callback `onSuccess` não é chamado quando o dados for carregado do cache, somente quando for retordado da rede. Se você precisa rodar qualquer side effect para dados cacheados, considere usar o hook `useEffect` em combinação com os dados do SWR.
+
+```jsx
+const { data } = useSWR('/api/user', fetcher);
+
+useEffect(() => {
+  if (data) {
+    // Executar side effects para dados cacheados
+    console.log('Cached data:', data);
+  }
+}, [data]);
+```
