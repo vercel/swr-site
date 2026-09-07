@@ -13,6 +13,7 @@ const environment = process.env.VERCEL_ENV ?? process.env.NODE_ENV
 const envFavicon = ENV_FAVICONS[environment as keyof typeof ENV_FAVICONS]
 
 const config: NextConfig = {
+  agentRules: false,
   experimental: {
     turbopackFileSystemCacheForDev: true
   },
