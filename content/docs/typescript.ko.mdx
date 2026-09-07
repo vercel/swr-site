@@ -45,6 +45,16 @@ const { data, error } = useSWR<User, Error>(uid, fetcher);
 // `error`는 `Error | undefined`입니다.
 ```
 
+If you specify both `Data` and `Error` and use an array key, specify the key type as the third generic so the `fetcher` argument stays typed:
+
+```typescript
+const { data, error } = useSWR<User, Error, [string, string]>(
+  ['/api/user', token],
+  ([url, token]) => fetchWithToken(url, token)
+)
+// `url` and `token` will be inferred as `string`.
+```
+
 ### useSWRInfinite [#useswrinfinite]
 
 `swr/infinite`와 마찬가지로, 자동 타입 추론에 의존하거나 직접 타입을 명시적으로 지정할 수 있습니다.

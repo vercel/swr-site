@@ -37,6 +37,16 @@ const { data } = useSWR(uid, fetcher)
 // `data`será `User | undefined`.
 ```
 
+If you specify both `Data` and `Error` and use an array key, specify the key type as the third generic so the `fetcher` argument stays typed:
+
+```typescript
+const { data, error } = useSWR<User, Error, [string, string]>(
+  ['/api/user', token],
+  ([url, token]) => fetchWithToken(url, token)
+)
+// `url` and `token` will be inferred as `string`.
+```
+
 ### useSWRInfinite [#useswrinfinite]
 
 O mesmo para `swr/infinite`, você pode confiar na inferência automática de tipos ou especificar explicitamente os tipos por conta própria:
