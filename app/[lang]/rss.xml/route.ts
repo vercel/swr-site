@@ -1,10 +1,10 @@
 import { Feed } from "feed";
 import type { NextRequest } from "next/server";
-import { title } from "@/geistdocs";
+import { agent, title } from "@/geistdocs";
 import { source } from "@/lib/geistdocs/source";
 
 const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
-const baseUrl = `${protocol}://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`;
+const baseUrl = `${protocol}://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL ?? "swr.vercel.app"}`;
 
 export const revalidate = false;
 
@@ -15,6 +15,7 @@ export const GET = async (
   const { lang } = await params;
   const feed = new Feed({
     title,
+    description: agent.product.description,
     id: baseUrl,
     link: baseUrl,
     language: lang,
