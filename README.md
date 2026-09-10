@@ -11,23 +11,6 @@ pnpm dev
 
 And visit `localhost:3000` to preview your changes.
 
-## Editable examples
-
-The six browser examples use `devjar@next` (currently pinned to
-`1.0.0-next.3`) and load `swr@latest` from esm.sh. `SWRExample` supplies
-virtual source files to the shared `Playground`; `pages/index.jsx` is the
-entry point. The `@sugar-high/react` editor provides syntax highlighting,
-line numbers, and light/dark themes for JavaScript/JSX and CSS files.
-The folder icon toggles the Sugar High FileTree, hidden by default.
-When open, it sits above the editor on mobile.
-Preview status shows loading or errors.
-Basic Usage simulates changing stock to show stale data during revalidation.
-All examples share a minimal monochrome stylesheet. Authentication, pagination,
-mutations, and subscriptions use simulated services so they can run without a backend.
-
-Devjar handles its compiler assets and dependency resolution. No asset-copy
-script, package patch, custom CDN resolver, or isolation headers are needed.
-
 ## Contributing
 
 When making a change, or creating a new page, please make sure to edit all language files. You can simply copy the content of the edited English document (or the edited paragraph) and apply it to other language files. And then, volunteers are welcome to help with any untranslated sections.
