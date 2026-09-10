@@ -18,7 +18,8 @@ The six browser examples use `devjar@next` (currently pinned to
 virtual source files to the shared `Playground`; `pages/index.jsx` is the
 entry point. The `@sugar-high/react` editor provides syntax highlighting,
 line numbers, and light/dark themes for JavaScript/JSX and CSS files.
-The Sugar High FileTree switches between sources and sits above the editor on mobile.
+The folder icon toggles the Sugar High FileTree, hidden by default.
+When open, it sits above the editor on mobile.
 Preview status shows loading or errors.
 Authentication, pagination, mutations, and subscriptions use
 simulated services so they can run without a backend.

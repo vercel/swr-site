@@ -17,6 +17,8 @@
   font-size: 13px;
 }
 
+.toolbar [role="status"] { flex: 1; }
+
 .toolbar button {
   display: grid;
   place-items: center;
@@ -38,9 +40,11 @@
 
 .workspace {
   display: grid;
-  grid-template-columns: 160px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   min-width: 0;
 }
+
+.workspace[data-files-open="true"] { grid-template-columns: 160px minmax(0, 1fr); }
 
 .files[data-sh-file-tree] {
   padding: 4px;
@@ -121,7 +125,7 @@
 @media (max-width: 768px) {
   .playground { margin-inline: -16px; --playground-padding: 8px; }
   .panels { grid-template-columns: 1fr; }
-  .workspace { grid-template-columns: minmax(0, 1fr); }
+  .workspace[data-files-open="true"] { grid-template-columns: minmax(0, 1fr); }
   .files[data-sh-file-tree] {
     max-height: 120px;
     border-right: 0;
