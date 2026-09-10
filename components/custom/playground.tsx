@@ -1,0 +1,81 @@
+"use client";
+
+import { DevJar, type PreviewStatus } from "devjar";
+import { Editor, FileTree } from "@sugar-high/react";
+import { vercel } from "@sugar-high/react/themes";
+import { useId, useState } from "react";
+import styles from "./playground.module.css";
+
+const dependencies = { react: "19.2.3", "react-dom": "19.2.3", swr: "latest" };
+
+export function Playground({ files: initialFiles, title }: {
+  files: Record<string, string>;
+  title: string;
+}) {
+  const [files, setFiles] = useState(initialFiles);
+  const [showFiles, setShowFiles] = useState(false);
+  const treeId = useId();
+  const [activeFile, setActiveFile] = useState("pages/index.jsx");
+  const [revision, setRevision] = useState(0);
+  const [error, setError] = useState<unknown>();
+  const [status, setStatus] = useState<PreviewStatus>("idle");
+  const busy = status === "idle" || status === "compiling" || status === "loading";
+
+  function reset() {
+    setFiles(initialFiles);
+    setError(undefined);
+    setStatus("idle");
+    setRevision((value) => value + 1);
+  }
+
+  return (
+    <div className={`${styles.playground} not-prose`}>
+      <div className={styles.toolbar}>
+        <button type="button" onClick={() => setShowFiles((open) => !open)} aria-label="Toggle files" title={showFiles ? "Hide files" : "Show files"} aria-expanded={showFiles} aria-controls={treeId}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z" />
+          </svg>
+        </button>
+        <span role="status">{busy ? "Loading preview…" : status === "failed" ? "Preview error" : "Preview ready"}</span>
+        <button type="button" onClick={reset} aria-label="Reset example" title="Reset example">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M3 11a9 9 0 1 1 2.7 7.4M3 4v7h7" />
+          </svg>
+        </button>
+      </div>
+      <div className={styles.panels}>
+        <div className={styles.workspace} data-files-open={showFiles}>
+          {showFiles && <FileTree
+            id={treeId}
+            className={styles.files}
+            aria-label="Example files"
+            paths={Object.keys(files)}
+            activeFile={activeFile}
+            onActiveFileChange={setActiveFile}
+            theme={vercel}
+          />}
+          <Editor
+            key={`${activeFile}:${revision}`}
+            className={styles.editor}
+            controls={false}
+            lineNumbers
+            wrapLongLines={false}
+            extension={activeFile.split(".").pop()}
+            theme={vercel}
+            fontSize="var(--playground-font-size, 13px)"
+            fontFamily="var(--font-geist-mono, monospace)"
+            padding="var(--playground-padding, 16px)"
+            textareaProps={{ "aria-label": `Edit ${activeFile}`, spellCheck: false, autoCapitalize: "off", autoCorrect: "off" }}
+            value={files[activeFile]}
+            onChange={(code) => setFiles((current) => ({ ...current, [activeFile]: code }))}
+          />
+        </div>
+        <div className={styles.preview} aria-busy={busy}>
+          <DevJar key={revision} files={files} dependencies={dependencies} tailwind={false}
+            title={title} onError={setError} onStatusChange={setStatus} />
+          {error != null && <pre role="alert" className={styles.error}>{String(error)}</pre>}
+        </div>
+      </div>
+    </div>
+  );
+}
