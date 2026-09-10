@@ -30,7 +30,11 @@ export function Playground({ files: initialFiles, title }: {
     <div className={`${styles.playground} not-prose`}>
       <div className={styles.toolbar}>
         <span role="status">{busy ? "Loading preview…" : status === "failed" ? "Preview error" : "Preview ready"}</span>
-        <button type="button" onClick={reset}>Reset example</button>
+        <button type="button" onClick={reset} aria-label="Reset example" title="Reset example">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M3 11a9 9 0 1 1 2.7 7.4M3 4v7h7" />
+          </svg>
+        </button>
       </div>
       <div className={styles.panels}>
         <div className={styles.workspace}>
@@ -52,7 +56,7 @@ export function Playground({ files: initialFiles, title }: {
             theme={vercel}
             fontSize="var(--playground-font-size, 13px)"
             fontFamily="var(--font-geist-mono, monospace)"
-            padding="16px"
+            padding="var(--playground-padding, 16px)"
             textareaProps={{ "aria-label": `Edit ${activeFile}`, spellCheck: false, autoCapitalize: "off", autoCorrect: "off" }}
             value={files[activeFile]}
             onChange={(code) => setFiles((current) => ({ ...current, [activeFile]: code }))}
