@@ -1,5 +1,33 @@
 // These source strings are editable files in the browser playground.
 export const examples: Record<string, Record<string, string>> = {
+  basic: {
+    "pages/index.jsx": `import useSWR from 'swr'
+import '../styles.css'
+
+let stock = 13
+async function fetchStock() {
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+  stock = stock > 1 ? stock - 1 : 12
+  return stock
+}
+
+export default function App() {
+  const { data, isLoading, isValidating, mutate } = useSWR('stock', fetchStock)
+
+  return (
+    <main>
+      <h1>Live stock</h1>
+      <p>A simulated stock count changes with each request.</p>
+      <p aria-live="polite">{isLoading ? 'Loading…' : data + ' items available'}</p>
+      <button onClick={() => mutate()} disabled={isValidating}>
+        {isValidating ? 'Updating…' : 'Refresh'}
+      </button>
+      <p>Refresh to see the previous count stay visible while new data loads.</p>
+      <p>Switch tabs and come back to refresh automatically.</p>
+    </main>
+  )
+}`,
+  },
   "error-handling": {
     "pages/index.jsx": `import useSWR from 'swr'
 import { useState } from 'react'
