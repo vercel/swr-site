@@ -18,10 +18,10 @@ The six browser examples use `devjar@next` (currently pinned to
 virtual source files to the shared `Playground`; `pages/index.jsx` is the
 entry point. The `@sugar-high/react` editor provides syntax highlighting,
 line numbers, and light/dark themes for JavaScript/JSX and CSS files.
-A file tree switches between sources, and preview status shows loading or errors.
+The Sugar High FileTree switches between sources and sits above the editor on mobile.
+Preview status shows loading or errors.
 Authentication, pagination, mutations, and subscriptions use
-simulated services so they can run without a backend. The Next.js SSR
-example remains in its existing external CodeSandbox.
+simulated services so they can run without a backend.
 
 Devjar handles its compiler assets and dependency resolution. No asset-copy
 script, package patch, custom CDN resolver, or isolation headers are needed.

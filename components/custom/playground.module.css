@@ -1,4 +1,5 @@
 .playground {
+  color-scheme: light;
   overflow: hidden;
   border: 1px solid var(--color-fd-border, #ddd);
   border-radius: 8px;
@@ -30,24 +31,24 @@
 
 .workspace {
   display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
+  grid-template-columns: 160px minmax(0, 1fr);
   min-width: 0;
 }
 
-.files {
-  padding: 12px 4px;
+.files[data-sh-file-tree] {
+  padding: 8px;
   border-right: 1px solid var(--color-fd-border, #ddd);
-  font-size: 12px;
-  line-height: 20px;
-  overflow: auto;
+  --sh-font-size: 12px;
+  --sh-font-family: var(--font-geist-mono, monospace);
+  color: var(--color-fd-muted-foreground, #737373);
 }
 
-.files ul { list-style: none; margin: 0; padding: 0; }
-.files ul ul { padding-left: 12px; }
-.files span, .files button { display: block; padding: 2px 6px; white-space: nowrap; }
-.files button { width: 100%; text-align: left; color: var(--color-fd-muted-foreground, #737373); cursor: pointer; }
-.files button:hover, .files button[aria-pressed="true"] { color: var(--color-fd-foreground, #171717); }
-.files button[aria-pressed="true"] { font-weight: 600; }
+.files[data-sh-file-tree] [role="treeitem"] { min-height: 24px; }
+.files[data-sh-file-tree] [role="treeitem"][tabindex]:is(:hover, [aria-selected="true"]) {
+  background: transparent;
+  color: var(--color-fd-foreground, #171717);
+}
+.files [aria-selected="true"] { font-weight: 600; }
 
 .editor[data-sh-editor] {
   width: 100%;
@@ -58,17 +59,15 @@
   overflow-y: auto;
   scrollbar-width: thin;
   line-height: 1.5;
-  color-scheme: light;
   tab-size: 2;
 }
 
-:global(.dark) .editor {
+:global(.dark) .playground {
   color-scheme: dark;
 }
 
 .editor[data-sh-editor] [data-sh-code-content] {
   overflow: hidden;
-  line-height: inherit;
 }
 
 .editor[data-sh-editor] code {
@@ -83,10 +82,6 @@
 .editor[data-sh-editor] textarea::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-}
-
-.editor[data-sh-editor] :global(.sh__line) {
-  display: block;
 }
 
 .editor:focus-within {
@@ -118,7 +113,14 @@
 
 @media (max-width: 768px) {
   .panels { grid-template-columns: 1fr; }
-  .workspace { grid-template-columns: 96px minmax(0, 1fr); }
+  .workspace { grid-template-columns: minmax(0, 1fr); }
+  .files[data-sh-file-tree] {
+    max-height: 176px;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-fd-border, #ddd);
+  }
+  .files[data-sh-file-tree] [role="treeitem"] { min-height: 44px; }
+  .editor[data-sh-editor] { --playground-font-size: 16px; }
   .editor[data-sh-editor] { height: 360px; }
   .preview { border-left: 0; border-top: 1px solid var(--color-fd-border, #ddd); }
   .preview iframe { min-height: 360px; }

@@ -1,43 +1,12 @@
 "use client";
 
 import { DevJar, type PreviewStatus } from "devjar";
-import { Editor } from "@sugar-high/react";
+import { Editor, FileTree } from "@sugar-high/react";
 import { vercel } from "@sugar-high/react/themes";
 import { useState } from "react";
 import styles from "./playground.module.css";
 
 const dependencies = { react: "19.2.3", "react-dom": "19.2.3", swr: "latest" };
-
-function FileTree({ files, active, onSelect, prefix = "" }: {
-  files: string[];
-  active: string;
-  onSelect: (file: string) => void;
-  prefix?: string;
-}) {
-  const names = [...new Set(files.map((file) => file.slice(prefix.length).split("/")[0]))];
-  return (
-    <ul>
-      {names.map((name) => {
-        const path = prefix + name;
-        return (
-          <li key={path}>
-            {files.includes(path) ? (
-              <button type="button" aria-pressed={active === path} title={path} onClick={() => onSelect(path)}>
-                {name}
-              </button>
-            ) : (
-              <>
-                <span>{name}/</span>
-                <FileTree files={files.filter((file) => file.startsWith(path + "/"))}
-                  active={active} onSelect={onSelect} prefix={path + "/"} />
-              </>
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
 
 export function Playground({ files: initialFiles, title }: {
   files: Record<string, string>;
@@ -65,9 +34,14 @@ export function Playground({ files: initialFiles, title }: {
       </div>
       <div className={styles.panels}>
         <div className={styles.workspace}>
-          <nav className={styles.files} aria-label="Example files">
-            <FileTree files={Object.keys(files)} active={activeFile} onSelect={setActiveFile} />
-          </nav>
+          <FileTree
+            className={styles.files}
+            aria-label="Example files"
+            paths={Object.keys(files)}
+            activeFile={activeFile}
+            onActiveFileChange={setActiveFile}
+            theme={vercel}
+          />
           <Editor
             key={`${activeFile}:${revision}`}
             className={styles.editor}
@@ -76,7 +50,7 @@ export function Playground({ files: initialFiles, title }: {
             wrapLongLines={false}
             extension={activeFile.split(".").pop()}
             theme={vercel}
-            fontSize={13}
+            fontSize="var(--playground-font-size, 13px)"
             fontFamily="var(--font-geist-mono, monospace)"
             padding="16px"
             textareaProps={{ "aria-label": `Edit ${activeFile}`, spellCheck: false, autoCapitalize: "off", autoCorrect: "off" }}

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@sugar-high/react':
-        specifier: ^2.2.0
-        version: 2.2.0(react@19.2.3)(sugar-high@2.2.2)
+        specifier: ^2.4.0
+        version: 2.4.0(react@19.2.3)
       '@vercel/analytics':
         specifier: ^1.6.1
         version: 1.6.1(next@16.2.12(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
@@ -51,8 +51,8 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3(react@19.2.3)
       sugar-high:
-        specifier: ^2.2.2
-        version: 2.2.2
+        specifier: ^2.4.0
+        version: 2.4.0
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.4.0
@@ -1962,11 +1962,10 @@ packages:
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
 
-  '@sugar-high/react@2.2.0':
-    resolution: {integrity: sha512-KLDXrGL817fIqoUseSyvkabul7OUjLJsqo2ncGRBieuAwWy8ABPGemEuCCTEYMUFYxRs5cZrWUMUxHJ8C47YWw==}
+  '@sugar-high/react@2.4.0':
+    resolution: {integrity: sha512-3QlbpPCDQouDl0TEgT5PAPfxymEBdnkPC1EnJjL/n0lMqLv2RdR0XnYpYchmwkvdrCn5+2ZaazMcVHncvfsLPA==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
-      sugar-high: ^2.2.1
 
   '@svta/common-media-library@0.17.4':
     resolution: {integrity: sha512-nP/KThzQW5FZKdc9V7ICTa9/A7xGw66VQoLPYOEwwMZTTrISp1zIQAX4KAYJw2PN/VPnxJQJXIYbzZTXgMHctw==}
@@ -3788,8 +3787,13 @@ packages:
   stylis@4.3.6:
     resolution: {integrity: sha512-yQ3rwFWRfwNUY7H5vpU0wfdkNSnvnJinhF9830Swlaxl03zsOjCfmX0ugac+3LtK0lYSgwL/KXc8oYL3mG4YFQ==}
 
-  sugar-high@2.2.2:
-    resolution: {integrity: sha512-Ik0u0NKJ25lLRP/fe50CDUZK9FYp+HtQboHGF2cJawXKTxH2icTqmzVcW0fJ0YDb+XrCfY9DBhXamlfkJGQEmw==}
+  sugar-high@2.4.0:
+    resolution: {integrity: sha512-exlimf1RMmnDcnBZeNebvj78eZt6XRmbyu+RCTq1p2RgcjoOfZPDH+hUlvjx5fWGK4M9E54EaDLERdLBQbwaFA==}
+    peerDependencies:
+      gpu-lexer: '>=0.0.2'
+    peerDependenciesMeta:
+      gpu-lexer:
+        optional: true
 
   super-media-element@1.4.2:
     resolution: {integrity: sha512-9pP/CVNp4NF2MNlRzLwQkjiTgKKe9WYXrLh9+8QokWmMxz+zt2mf1utkWLco26IuA3AfVcTb//qtlTIjY3VHxA==}
@@ -5724,10 +5728,12 @@ snapshots:
       react: 19.2.3
       shiki: 3.22.0
 
-  '@sugar-high/react@2.2.0(react@19.2.3)(sugar-high@2.2.2)':
+  '@sugar-high/react@2.4.0(react@19.2.3)':
     dependencies:
       react: 19.2.3
-      sugar-high: 2.2.2
+      sugar-high: 2.4.0
+    transitivePeerDependencies:
+      - gpu-lexer
 
   '@svta/common-media-library@0.17.4': {}
 
@@ -8135,7 +8141,7 @@ snapshots:
 
   stylis@4.3.6: {}
 
-  sugar-high@2.2.2: {}
+  sugar-high@2.4.0: {}
 
   super-media-element@1.4.2: {}
 
