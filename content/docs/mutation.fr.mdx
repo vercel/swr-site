@@ -317,6 +317,21 @@ function Profile () {
 }
 ```
 
+The function receives the current data as the first argument and the last
+displayed data as the second argument. Using the displayed data keeps the UI
+consistent with the user's actions when several mutations are in flight before
+any of them resolves, which matters on slow networks:
+
+```jsx
+mutate('/api/user', updateUserName(newName), {
+  optimisticData: (currentData, displayedData) => ({
+    ...displayedData,
+    name: newName
+  }),
+  rollbackOnError: true
+})
+```
+
 Vous pouvez également créer la même chose avec `useSWRMutation` et `trigger` :
 
 ```jsx

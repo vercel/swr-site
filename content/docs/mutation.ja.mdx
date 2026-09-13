@@ -64,6 +64,21 @@ function Profile () {
 }
 ```
 
+The function receives the current data as the first argument and the last
+displayed data as the second argument. Using the displayed data keeps the UI
+consistent with the user's actions when several mutations are in flight before
+any of them resolves, which matters on slow networks:
+
+```jsx
+mutate('/api/user', updateUserName(newName), {
+  optimisticData: (currentData, displayedData) => ({
+    ...displayedData,
+    name: newName
+  }),
+  rollbackOnError: true
+})
+```
+
 #### 再検証 [#revalidation]
 
 `mutate(key)` (または単にバウンドミューテートの `mutate()`) をデータの指定なしに呼んだ場合、そのリソースに対して再検証を発行 (データを期限切れとしてマークして再フェッチを発行する) します。
