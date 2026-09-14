@@ -23,6 +23,12 @@
   }
 }
 
+/* Match the desktop Vercel OSS wordmark height to the SWR mark beside it. */
+header a[href="https://vercel.com/oss"] svg[viewBox="0 0 179 45"] {
+  height: 12px;
+  width: auto;
+}
+
 /* Align docs content with navbar on mobile */
 /*
  * On mobile the sticky MobileDocsBar abuts the navbar via a negative top
