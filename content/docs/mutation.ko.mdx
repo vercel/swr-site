@@ -325,9 +325,11 @@ function Profile () {
 `useSWRMutation` 및 `trigger`를 사용하여 동일한 작업을 수행할 수도 있습니다.
 
 ```jsx
+import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
 
 function Profile () {
+  const { data } = useSWR('/api/user', fetcher)
   const { trigger } = useSWRMutation('/api/user', updateUserName)
 
   return (
