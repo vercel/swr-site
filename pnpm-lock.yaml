@@ -15,8 +15,8 @@ importers:
         specifier: ^1.6.1
         version: 1.6.1(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
       '@vercel/geistdocs':
-        specifier: 1.28.1
-        version: 1.28.1(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)
+        specifier: 2.9.0
+        version: 2.9.0(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(lucide-react@0.555.0(react@19.2.3))(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)
       '@vercel/speed-insights':
         specifier: ^1.3.1
         version: 1.3.1(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
@@ -326,11 +326,6 @@ packages:
   '@iconify/utils@3.1.0':
     resolution: {integrity: sha512-Zlzem1ZXhI1iHeeERabLNzBHdOa4VhQbqAcOQaMKuTuyZCpwKbC2R4Dd0Zo3g9EAc+Y4fiarO8HIHRAth7+skw==}
 
-  '@icons-pack/react-simple-icons@13.8.0':
-    resolution: {integrity: sha512-iZrhL1fSklfCCVn68IYHaAoKfcby3RakUTn2tRPyHBkhr2tkYqeQbjJWf+NizIYBzKBn2IarDJXmTdXd6CuEfw==}
-    peerDependencies:
-      react: ^16.13 || ^17 || ^18 || ^19
-
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
     engines: {node: '>=18'}
@@ -502,6 +497,14 @@ packages:
 
   '@mermaid-js/parser@0.6.3':
     resolution: {integrity: sha512-lnjOhe7zyHjc+If7yT4zoedx2vo4sHaTmtkl1+or8BRTnCtDmcTpAjpzDSfCZrshM5bCoz0GyidzadJAH1xobA==}
+
+  '@modelcontextprotocol/core@2.3.1':
+    resolution: {integrity: sha512-laVmIhPGpWi7rG9q+0UigblRN0Hws/Yjlb6qLFtVqryXVLkc4h+yN8z731POD2LnAGQlFe7/tXhUm7Bi0YB91g==}
+    engines: {node: '>=20'}
+
+  '@modelcontextprotocol/server@2.3.1':
+    resolution: {integrity: sha512-e59MfWuSssj6DoQ96JCTqdW1AXT5/XtnTl0WWd6MU1Ka434fFUGGosCLJbGNySDhHGvxQWoRWK137FXYFkYNWw==}
+    engines: {node: '>=20'}
 
   '@mux/mux-data-google-ima@0.2.8':
     resolution: {integrity: sha512-0ZEkHdcZ6bS8QtcjFcoJeZxJTpX7qRIledf4q1trMWPznugvtajCjCM2kieK/pzkZj1JM6liDRFs1PJSfVUs2A==}
@@ -1933,11 +1936,6 @@ packages:
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
 
-  '@streamdown/code@1.0.2':
-    resolution: {integrity: sha512-QKLS3sC8no5y0YvhGLA+ZjtNhznWU09IvFcjRKgSA35ulckMLw3b5T1ha+o1DaW8BS8l0zceLPFZa3/X9+agWQ==}
-    peerDependencies:
-      react: ^18.0.0 || ^19.0.0
-
   '@sugar-high/react@2.4.0':
     resolution: {integrity: sha512-3QlbpPCDQouDl0TEgT5PAPfxymEBdnkPC1EnJjL/n0lMqLv2RdR0XnYpYchmwkvdrCn5+2ZaazMcVHncvfsLPA==}
     peerDependencies:
@@ -2234,8 +2232,8 @@ packages:
     resolution: {integrity: sha512-g9XerViJ/paZujufXYcu5XYI2vU2rtB4sgdpjUHde5RnOkdmpu0ngH46LCFGHoPXO/C+qDPSczIHIRN+8Q2YKQ==}
     engines: {node: '>= 18'}
 
-  '@vercel/geistdocs@1.28.1':
-    resolution: {integrity: sha512-cXpfdVc8b52B0Jcopj0zIH948uGvqKXIgSdcUJtCfI9Ksa2vtOv3PPGrjgjhvkAacF+D88wY5P0/1TwG83Dwew==}
+  '@vercel/geistdocs@2.9.0':
+    resolution: {integrity: sha512-dtFyqu/r4BINxX7AFN54ka8RojsDUmNwvUe8kV8PzVcov1YITySniDrfKMk+xGz8UukSh3+yLMI/qOXnCo9olA==}
     hasBin: true
     peerDependencies:
       next: ^16.3.3
@@ -2343,6 +2341,10 @@ packages:
     peerDependencies:
       react: '>=17.0.0'
 
+  chalk@5.6.2:
+    resolution: {integrity: sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
   character-entities-html4@2.1.0:
     resolution: {integrity: sha512-1v7fgQRj6hnSwFpq1Eu0ynr/CDEw0rXo2B61qXrLNdHZmPKgb7fqS1a2JwF0rISo9q77jDI8VMEHoApn8qDoZA==}
 
@@ -2391,6 +2393,10 @@ packages:
 
   comma-separated-tokens@2.0.3:
     resolution: {integrity: sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==}
+
+  commander@11.1.0:
+    resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
+    engines: {node: '>=16'}
 
   commander@14.0.3:
     resolution: {integrity: sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==}
@@ -2632,13 +2638,6 @@ packages:
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
 
-  dexie-react-hooks@4.2.0:
-    resolution: {integrity: sha512-u7KqTX9JpBQK8+tEyA9X0yMGXlSCsbm5AU64N6gjvGk/IutYDpLBInMYEAEC83s3qhIvryFS+W+sqLZUBEvePQ==}
-    peerDependencies:
-      '@types/react': '>=16'
-      dexie: '>=4.2.0-alpha.1 <5.0.0'
-      react: '>=16'
-
   dexie@4.2.1:
     resolution: {integrity: sha512-Ckej0NS6jxQ4Po3OrSQBFddayRhTCic2DoCAG5zacOfOVB9P2Q5Xc5uL/nVa7ZVs+HdMnvUPzLFCB/JwpB6Csg==}
 
@@ -2819,6 +2818,11 @@ packages:
         optional: true
       tailwindcss:
         optional: true
+
+  geist@1.7.1:
+    resolution: {integrity: sha512-XF8DM30ODhDu0Ng5S2kOS8j4ZkG/6z2fKWAiFJA7wG0Hc92ZXgjYLrwbD9bVU4nGVzwboPtG+QtaPGsfgnXLaA==}
+    peerDependencies:
+      next: '>=13.2.0'
 
   geist@1.7.2:
     resolution: {integrity: sha512-Gu5lDFa3pLRyoBlBPf0QIFHVdWAnpco7fS1bJm41jyLPFoguBgiubseUN2oLXMgqZ7uxAxDoXcHMhCY/fOTTgg==}
@@ -3107,6 +3111,17 @@ packages:
     resolution: {integrity: sha512-s5HZGFQea7Huv5zZcAGhJLT3qLpAfnY7v7GWkICUr0+Wd5TFEtdlRR2XUL5Gg+RH7u2Df595ifrxR03mBaw7gA==}
     engines: {node: '>= 20'}
     hasBin: true
+
+  mcp-handler@2.2.0:
+    resolution: {integrity: sha512-loJsIem4jM1jLUsI4x2errOHSzvU+Et6XV4Aqq1AEUkHOqridUoY4dLM02OlRfsku+OjtMlk+tHyYjpfO65X6g==}
+    engines: {node: '>=20'}
+    hasBin: true
+    peerDependencies:
+      '@modelcontextprotocol/server': ^2.0.0
+      next: '>=13.0.0'
+    peerDependenciesMeta:
+      next:
+        optional: true
 
   mdast-util-find-and-replace@3.0.2:
     resolution: {integrity: sha512-Tmd1Vg/m3Xz43afeNxDIhWRtFZgM2VLyaf4vSTYwudTyeuTneoL3qtWMA5jeLyz/O1vDJmmV4QuScFCA2tBPwg==}
@@ -3461,6 +3476,16 @@ packages:
 
   pathe@2.0.3:
     resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==}
+
+  phase@0.5.4:
+    resolution: {integrity: sha512-3nCOrMZ/dW1q0nLCbVZBcGW/60TEApcoBPCT7s8SsQ2I0/rHLeSMkxlPhaGfW/yEKgkLkCfmd+YGss65ZwR77Q==}
+    engines: {node: 24.x}
+    deprecated: phase is now the scan tool; the runtime library moved to @usephase/core and @usephase/react
+    peerDependencies:
+      react: '>=18'
+    peerDependenciesMeta:
+      react:
+        optional: true
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -3988,33 +4013,36 @@ packages:
   zod@4.1.13:
     resolution: {integrity: sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig==}
 
+  zod@4.6.5:
+    resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
 snapshots:
 
-  '@ai-sdk/gateway@3.0.126(zod@4.1.13)':
+  '@ai-sdk/gateway@3.0.126(zod@4.6.5)':
     dependencies:
       '@ai-sdk/provider': 3.0.10
-      '@ai-sdk/provider-utils': 4.0.27(zod@4.1.13)
+      '@ai-sdk/provider-utils': 4.0.27(zod@4.6.5)
       '@vercel/oidc': 3.2.0
-      zod: 4.1.13
+      zod: 4.6.5
 
-  '@ai-sdk/provider-utils@4.0.27(zod@4.1.13)':
+  '@ai-sdk/provider-utils@4.0.27(zod@4.6.5)':
     dependencies:
       '@ai-sdk/provider': 3.0.10
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.1.0
-      zod: 4.1.13
+      zod: 4.6.5
 
   '@ai-sdk/provider@3.0.10':
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/react@3.0.200(react@19.2.3)(zod@4.1.13)':
+  '@ai-sdk/react@3.0.200(react@19.2.3)(zod@4.6.5)':
     dependencies:
-      '@ai-sdk/provider-utils': 4.0.27(zod@4.1.13)
-      ai: 6.0.198(zod@4.1.13)
+      '@ai-sdk/provider-utils': 4.0.27(zod@4.6.5)
+      ai: 6.0.198(zod@4.6.5)
       react: 19.2.3
       swr: 2.3.7(react@19.2.3)
       throttleit: 2.1.0
@@ -4170,10 +4198,6 @@ snapshots:
       '@iconify/types': 2.0.0
       mlly: 1.8.0
 
-  '@icons-pack/react-simple-icons@13.8.0(react@19.2.3)':
-    dependencies:
-      react: 19.2.3
-
   '@img/colour@1.1.0':
     optional: true
 
@@ -4327,7 +4351,7 @@ snapshots:
       unified: 11.0.5
       unist-util-position-from-estree: 2.0.0
       unist-util-stringify-position: 4.0.0
-      unist-util-visit: 5.0.0
+      unist-util-visit: 5.1.0
       vfile: 6.0.3
     transitivePeerDependencies:
       - supports-color
@@ -4335,6 +4359,15 @@ snapshots:
   '@mermaid-js/parser@0.6.3':
     dependencies:
       langium: 3.3.1
+
+  '@modelcontextprotocol/core@2.3.1':
+    dependencies:
+      zod: 4.6.5
+
+  '@modelcontextprotocol/server@2.3.1':
+    dependencies:
+      '@modelcontextprotocol/core': 2.3.1
+      zod: 4.6.5
 
   '@mux/mux-data-google-ima@0.2.8':
     dependencies:
@@ -5720,11 +5753,6 @@ snapshots:
       - micromark-util-types
       - unified
 
-  '@streamdown/code@1.0.2(react@19.2.3)':
-    dependencies:
-      react: 19.2.3
-      shiki: 3.22.0
-
   '@sugar-high/react@2.4.0(react@19.2.3)':
     dependencies:
       react: 19.2.3
@@ -5993,34 +6021,34 @@ snapshots:
     dependencies:
       execa: 5.1.1
 
-  '@vercel/geistdocs@1.28.1(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)':
+  '@vercel/geistdocs@2.9.0(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(lucide-react@0.555.0(react@19.2.3))(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)':
     dependencies:
-      '@ai-sdk/react': 3.0.200(react@19.2.3)(zod@4.1.13)
+      '@ai-sdk/react': 3.0.200(react@19.2.3)(zod@4.6.5)
       '@clack/prompts': 0.11.0
-      '@icons-pack/react-simple-icons': 13.8.0(react@19.2.3)
+      '@modelcontextprotocol/server': 2.3.1
       '@next/env': 16.3.3
       '@orama/tokenizers': 3.1.16
       '@streamdown/cjk': 1.0.2(@types/mdast@4.0.4)(micromark-util-types@2.0.2)(micromark@4.0.2)(react@19.2.3)(unified@11.0.5)
-      '@streamdown/code': 1.0.2(react@19.2.3)
       '@types/mdx': 2.0.13
       '@types/react': 19.2.7
       '@vercel/agent-readability': 0.7.0(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       '@vercel/oidc': 3.8.2
-      ai: 6.0.198(zod@4.1.13)
+      ai: 6.0.198(zod@4.6.5)
       class-variance-authority: 0.7.1
       clsx: 2.1.1
       commander: 14.0.3
       dexie: 4.2.1
-      dexie-react-hooks: 4.2.0(@types/react@19.2.7)(dexie@4.2.1)(react@19.2.3)
       fumadocs-core: 16.2.2(@types/react@19.2.7)(lucide-react@0.555.0(react@19.2.3))(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       fumadocs-mdx: 14.0.4(fumadocs-core@16.2.2(@types/react@19.2.7)(lucide-react@0.555.0(react@19.2.3))(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
       fumadocs-ui: 16.2.2(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(lucide-react@0.555.0(react@19.2.3))(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)
+      geist: 1.7.1(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       glob: 11.1.0
-      lucide-react: 0.555.0(react@19.2.3)
+      mcp-handler: 2.2.0(@modelcontextprotocol/server@2.3.1)(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       mermaid: 11.12.2
       motion: 12.23.26(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       next: 16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       next-themes: 0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      phase: 0.5.4(react@19.2.3)
       radix-ui: 1.6.4(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
@@ -6030,6 +6058,7 @@ snapshots:
       remark-gfm: 4.0.1
       remark-mdx: 3.1.1
       remark-parse: 11.0.0
+      remark-stringify: 11.0.0
       sonner: 2.0.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       streamdown: 2.2.0(react@19.2.3)
       tailwind-merge: 3.4.0
@@ -6040,7 +6069,7 @@ snapshots:
       unist-util-visit: 5.1.0
       use-stick-to-bottom: 1.1.1(react@19.2.3)
       vaul: 1.1.2(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      zod: 4.1.13
+      zod: 4.6.5
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
       - '@fumadocs/mdx-remote'
@@ -6053,6 +6082,7 @@ snapshots:
       - '@vercel/functions'
       - algoliasearch
       - h3
+      - lucide-react
       - micromark
       - micromark-util-types
       - react-router
@@ -6084,13 +6114,13 @@ snapshots:
 
   acorn@8.15.0: {}
 
-  ai@6.0.198(zod@4.1.13):
+  ai@6.0.198(zod@4.6.5):
     dependencies:
-      '@ai-sdk/gateway': 3.0.126(zod@4.1.13)
+      '@ai-sdk/gateway': 3.0.126(zod@4.6.5)
       '@ai-sdk/provider': 3.0.10
-      '@ai-sdk/provider-utils': 4.0.27(zod@4.1.13)
+      '@ai-sdk/provider-utils': 4.0.27(zod@4.6.5)
       '@opentelemetry/api': 1.9.0
-      zod: 4.1.13
+      zod: 4.6.5
 
   argparse@2.0.1: {}
 
@@ -6135,6 +6165,8 @@ snapshots:
     dependencies:
       react: 19.2.3
 
+  chalk@5.6.2: {}
+
   character-entities-html4@2.1.0: {}
 
   character-entities-legacy@3.0.0: {}
@@ -6178,6 +6210,8 @@ snapshots:
   collapse-white-space@2.1.0: {}
 
   comma-separated-tokens@2.0.3: {}
+
+  commander@11.1.0: {}
 
   commander@14.0.3: {}
 
@@ -6443,12 +6477,6 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  dexie-react-hooks@4.2.0(@types/react@19.2.7)(dexie@4.2.1)(react@19.2.3):
-    dependencies:
-      '@types/react': 19.2.7
-      dexie: 4.2.1
-      react: 19.2.3
-
   dexie@4.2.1: {}
 
   dompurify@3.3.1:
@@ -6684,6 +6712,10 @@ snapshots:
       - react-router
       - supports-color
       - waku
+
+  geist@1.7.1(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)):
+    dependencies:
+      next: 16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
   geist@1.7.2(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)):
     dependencies:
@@ -6985,6 +7017,7 @@ snapshots:
   lucide-react@0.555.0(react@19.2.3):
     dependencies:
       react: 19.2.3
+    optional: true
 
   magic-string@0.30.21:
     dependencies:
@@ -6997,6 +7030,14 @@ snapshots:
   marked@16.4.2: {}
 
   marked@17.0.2: {}
+
+  mcp-handler@2.2.0(@modelcontextprotocol/server@2.3.1)(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)):
+    dependencies:
+      '@modelcontextprotocol/server': 2.3.1
+      chalk: 5.6.2
+      commander: 11.1.0
+    optionalDependencies:
+      next: 16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
   mdast-util-find-and-replace@3.0.2:
     dependencies:
@@ -7165,7 +7206,7 @@ snapshots:
       mdast-util-to-string: 4.0.0
       micromark-util-classify-character: 2.0.1
       micromark-util-decode-string: 2.0.1
-      unist-util-visit: 5.0.0
+      unist-util-visit: 5.1.0
       zwitch: 2.0.4
 
   mdast-util-to-string@4.0.0:
@@ -7680,6 +7721,10 @@ snapshots:
   path-to-regexp@8.3.0: {}
 
   pathe@2.0.3: {}
+
+  phase@0.5.4(react@19.2.3):
+    optionalDependencies:
+      react: 19.2.3
 
   picocolors@1.1.1: {}
 
@@ -8241,7 +8286,7 @@ snapshots:
   unist-util-remove-position@5.0.0:
     dependencies:
       '@types/unist': 3.0.3
-      unist-util-visit: 5.0.0
+      unist-util-visit: 5.1.0
 
   unist-util-stringify-position@4.0.0:
     dependencies:
@@ -8366,5 +8411,7 @@ snapshots:
   zod@4.1.11: {}
 
   zod@4.1.13: {}
+
+  zod@4.6.5: {}
 
   zwitch@2.0.4: {}
