@@ -54,7 +54,7 @@ More information can be found [here](/docs/advanced/understanding).
 - `strictServerPrefetchWarning = false`: show a warning message in the console when a key has no pre-filled data provided [(details)](/docs/with-nextjs#prefetch-data-in-server-components)
 - `keepPreviousData = false`: return the previous key's data until the new data has been loaded [(details)](/docs/advanced/understanding#return-previous-data-for-better-ux)
 - `onLoadingSlow(key, config)`: callback function when a request takes too long to load (see `loadingTimeout`)
-- `onSuccess(data, key, config)`: callback function when a request finishes successfully
+- `onSuccess(data, key, config)`: callback function when a request finishes successfully [(details)](/docs/advanced/understanding#on-success-callback)
 - `onError(err, key, config)`: callback function when a request returns an error
 - `onErrorRetry(err, key, config, revalidate, revalidateOps)`: handler for error retry
 - `onDiscarded(key)`: callback function when a request is ignored due to race conditions
