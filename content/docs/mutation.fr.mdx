@@ -320,9 +320,11 @@ function Profile () {
 Vous pouvez également créer la même chose avec `useSWRMutation` et `trigger` :
 
 ```jsx
+import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
 
 function Profile () {
+  const { data } = useSWR('/api/user', fetcher)
   const { trigger } = useSWRMutation('/api/user', updateUserName)
 
   return (
