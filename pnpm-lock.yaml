@@ -15,8 +15,8 @@ importers:
         specifier: ^1.6.1
         version: 1.6.1(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
       '@vercel/geistdocs':
-        specifier: 2.9.4
-        version: 2.9.4(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(lucide-react@0.555.0(react@19.2.3))(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)
+        specifier: 2.13.1
+        version: 2.13.1(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(lucide-react@0.555.0(react@19.2.3))(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)
       '@vercel/speed-insights':
         specifier: ^1.3.1
         version: 1.3.1(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
@@ -2232,8 +2232,8 @@ packages:
     resolution: {integrity: sha512-g9XerViJ/paZujufXYcu5XYI2vU2rtB4sgdpjUHde5RnOkdmpu0ngH46LCFGHoPXO/C+qDPSczIHIRN+8Q2YKQ==}
     engines: {node: '>= 18'}
 
-  '@vercel/geistdocs@2.9.4':
-    resolution: {integrity: sha512-9U+sV1UKhd9A91ZwPOMvvJ30pwnxPNRxcyWF+Q5j9PksmDAr87k0fPyytMvP2FzrceqGSkGEiWVK4KW4uMS21Q==}
+  '@vercel/geistdocs@2.13.1':
+    resolution: {integrity: sha512-xnt2dwZjK7B0ons4JGlJ458dDvt44/fv5KSIrwbCBY2JY1VUcmjKc+L6FWIrGUng2VbXOLNlss0Qvr3yndWR9g==}
     hasBin: true
     peerDependencies:
       next: ^16.3.3
@@ -3480,7 +3480,7 @@ packages:
   phase@0.5.4:
     resolution: {integrity: sha512-3nCOrMZ/dW1q0nLCbVZBcGW/60TEApcoBPCT7s8SsQ2I0/rHLeSMkxlPhaGfW/yEKgkLkCfmd+YGss65ZwR77Q==}
     engines: {node: 24.x}
-    deprecated: phase is now the scan tool; the runtime library moved to @usephase/core and @usephase/react
+    deprecated: 'phase is now the scan tool; the runtime library moved to @usephase/core and @usephase/react. Run: npx @usephase/codemod@latest migrate-phase-to-usephase .'
     peerDependencies:
       react: '>=18'
     peerDependenciesMeta:
@@ -3743,11 +3743,15 @@ packages:
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
 
-  sonner@2.0.7:
-    resolution: {integrity: sha512-W6ZN4p58k8aDKA4XPcx2hpIQXBRAgyiWVkYhT7CvK6D3iAu7xjvVyhQHg2/iaKJZ1XVJ4r7XuwGL+WGEK37i9w==}
+  sonner@2.0.8:
+    resolution: {integrity: sha512-UM/ByIoFra8yzV75n1o0Puu0bw5U/9UNnDacrJNspekBewIfsQ3D6ez1nvlWpt7aTsO6rujQtifBpycwIivqlg==}
     peerDependencies:
+      '@types/react': ^18.0.0 || ^19.0.0
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -6021,7 +6025,7 @@ snapshots:
     dependencies:
       execa: 5.1.1
 
-  '@vercel/geistdocs@2.9.4(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(lucide-react@0.555.0(react@19.2.3))(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)':
+  '@vercel/geistdocs@2.13.1(@types/mdast@4.0.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(lucide-react@0.555.0(react@19.2.3))(micromark-util-types@2.0.2)(micromark@4.0.2)(next@16.3.4(@opentelemetry/api@1.9.0)(@types/node@24.10.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.17)':
     dependencies:
       '@ai-sdk/react': 3.0.200(react@19.2.3)(zod@4.6.5)
       '@clack/prompts': 0.11.0
@@ -6059,7 +6063,7 @@ snapshots:
       remark-mdx: 3.1.1
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
-      sonner: 2.0.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      sonner: 2.0.8(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       streamdown: 2.2.0(react@19.2.3)
       tailwind-merge: 3.4.0
       tailwindcss: 4.1.17
@@ -8153,10 +8157,12 @@ snapshots:
 
   sisteransi@1.0.5: {}
 
-  sonner@2.0.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+  sonner@2.0.8(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
+    optionalDependencies:
+      '@types/react': 19.2.7
 
   source-map-js@1.2.1: {}
 
