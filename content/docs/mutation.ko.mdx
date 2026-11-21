@@ -280,9 +280,9 @@ function Profile () {
         const user = { ...data, name: newName }
         const options = {
           optimisticData: user,
-          rollbackOnError(error: unknown) {
+          rollbackOnError(error) {
             // timeout 오류인 경우 롤백하지 않기
-            return error instanceof Error && error.name !== 'AbortError'
+            return !(error instanceof Error && error.name === 'AbortError')
           },
         }
 

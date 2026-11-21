@@ -280,9 +280,9 @@ function Profile () {
         const user = { ...data, name: newName }
         const options = {
           optimisticData: user,
-          rollbackOnError(error: unknown) {
+          rollbackOnError(error) {
             // タイムアウトの AbortError だった場合はロールバックしません
-            return error instanceof Error && error.name !== 'AbortError'
+            return !(error instanceof Error && error.name === 'AbortError')
           },
         }
 
