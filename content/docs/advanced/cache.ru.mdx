@@ -115,8 +115,18 @@ function Avatar() {
 
 ```jsx
 function localStorageProvider() {
+  if (typeof window === 'undefined') {
+    return new Map()
+  }
+
   // При инициализации мы восстанавливаем данные из `localStorage` в Map.
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  let map
+  try {
+    map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  } catch {
+    map = new Map()
+    localStorage.removeItem('app-cache')
+  }
 
   // Перед выгрузкой приложения мы записываем все данные обратно в `localStorage`.
   window.addEventListener('beforeunload', () => {

@@ -102,8 +102,18 @@ function Avatar() {
 
 ```jsx
 function localStorageProvider() {
+  if (typeof window === 'undefined') {
+    return new Map()
+  }
+
   // 初始化时，我们将数据从 `localStorage` 恢复到一个 map 中。
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  let map
+  try {
+    map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  } catch {
+    map = new Map()
+    localStorage.removeItem('app-cache')
+  }
 
   // 在卸载 app 之前，我们将所有数据写回 `localStorage` 中。
   window.addEventListener('beforeunload', () => {

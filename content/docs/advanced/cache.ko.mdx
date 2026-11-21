@@ -102,8 +102,18 @@ function Avatar() {
 
 ```jsx
 function localStorageProvider() {
+  if (typeof window === 'undefined') {
+    return new Map()
+  }
+
   // 초기화할 때, `localStorage`의 데이터를 map으로 복구합니다.
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  let map
+  try {
+    map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  } catch {
+    map = new Map()
+    localStorage.removeItem('app-cache')
+  }
 
   // app을 unloading하기 전에, 모든 데이터를 `localStorage`에 다시 씁니다.
   window.addEventListener('beforeunload', () => {
