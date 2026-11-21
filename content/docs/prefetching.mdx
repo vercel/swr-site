@@ -82,7 +82,7 @@ function App({ userId }) {
 
 Together with techniques like [page prefetching](https://nextjs.org/docs/api-reference/next/router#routerprefetch) in Next.js, you will be able to load both next page and data instantly.
 
-If the prefetch request throws an error, `preload` rejects with that error. Use `preload(...).catch(...)` when you want to handle prefetch failures, or ignore them if the mounted `useSWR` hook should handle the error state.
+If the prefetch request throws an error, `preload` rejects with that error. Handle that rejection with `preload(...).catch(...)` to avoid an unhandled promise rejection, even if a mounted `useSWR` hook will also observe the error state.
 
 In Suspense mode, you should utilize `preload` to avoid waterfall problems.
 
