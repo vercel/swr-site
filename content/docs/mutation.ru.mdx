@@ -104,7 +104,7 @@ function App () {
 - `key`: то же, что и `key` `useSWR`, но функция ведет себя как [функция фильтра](/docs/mutation#мутация-нескольких-элементов)
 - `data`: данные для обновления кеша клиента или асинхронная функция для удаленной мутации
 - `options`: принимает следующие опции
-  - `optimisticData`: данные для немедленного обновления кеша клиента или функция, которая получает текущие данные и возвращает новые данные кеша клиента, обычно используемые в оптимистичном UI.
+  - `optimisticData`: данные для немедленного обновления кеша клиента или функция, которая получает текущие данные и возвращает новые данные кеша клиента, обычно используемые в оптимистичном UI (function receives (currentData, displayedData)).
   - `revalidate = true`: should the cache revalidate once the asynchronous update resolves. If set to a function, the function receives `data` and `key`.
   - `populateCache = true`: следует ли записывать результат удаленной мутации в кеш, или функция, которая получает в качестве аргументов новый результат и текущий результат и возвращает результат мутации.
   - `rollbackOnError = true`: должен ли кеш откатиться, при сбое удаленной мутации, или функция, которая получает в качестве аргументов ошибку, выданную fetcher-ом, и возвращает логическое значение, следует ли выполнять откат или нет.
@@ -320,6 +320,18 @@ function Profile () {
   )
 }
 ```
+
+When optimistic updates may be queued before previous mutations finish (for example, on slow networks), use the second displayedData argument to base the next optimistic value on what is currently shown in the UI:
+
+`jsx
+mutate('/api/user', updateUserName(newName), {
+  optimisticData: (currentData, displayedData) => ({
+    ...displayedData,
+    name: newName
+  }),
+  rollbackOnError: true
+})
+`
 
 Вы также можете создать то же самое с помощью `useSWRMutation` и `trigger`:
 
