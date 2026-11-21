@@ -102,8 +102,18 @@ Vous pouvez synchroniser votre cache avec `localStorage`. Voici un exemple d'imp
 
 ```jsx
 function localStorageProvider() {
+  if (typeof window === 'undefined') {
+    return new Map()
+  }
+
   // Pendant l'initialisation, nous restaurons les données de `localStorage` dans une map.
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  let map
+  try {
+    map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  } catch {
+    map = new Map()
+    localStorage.removeItem('app-cache')
+  }
 
   // Abant de décharger l'application, nous réécrivons toutes les données dans `localStorage`.
   window.addEventListener('beforeunload', () => {

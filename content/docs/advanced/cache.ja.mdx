@@ -102,8 +102,18 @@ function Avatar() {
 
 ```jsx
 function localStorageProvider() {
+  if (typeof window === 'undefined') {
+    return new Map()
+  }
+
   // 初期化時に、 `localStorage` から Map にデータを復元します。
-  const map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  let map
+  try {
+    map = new Map(JSON.parse(localStorage.getItem('app-cache') || '[]'))
+  } catch {
+    map = new Map()
+    localStorage.removeItem('app-cache')
+  }
 
   // アプリが終了する前に、すべてのデータを `localStorage` に保存します。
   window.addEventListener('beforeunload', () => {
