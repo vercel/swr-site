@@ -279,9 +279,9 @@ function Profile () {
         const user = { ...data, name: newName }
         const options = {
           optimisticData: user,
-          rollbackOnError(error) {
+          rollbackOnError(error: unknown) {
             // Не откатываться, если это ошибка прерывания по таймауту
-            return error.name !== 'AbortError'
+            return error instanceof Error && error.name !== 'AbortError'
           },
         }
 

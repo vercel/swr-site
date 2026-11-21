@@ -275,9 +275,9 @@ function Profile () {
         const user = { ...data, name: newName }
         const options = {
           optimisticData: user,
-          rollbackOnError(error) {
+          rollbackOnError(error: unknown) {
             // Se for um erro de abortamento por timeout, não reverta
-            return error.name !== 'AbortError'
+            return error instanceof Error && error.name !== 'AbortError'
           },
         }
 
