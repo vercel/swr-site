@@ -156,7 +156,7 @@ function Profile() {
 
 #### 参数 [#useswrmutation-parameters]
 
-- `key`: 与 [`mutate`](/docs/mutation#mutate) 的 `key` 相同
+- `key`: same as `useSWR`'s `key`. Unlike the global `mutate`, `useSWRMutation` does not accept a filter function; use a specific key and call the global `mutate` if you need to revalidate multiple related keys.
 - `fetcher(key, { arg })`：一个用于远程数据更改的异步函数
 - `options`：一个可选的对象，包含了下列属性：
   - `optimisticData`：与 `mutate` 的 `optimisticData` 相同
