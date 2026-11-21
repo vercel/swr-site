@@ -82,6 +82,17 @@ useSWR('/api/user', fetcher, {
 
 이 콜백을 사용하면 다양한 조건을 기반으로 유연하게 재시도할 수 있습니다. `shouldRetryOnError: false` 설정으로 비활성화할 수도 있습니다.
 
+`js
+useSWR('/api/user', fetcher, {
+  shouldRetryOnError: (error) => {
+    // Don't retry for 404 responses
+    if (error.status === 404) return false
+    return true
+  }
+})
+`
+
+
 [전역 설정](/docs/global-configuration) 컨텍스트를 통해 제공하는 것도 가능합니다.
 
 ## 전역 에러 기록 [#global-error-report]

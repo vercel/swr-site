@@ -37,7 +37,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
   - 関数を設定した場合、その関数は最新のデータを受け取り、ミリ秒単位の間隔で返す必要があります
 - `refreshWhenHidden = false`: ウィンドウが非表示の場合にポーリングします（`refreshInterval` が有効になっているときのみ）
 - `refreshWhenOffline = false`: ブラウザがオフラインのときにポーリングします（`navigator.onLine` によって決定される）
-- `shouldRetryOnError = true`: フェッチャーでエラーが発生したときに再試行します
+- `shouldRetryOnError = true`: フェッチャーでエラーが発生したときに再試行します (or a function that receives the error and returns whether to retry)
 - `dedupingInterval = 2000`: この期間内での同じキーのリクエストを重複として排除します
 - `focusThrottleInterval = 5000`: この期間中に一度だけ再検証をします
 - `loadingTimeout = 3000`: `onLoadingSlow` イベントをトリガーするためのタイムアウト

@@ -37,7 +37,7 @@ More information can be found [here](/docs/advanced/understanding).
   - Se definido como uma função, a função recebe o último dado e deve retornar o intervalo em milisegundos
 - `refreshWhenHidden = false`: sondagem (polling) quando a janela está invisivel (se `refreshInterval` está ativado)
 - `refreshWhenOffline = false`: sondagem (polling) quando o navegador está offline (determinado por `navigator.onLine`)
-- `shouldRetryOnError = true`: se deve tentar novamente quando o fetcher retorna um erro
+- `shouldRetryOnError = true`: se deve tentar novamente quando o fetcher retorna um erro (or a function that receives the error and returns whether to retry)
 - `dedupingInterval = 2000`: deduplicar pedidos com a mesma chave em este intervalo em milisegundos
 - `focusThrottleInterval = 5000`: somente revalidar uma vez durante um intervalo em milisegundos
 - `loadingTimeout = 3000`: tempo limite para o evento onLoadingSlow

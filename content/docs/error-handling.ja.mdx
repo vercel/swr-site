@@ -82,6 +82,17 @@ useSWR('/api/user', fetcher, {
 
 このコールバックは、様々な条件にもとづいて再試行する柔軟性を提供します。 `shouldRetryOnError: false` を設定することで、この機能を無効にすることもできます。
 
+`js
+useSWR('/api/user', fetcher, {
+  shouldRetryOnError: (error) => {
+    // Don't retry for 404 responses
+    if (error.status === 404) return false
+    return true
+  }
+})
+`
+
+
 また、 [グローバルな設定](/docs/global-configuration) のコンテキストを介して提供することもできます。
 
 ## グローバルエラーの報告 [#global-error-report]

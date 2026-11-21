@@ -37,7 +37,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
   - function으로 설정된 경우, 함수가 최신 데이터를 받고 인터벌 반환(밀리초)
 - `refreshWhenHidden = false`: 창이 보이지 않을 때 폴링(`refreshInterval`이 활성화된 경우)
 - `refreshWhenOffline = false`: 브라우저가 오프라인일 때 폴링(`navigator.onLine`에 의해 결정됨)
-- `shouldRetryOnError = true`: fetcher에 에러가 있을 때 재시도
+- `shouldRetryOnError = true`: fetcher에 에러가 있을 때 재시도 (or a function that receives the error and returns whether to retry)
 - `dedupingInterval = 2000`: 이 시간 범위내에 동일 키를 사용하는 요청 중복 제거(밀리초)
 - `focusThrottleInterval = 5000`: 이 시간 범위 동안 단 한 번만 갱신(밀리초)
 - `loadingTimeout = 3000`: onLoadingSlow 이벤트를 트리거 하기 위한 타임아웃(밀리초)
