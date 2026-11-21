@@ -43,7 +43,7 @@ More information can be found [here](/docs/advanced/understanding).
   - If set to a function, the function will receive the latest data and should return the interval in milliseconds
 - `refreshWhenHidden = false`: polling when the window is invisible (if `refreshInterval` is enabled)
 - `refreshWhenOffline = false`: polling when the browser is offline (determined by `navigator.onLine`)
-- `shouldRetryOnError = true`: retry when fetcher has an error
+- `shouldRetryOnError = true`: retry when fetcher has an error (or a function that receives the error and returns whether to retry)
 - `dedupingInterval = 2000`: dedupe requests with the same key in this time span in milliseconds
 - `focusThrottleInterval = 5000`: only revalidate once during a time span in milliseconds
 - `loadingTimeout = 3000`: timeout to trigger the onLoadingSlow event in milliseconds

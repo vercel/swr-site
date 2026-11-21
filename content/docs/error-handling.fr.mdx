@@ -82,6 +82,17 @@ useSWR('/api/user', fetcher, {
 
 Ce rappel vous donne la flexibilité de retenter en fonction de diverses conditions. Vous pouvez également le désactiver en définissant `shouldRetryOnError: false`.
 
+`js
+useSWR('/api/user', fetcher, {
+  shouldRetryOnError: (error) => {
+    // Don't retry for 404 responses
+    if (error.status === 404) return false
+    return true
+  }
+})
+`
+
+
 C'est aussi possible de le fournir via le contexte de [configuration globale](/docs/global-configuration).
 
 ## Rapport d'erreur globale [#global-error-report]

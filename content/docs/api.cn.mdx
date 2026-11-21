@@ -37,7 +37,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
   - 如果设置为函数，该函数将接收最新数据，并且应以毫秒为单位返回间隔
 - `refreshWhenHidden = false`: 窗口不可见时进行轮询（如果启用了 `refreshInterval`）
 - `refreshWhenOffline = false`: 浏览器离线时轮询（由 `navigator.onLine` 确定）
-- `shouldRetryOnError = true`: fetcher 有错误时重试
+- `shouldRetryOnError = true`: fetcher 有错误时重试 (or a function that receives the error and returns whether to retry)
 - `dedupingInterval = 2000`: 删除一段时间内相同 key 的重复请求（以毫秒为单位）
 - `focusThrottleInterval = 5000`: 在一段时间内只重新验证一次（以毫秒为单位）
 - `loadingTimeout = 3000`: 超时触发 `onLoadingSlow` 事件（以毫秒为单位）

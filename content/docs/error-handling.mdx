@@ -88,6 +88,17 @@ useSWR('/api/user', fetcher, {
 
 This callback gives you the flexibility to retry based on various conditions. You can also disable it by setting `shouldRetryOnError: false`.
 
+`js
+useSWR('/api/user', fetcher, {
+  shouldRetryOnError: (error) => {
+    // Don't retry for 404 responses
+    if (error.status === 404) return false
+    return true
+  }
+})
+`
+
+
 It's also possible to provide it via the [Global Configuration](/docs/global-configuration) context.
 
 ## Global Error Report [#global-error-report]

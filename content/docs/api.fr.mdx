@@ -37,7 +37,7 @@ Plus d'informations [ici](/docs/advanced/understanding).
   - Si défini sur une fonction, la fonction recevra les dernières données et devrait renvoyer l'intervalle en millisecondes
 - `refreshWhenHidden = false`: actualisation lorsque la fenêtre est invisible (si `refreshInterval` est activé)
 - `refreshWhenOffline = false`: actualisation lorsque le navigateur est hors ligne (déterminé par `navigator.onLine`)
-- `shouldRetryOnError = true`: réessayer lorsque le fetcher a une erreur
+- `shouldRetryOnError = true`: réessayer lorsque le fetcher a une erreur (or a function that receives the error and returns whether to retry)
 - `dedupingInterval = 2000`: dédupliquer les requêtes avec la même clé dans cette période de temps en millisecondes
 - `focusThrottleInterval = 5000`: ne revalider qu'une seule fois pendant une période de temps en millisecondes
 - `loadingTimeout = 3000`: délai d'attente pour déclencher l'événement onLoadingSlow en millisecondes

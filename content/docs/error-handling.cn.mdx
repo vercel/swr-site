@@ -78,6 +78,17 @@ useSWR('/api/user', fetcher, {
 
 这个回调让你可以灵活的根据各种条件重试。你也可以通过设置 `shouldRetryOnError: false` 来禁用它。
 
+`js
+useSWR('/api/user', fetcher, {
+  shouldRetryOnError: (error) => {
+    // Don't retry for 404 responses
+    if (error.status === 404) return false
+    return true
+  }
+})
+`
+
+
 也可以通过[全局配置](/docs/global-configuration) context 来提供它。
 
 ## 全局错误报告 [#global-error-report]

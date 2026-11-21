@@ -37,7 +37,7 @@ const { data, error, isLoading, isValidating, mutate } = useSWR(key, fetcher, op
   - Если установлено значение функции, функция будет получать последние данные и должна возвращать интервал в миллисекундах
 - `refreshWhenHidden = false`: поллинг, когда окно невидимо (если `refreshInterval` включён)
 - `refreshWhenOffline = false`: поллинг, когда браузер оффлайн (определяется `navigator.onLine`)
-- `shouldRetryOnError = true`: повторить попытку, если в fetcher-е возникла ошибка
+- `shouldRetryOnError = true`: повторить попытку, если в fetcher-е возникла ошибка (or a function that receives the error and returns whether to retry)
 - `dedupingInterval = 2000`: дедупликация запросов с тем же ключом за этот промежуток времени в миллисекундах
 - `focusThrottleInterval = 5000`: проверять только один раз за период времени в миллисекундах
 - `loadingTimeout = 3000`: тайм-аут для запуска события onLoadingSlow в миллисекундах
