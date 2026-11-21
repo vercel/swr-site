@@ -158,7 +158,7 @@ function Profile() {
 
 #### Параметры [#useswrmutation-parameters]
 
-- `key`: то же, что и `key` у [`mutate`](/docs/mutation#mutate)
+- `key`: same as `useSWR`'s `key`. Unlike the global `mutate`, `useSWRMutation` does not accept a filter function; use a specific key and call the global `mutate` if you need to revalidate multiple related keys.
 - `fetcher(key, { arg })`: асинхронная функция для удаленной мутации
 - `options`: необязательный объект со следующими свойствами:
   - `optimisticData`: то же, что и `optimisticData` в `mutate`

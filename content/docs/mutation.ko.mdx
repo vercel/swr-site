@@ -158,7 +158,7 @@ function Profile() {
 
 #### 매개변수 [#useswrmutation-parameters]
 
-- `key`: [`mutate`](/docs/mutation#mutate)의 `key`와 동일
+- `key`: same as `useSWR`'s `key`. Unlike the global `mutate`, `useSWRMutation` does not accept a filter function; use a specific key and call the global `mutate` if you need to revalidate multiple related keys.
 - `fetcher(key, { arg })`: remote mutation을 위한 비동기 함수
 - `options`: 다음 속성을 가진 optional 객체
   - `optimisticData`: `mutate`의 `optimisticData`와 동일
