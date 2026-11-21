@@ -23,6 +23,11 @@
   }
 }
 
+/* Align docs page scroll target with sticky navbar height */
+#nd-page {
+  scroll-margin-top: var(--fd-docs-row-1, 4rem);
+}
+
 /* Align docs content with navbar on mobile */
 /*
  * On mobile the sticky MobileDocsBar abuts the navbar via a negative top
