@@ -102,7 +102,7 @@ function App () {
 - `key`：与 `useSWR` 的 `key` 相同，但函数表现为一个 [过滤函数](/docs/mutation#mutate-multiple-items)。
 - `data`：用于更新客户端缓存的数据，或者是一个用于进行远程数据更改的异步函数。
 - `options`：接受下列选项
-  - `optimisticData`：用于立即更新客户端缓存的数据，或是一个接受当前数据并返回新的客户端缓存数据的函数，通常用于乐观 UI。
+  - `optimisticData`：用于立即更新客户端缓存的数据，或是一个接受当前数据和当前显示数据并返回新的客户端缓存数据的函数，通常用于乐观 UI。
   - `revalidate = true`: 异步更新完成后是否应该重新验证缓存。如果设置为函数，该函数将接收 `data` 和 `key` 作为参数。
   - `populateCache = true`：将远程数据更改的结果写入缓存，或者将接收新结果和当前结果作为参数并返回数据更改结果的函数。
   - `rollbackOnError = true`：如果远程数据更改失败，缓存会回滚。或者接受一个函数，它接收从 fetcher 抛出的错误作为参数，并返回一个布尔值判断是否应该回滚。
@@ -308,13 +308,25 @@ function Profile () {
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
         mutate('/api/user', updateUserName(newName), {
-          optimisticData: user => ({ ...user, name: newName }),
+          optimisticData: currentData => ({ ...currentData, name: newName }),
           rollbackOnError: true
         });
       }}>Uppercase my name!</button>
     </div>
   )
 }
+```
+
+如果在上一次 mutation 完成前可能连续触发多次乐观更新（例如网络较慢时），可以使用函数的第二个参数 `displayedData`，基于当前界面显示的数据计算下一次乐观值：
+
+```jsx
+mutate('/api/user', updateUserName(newName), {
+  optimisticData: (currentData, displayedData) => ({
+    ...displayedData,
+    name: newName
+  }),
+  rollbackOnError: true
+})
 ```
 
 你还可以通过 `useSWRMutation` 和 `trigger` 实现相同的功能：
