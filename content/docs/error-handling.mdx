@@ -63,7 +63,7 @@ const { data, error } = useSWR('/api/user', fetcher)
 
 ## Suspense [#suspense]
 
-When using `suspense: true`, errors are thrown during render and must be handled by a [React Error Boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) instead of the `error` return value. See [Suspense Mode](/docs/suspense) for details.
+When using `suspense: true`, errors are thrown during render if there is no data to show, so handle them with a [React Error Boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary). If cached or fallback data is already available, SWR can return that data and expose the error through the `error` return value instead. See [Suspense Mode](/docs/suspense) for details.
 
 ## Error Retry [#error-retry]
 
