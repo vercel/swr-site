@@ -277,7 +277,7 @@ function Profile () {
           optimisticData: user,
           rollbackOnError(error) {
             // 如果超时中止请求的错误，不执行回滚
-            return error.name !== 'AbortError'
+            return !(error instanceof Error && error.name === 'AbortError')
           },
         }
 

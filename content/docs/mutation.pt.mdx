@@ -277,7 +277,7 @@ function Profile () {
           optimisticData: user,
           rollbackOnError(error) {
             // Se for um erro de abortamento por timeout, não reverta
-            return error.name !== 'AbortError'
+            return !(error instanceof Error && error.name === 'AbortError')
           },
         }
 

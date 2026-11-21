@@ -277,7 +277,7 @@ function Profile () {
           optimisticData: user,
           rollbackOnError(error) {
             // Si c'est une erreur d'abandon de délai, ne pas revenir en arrière
-            return error.name !== 'AbortError'
+            return !(error instanceof Error && error.name === 'AbortError')
           },
         }
 

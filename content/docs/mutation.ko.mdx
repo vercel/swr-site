@@ -282,7 +282,7 @@ function Profile () {
           optimisticData: user,
           rollbackOnError(error) {
             // timeout 오류인 경우 롤백하지 않기
-            return error.name !== 'AbortError'
+            return !(error instanceof Error && error.name === 'AbortError')
           },
         }
 

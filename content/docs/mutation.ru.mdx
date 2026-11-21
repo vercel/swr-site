@@ -281,7 +281,7 @@ function Profile () {
           optimisticData: user,
           rollbackOnError(error) {
             // Не откатываться, если это ошибка прерывания по таймауту
-            return error.name !== 'AbortError'
+            return !(error instanceof Error && error.name === 'AbortError')
           },
         }
 
